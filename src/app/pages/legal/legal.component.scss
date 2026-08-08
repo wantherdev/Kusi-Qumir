@@ -1,0 +1,55 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: white;
+}
+
+.legal-header {
+  border-bottom: 1px solid var(--kq-border);
+  background: var(--kq-canvas);
+}
+.back-link {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.legal-page {
+  padding-block: clamp(4rem, 8vw, 7rem);
+
+  h1 {
+    max-width: 13ch;
+    margin: 1rem 0 2rem;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.04;
+  }
+
+  .lead {
+    max-width: 70ch;
+    color: var(--kq-muted);
+    font-size: 1.12rem;
+  }
+
+  section {
+    max-width: 52rem;
+    margin-top: 3rem;
+    border-top: 1px solid var(--kq-border);
+    padding-top: 2rem;
+  }
+
+  h2 {
+    margin: 0 0 1rem;
+    font-size: 2rem;
+  }
+  li {
+    margin-block: 0.7rem;
+  }
+
+  aside {
+    max-width: 52rem;
+    margin-top: 2.5rem;
+    border-left: 4px solid var(--kq-teal);
+    padding: 1rem 1.25rem;
+    background: #eaf4f4;
+    font-weight: 600;
+  }
+}

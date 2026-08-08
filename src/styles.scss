@@ -1,0 +1,201 @@
+@use 'tailwindcss';
+@use 'styles/tokens' as tokens;
+
+@theme {
+  --color-kq-teal: #{tokens.$teal};
+  --color-kq-river: #{tokens.$river};
+  --color-kq-mountain: #{tokens.$mountain};
+  --color-kq-ink: #{tokens.$ink};
+  --color-kq-canvas: #{tokens.$canvas};
+  --color-kq-border: #{tokens.$border};
+  --color-kq-muted: #{tokens.$muted};
+  --font-kq-display: 'Fjalla One', 'Arial Narrow', sans-serif;
+  --font-kq-text: 'Inter', system-ui, sans-serif;
+}
+
+@font-face {
+  font-family: 'Fjalla One';
+  src: url('/assets/fonts/fjalla-one-latin-400.woff2') format('woff2');
+  font-display: swap;
+  font-weight: 400;
+}
+
+@each $weight in 400, 500, 600, 700 {
+  @font-face {
+    font-family: 'Inter';
+    src: url('/assets/fonts/inter-latin-#{$weight}.woff2') format('woff2');
+    font-display: swap;
+    font-weight: $weight;
+  }
+}
+
+:root {
+  --kq-teal: #{tokens.$teal};
+  --kq-river: #{tokens.$river};
+  --kq-mountain: #{tokens.$mountain};
+  --kq-ink: #{tokens.$ink};
+  --kq-canvas: #{tokens.$canvas};
+  --kq-surface: #{tokens.$surface};
+  --kq-border: #{tokens.$border};
+  --kq-muted: #{tokens.$muted};
+  --kq-success: #{tokens.$success};
+  --kq-warning: #{tokens.$warning};
+  --kq-danger: #{tokens.$danger};
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5.5rem;
+}
+
+body {
+  margin: 0;
+  background: var(--kq-canvas);
+  color: var(--kq-ink);
+  font:
+    400 1rem/1.62 'Inter',
+    system-ui,
+    sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body.menu-open {
+  overflow: hidden;
+}
+
+h1,
+h2,
+h3 {
+  font-family: 'Fjalla One', 'Arial Narrow', sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+a,
+button,
+input,
+select,
+textarea,
+summary {
+  &:focus-visible {
+    outline: 3px solid #ffffff;
+    outline-offset: 3px;
+    box-shadow: 0 0 0 6px var(--kq-ink);
+  }
+}
+
+.kq-shell {
+  width: min(74rem, calc(100% - 3rem));
+  margin-inline: auto;
+}
+
+.kq-button {
+  display: inline-flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  border: 2px solid var(--kq-teal);
+  border-radius: 0.875rem;
+  padding: 0.75rem 1.35rem;
+  background: var(--kq-teal);
+  color: var(--kq-ink);
+  font-weight: 700;
+  text-decoration: none;
+  transition:
+    transform 160ms ease,
+    background-color 160ms ease;
+
+  &:hover {
+    background: #18bdbc;
+    transform: translateY(-2px);
+  }
+
+  &--small {
+    min-height: 2.75rem;
+    padding: 0.55rem 1rem;
+  }
+
+  &--dark {
+    border-color: var(--kq-ink);
+    background: var(--kq-ink);
+    color: white;
+  }
+
+  &--light {
+    border-color: white;
+    background: white;
+  }
+}
+
+.kq-eyebrow {
+  color: var(--kq-teal);
+  font-size: 0.75rem;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+.kq-field {
+  display: grid;
+  gap: 0.4rem;
+  color: #344257;
+  font-size: 0.82rem;
+  font-weight: 700;
+
+  input,
+  select,
+  textarea {
+    width: 100%;
+    min-height: 3rem;
+    border: 1px solid #aebbc4;
+    border-radius: 0.5rem;
+    padding: 0.7rem 0.8rem;
+    background: white;
+    color: var(--kq-ink);
+    font-size: 1rem;
+    font-weight: 400;
+  }
+
+  textarea {
+    resize: vertical;
+  }
+}
+
+.kq-error {
+  color: var(--kq-danger);
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.skip-link {
+  position: fixed;
+  z-index: 1000;
+  top: 0.75rem;
+  left: 0.75rem;
+  padding: 0.75rem 1rem;
+  background: var(--kq-ink);
+  color: white;
+  transform: translateY(-160%);
+
+  &:focus {
+    transform: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .kq-shell {
+    width: min(100% - 2.5rem, 74rem);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

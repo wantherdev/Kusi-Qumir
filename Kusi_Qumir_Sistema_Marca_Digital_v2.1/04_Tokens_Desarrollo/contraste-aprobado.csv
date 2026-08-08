@@ -1,0 +1,9 @@
+fondo,texto,ratio,uso
+#00ABAA,#0F172A,6.30,Apto para texto normal y botones
+#9BBFE6,#0F172A,9.34,Apto para texto normal
+#0F172A,#FFFFFF,17.85,Apto para texto normal
+#F6F9F9,#0F172A,16.86,Apto para texto normal
+#FFFFFF,#5A697B,5.61,Apto para texto secundario
+#FFFFFF,#647BAB,4.23,Solo texto grande; no usar en cuerpo
+#FFFFFF,#00ABAA,2.84,No usar como texto ni icono funcional crítico
+#FFFFFF,#9BBFE6,1.91,No usar como texto

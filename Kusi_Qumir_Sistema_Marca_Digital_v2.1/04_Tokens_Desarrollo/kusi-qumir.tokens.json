@@ -1,0 +1,54 @@
+{
+  "$schema": "https://tr.designtokens.org/format/",
+  "brand": "Kusi Q’umir",
+  "version": "2.1",
+  "color": {
+    "brand": {
+      "teal": { "value": "#00ABAA", "role": "sol, Q y acento de acción" },
+      "river": { "value": "#9BBFE6", "role": "K del isotipo, fondos informativos y apoyo" },
+      "mountain": { "value": "#647BAB", "role": "montañas y apoyo editorial" },
+      "ink": { "value": "#0F172A", "role": "texto, navegación y fondo oscuro" }
+    },
+    "neutral": {
+      "canvas": { "value": "#F6F9F9", "role": "fondo general" },
+      "surface": { "value": "#FFFFFF", "role": "superficies" },
+      "border": { "value": "#D9E3E5", "role": "bordes y divisores" },
+      "muted": { "value": "#5A697B", "role": "texto secundario" }
+    },
+    "status": {
+      "success": { "value": "#13795B", "role": "confirmación funcional; no es color de marca" },
+      "warning": { "value": "#8A5A00", "role": "advertencia funcional; no es color de marca" },
+      "danger": { "value": "#B42318", "role": "error funcional; no es color de marca" }
+    }
+  },
+  "typography": {
+    "display": { "family": "Fjalla One", "weights": [400] },
+    "text": { "family": "Inter", "weights": [400, 500, 600, 700] }
+  },
+  "spacing": {
+    "1": 4,
+    "2": 8,
+    "3": 12,
+    "4": 16,
+    "6": 24,
+    "8": 32,
+    "12": 48,
+    "16": 64,
+    "24": 96
+  },
+  "radius": { "sm": 8, "md": 14, "lg": 24 },
+  "motion": {
+    "fast": "160ms",
+    "base": "240ms",
+    "slow": "400ms",
+    "easing": "cubic-bezier(0.2, 0, 0, 1)"
+  },
+  "accessibility": {
+    "bodyTextMinimum": "16px",
+    "targetRecommended": "44px",
+    "preferredButtons": [
+      { "background": "#00ABAA", "foreground": "#0F172A" },
+      { "background": "#0F172A", "foreground": "#FFFFFF" }
+    ]
+  }
+}

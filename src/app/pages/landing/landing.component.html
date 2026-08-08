@@ -1,0 +1,407 @@
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
+
+<header class="site-header" [class.scrolled]="headerScrolled()">
+  <div class="kq-shell flex min-h-20 items-center justify-between">
+    <a class="brand" href="#inicio" aria-label="Kusi Q’umir, inicio" (click)="closeMenu()">
+      <img
+        src="/assets/brand/logo-horizontal-color.svg"
+        width="190"
+        height="54"
+        alt="Kusi Q’umir"
+      />
+    </a>
+
+    <button
+      class="menu-toggle"
+      type="button"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="site-nav"
+      (click)="toggleMenu()"
+    >
+      <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
+      <span></span><span></span><span></span>
+    </button>
+
+    <nav id="site-nav" class="site-nav" [class.open]="menuOpen()" aria-label="Navegación principal">
+      <a href="#experiencias" (click)="closeMenu()">Experiencias</a>
+      <a href="#como-viajamos" (click)="closeMenu()">Cómo viajamos</a>
+      <a href="#servicios" (click)="closeMenu()">Servicios</a>
+      <a href="#preguntas" (click)="closeMenu()">Preguntas</a>
+      <a class="kq-button kq-button--small" href="#contacto" (click)="closeMenu()"
+        >Planear mi viaje</a
+      >
+    </nav>
+  </div>
+</header>
+
+<main id="contenido">
+  <section class="hero" id="inicio" aria-labelledby="hero-title">
+    <div
+      class="hero-art"
+      role="img"
+      aria-label="Ilustración editorial del Valle Sagrado con montañas, terrazas y viajeros acompañados por un guía local"
+    ></div>
+    <div class="kq-shell hero-layout">
+      <div class="hero-copy reveal">
+        <p class="kq-eyebrow mb-4">Cultura · paisaje · acompañamiento</p>
+        <h1 id="hero-title" class="text-balance">Cusco auténtico, a tu propio ritmo.</h1>
+        <p class="hero-lead">
+          Diseñamos rutas claras y personalizadas para que conozcas el territorio con contexto,
+          tranquilidad y un equipo cercano.
+        </p>
+        <div class="mt-8 flex flex-wrap items-center gap-5">
+          <a class="kq-button" href="#contacto">Diseñar mi experiencia</a>
+          <a class="text-link" href="#experiencias"
+            >Explorar rutas <span aria-hidden="true">→</span></a
+          >
+        </div>
+        <ul class="trust-list" aria-label="Beneficios">
+          <li><span aria-hidden="true">✓</span> Itinerarios claros</li>
+          <li><span aria-hidden="true">✓</span> Asistencia cercana</li>
+          <li><span aria-hidden="true">✓</span> Ritmo personalizado</li>
+        </ul>
+      </div>
+    </div>
+    <p class="art-note">
+      Ilustración editorial · La experiencia final se confirma en tu propuesta.
+    </p>
+  </section>
+
+  <section class="bg-white py-20 lg:py-32">
+    <div class="kq-shell intro-grid reveal">
+      <p class="kq-eyebrow">01 / Nuestra forma de viajar</p>
+      <div>
+        <h2 class="text-balance">Más que llegar, buscamos que comprendas dónde estás.</h2>
+        <p>
+          Conectamos historia, paisaje y vida local en una experiencia bien acompañada. Te contamos
+          con claridad qué incluye cada ruta, su exigencia y cómo prepararte.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <section class="py-20 lg:py-32" id="experiencias" aria-labelledby="experiences-title">
+    <div class="kq-shell">
+      <div class="section-heading reveal">
+        <div>
+          <p class="kq-eyebrow mb-3">Rutas para inspirarte</p>
+          <h2 id="experiences-title" class="text-balance">Elige el Cusco que quieres vivir</h2>
+        </div>
+        <p>
+          Estas son ideas iniciales. Cada salida se ajusta a tus fechas, intereses y condición
+          física antes de confirmar disponibilidad.
+        </p>
+      </div>
+
+      <div class="grid gap-4 lg:grid-cols-3">
+        <article class="experience-card card-valley reveal">
+          <span class="card-number">01</span>
+          <div class="card-content">
+            <p class="card-meta">Cultura · día completo</p>
+            <h3>Valle Sagrado con contexto</h3>
+            <p>
+              Territorio, mercados y memoria andina en una ruta que conecta paisajes y comunidades.
+            </p>
+            <a href="#contacto" aria-label="Consultar la ruta Valle Sagrado con contexto">
+              Consultar ruta <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="experience-card card-city reveal">
+          <span class="card-number">02</span>
+          <div class="card-content">
+            <p class="card-meta">Historia · medio día</p>
+            <h3>Cusco entre capas</h3>
+            <p>
+              Una lectura cercana de la ciudad, sus muros, plazas y relatos más allá de la postal.
+            </p>
+            <a href="#contacto" aria-label="Consultar la ruta Cusco entre capas">
+              Consultar ruta <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+
+        <article class="experience-card card-mountain reveal">
+          <span class="card-number">03</span>
+          <div class="card-content">
+            <p class="card-meta">Naturaleza · esfuerzo adaptable</p>
+            <h3>Montañas a tu ritmo</h3>
+            <p>
+              Altura, clima y exigencia explicados desde el inicio para elegir una caminata
+              responsable.
+            </p>
+            <a href="#contacto" aria-label="Consultar la ruta Montañas a tu ritmo">
+              Consultar ruta <span aria-hidden="true">↗</span>
+            </a>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="process py-20 lg:py-32" id="como-viajamos" aria-labelledby="process-title">
+    <div class="kq-shell process-grid">
+      <div class="process-copy reveal">
+        <p class="kq-eyebrow mb-3 text-kq-river">Un proceso simple</p>
+        <h2 id="process-title" class="text-balance">
+          Tú imaginas el viaje. Nosotros ordenamos la ruta.
+        </h2>
+        <p>
+          Primero entendemos qué buscas. Luego construimos una propuesta realista y te acompañamos
+          antes, durante y después de la experiencia.
+        </p>
+        <a class="kq-button kq-button--light mt-4" href="#contacto">Contarnos tu idea</a>
+      </div>
+
+      <ol class="steps">
+        <li class="reveal">
+          <span>01</span>
+          <div>
+            <h3>Conversemos</h3>
+            <p>Fechas, viajeros, intereses y ritmo en un brief corto.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>02</span>
+          <div>
+            <h3>Recibe tu propuesta</h3>
+            <p>Itinerario, inclusiones, esfuerzo y precio explicados sin letra pequeña.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>03</span>
+          <div>
+            <h3>Confirma con claridad</h3>
+            <p>Validamos disponibilidad y te indicamos el siguiente paso.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>04</span>
+          <div>
+            <h3>Viaja acompañado</h3>
+            <p>Asistencia local y recomendaciones útiles durante el recorrido.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+  </section>
+
+  <section class="bg-white py-20 lg:py-32" id="servicios" aria-labelledby="services-title">
+    <div class="kq-shell">
+      <div class="section-heading reveal">
+        <div>
+          <p class="kq-eyebrow mb-3">Todo conectado</p>
+          <h2 id="services-title">Tu viaje, en un solo lugar</h2>
+        </div>
+        <p>
+          Coordinamos cada servicio según tu propuesta y confirmamos sus condiciones antes de
+          cualquier pago.
+        </p>
+      </div>
+      <ul class="service-list">
+        <li class="reveal"><img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours</span></li>
+        <li class="reveal">
+          <img src="/assets/icons/icono-hoteles.svg" alt="" /><span>Hoteles</span>
+        </li>
+        <li class="reveal">
+          <img src="/assets/icons/icono-vuelos.svg" alt="" /><span>Vuelos</span>
+        </li>
+        <li class="reveal">
+          <img src="/assets/icons/icono-asistencia.svg" alt="" /><span>Asistencia</span>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="trust-section py-20 lg:py-28" aria-labelledby="trust-title">
+    <div class="kq-shell trust-grid">
+      <div class="reveal">
+        <p class="kq-eyebrow mb-3">Claridad antes de contratar</p>
+        <h2 id="trust-title" class="text-balance">La confianza también se diseña.</h2>
+        <p>
+          Antes de activar ventas, cada dato legal, condición y canal será validado. No publicamos
+          sellos, reseñas, cupos ni promesas que todavía no puedan comprobarse.
+        </p>
+      </div>
+      <ul class="compliance-list">
+        <li class="reveal">
+          <span>01</span>
+          <div>
+            <strong>Identidad verificable</strong>
+            <p>Razón social, RUC, dirección y contacto accesibles.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>02</span>
+          <div>
+            <strong>Condiciones transparentes</strong>
+            <p>Cobros, cambios, cancelaciones y reembolsos por escrito.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>03</span>
+          <div>
+            <strong>Datos protegidos</strong>
+            <p>Consentimiento informado y medidas técnicas antes de captar datos.</p>
+          </div>
+        </li>
+        <li class="reveal">
+          <span>04</span>
+          <div>
+            <strong>Registro responsable</strong>
+            <p>El distintivo oficial solo aparecerá cuando exista autorización vigente.</p>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section class="faq bg-white py-20 lg:py-32" id="preguntas" aria-labelledby="faq-title">
+    <div class="kq-shell faq-grid">
+      <div class="reveal">
+        <p class="kq-eyebrow mb-3">Antes de escribirnos</p>
+        <h2 id="faq-title">Preguntas frecuentes</h2>
+        <p>La información concreta hace mejores viajes.</p>
+      </div>
+      <div>
+        <details class="reveal">
+          <summary>¿Puedo personalizar una ruta?<span aria-hidden="true">+</span></summary>
+          <p>
+            Sí. Ajustamos duración, intereses y ritmo. La propuesta final depende de disponibilidad
+            y condiciones operativas.
+          </p>
+        </details>
+        <details class="reveal">
+          <summary>¿Cómo sé si una caminata es para mí?<span aria-hidden="true">+</span></summary>
+          <p>
+            Antes de confirmar indicamos altitud, desnivel, duración, terreno, equipo y
+            restricciones.
+          </p>
+        </details>
+        <details class="reveal">
+          <summary>¿La consulta confirma una reserva?<span aria-hidden="true">+</span></summary>
+          <p>
+            No. Primero verificamos cupos y servicios. Recibirás precio, inclusiones y pasos de
+            confirmación.
+          </p>
+        </details>
+        <details class="reveal">
+          <summary>¿Con cuánto tiempo debo planificar?<span aria-hidden="true">+</span></summary>
+          <p>
+            Depende de la temporada y ruta. Con tus fechas tentativas podremos orientarte según
+            disponibilidad real.
+          </p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <section class="contact py-20 lg:py-28" id="contacto" aria-labelledby="contact-title">
+    <div class="kq-shell contact-panel">
+      <div class="contact-copy reveal">
+        <p class="kq-eyebrow mb-3">Empecemos por tu idea</p>
+        <h2 id="contact-title" class="text-balance">¿Qué te gustaría descubrir en Cusco?</h2>
+        <p>
+          Cuéntanos lo esencial. Te responderemos con las preguntas necesarias para preparar una
+          propuesta clara.
+        </p>
+        <p
+          class="status-pill inline-flex items-center gap-2 rounded-full border border-kq-ink/15 px-3 py-2"
+        >
+          <span class="text-kq-teal" aria-hidden="true">●</span> Canal de atención en configuración
+        </p>
+      </div>
+
+      <form
+        class="contact-form reveal"
+        [formGroup]="contactForm"
+        (ngSubmit)="submitConsultation()"
+        novalidate
+      >
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="kq-field">
+            Nombre
+            <input formControlName="nombre" autocomplete="name" />
+            @if (contactForm.controls.nombre.touched && contactForm.controls.nombre.invalid) {
+              <small class="kq-error">Ingresa tu nombre.</small>
+            }
+          </label>
+          <label class="kq-field">
+            WhatsApp
+            <input formControlName="telefono" type="tel" autocomplete="tel" inputmode="tel" />
+            @if (contactForm.controls.telefono.touched && contactForm.controls.telefono.invalid) {
+              <small class="kq-error">Ingresa un número válido.</small>
+            }
+          </label>
+        </div>
+        <div class="grid gap-4 sm:grid-cols-2">
+          <label class="kq-field"
+            >Fecha aproximada <input formControlName="fecha" type="month"
+          /></label>
+          <label class="kq-field"
+            >Viajeros <input formControlName="viajeros" type="number" min="1" max="30"
+          /></label>
+        </div>
+        <label class="kq-field">
+          ¿Qué tipo de experiencia buscas?
+          <select formControlName="interes">
+            <option>Cultura e historia</option>
+            <option>Naturaleza y caminata</option>
+            <option>Viaje personalizado</option>
+            <option>Quiero orientación</option>
+          </select>
+        </label>
+        <label class="kq-field">
+          Cuéntanos un poco más
+          <textarea
+            formControlName="mensaje"
+            rows="4"
+            placeholder="Intereses, ritmo, edades o alguna necesidad importante"
+          ></textarea>
+        </label>
+        <button class="kq-button kq-button--dark" type="submit">Preparar consulta</button>
+        <p class="form-note">
+          Al continuar aceptas el tratamiento de tus datos para responder esta consulta. El envío se
+          activará cuando el canal y la política hayan sido validados.
+        </p>
+        <p class="form-status" role="status" aria-live="polite">{{ formStatus() }}</p>
+      </form>
+    </div>
+  </section>
+</main>
+
+<footer class="site-footer">
+  <div class="kq-shell footer-top">
+    <div>
+      <img
+        src="/assets/brand/logo-horizontal-white.svg"
+        width="190"
+        height="54"
+        alt="Kusi Q’umir"
+      />
+      <p>Cusco auténtico, experiencias que permanecen.</p>
+    </div>
+    <div>
+      <h2>Explora</h2>
+      <a href="#experiencias">Experiencias</a><a href="#como-viajamos">Cómo viajamos</a
+      ><a href="#preguntas">Preguntas frecuentes</a>
+    </div>
+    <div>
+      <h2>Información</h2>
+      <span>Razón social y RUC por validar</span><span>Cusco, Perú</span
+      ><span>Contacto oficial por confirmar</span>
+    </div>
+    <div>
+      <h2>Legal</h2>
+      <a routerLink="/privacidad">Política de privacidad</a>
+      <a routerLink="/terminos">Términos y condiciones</a>
+      <a routerLink="/turismo-responsable">Turismo responsable</a>
+      <a routerLink="/libro-de-reclamaciones">Libro de Reclamaciones</a>
+    </div>
+  </div>
+  <div class="kq-shell footer-bottom flex flex-wrap justify-between gap-2">
+    <p>© {{ currentYear }} Kusi Q’umir. Todos los derechos reservados.</p>
+    <p>Identidad digital KQ-DIGITAL-2.1</p>
+  </div>
+</footer>

@@ -1,0 +1,77 @@
+@import url("../03_Tipografias/Web/fonts.css");
+
+:root {
+  --kq-brand-teal: #00abaa;
+  --kq-brand-river: #9bbfe6;
+  --kq-brand-mountain: #647bab;
+  --kq-brand-ink: #0f172a;
+
+  --kq-canvas: #f6f9f9;
+  --kq-surface: #ffffff;
+  --kq-border: #d9e3e5;
+  --kq-text-muted: #5a697b;
+
+  --kq-success: #13795b;
+  --kq-warning: #8a5a00;
+  --kq-danger: #b42318;
+
+  --kq-font-display: "Fjalla One", "Arial Narrow", sans-serif;
+  --kq-font-text: "Inter", system-ui, sans-serif;
+
+  --kq-radius-sm: 0.5rem;
+  --kq-radius-md: 0.875rem;
+  --kq-radius-lg: 1.5rem;
+
+  --kq-space-1: 0.25rem;
+  --kq-space-2: 0.5rem;
+  --kq-space-3: 0.75rem;
+  --kq-space-4: 1rem;
+  --kq-space-6: 1.5rem;
+  --kq-space-8: 2rem;
+  --kq-space-12: 3rem;
+  --kq-space-16: 4rem;
+  --kq-space-24: 6rem;
+
+  --kq-motion-fast: 160ms;
+  --kq-motion-base: 240ms;
+  --kq-motion-slow: 400ms;
+  --kq-motion-ease: cubic-bezier(0.2, 0, 0, 1);
+}
+
+.kq-button-primary {
+  min-block-size: 3rem;
+  padding-inline: 1.5rem;
+  border: 2px solid var(--kq-brand-teal);
+  border-radius: var(--kq-radius-md);
+  color: var(--kq-brand-ink);
+  background: var(--kq-brand-teal);
+  font: 600 1rem/1 var(--kq-font-text);
+}
+
+.kq-button-dark {
+  min-block-size: 3rem;
+  padding-inline: 1.5rem;
+  border: 2px solid var(--kq-brand-ink);
+  border-radius: var(--kq-radius-md);
+  color: var(--kq-surface);
+  background: var(--kq-brand-ink);
+  font: 600 1rem/1 var(--kq-font-text);
+}
+
+.kq-button-primary:focus-visible,
+.kq-button-dark:focus-visible {
+  outline: 3px solid var(--kq-surface);
+  outline-offset: 2px;
+  box-shadow: 0 0 0 5px var(--kq-brand-ink);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    scroll-behavior: auto !important;
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="64" height="64" viewBox="0 0 64 64" role="img" aria-label="cruceros">
+  <g fill="none" stroke="#0F172A" stroke-width="2.8" stroke-linecap="round" stroke-linejoin="round">
+    <path d="M10 38h44l-7 12H18Z"/>
+    <path d="M20 38V25h25v13M26 25v-8h13v8M32.5 17V9"/>
+    <path d="M9 55c5 3 9 3 14 0 5 3 9 3 14 0 5 3 9 3 14 0" stroke="#00ABAA"/></g>
+</svg>

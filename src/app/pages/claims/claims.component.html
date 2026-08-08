@@ -1,0 +1,98 @@
+<header class="claims-header">
+  <div class="kq-shell flex min-h-20 items-center justify-between gap-6">
+    <a routerLink="/" aria-label="Volver al inicio de Kusi Q’umir">
+      <img
+        src="/assets/brand/logo-horizontal-color.svg"
+        width="178"
+        height="51"
+        alt="Kusi Q’umir"
+      />
+    </a>
+    <a class="font-bold no-underline" routerLink="/">← Volver al inicio</a>
+  </div>
+</header>
+
+<main class="claims-page kq-shell">
+  <div class="claims-heading">
+    <div>
+      <p class="kq-eyebrow">Atención al consumidor</p>
+      <h1 class="text-balance">Libro de Reclamaciones</h1>
+      <p>
+        Formulario preparado según la información mínima de una hoja de reclamación. La integración
+        de envío y seguimiento debe completarse antes de publicar la web.
+      </p>
+    </div>
+    <aside>
+      <strong>Modo preparación</strong><br />Este formulario todavía no registra un reclamo válido.
+    </aside>
+  </div>
+
+  <div class="provider-card">
+    <h2>Identificación del proveedor</h2>
+    <dl>
+      <div>
+        <dt>Razón social</dt>
+        <dd>Pendiente de validación</dd>
+      </div>
+      <div>
+        <dt>RUC</dt>
+        <dd>Pendiente de validación</dd>
+      </div>
+      <div>
+        <dt>Domicilio</dt>
+        <dd>Cusco, Perú · dirección pendiente</dd>
+      </div>
+    </dl>
+  </div>
+
+  <form [formGroup]="claimForm" (ngSubmit)="prepareClaim()" novalidate>
+    <fieldset>
+      <legend>1. Tipo de solicitud</legend>
+      <div class="choice-row">
+        <label><input type="radio" formControlName="tipo" value="Reclamo" /> Reclamo</label>
+        <label><input type="radio" formControlName="tipo" value="Queja" /> Queja</label>
+      </div>
+      <p class="helper">
+        Reclamo: disconformidad con el servicio. Queja: malestar respecto de la atención.
+      </p>
+    </fieldset>
+
+    <fieldset>
+      <legend>2. Identificación del consumidor</legend>
+      <div class="grid gap-4 md:grid-cols-2">
+        <label class="kq-field"
+          >Nombres y apellidos <input formControlName="nombre" autocomplete="name"
+        /></label>
+        <label class="kq-field">DNI, CE o pasaporte <input formControlName="documento" /></label>
+        <label class="kq-field"
+          >Domicilio <input formControlName="domicilio" autocomplete="street-address"
+        /></label>
+        <label class="kq-field"
+          >Teléfono <input formControlName="telefono" type="tel" autocomplete="tel"
+        /></label>
+        <label class="kq-field md:col-span-2"
+          >Correo electrónico <input formControlName="correo" type="email" autocomplete="email"
+        /></label>
+      </div>
+    </fieldset>
+
+    <fieldset>
+      <legend>3. Servicio y detalle</legend>
+      <div class="grid gap-4 md:grid-cols-2">
+        <label class="kq-field">Servicio contratado <input formControlName="servicio" /></label>
+        <label class="kq-field"
+          >Monto reclamado (opcional) <input formControlName="monto" inputmode="decimal"
+        /></label>
+      </div>
+      <label class="kq-field mt-4"
+        >Detalle del reclamo o queja <textarea formControlName="detalle" rows="5"></textarea>
+      </label>
+      <label class="kq-field mt-4"
+        >Pedido concreto <textarea formControlName="pedido" rows="3"></textarea>
+      </label>
+    </fieldset>
+
+    <button class="kq-button kq-button--dark" type="submit">Validar formulario</button>
+    <p class="claim-status" role="status" aria-live="polite">{{ status() }}</p>
+  </form>
+</main>
