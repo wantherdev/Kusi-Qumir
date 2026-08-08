@@ -70,13 +70,13 @@
   background-image:
     linear-gradient(
       90deg,
-      rgba(246, 249, 249, 0.98),
-      rgba(246, 249, 249, 0.82) 30%,
-      rgba(246, 249, 249, 0.05) 58%
+      rgba(15, 23, 42, 0.74),
+      rgba(15, 23, 42, 0.42) 34%,
+      rgba(15, 23, 42, 0.06) 66%
     ),
     image-set(
-      url('/assets/images/cusco-andes-editorial.webp') type('image/webp'),
-      url('/assets/images/cusco-andes-editorial.png') type('image/png')
+      url('/assets/images/cusco-andes-editorial-v2.webp') type('image/webp'),
+      url('/assets/images/cusco-andes-editorial-v2.png') type('image/png')
     );
   background-position: center;
   background-size: cover;
@@ -92,6 +92,7 @@
 
 .hero-copy {
   width: min(38rem, 52%);
+  color: white;
 
   h1 {
     max-width: 8ch;
@@ -103,12 +104,13 @@
 
 .hero-lead {
   max-width: 56ch;
-  color: #37465a;
+  color: rgba(255, 255, 255, 0.9);
   font-size: 1.12rem;
 }
 
 .text-link {
-  border-bottom: 2px solid var(--kq-ink);
+  border-bottom: 2px solid white;
+  color: white;
   padding: 0.7rem 0;
   font-weight: 700;
   text-decoration: none;
@@ -124,7 +126,7 @@
   list-style: none;
 
   span {
-    color: #007d7c;
+    color: var(--kq-teal);
   }
 }
 
@@ -603,13 +605,13 @@
     background-image:
       linear-gradient(
         180deg,
-        rgba(246, 249, 249, 0.98) 8%,
-        rgba(246, 249, 249, 0.82) 48%,
-        rgba(246, 249, 249, 0.04) 72%
+        rgba(15, 23, 42, 0.78) 8%,
+        rgba(15, 23, 42, 0.56) 50%,
+        rgba(15, 23, 42, 0.12) 78%
       ),
       image-set(
-        url('/assets/images/cusco-andes-editorial.webp') type('image/webp'),
-        url('/assets/images/cusco-andes-editorial.png') type('image/png')
+        url('/assets/images/cusco-andes-editorial-v2.webp') type('image/webp'),
+        url('/assets/images/cusco-andes-editorial-v2.png') type('image/png')
       );
     background-position: 68% center;
   }
