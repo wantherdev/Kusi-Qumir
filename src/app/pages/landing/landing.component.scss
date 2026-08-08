@@ -220,7 +220,12 @@
 
   &::before {
     inset: 0;
-    background: linear-gradient(180deg, transparent 25%, rgba(15, 23, 42, 0.94) 88%);
+    background: linear-gradient(
+      180deg,
+      rgba(15, 23, 42, 0.28),
+      transparent 28%,
+      rgba(15, 23, 42, 0.96) 88%
+    );
   }
 
   &::after {
@@ -234,13 +239,28 @@
 }
 
 .card-valley {
-  background: linear-gradient(145deg, #9bbfe6, #315470 70%);
+  background-image: image-set(
+    url('/assets/images/experience-sacred-valley.webp') type('image/webp'),
+    url('/assets/images/experience-sacred-valley.png') type('image/png')
+  );
+  background-position: center;
+  background-size: cover;
 }
 .card-city {
-  background: linear-gradient(145deg, #b89970, #5a3f2f 70%);
+  background-image: image-set(
+    url('/assets/images/experience-cusco-city.webp') type('image/webp'),
+    url('/assets/images/experience-cusco-city.png') type('image/png')
+  );
+  background-position: center;
+  background-size: cover;
 }
 .card-mountain {
-  background: linear-gradient(145deg, #647bab, #172f55 70%);
+  background-image: image-set(
+    url('/assets/images/experience-high-andes.webp') type('image/webp'),
+    url('/assets/images/experience-high-andes.png') type('image/png')
+  );
+  background-position: center;
+  background-size: cover;
 }
 
 .card-number {
