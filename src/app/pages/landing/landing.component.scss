@@ -646,22 +646,46 @@
     border-radius: 50%;
     background: #273750;
     color: #dbe5f5;
+    transition:
+      border-color 160ms ease,
+      background-color 160ms ease,
+      color 160ms ease,
+      transform 160ms ease;
+
+    &:hover {
+      border-color: rgba(0, 171, 170, 0.5);
+      background: rgba(0, 171, 170, 0.12);
+      color: var(--kq-teal);
+      transform: translateY(-2px);
+    }
   }
 
-  svg {
-    width: 1rem;
-    height: 1rem;
-    fill: none;
-    stroke: currentColor;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-    stroke-width: 1.8;
+  i {
+    display: block;
+    width: 1.05rem;
+    height: 1.05rem;
+    background: currentColor;
+    font-size: 1.05rem;
+    line-height: 1;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
   }
 
-  .social-fill,
-  .social-dot {
-    fill: currentColor;
-    stroke: none;
+  .ri-facebook-fill {
+    mask-image: url('/assets/remixicon/facebook-fill.svg');
+  }
+
+  .ri-instagram-line {
+    mask-image: url('/assets/remixicon/instagram-line.svg');
+  }
+
+  .ri-youtube-fill {
+    mask-image: url('/assets/remixicon/youtube-fill.svg');
+  }
+
+  .ri-tiktok-fill {
+    mask-image: url('/assets/remixicon/tiktok-fill.svg');
   }
 }
 

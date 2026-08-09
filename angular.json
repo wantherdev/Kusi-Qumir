@@ -28,6 +28,26 @@
               {
                 "glob": "**/*",
                 "input": "public"
+              },
+              {
+                "glob": "facebook-fill.svg",
+                "input": "node_modules/remixicon/icons/Logos",
+                "output": "assets/remixicon"
+              },
+              {
+                "glob": "instagram-line.svg",
+                "input": "node_modules/remixicon/icons/Logos",
+                "output": "assets/remixicon"
+              },
+              {
+                "glob": "youtube-fill.svg",
+                "input": "node_modules/remixicon/icons/Logos",
+                "output": "assets/remixicon"
+              },
+              {
+                "glob": "tiktok-fill.svg",
+                "input": "node_modules/remixicon/icons/Logos",
+                "output": "assets/remixicon"
               }
             ],
             "styles": ["src/styles.scss"],
