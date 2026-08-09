@@ -604,13 +604,9 @@
       transform 160ms ease;
 
     &:hover {
-      color: white;
+      color: var(--kq-teal);
       transform: translateX(2px);
     }
-  }
-
-  .footer-link-accent {
-    color: var(--kq-teal);
   }
 }
 
