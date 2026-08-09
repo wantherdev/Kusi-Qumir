@@ -25,6 +25,7 @@ export class LandingComponent {
   protected readonly menuOpen = signal(false);
   protected readonly headerScrolled = signal(false);
   protected readonly formStatus = signal('');
+  protected readonly newsletterStatus = signal('');
 
   protected readonly contactForm = this.formBuilder.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -84,6 +85,16 @@ export class LandingComponent {
 
     this.formStatus.set(
       'El formulario está listo, pero el canal oficial aún debe conectarse antes de publicar la web.',
+    );
+  }
+
+  protected submitNewsletter(event: SubmitEvent, email: HTMLInputElement): void {
+    event.preventDefault();
+
+    if (!email.reportValidity()) return;
+
+    this.newsletterStatus.set(
+      'La suscripción se habilitará cuando el canal oficial esté conectado.',
     );
   }
 }
