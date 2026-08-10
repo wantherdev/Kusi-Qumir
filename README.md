@@ -1,6 +1,10 @@
-# Kusi Q’umir — Landing
+# Kusi Q’umir — Frontend institucional
 
-Landing de experiencias turísticas en Cusco construida con Angular 22 standalone, pnpm, Tailwind CSS 4, SCSS y renderizado híbrido con prerender.
+Frontend institucional de experiencias turísticas en Cusco construido con Angular 22 standalone, pnpm, Tailwind CSS 4, SCSS y renderizado híbrido con prerender.
+
+La versión actual está preparada para evaluación institucional. No recibe datos,
+reclamos, reservas ni pagos reales y no afirma que la agencia ya se encuentre
+registrada.
 
 ## Requisitos
 
@@ -12,7 +16,7 @@ Landing de experiencias turísticas en Cusco construida con Angular 22 standalon
 
 ```bash
 nvm use
-pnpm install
+pnpm install --frozen-lockfile
 pnpm start
 ```
 
@@ -33,6 +37,20 @@ En producción, define los dominios públicos permitidos por la protección SSRF
 ```bash
 NG_ALLOWED_HOSTS="kusi-qumir.pe,www.kusi-qumir.pe" pnpm serve:ssr
 ```
+
+El servidor Express aplica encabezados básicos de seguridad y caché diferenciada
+para HTML, recursos versionados y activos públicos. Si el despliegue termina en
+un hosting estático o CDN, replica esas reglas en la plataforma.
+
+## Modo de evaluación
+
+- Los datos verificables del prestador se centralizan en
+  `src/app/config/agency-profile.ts`.
+- Los campos sin sustento permanecen vacíos y se muestran como pendientes.
+- Todas las rutas incluyen `noindex, nofollow` hasta autorizar la publicación.
+- `robots.txt` permite el rastreo para que los buscadores puedan leer la
+  directiva `noindex`.
+- Las rutas desconocidas muestran una página propia y responden HTTP 404.
 
 ## Arquitectura de estilos
 

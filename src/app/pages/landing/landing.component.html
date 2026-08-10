@@ -12,6 +12,7 @@
     </a>
 
     <button
+      #menuToggle
       class="menu-toggle"
       type="button"
       [attr.aria-expanded]="menuOpen()"
@@ -26,33 +27,43 @@
       <a href="#experiencias" (click)="closeMenu()">Experiencias</a>
       <a href="#como-viajamos" (click)="closeMenu()">Cómo viajamos</a>
       <a href="#servicios" (click)="closeMenu()">Servicios</a>
-      <a href="#preguntas" (click)="closeMenu()">Preguntas</a>
+      <a routerLink="/informacion-institucional" (click)="closeMenu()">Información institucional</a>
       <a class="kq-button kq-button--small" href="#contacto" (click)="closeMenu()"
-        >Planear mi viaje</a
+        >Ver canal de consulta</a
       >
     </nav>
   </div>
 </header>
 
-<main id="contenido">
+<main id="contenido" tabindex="-1">
   <section class="hero" id="inicio" aria-labelledby="hero-title">
-    <div
-      class="hero-art"
-      role="img"
-      aria-label="Ilustración editorial del Valle Sagrado con montañas, terrazas y viajeros acompañados por un guía local"
-    ></div>
+    <picture class="hero-art">
+      <source srcset="/assets/images/cusco-andes-editorial-v2.webp" type="image/webp" />
+      <img
+        src="/assets/images/cusco-andes-editorial-v2.png"
+        width="1672"
+        height="941"
+        alt="Ilustración editorial del Valle Sagrado con montañas, terrazas y viajeros acompañados por un guía local"
+        decoding="async"
+        fetchpriority="high"
+      />
+    </picture>
     <div class="kq-shell hero-layout">
       <div class="hero-copy reveal">
+        <p class="evaluation-label">
+          <span aria-hidden="true"></span> Canal exclusivamente digital · evaluación institucional ·
+          ventas desactivadas
+        </p>
         <p class="kq-eyebrow mb-4">Cultura · paisaje · acompañamiento</p>
         <h1 id="hero-title" class="text-balance">Cusco auténtico, a tu propio ritmo.</h1>
         <p class="hero-lead">
-          Diseñamos rutas claras y personalizadas para que conozcas el territorio con contexto,
-          tranquilidad y un equipo cercano.
+          Una propuesta de rutas claras y personalizadas, con atención y coordinación completamente
+          digitales, para conocer el territorio con contexto y acompañamiento cercano.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-5">
-          <a class="kq-button" href="#contacto">Diseñar mi experiencia</a>
-          <a class="text-link" href="#experiencias"
-            >Explorar rutas <span aria-hidden="true">→</span></a
+          <a class="kq-button" href="#experiencias">Conocer la propuesta</a>
+          <a class="text-link" routerLink="/informacion-institucional"
+            >Ver ficha institucional <span aria-hidden="true">→</span></a
           >
         </div>
         <ul class="trust-list" aria-label="Beneficios">
@@ -95,6 +106,17 @@
 
       <div class="grid gap-4 lg:grid-cols-3">
         <article class="experience-card card-valley reveal">
+          <picture class="card-art" aria-hidden="true">
+            <source srcset="/assets/images/experience-sacred-valley.webp" type="image/webp" />
+            <img
+              src="/assets/images/experience-sacred-valley.png"
+              width="1122"
+              height="1402"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <span class="card-number">01</span>
           <div class="card-content">
             <p class="card-meta">Cultura · día completo</p>
@@ -109,6 +131,17 @@
         </article>
 
         <article class="experience-card card-city reveal">
+          <picture class="card-art" aria-hidden="true">
+            <source srcset="/assets/images/experience-cusco-city.webp" type="image/webp" />
+            <img
+              src="/assets/images/experience-cusco-city.png"
+              width="1122"
+              height="1402"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <span class="card-number">02</span>
           <div class="card-content">
             <p class="card-meta">Historia · medio día</p>
@@ -123,6 +156,17 @@
         </article>
 
         <article class="experience-card card-mountain reveal">
+          <picture class="card-art" aria-hidden="true">
+            <source srcset="/assets/images/experience-high-andes.webp" type="image/webp" />
+            <img
+              src="/assets/images/experience-high-andes.png"
+              width="1122"
+              height="1402"
+              alt=""
+              loading="lazy"
+              decoding="async"
+            />
+          </picture>
           <span class="card-number">03</span>
           <div class="card-content">
             <p class="card-meta">Naturaleza · esfuerzo adaptable</p>
@@ -148,10 +192,12 @@
           Tú imaginas el viaje. Nosotros ordenamos la ruta.
         </h2>
         <p>
-          Primero entendemos qué buscas. Luego construimos una propuesta realista y te acompañamos
-          antes, durante y después de la experiencia.
+          El modelo exclusivamente digital parte de entender qué busca cada viajero, construir una
+          propuesta realista y acompañar la experiencia cuando la operación se encuentre habilitada.
         </p>
-        <a class="kq-button kq-button--light mt-4" href="#contacto">Contarnos tu idea</a>
+        <a class="kq-button kq-button--light mt-4" routerLink="/informacion-institucional"
+          >Revisar el canal digital</a
+        >
       </div>
 
       <ol class="steps">
@@ -192,23 +238,20 @@
       <div class="section-heading reveal">
         <div>
           <p class="kq-eyebrow mb-3">Todo conectado</p>
-          <h2 id="services-title">Tu viaje, en un solo lugar</h2>
+          <h2 id="services-title">Tours propios y de terceros</h2>
         </div>
         <p>
-          Coordinamos cada servicio según tu propuesta y confirmamos sus condiciones antes de
-          cualquier pago.
+          Kusi Q’umir ofrecerá directamente tours operados por la agencia y tours prestados por
+          terceros. Cada propuesta identificará quién opera el servicio y detallará sus condiciones
+          antes de cualquier pago.
         </p>
       </div>
       <ul class="service-list">
-        <li class="reveal"><img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours</span></li>
         <li class="reveal">
-          <img src="/assets/icons/icono-hoteles.svg" alt="" /><span>Hoteles</span>
+          <img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours propios</span>
         </li>
         <li class="reveal">
-          <img src="/assets/icons/icono-vuelos.svg" alt="" /><span>Vuelos</span>
-        </li>
-        <li class="reveal">
-          <img src="/assets/icons/icono-asistencia.svg" alt="" /><span>Asistencia</span>
+          <img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours de terceros</span>
         </li>
       </ul>
     </div>
@@ -236,7 +279,7 @@
           <span>02</span>
           <div>
             <strong>Condiciones transparentes</strong>
-            <p>Cobros, cambios, cancelaciones y reembolsos por escrito.</p>
+            <p>Operador del tour, cobros, cambios, cancelaciones y reembolsos por escrito.</p>
           </div>
         </li>
         <li class="reveal">
@@ -249,11 +292,17 @@
         <li class="reveal">
           <span>04</span>
           <div>
-            <strong>Registro responsable</strong>
-            <p>El distintivo oficial solo aparecerá cuando exista autorización vigente.</p>
+            <strong>Modalidad declarada</strong>
+            <p>
+              Operación exclusivamente digital bajo Anexo II; el distintivo aparecerá solo cuando
+              exista autorización vigente.
+            </p>
           </div>
         </li>
       </ul>
+      <a class="institutional-link reveal" routerLink="/informacion-institucional">
+        Consultar la ficha completa del canal digital <span aria-hidden="true">→</span>
+      </a>
     </div>
   </section>
 
@@ -287,6 +336,13 @@
           </p>
         </details>
         <details class="reveal">
+          <summary>¿La atención será presencial?<span aria-hidden="true">+</span></summary>
+          <p>
+            No. Kusi Q’umir operará exclusivamente mediante canales digitales. La dirección de
+            contacto, el teléfono y el correo oficiales se publicarán antes de iniciar operaciones.
+          </p>
+        </details>
+        <details class="reveal">
           <summary>¿Con cuánto tiempo debo planificar?<span aria-hidden="true">+</span></summary>
           <p>
             Depende de la temporada y ruta. Con tus fechas tentativas podremos orientarte según
@@ -300,16 +356,16 @@
   <section class="contact py-20 lg:py-28" id="contacto" aria-labelledby="contact-title">
     <div class="kq-shell contact-panel">
       <div class="contact-copy reveal">
-        <p class="kq-eyebrow mb-3">Empecemos por tu idea</p>
-        <h2 id="contact-title" class="text-balance">¿Qué te gustaría descubrir en Cusco?</h2>
+        <p class="kq-eyebrow mb-3">Vista demostrativa</p>
+        <h2 id="contact-title" class="text-balance">Así funcionará el canal de consulta</h2>
         <p>
-          Cuéntanos lo esencial. Te responderemos con las preguntas necesarias para preparar una
-          propuesta clara.
+          Este será uno de los medios de atención de la operación exclusivamente digital. Durante la
+          evaluación solo permite revisar campos y validaciones: no transmite ni almacena datos.
         </p>
         <p
           class="status-pill inline-flex items-center gap-2 rounded-full border border-kq-ink/15 px-3 py-2"
         >
-          <span class="text-kq-teal" aria-hidden="true">●</span> Canal de atención en configuración
+          <span class="text-kq-teal" aria-hidden="true">●</span> Canal comercial desactivado
         </p>
       </div>
 
@@ -317,21 +373,60 @@
         class="contact-form reveal"
         [formGroup]="contactForm"
         (ngSubmit)="submitConsultation()"
+        aria-labelledby="contact-title"
         novalidate
       >
         <div class="grid gap-4 sm:grid-cols-2">
           <label class="kq-field">
             Nombre
-            <input formControlName="nombre" autocomplete="name" />
+            <input
+              id="contact-name"
+              formControlName="nombre"
+              autocomplete="name"
+              required
+              minlength="2"
+              [attr.aria-invalid]="
+                contactForm.controls.nombre.touched && contactForm.controls.nombre.invalid
+                  ? 'true'
+                  : null
+              "
+              [attr.aria-describedby]="
+                contactForm.controls.nombre.touched && contactForm.controls.nombre.invalid
+                  ? 'contact-name-error'
+                  : null
+              "
+            />
             @if (contactForm.controls.nombre.touched && contactForm.controls.nombre.invalid) {
-              <small class="kq-error">Ingresa tu nombre.</small>
+              <small id="contact-name-error" class="kq-error"
+                >Ingresa al menos dos caracteres.</small
+              >
             }
           </label>
           <label class="kq-field">
             WhatsApp
-            <input formControlName="telefono" type="tel" autocomplete="tel" inputmode="tel" />
+            <input
+              id="contact-phone"
+              formControlName="telefono"
+              type="tel"
+              autocomplete="tel"
+              inputmode="tel"
+              required
+              minlength="7"
+              [attr.aria-invalid]="
+                contactForm.controls.telefono.touched && contactForm.controls.telefono.invalid
+                  ? 'true'
+                  : null
+              "
+              [attr.aria-describedby]="
+                contactForm.controls.telefono.touched && contactForm.controls.telefono.invalid
+                  ? 'contact-phone-error'
+                  : null
+              "
+            />
             @if (contactForm.controls.telefono.touched && contactForm.controls.telefono.invalid) {
-              <small class="kq-error">Ingresa un número válido.</small>
+              <small id="contact-phone-error" class="kq-error"
+                >Ingresa al menos siete dígitos.</small
+              >
             }
           </label>
         </div>
@@ -340,8 +435,30 @@
             >Fecha aproximada <input formControlName="fecha" type="month"
           /></label>
           <label class="kq-field"
-            >Viajeros <input formControlName="viajeros" type="number" min="1" max="30"
-          /></label>
+            >Viajeros
+            <input
+              formControlName="viajeros"
+              type="number"
+              min="1"
+              max="30"
+              required
+              [attr.aria-invalid]="
+                contactForm.controls.viajeros.touched && contactForm.controls.viajeros.invalid
+                  ? 'true'
+                  : null
+              "
+              [attr.aria-describedby]="
+                contactForm.controls.viajeros.touched && contactForm.controls.viajeros.invalid
+                  ? 'contact-travelers-error'
+                  : null
+              "
+            />
+            @if (contactForm.controls.viajeros.touched && contactForm.controls.viajeros.invalid) {
+              <small id="contact-travelers-error" class="kq-error"
+                >Indica entre 1 y 30 viajeros.</small
+              >
+            }
+          </label>
         </div>
         <label class="kq-field">
           ¿Qué tipo de experiencia buscas?
@@ -360,12 +477,22 @@
             placeholder="Intereses, ritmo, edades o alguna necesidad importante"
           ></textarea>
         </label>
-        <button class="kq-button kq-button--dark" type="submit">Preparar consulta</button>
+        <button class="kq-button kq-button--dark" type="submit">
+          Validar vista del formulario
+        </button>
         <p class="form-note">
-          Al continuar aceptas el tratamiento de tus datos para responder esta consulta. El envío se
-          activará cuando el canal y la política hayan sido validados.
+          No ingreses datos personales reales durante la evaluación. Esta acción solo comprueba la
+          interfaz en tu navegador; no existe envío ni almacenamiento.
         </p>
-        <p class="form-status" role="status" aria-live="polite">{{ formStatus() }}</p>
+        <p
+          class="form-status"
+          [class.form-status--error]="formFeedback()?.kind === 'error'"
+          [class.form-status--success]="formFeedback()?.kind === 'success'"
+          [attr.role]="formFeedback()?.kind === 'error' ? 'alert' : 'status'"
+          aria-live="polite"
+        >
+          {{ formFeedback()?.message }}
+        </p>
       </form>
     </div>
   </section>
@@ -381,13 +508,17 @@
         height="82"
         alt="Kusi Q’umir"
       />
-      <address class="footer-contact">
+      <div class="footer-contact">
         <p>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
             <circle cx="12" cy="10" r="2.5" />
           </svg>
-          <span>Cusco, Perú<br />Dirección oficial por confirmar</span>
+          <span
+            >{{ agencyProfile.location }}<br />{{
+              agencyProfile.address ?? 'Dirección de contacto por confirmar'
+            }}</span
+          >
         </p>
         <p>
           <svg viewBox="0 0 24 24" aria-hidden="true">
@@ -395,23 +526,23 @@
               d="M7 3H4a1 1 0 0 0-1 1c0 9.39 7.61 17 17 17a1 1 0 0 0 1-1v-3l-4-1-1.25 2.25a15.6 15.6 0 0 1-10-10L8 7 7 3Z"
             />
           </svg>
-          <span>Teléfono oficial por confirmar</span>
+          <span>{{ agencyProfile.phone ?? 'Teléfono oficial por confirmar' }}</span>
         </p>
         <p>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <rect x="3" y="5" width="18" height="14" rx="1" />
             <path d="m4 7 8 6 8-6" />
           </svg>
-          <span>Correo oficial por confirmar</span>
+          <span>{{ agencyProfile.email ?? 'Correo oficial por confirmar' }}</span>
         </p>
         <p>
           <svg viewBox="0 0 24 24" aria-hidden="true">
             <circle cx="12" cy="12" r="9" />
             <path d="M12 7v5l3 2" />
           </svg>
-          <span>Horario de atención por confirmar</span>
+          <span>{{ agencyProfile.businessHours ?? 'Horario de atención por confirmar' }}</span>
         </p>
-      </address>
+      </div>
     </div>
 
     <div class="footer-column">
@@ -428,69 +559,54 @@
     <div class="footer-column">
       <h2>Información legal</h2>
       <nav class="footer-links" aria-label="Información legal">
+        <a routerLink="/informacion-institucional">Información institucional</a>
         <a routerLink="/terminos">Términos y condiciones</a>
         <a routerLink="/privacidad">Política de privacidad</a>
         <a routerLink="/terminos">Cancelaciones y reembolsos</a>
         <a routerLink="/turismo-responsable">Turismo responsable</a>
         <a routerLink="/libro-de-reclamaciones">Libro de Reclamaciones</a>
       </nav>
-      <p class="footer-support-label">Documentación y respaldo:</p>
+      <p class="footer-support-label">Estado y documentación:</p>
       <div class="footer-support-list">
-        <span>Registro MINCETUR por validar</span>
-        <span>Atención personalizada</span>
+        <span>Registro aún no acreditado</span>
+        <span>Sin distintivo oficial</span>
       </div>
     </div>
 
     <div class="footer-column footer-community">
       <h2>Síguenos</h2>
-      <div class="footer-socials" aria-label="Redes sociales pendientes de configurar">
-        <span role="img" aria-label="Facebook, enlace pendiente" title="Facebook por configurar">
+      <div class="footer-socials" aria-hidden="true">
+        <span title="Facebook por configurar">
           <i class="ri-facebook-fill" aria-hidden="true"></i>
         </span>
-        <span role="img" aria-label="Instagram, enlace pendiente" title="Instagram por configurar">
+        <span title="Instagram por configurar">
           <i class="ri-instagram-line" aria-hidden="true"></i>
         </span>
-        <span role="img" aria-label="YouTube, enlace pendiente" title="YouTube por configurar">
+        <span title="YouTube por configurar">
           <i class="ri-youtube-fill" aria-hidden="true"></i>
         </span>
-        <span role="img" aria-label="TikTok, enlace pendiente" title="TikTok por configurar">
+        <span title="TikTok por configurar">
           <i class="ri-tiktok-fill" aria-hidden="true"></i>
         </span>
       </div>
+      <p class="footer-social-note">Los perfiles oficiales se publicarán después de validarlos.</p>
 
-      <form class="footer-newsletter" (submit)="submitNewsletter($event, newsletterEmail)">
-        <label for="newsletter-email">Newsletter</label>
-        <p>Recibe inspiración y consejos para planear tu viaje.</p>
-        <div class="newsletter-field">
-          <input
-            #newsletterEmail
-            id="newsletter-email"
-            name="email"
-            type="email"
-            autocomplete="email"
-            placeholder="Tu email"
-            aria-describedby="newsletter-status"
-            required
-          />
-          <button type="submit" aria-label="Solicitar suscripción al newsletter">
-            <svg viewBox="0 0 24 24" aria-hidden="true">
-              <path d="m21 3-7 18-4-7-7-4 18-7Z" />
-              <path d="m10 14 5-5" />
-            </svg>
-          </button>
-        </div>
-        <p id="newsletter-status" class="newsletter-status" role="status" aria-live="polite">
-          {{ newsletterStatus() }}
+      <div class="footer-evaluation">
+        <strong>{{ agencyProfile.modality }} · {{ agencyProfile.registrationForm }}</strong>
+        <p>
+          La suscripción, las consultas, las reservas y los pagos permanecerán desactivados hasta
+          completar el registro y los controles correspondientes.
         </p>
-      </form>
+        <a routerLink="/informacion-institucional">Ver ficha institucional →</a>
+      </div>
     </div>
   </div>
 
   <div class="kq-shell footer-bottom">
     <p>
       © {{ currentYear }} <strong>Kusi Q’umir</strong>. Todos los derechos reservados.
-      <span>RUC y registro MINCETUR pendientes de validación.</span>
+      <span>RUC y constancia de inscripción pendientes de sustento.</span>
     </p>
-    <p class="footer-commercial-status">Información comercial en preparación</p>
+    <p class="footer-commercial-status">Canal exclusivamente digital · sin ventas</p>
   </div>
 </footer>

@@ -1,8 +1,9 @@
+import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
 import { ApplicationConfig, provideBrowserGlobalErrorListeners } from '@angular/core';
-import { provideRouter, withInMemoryScrolling } from '@angular/router';
+import { provideRouter, TitleStrategy, withInMemoryScrolling } from '@angular/router';
 
 import { routes } from './app.routes';
-import { provideClientHydration, withEventReplay } from '@angular/platform-browser';
+import { SeoTitleStrategy } from './core/seo/seo-title.strategy';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -11,6 +12,7 @@ export const appConfig: ApplicationConfig = {
       routes,
       withInMemoryScrolling({ anchorScrolling: 'enabled', scrollPositionRestoration: 'enabled' }),
     ),
+    { provide: TitleStrategy, useClass: SeoTitleStrategy },
     provideClientHydration(withEventReplay()),
   ],
 };

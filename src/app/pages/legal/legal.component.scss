@@ -4,15 +4,6 @@
   background: white;
 }
 
-.legal-header {
-  border-bottom: 1px solid var(--kq-border);
-  background: var(--kq-canvas);
-}
-.back-link {
-  font-weight: 700;
-  text-decoration: none;
-}
-
 .legal-page {
   padding-block: clamp(4rem, 8vw, 7rem);
 
@@ -51,5 +42,18 @@
     padding: 1rem 1.25rem;
     background: #eaf4f4;
     font-weight: 600;
+  }
+}
+
+.institutional-nav {
+  max-width: 52rem;
+  margin-top: 2rem;
+
+  a {
+    display: inline-flex;
+    border-bottom: 2px solid var(--kq-teal);
+    padding-block: 0.5rem;
+    font-weight: 700;
+    text-decoration: none;
   }
 }

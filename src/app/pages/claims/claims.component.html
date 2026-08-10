@@ -1,29 +1,21 @@
-<header class="claims-header">
-  <div class="kq-shell flex min-h-20 items-center justify-between gap-6">
-    <a routerLink="/" aria-label="Volver al inicio de Kusi Q’umir">
-      <img
-        src="/assets/brand/logo-horizontal-color.svg"
-        width="178"
-        height="51"
-        alt="Kusi Q’umir"
-      />
-    </a>
-    <a class="font-bold no-underline" routerLink="/">← Volver al inicio</a>
-  </div>
-</header>
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
 
-<main class="claims-page kq-shell">
+<app-page-header />
+
+<main id="contenido" class="claims-page kq-shell" tabindex="-1">
   <div class="claims-heading">
     <div>
       <p class="kq-eyebrow">Atención al consumidor</p>
-      <h1 class="text-balance">Libro de Reclamaciones</h1>
+      <h1 id="claims-title" class="text-balance">Libro de Reclamaciones</h1>
       <p>
-        Formulario preparado según la información mínima de una hoja de reclamación. La integración
-        de envío y seguimiento debe completarse antes de publicar la web.
+        Vista del formulario previsto para la operación exclusivamente digital. La numeración, el
+        registro, la constancia y el seguimiento se conectarán antes de iniciar operaciones
+        comerciales.
       </p>
     </div>
-    <aside>
-      <strong>Modo preparación</strong><br />Este formulario todavía no registra un reclamo válido.
+    <aside id="claims-demo-note">
+      <strong>Modo demostración</strong><br />No ingreses datos reales. Este formulario todavía no
+      registra un reclamo válido.
     </aside>
   </div>
 
@@ -32,27 +24,33 @@
     <dl>
       <div>
         <dt>Razón social</dt>
-        <dd>Pendiente de validación</dd>
+        <dd>{{ profile.legalName ?? 'Pendiente de sustento' }}</dd>
       </div>
       <div>
         <dt>RUC</dt>
-        <dd>Pendiente de validación</dd>
+        <dd>{{ profile.ruc ?? 'Pendiente de sustento' }}</dd>
       </div>
       <div>
-        <dt>Domicilio</dt>
-        <dd>Cusco, Perú · dirección pendiente</dd>
+        <dt>Dirección de contacto</dt>
+        <dd>{{ profile.address ?? profile.location + ' · dirección pendiente' }}</dd>
       </div>
     </dl>
   </div>
 
-  <form [formGroup]="claimForm" (ngSubmit)="prepareClaim()" novalidate>
-    <fieldset>
+  <form
+    [formGroup]="claimForm"
+    (ngSubmit)="prepareClaim()"
+    aria-labelledby="claims-title"
+    aria-describedby="claims-demo-note claims-privacy-note"
+    novalidate
+  >
+    <fieldset aria-describedby="claim-type-help">
       <legend>1. Tipo de solicitud</legend>
       <div class="choice-row">
         <label><input type="radio" formControlName="tipo" value="Reclamo" /> Reclamo</label>
         <label><input type="radio" formControlName="tipo" value="Queja" /> Queja</label>
       </div>
-      <p class="helper">
+      <p id="claim-type-help" class="helper">
         Reclamo: disconformidad con el servicio. Queja: malestar respecto de la atención.
       </p>
     </fieldset>
@@ -60,39 +58,232 @@
     <fieldset>
       <legend>2. Identificación del consumidor</legend>
       <div class="grid gap-4 md:grid-cols-2">
-        <label class="kq-field"
-          >Nombres y apellidos <input formControlName="nombre" autocomplete="name"
-        /></label>
-        <label class="kq-field">DNI, CE o pasaporte <input formControlName="documento" /></label>
-        <label class="kq-field"
-          >Domicilio <input formControlName="domicilio" autocomplete="street-address"
-        /></label>
-        <label class="kq-field"
-          >Teléfono <input formControlName="telefono" type="tel" autocomplete="tel"
-        /></label>
-        <label class="kq-field md:col-span-2"
-          >Correo electrónico <input formControlName="correo" type="email" autocomplete="email"
-        /></label>
+        <label class="kq-field">
+          Nombres y apellidos
+          <input
+            formControlName="nombre"
+            autocomplete="name"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.nombre.touched && claimForm.controls.nombre.invalid ? 'true' : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.nombre.touched && claimForm.controls.nombre.invalid
+                ? 'claim-name-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.nombre.touched && claimForm.controls.nombre.invalid) {
+            <small id="claim-name-error" class="kq-error">Ingresa los nombres y apellidos.</small>
+          }
+        </label>
+        <label class="kq-field">
+          DNI, CE o pasaporte
+          <input
+            formControlName="documento"
+            autocomplete="off"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.documento.touched && claimForm.controls.documento.invalid
+                ? 'true'
+                : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.documento.touched && claimForm.controls.documento.invalid
+                ? 'claim-document-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.documento.touched && claimForm.controls.documento.invalid) {
+            <small id="claim-document-error" class="kq-error"
+              >Ingresa un documento de identidad.</small
+            >
+          }
+        </label>
+        <label class="kq-field">
+          Domicilio
+          <input
+            formControlName="domicilio"
+            autocomplete="street-address"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.domicilio.touched && claimForm.controls.domicilio.invalid
+                ? 'true'
+                : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.domicilio.touched && claimForm.controls.domicilio.invalid
+                ? 'claim-address-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.domicilio.touched && claimForm.controls.domicilio.invalid) {
+            <small id="claim-address-error" class="kq-error">Ingresa el domicilio.</small>
+          }
+        </label>
+        <label class="kq-field">
+          Teléfono
+          <input
+            formControlName="telefono"
+            type="tel"
+            autocomplete="tel"
+            inputmode="tel"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.telefono.touched && claimForm.controls.telefono.invalid
+                ? 'true'
+                : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.telefono.touched && claimForm.controls.telefono.invalid
+                ? 'claim-phone-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.telefono.touched && claimForm.controls.telefono.invalid) {
+            <small id="claim-phone-error" class="kq-error">Ingresa un teléfono de contacto.</small>
+          }
+        </label>
+        <label class="kq-field md:col-span-2">
+          Correo electrónico
+          <input
+            formControlName="correo"
+            type="email"
+            autocomplete="email"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.correo.touched && claimForm.controls.correo.invalid ? 'true' : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.correo.touched && claimForm.controls.correo.invalid
+                ? 'claim-email-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.correo.touched && claimForm.controls.correo.invalid) {
+            <small id="claim-email-error" class="kq-error">Ingresa un correo válido.</small>
+          }
+        </label>
+        <label class="minor-choice md:col-span-2">
+          <input
+            type="checkbox"
+            formControlName="menorEdad"
+            (change)="updateGuardianRequirement()"
+          />
+          El consumidor es menor de edad
+        </label>
+        @if (claimForm.controls.menorEdad.value) {
+          <label class="kq-field md:col-span-2">
+            Madre, padre o representante
+            <input
+              formControlName="apoderado"
+              autocomplete="name"
+              required
+              [attr.aria-invalid]="
+                claimForm.controls.apoderado.touched && claimForm.controls.apoderado.invalid
+                  ? 'true'
+                  : null
+              "
+              [attr.aria-describedby]="
+                claimForm.controls.apoderado.touched && claimForm.controls.apoderado.invalid
+                  ? 'claim-guardian-error'
+                  : null
+              "
+            />
+            @if (claimForm.controls.apoderado.touched && claimForm.controls.apoderado.invalid) {
+              <small id="claim-guardian-error" class="kq-error"
+                >Indica la madre, padre o representante.</small
+              >
+            }
+          </label>
+        }
       </div>
     </fieldset>
 
     <fieldset>
       <legend>3. Servicio y detalle</legend>
       <div class="grid gap-4 md:grid-cols-2">
-        <label class="kq-field">Servicio contratado <input formControlName="servicio" /></label>
+        <label class="kq-field">
+          Servicio contratado
+          <input
+            formControlName="servicio"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.servicio.touched && claimForm.controls.servicio.invalid
+                ? 'true'
+                : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.servicio.touched && claimForm.controls.servicio.invalid
+                ? 'claim-service-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.servicio.touched && claimForm.controls.servicio.invalid) {
+            <small id="claim-service-error" class="kq-error">Describe el servicio.</small>
+          }
+        </label>
         <label class="kq-field"
           >Monto reclamado (opcional) <input formControlName="monto" inputmode="decimal"
         /></label>
       </div>
       <label class="kq-field mt-4"
-        >Detalle del reclamo o queja <textarea formControlName="detalle" rows="5"></textarea>
+        >Detalle del reclamo o queja
+        <textarea
+          formControlName="detalle"
+          rows="5"
+          required
+          minlength="10"
+          [attr.aria-invalid]="
+            claimForm.controls.detalle.touched && claimForm.controls.detalle.invalid ? 'true' : null
+          "
+          [attr.aria-describedby]="
+            claimForm.controls.detalle.touched && claimForm.controls.detalle.invalid
+              ? 'claim-detail-error'
+              : null
+          "
+        ></textarea>
+        @if (claimForm.controls.detalle.touched && claimForm.controls.detalle.invalid) {
+          <small id="claim-detail-error" class="kq-error"
+            >Describe el hecho en al menos diez caracteres.</small
+          >
+        }
       </label>
       <label class="kq-field mt-4"
-        >Pedido concreto <textarea formControlName="pedido" rows="3"></textarea>
+        >Pedido concreto
+        <textarea
+          formControlName="pedido"
+          rows="3"
+          required
+          minlength="5"
+          [attr.aria-invalid]="
+            claimForm.controls.pedido.touched && claimForm.controls.pedido.invalid ? 'true' : null
+          "
+          [attr.aria-describedby]="
+            claimForm.controls.pedido.touched && claimForm.controls.pedido.invalid
+              ? 'claim-request-error'
+              : null
+          "
+        ></textarea>
+        @if (claimForm.controls.pedido.touched && claimForm.controls.pedido.invalid) {
+          <small id="claim-request-error" class="kq-error">Indica qué solución solicitas.</small>
+        }
       </label>
     </fieldset>
 
     <button class="kq-button kq-button--dark" type="submit">Validar formulario</button>
-    <p class="claim-status" role="status" aria-live="polite">{{ status() }}</p>
+    <p id="claims-privacy-note" class="privacy-note">
+      Esta vista no transmite ni conserva la información. La versión operativa deberá generar una
+      hoja numerada, entregar constancia y permitir el seguimiento del caso.
+    </p>
+    <p
+      class="claim-status"
+      [class.claim-status--error]="feedback()?.kind === 'error'"
+      [class.claim-status--success]="feedback()?.kind === 'success'"
+      [attr.role]="feedback()?.kind === 'error' ? 'alert' : 'status'"
+      aria-live="polite"
+    >
+      {{ feedback()?.message }}
+    </p>
   </form>
 </main>

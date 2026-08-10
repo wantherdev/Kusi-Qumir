@@ -1,0 +1,17 @@
+export const agencyProfile = {
+  commercialName: 'Kusi Q’umir',
+  location: 'Cusco, Perú',
+  legalName: null,
+  ruc: null,
+  representative: null,
+  address: null,
+  phone: null,
+  email: null,
+  businessHours: null,
+  modality: 'Exclusivamente digital',
+  registrationForm: 'Anexo II',
+  classification: 'Minorista y operador de turismo',
+  serviceModel: 'Tours propios y tours de terceros',
+  registrationNumber: null,
+  evaluationStatus: 'Canal digital en evaluación institucional',
+} as const;

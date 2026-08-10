@@ -1,6 +1,6 @@
 # Requisitos de publicación y formalización
 
-Fecha de revisión: 8 de agosto de 2026. Este documento es una guía de implementación, no reemplaza asesoría legal ni la evaluación de GERCETUR Cusco.
+Fecha de revisión: 10 de agosto de 2026. Este documento es una guía de implementación, no reemplaza asesoría legal ni la evaluación de GERCETUR Cusco.
 
 ## Registro de la actividad
 
@@ -44,14 +44,18 @@ Fuentes: [INDECOPI — Libro de Reclamaciones](https://www.gob.pe/institucion/in
 - [ ] Representante legal y documento.
 - [ ] Domicilio legal y dirección de contacto.
 - [ ] Teléfono, WhatsApp y correo oficiales.
-- [ ] Clasificación: minorista, mayorista u operador.
-- [ ] Modalidad: presencial/mixta o exclusivamente digital.
+- [x] Clasificación: minorista y operador de turismo.
+- [x] Modalidad exclusivamente digital; corresponde el Anexo II.
 - [ ] Constancia de inscripción y autorización del distintivo.
 - [ ] Código de Conducta y afiche oficial contra la ESNNA.
 - [ ] Políticas reales de cobro, cambios, cancelación y reembolso.
 - [ ] Responsable y canal para derechos sobre datos personales.
 - [ ] Backend y correo responsable del Libro de Reclamaciones.
 - [ ] Fotografías reales con licencia y permisos de las personas retratadas.
+
+Los datos destinados al frontend deben incorporarse en
+`src/app/config/agency-profile.ts` solo después de contrastarlos con sus
+documentos sustentatorios.
 
 ## Bloqueos de salida a producción
 

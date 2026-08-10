@@ -1,26 +1,16 @@
-<header class="legal-header">
-  <div class="kq-shell flex min-h-20 items-center justify-between gap-6">
-    <a routerLink="/" aria-label="Volver al inicio de Kusi Q’umir">
-      <img
-        src="/assets/brand/logo-horizontal-color.svg"
-        width="178"
-        height="51"
-        alt="Kusi Q’umir"
-      />
-    </a>
-    <a class="back-link" routerLink="/">← Volver al inicio</a>
-  </div>
-</header>
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
 
-<main class="legal-page kq-shell">
-  <p class="kq-eyebrow">Documento previo a publicación</p>
+<app-page-header />
+
+<main id="contenido" class="legal-page kq-shell" tabindex="-1">
+  <p class="kq-eyebrow">Versión para evaluación institucional</p>
 
   @switch (document) {
     @case ('privacy') {
       <h1 class="text-balance">Política de privacidad</h1>
       <p class="lead">
-        Estructura preparada para cumplir con la normativa peruana de protección de datos
-        personales. Debe ser completada y validada con los datos reales del titular antes de activar
+        Estructura prevista para informar el tratamiento de datos en una operación exclusivamente
+        digital. Debe completarse y validarse con los datos reales del titular antes de activar
         formularios, analítica o publicidad.
       </p>
       <section>
@@ -35,21 +25,26 @@
         </ul>
       </section>
       <aside>
-        Los formularios de esta versión son demostrativos y todavía no transmiten datos.
+        Estado: borrador no vigente. Los formularios de esta versión son demostrativos y no
+        transmiten ni almacenan datos.
       </aside>
     }
     @case ('terms') {
       <h1 class="text-balance">Términos y condiciones</h1>
       <p class="lead">
-        Estas condiciones deberán coincidir con la operación real de Kusi Q’umir y con cada
-        propuesta comercial. No deben publicarse políticas genéricas que contradigan lo ofrecido al
-        viajero.
+        Estas condiciones deberán coincidir con la operación exclusivamente digital de Kusi Q’umir y
+        con cada propuesta comercial. No deben publicarse políticas genéricas que contradigan lo
+        ofrecido al viajero.
       </p>
       <section>
         <h2>Contenido pendiente de completar</h2>
         <ul>
           <li>Razón social o nombre del titular, RUC, domicilio y canales de atención.</li>
-          <li>Alcance de intermediación u operación de cada servicio.</li>
+          <li>Flujo digital de consulta, cotización, asistencia y confirmación.</li>
+          <li>
+            Identificación de los tours operados por Kusi Q’umir y de los prestados por terceros.
+          </li>
+          <li>Alcance de intermediación, organización y operación de cada servicio.</li>
           <li>Proceso de cotización, verificación de cupo y confirmación.</li>
           <li>Moneda, impuestos, medios y cronograma de pago.</li>
           <li>Políticas de cambios, cancelaciones, no presentación y reembolsos.</li>
@@ -57,7 +52,7 @@
         </ul>
       </section>
       <aside>
-        Una consulta desde la landing no constituye reserva ni garantiza disponibilidad.
+        Estado: borrador no vigente. La web no recibe consultas, reservas ni pagos reales.
       </aside>
     }
     @case ('responsibleTourism') {
@@ -81,9 +76,13 @@
         </ul>
       </section>
       <aside>
-        El afiche oficial y la constancia de suscripción todavía deben ser proporcionados por el
-        titular.
+        Estado: contenido en preparación. El afiche oficial y la constancia de suscripción todavía
+        deben ser proporcionados por el titular.
       </aside>
     }
   }
+
+  <nav class="institutional-nav" aria-label="Información complementaria">
+    <a routerLink="/informacion-institucional">Consultar la ficha institucional →</a>
+  </nav>
 </main>

@@ -3,12 +3,19 @@ import {
   afterNextRender,
   ChangeDetectionStrategy,
   Component,
+  DestroyRef,
+  ElementRef,
   HostListener,
   inject,
   signal,
+  viewChild,
 } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
 import { RouterLink } from '@angular/router';
+
+import { agencyProfile } from '../../config/agency-profile';
+
+type FormFeedback = { kind: 'error' | 'success'; message: string };
 
 @Component({
   selector: 'app-landing',
@@ -19,13 +26,15 @@ import { RouterLink } from '@angular/router';
 })
 export class LandingComponent {
   private readonly document = inject(DOCUMENT);
+  private readonly destroyRef = inject(DestroyRef);
   private readonly formBuilder = inject(NonNullableFormBuilder);
+  private readonly menuToggle = viewChild<ElementRef<HTMLButtonElement>>('menuToggle');
 
   protected readonly currentYear = new Date().getFullYear();
+  protected readonly agencyProfile = agencyProfile;
   protected readonly menuOpen = signal(false);
   protected readonly headerScrolled = signal(false);
-  protected readonly formStatus = signal('');
-  protected readonly newsletterStatus = signal('');
+  protected readonly formFeedback = signal<FormFeedback | null>(null);
 
   protected readonly contactForm = this.formBuilder.group({
     nombre: ['', [Validators.required, Validators.minLength(2)]],
@@ -37,33 +46,28 @@ export class LandingComponent {
   });
 
   constructor() {
-    afterNextRender(() => {
-      const elements = this.document.querySelectorAll<HTMLElement>('.reveal');
-      const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-
-      if (reduceMotion || !('IntersectionObserver' in window)) {
-        elements.forEach((element) => element.classList.add('visible'));
-        return;
-      }
-
-      const observer = new IntersectionObserver(
-        (entries) => {
-          entries.forEach((entry) => {
-            if (!entry.isIntersecting) return;
-            entry.target.classList.add('visible');
-            observer.unobserve(entry.target);
-          });
-        },
-        { threshold: 0.12 },
-      );
-
-      elements.forEach((element) => observer.observe(element));
-    });
+    afterNextRender(() => this.onWindowScroll());
+    this.destroyRef.onDestroy(() => this.document.body.classList.remove('menu-open'));
   }
 
   @HostListener('window:scroll')
   protected onWindowScroll(): void {
     this.headerScrolled.set(window.scrollY > 20);
+  }
+
+  @HostListener('window:resize')
+  protected onWindowResize(): void {
+    if (window.innerWidth > 900 && this.menuOpen()) {
+      this.closeMenu();
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  protected onEscape(): void {
+    if (this.menuOpen()) {
+      this.closeMenu();
+      this.menuToggle()?.nativeElement.focus();
+    }
   }
 
   protected toggleMenu(): void {
@@ -79,22 +83,16 @@ export class LandingComponent {
   protected submitConsultation(): void {
     if (this.contactForm.invalid) {
       this.contactForm.markAllAsTouched();
-      this.formStatus.set('Completa tu nombre y un número de contacto válido para continuar.');
+      this.formFeedback.set({
+        kind: 'error',
+        message: 'Revisa los campos marcados antes de validar la vista del formulario.',
+      });
       return;
     }
 
-    this.formStatus.set(
-      'El formulario está listo, pero el canal oficial aún debe conectarse antes de publicar la web.',
-    );
-  }
-
-  protected submitNewsletter(event: SubmitEvent, email: HTMLInputElement): void {
-    event.preventDefault();
-
-    if (!email.reportValidity()) return;
-
-    this.newsletterStatus.set(
-      'La suscripción se habilitará cuando el canal oficial esté conectado.',
-    );
+    this.formFeedback.set({
+      kind: 'success',
+      message: 'Vista validada. En esta etapa los datos no se transmiten ni se almacenan.',
+    });
   }
 }

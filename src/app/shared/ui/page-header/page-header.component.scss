@@ -1,0 +1,28 @@
+.page-header {
+  border-bottom: 1px solid var(--kq-border);
+  background: white;
+
+  img {
+    display: block;
+    width: 11.125rem;
+    height: auto;
+  }
+}
+
+.back-link {
+  display: inline-flex;
+  min-height: 2.75rem;
+  align-items: center;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+@media (max-width: 480px) {
+  .page-header img {
+    width: 7.75rem;
+  }
+
+  .back-link {
+    font-size: 0.78rem;
+  }
+}

@@ -129,11 +129,22 @@ summary {
 }
 
 .kq-eyebrow {
-  color: var(--kq-teal);
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  color: var(--kq-ink);
   font-size: 0.75rem;
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
+
+  &::before {
+    width: 1.5rem;
+    height: 2px;
+    flex: 0 0 auto;
+    background: var(--kq-teal);
+    content: '';
+  }
 }
 
 .kq-field {
@@ -155,6 +166,11 @@ summary {
     color: var(--kq-ink);
     font-size: 1rem;
     font-weight: 400;
+
+    &[aria-invalid='true'] {
+      border-color: var(--kq-danger);
+      box-shadow: 0 0 0 1px var(--kq-danger);
+    }
   }
 
   textarea {

@@ -1,10 +1,14 @@
 import { ChangeDetectionStrategy, Component, inject, signal } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+
+import { agencyProfile } from '../../config/agency-profile';
+import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+
+type ClaimFeedback = { kind: 'error' | 'success'; message: string };
 
 @Component({
   selector: 'app-claims',
-  imports: [ReactiveFormsModule, RouterLink],
+  imports: [PageHeaderComponent, ReactiveFormsModule],
   templateUrl: './claims.component.html',
   styleUrl: './claims.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -12,10 +16,13 @@ import { RouterLink } from '@angular/router';
 export class ClaimsComponent {
   private readonly formBuilder = inject(NonNullableFormBuilder);
 
-  protected readonly status = signal('');
+  protected readonly profile = agencyProfile;
+  protected readonly feedback = signal<ClaimFeedback | null>(null);
   protected readonly claimForm = this.formBuilder.group({
     tipo: ['Reclamo', Validators.required],
     nombre: ['', Validators.required],
+    menorEdad: [false],
+    apoderado: [''],
     documento: ['', Validators.required],
     domicilio: ['', Validators.required],
     telefono: ['', Validators.required],
@@ -30,12 +37,29 @@ export class ClaimsComponent {
     this.claimForm.markAllAsTouched();
 
     if (this.claimForm.invalid) {
-      this.status.set('Completa todos los campos obligatorios antes de continuar.');
+      this.feedback.set({
+        kind: 'error',
+        message: 'Revisa los campos marcados antes de validar la vista del formulario.',
+      });
       return;
     }
 
-    this.status.set(
-      'Vista de implementación: todavía falta conectar el registro, generar el código y enviar la constancia por correo.',
-    );
+    this.feedback.set({
+      kind: 'success',
+      message: 'Vista validada. No se registró ningún reclamo ni se almacenaron los datos.',
+    });
+  }
+
+  protected updateGuardianRequirement(): void {
+    const guardian = this.claimForm.controls.apoderado;
+
+    if (this.claimForm.controls.menorEdad.value) {
+      guardian.setValidators(Validators.required);
+    } else {
+      guardian.clearValidators();
+      guardian.markAsUntouched();
+    }
+
+    guardian.updateValueAndValidity();
   }
 }

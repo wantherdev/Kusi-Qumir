@@ -67,19 +67,25 @@
 .hero-art {
   position: absolute;
   inset: 0;
-  background-image:
-    linear-gradient(
+
+  &::after {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
       90deg,
       rgba(15, 23, 42, 0.74),
       rgba(15, 23, 42, 0.42) 34%,
       rgba(15, 23, 42, 0.06) 66%
-    ),
-    image-set(
-      url('/assets/images/cusco-andes-editorial-v2.webp') type('image/webp'),
-      url('/assets/images/cusco-andes-editorial-v2.png') type('image/png')
     );
-  background-position: center;
-  background-size: cover;
+    content: '';
+  }
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
 }
 
 .hero-layout {
@@ -94,11 +100,37 @@
   width: min(38rem, 52%);
   color: white;
 
+  .kq-eyebrow {
+    color: var(--kq-teal);
+  }
+
   h1 {
     max-width: 8ch;
     margin: 0 0 1.5rem;
     font-size: clamp(3.3rem, 7vw, 6.5rem);
     line-height: 1.03;
+  }
+}
+
+.evaluation-label {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.55rem;
+  margin: 0 0 1.25rem;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  padding: 0.5rem 0.75rem;
+  background: rgba(15, 23, 42, 0.5);
+  color: white;
+  font-size: 0.7rem;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+
+  span {
+    width: 0.55rem;
+    height: 0.55rem;
+    border-radius: 50%;
+    background: #ffd36a;
   }
 }
 
@@ -238,29 +270,16 @@
   }
 }
 
-.card-valley {
-  background-image: image-set(
-    url('/assets/images/experience-sacred-valley.webp') type('image/webp'),
-    url('/assets/images/experience-sacred-valley.png') type('image/png')
-  );
-  background-position: center;
-  background-size: cover;
-}
-.card-city {
-  background-image: image-set(
-    url('/assets/images/experience-cusco-city.webp') type('image/webp'),
-    url('/assets/images/experience-cusco-city.png') type('image/png')
-  );
-  background-position: center;
-  background-size: cover;
-}
-.card-mountain {
-  background-image: image-set(
-    url('/assets/images/experience-high-andes.webp') type('image/webp'),
-    url('/assets/images/experience-high-andes.png') type('image/png')
-  );
-  background-position: center;
-  background-size: cover;
+.card-art {
+  position: absolute;
+  z-index: -2;
+  inset: 0;
+
+  img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
 }
 
 .card-number {
@@ -300,6 +319,10 @@
 .process {
   background: var(--kq-ink);
   color: white;
+
+  .kq-eyebrow {
+    color: var(--kq-river);
+  }
 }
 
 .process-copy {
@@ -360,7 +383,7 @@
 
 .service-list {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(2, 1fr);
   border-block: 1px solid var(--kq-border);
 
   li {
@@ -425,6 +448,16 @@
     color: var(--kq-muted);
     font-size: 0.88rem;
   }
+}
+
+.institutional-link {
+  display: inline-flex;
+  gap: 0.75rem;
+  margin-top: 1.5rem;
+  border-bottom: 2px solid var(--kq-teal);
+  padding-block: 0.5rem;
+  font-weight: 700;
+  text-decoration: none;
 }
 
 .faq-grid {
@@ -521,9 +554,17 @@
 .form-status {
   min-height: 1.5rem;
   margin: 0;
-  color: var(--kq-warning);
+  color: var(--kq-muted);
   font-size: 0.8rem;
   font-weight: 700;
+
+  &--error {
+    color: var(--kq-danger);
+  }
+
+  &--success {
+    color: var(--kq-success);
+  }
 }
 
 .site-footer {
@@ -689,89 +730,38 @@
   }
 }
 
-.footer-newsletter {
+.footer-social-note {
+  margin: -0.65rem 0 1.25rem;
+  color: #aebbd0;
+  font-size: 0.72rem;
+}
+
+.footer-evaluation {
   border: 1px solid rgba(155, 191, 230, 0.08);
   border-radius: 0.65rem;
   padding: 1rem;
   background: rgba(155, 191, 230, 0.1);
 
-  > label {
+  > strong {
     display: block;
     margin-bottom: 0.45rem;
     font-size: 0.9rem;
     font-weight: 600;
   }
 
-  > p:not(.newsletter-status) {
+  > p {
     margin: 0 0 0.75rem;
     color: #91a8cc;
     font-size: 0.72rem;
     line-height: 1.45;
   }
-}
 
-.newsletter-field {
-  display: grid;
-  grid-template-columns: minmax(0, 1fr) 3rem;
-  overflow: hidden;
-  border: 1px solid rgba(155, 191, 230, 0.1);
-  border-radius: 0.25rem;
-  background: #2a3a54;
-
-  input {
-    min-width: 0;
-    border: 0;
-    padding: 0.7rem;
-    outline: 0;
-    background: transparent;
-    color: white;
-    font: inherit;
-    font-size: 0.78rem;
-
-    &::placeholder {
-      color: #91a4c2;
-    }
-
-    &:focus-visible {
-      box-shadow: inset 0 0 0 2px var(--kq-teal);
-    }
+  > a {
+    color: var(--kq-teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
   }
-
-  button {
-    display: grid;
-    border: 0;
-    border-left: 1px solid rgba(0, 171, 170, 0.55);
-    place-items: center;
-    background: rgba(15, 23, 42, 0.22);
-    color: #b8c6dc;
-    cursor: pointer;
-    transition:
-      background-color 160ms ease,
-      color 160ms ease;
-
-    &:hover {
-      background: var(--kq-teal);
-      color: var(--kq-ink);
-    }
-
-    svg {
-      width: 1rem;
-      height: 1rem;
-      fill: none;
-      stroke: currentColor;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-      stroke-width: 1.5;
-    }
-  }
-}
-
-.newsletter-status {
-  min-height: 1rem;
-  margin: 0.55rem 0 0;
-  color: var(--kq-river);
-  font-size: 0.65rem;
-  line-height: 1.35;
 }
 
 .footer-bottom {
@@ -805,19 +795,6 @@
   padding: 0.45rem 0.7rem;
   color: #afbdd3;
   white-space: nowrap;
-}
-
-.reveal {
-  opacity: 1;
-  transform: none;
-  transition:
-    opacity 400ms ease,
-    transform 400ms ease;
-
-  &.visible {
-    opacity: 1;
-    transform: none;
-  }
 }
 
 @media (max-width: 1100px) {
@@ -856,18 +833,18 @@
     min-height: 51rem;
   }
   .hero-art {
-    background-image:
-      linear-gradient(
+    &::after {
+      background: linear-gradient(
         180deg,
         rgba(15, 23, 42, 0.78) 8%,
         rgba(15, 23, 42, 0.56) 50%,
         rgba(15, 23, 42, 0.12) 78%
-      ),
-      image-set(
-        url('/assets/images/cusco-andes-editorial-v2.webp') type('image/webp'),
-        url('/assets/images/cusco-andes-editorial-v2.png') type('image/png')
       );
-    background-position: 68% center;
+    }
+
+    img {
+      object-position: 68% center;
+    }
   }
   .hero-layout {
     align-items: flex-start;
@@ -893,9 +870,6 @@
   }
   .service-list li:nth-child(2) {
     border-right: 0;
-  }
-  .service-list li:nth-child(-n + 2) {
-    border-bottom: 1px solid var(--kq-border);
   }
 }
 
@@ -952,12 +926,5 @@
   }
   .footer-commercial-status {
     white-space: normal;
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .reveal {
-    opacity: 1;
-    transform: none;
   }
 }

@@ -10,6 +10,15 @@ import { join } from 'node:path';
 const browserDistFolder = join(import.meta.dirname, '../browser');
 
 const app = express();
+app.disable('x-powered-by');
+app.use((_request, response, next) => {
+  response.setHeader('X-Content-Type-Options', 'nosniff');
+  response.setHeader('X-Frame-Options', 'DENY');
+  response.setHeader('Referrer-Policy', 'strict-origin-when-cross-origin');
+  response.setHeader('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
+  next();
+});
+
 const configuredHosts = process.env['NG_ALLOWED_HOSTS']
   ?.split(',')
   .map((host) => host.trim())
@@ -35,11 +44,15 @@ const angularApp = new AngularNodeAppEngine({
  */
 app.use(
   express.static(browserDistFolder, {
-    maxAge: '1y',
+    maxAge: 0,
     index: 'index.html',
     redirect: true,
     setHeaders: (response, filePath) => {
-      if (filePath.endsWith('.html')) {
+      if (/[-.][a-z0-9]{8,}\.(?:css|js)$/i.test(filePath)) {
+        response.setHeader('Cache-Control', 'public, max-age=31536000, immutable');
+      } else if (/\.(?:avif|gif|ico|jpe?g|png|svg|webp|woff2?)$/i.test(filePath)) {
+        response.setHeader('Cache-Control', 'public, max-age=86400, stale-while-revalidate=604800');
+      } else {
         response.setHeader('Cache-Control', 'public, max-age=0, must-revalidate');
       }
     },
