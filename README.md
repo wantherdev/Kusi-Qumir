@@ -22,6 +22,10 @@ pnpm start
 
 Abrir `http://localhost:4200`.
 
+`pnpm start` compila e inicia la API en el puerto `3000` y el frontend en el
+puerto `4200`. PostgreSQL debe estar disponible; puede iniciarse previamente con
+`pnpm db:start` cuando Docker esté configurado.
+
 ## Verificación y producción
 
 ```bash
@@ -30,7 +34,8 @@ pnpm build
 pnpm serve:ssr
 ```
 
-El build se genera en `dist/kusi-qumir/`; el servidor SSR utiliza el puerto `4000`.
+El build se genera en `frontend/dist/kusi-qumir/`; el servidor SSR utiliza el
+puerto `4000`.
 
 En producción, define los dominios públicos permitidos por la protección SSRF de Angular:
 
@@ -42,10 +47,28 @@ El servidor Express aplica encabezados básicos de seguridad y caché diferencia
 para HTML, recursos versionados y activos públicos. Si el despliegue termina en
 un hosting estático o CDN, replica esas reglas en la plataforma.
 
+## Backend en preparación
+
+La API propia vive en `backend/` y utiliza NestJS, Prisma y PostgreSQL. Por el
+momento los formularios públicos permanecen desacoplados hasta aprobar las
+políticas, configurar una base persistente y definir el flujo responsable de
+atención. El catálogo de tours sí consume endpoints públicos de solo lectura.
+
+```bash
+pnpm backend:build
+pnpm backend:test
+pnpm backend:start
+pnpm --dir backend prisma:seed
+```
+
+Para desarrollo local puede iniciarse PostgreSQL con `pnpm db:start`. El
+frontend ya contiene la frontera HTTP tipada y el proxy `/api`, pero el
+interruptor de envíos permanece apagado hasta aprobar privacidad y operación.
+
 ## Modo de evaluación
 
 - Los datos verificables del prestador se centralizan en
-  `src/app/config/agency-profile.ts`.
+  `frontend/src/app/config/agency-profile.ts`.
 - Los campos sin sustento permanecen vacíos y se muestran como pendientes.
 - Todas las rutas incluyen `noindex, nofollow` hasta autorizar la publicación.
 - `robots.txt` permite el rastreo para que los buscadores puedan leer la
@@ -54,8 +77,8 @@ un hosting estático o CDN, replica esas reglas en la plataforma.
 
 ## Arquitectura de estilos
 
-- `src/styles/_tokens.scss`: colores funcionales de KQ-DIGITAL-2.1.
-- `src/styles.scss`: tipografías, tokens CSS, elementos compartidos y carga de Tailwind.
+- `frontend/src/styles/_tokens.scss`: colores funcionales de KQ-DIGITAL-2.1.
+- `frontend/src/styles.scss`: tipografías, tokens CSS, elementos compartidos y carga de Tailwind.
 - `*.component.scss`: composiciones editoriales encapsuladas.
 - Tailwind: utilidades directamente en las plantillas; no se usa `@apply` dentro de Sass.
 

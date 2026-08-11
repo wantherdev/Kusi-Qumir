@@ -1,0 +1,40 @@
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
+
+<app-page-header />
+
+<main id="contenido" class="tours-page kq-shell" tabindex="-1">
+  <header class="tours-hero">
+    <p class="kq-eyebrow">Catálogo vigente</p>
+    <h1 class="text-balance">Tours para descubrir Cusco con contexto</h1>
+    <p>
+      Consulta itinerarios, exigencia, inclusiones y precios informados. La disponibilidad se valida
+      antes de cualquier contratación y, durante la evaluación, no aceptamos reservas ni pagos en
+      esta web.
+    </p>
+  </header>
+
+  <aside class="catalog-status" aria-label="Estado comercial">
+    <strong>Catálogo informativo</strong>
+    <span>RUC en baja provisional · reservas y pagos desactivados</span>
+  </aside>
+
+  @if (isLoading()) {
+    <p class="state-card" role="status">Cargando el catálogo…</p>
+  } @else if (hasError()) {
+    <section class="state-card state-card--error" role="alert">
+      <h2>No pudimos cargar los tours</h2>
+      <p>Comprueba que la API esté disponible y vuelve a recargar esta página.</p>
+    </section>
+  } @else if (tours().length === 0) {
+    <section class="state-card">
+      <h2>El catálogo está vacío</h2>
+      <p>Los tours aparecerán aquí cuando estén disponibles.</p>
+    </section>
+  } @else {
+    <section class="tour-grid" aria-label="Tours disponibles">
+      @for (tour of tours(); track tour.slug) {
+        <app-tour-card [tour]="tour" />
+      }
+    </section>
+  }
+</main>

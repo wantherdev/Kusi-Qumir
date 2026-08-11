@@ -39,11 +39,12 @@ Fuentes: [INDECOPI — Libro de Reclamaciones](https://www.gob.pe/institucion/in
 
 ## Datos pendientes del titular
 
-- [ ] Razón social o nombre completo.
-- [ ] RUC.
-- [ ] Representante legal y documento.
-- [ ] Domicilio legal y dirección de contacto.
-- [ ] Teléfono, WhatsApp y correo oficiales.
+- [x] Razón social o nombre completo.
+- [x] RUC (actualmente en baja provisional por oficio; debe regularizarse).
+- [x] Representante legal identificado en la Ficha RUC.
+- [ ] Domicilio legal verificado; falta confirmar una dirección pública de atención.
+- [x] Correo general, teléfono y WhatsApp confirmados.
+- [ ] Precisar días y horas exactos del horario de oficina.
 - [x] Clasificación: minorista y operador de turismo.
 - [x] Modalidad exclusivamente digital; corresponde el Anexo II.
 - [ ] Constancia de inscripción y autorización del distintivo.
@@ -54,9 +55,13 @@ Fuentes: [INDECOPI — Libro de Reclamaciones](https://www.gob.pe/institucion/in
 - [ ] Fotografías reales con licencia y permisos de las personas retratadas.
 
 Los datos destinados al frontend deben incorporarse en
-`src/app/config/agency-profile.ts` solo después de contrastarlos con sus
+`frontend/src/app/config/agency-profile.ts` solo después de contrastarlos con sus
 documentos sustentatorios.
 
 ## Bloqueos de salida a producción
 
-No activar envíos, analítica, pagos ni ventas hasta completar privacidad y condiciones. No mostrar el distintivo ni afirmar que la empresa está registrada sin la constancia vigente. La ilustración del hero es decorativa y no debe presentarse como evidencia de una experiencia real.
+No activar envíos, analítica, pagos ni ventas mientras el RUC figure en baja
+provisional por oficio y hasta completar privacidad y condiciones. No mostrar el
+distintivo ni afirmar que la empresa está registrada sin la constancia vigente.
+La ilustración del hero es decorativa y no debe presentarse como evidencia de
+una experiencia real.

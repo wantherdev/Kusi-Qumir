@@ -1,0 +1,80 @@
+:host {
+  display: block;
+  min-height: 100vh;
+  background: var(--kq-canvas);
+}
+
+.tours-page {
+  padding-block: clamp(3.5rem, 8vw, 7rem);
+}
+
+.tours-hero {
+  max-width: 54rem;
+
+  h1 {
+    max-width: 14ch;
+    margin: 1rem 0 1.5rem;
+    font-size: clamp(3rem, 8vw, 5.5rem);
+    line-height: 1.02;
+  }
+
+  > p:last-child {
+    max-width: 68ch;
+    color: var(--kq-muted);
+    font-size: 1.05rem;
+  }
+}
+
+.catalog-status {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem 1rem;
+  justify-content: space-between;
+  margin: 2.5rem 0 3rem;
+  border: 1px solid #d9c18c;
+  border-radius: 1rem;
+  padding: 1rem 1.25rem;
+  background: #fff8e8;
+
+  span {
+    color: var(--kq-muted);
+  }
+}
+
+.tour-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 1.25rem;
+}
+
+.state-card {
+  border: 1px solid var(--kq-border);
+  border-radius: 1rem;
+  padding: 2rem;
+  background: white;
+
+  h2,
+  p {
+    margin: 0;
+  }
+
+  h2 + p {
+    margin-top: 0.5rem;
+  }
+
+  &--error {
+    border-color: #d8a3a3;
+  }
+}
+
+@media (max-width: 900px) {
+  .tour-grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 620px) {
+  .tour-grid {
+    grid-template-columns: 1fr;
+  }
+}

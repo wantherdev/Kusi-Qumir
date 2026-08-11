@@ -47,15 +47,15 @@ pnpm serve:ssr
 ```
 
 Antes de entregar cambios de código, ejecuta al menos `pnpm test:ci` y
-`pnpm build`. No edites artefactos dentro de `dist/` ni dependencias dentro de
-`node_modules/`.
+`pnpm build`. No edites artefactos dentro de `frontend/dist/`, `backend/dist/`
+ni dependencias dentro de `node_modules/`.
 
 ## Antes de modificar código
 
 1. Consulta `git status` y `git log --oneline -10`.
 2. Lee la documentación de continuidad indicada al inicio de este archivo.
-3. Inspecciona `package.json`, `angular.json`, las rutas y la estructura del
-   feature afectado.
+3. Inspecciona `package.json`, `frontend/package.json`,
+   `frontend/angular.json`, las rutas y la estructura del feature afectado.
 4. Identifica patrones existentes y busca componentes, servicios, stores o
    utilidades reutilizables antes de crear alternativas.
 5. Determina qué pruebas protegen actualmente el comportamiento.
@@ -63,12 +63,12 @@ Antes de entregar cambios de código, ejecuta al menos `pnpm test:ci` y
 
 ## Arquitectura y convenciones
 
-- Las rutas están en `src/app/app.routes.ts` y su estrategia de renderizado en
-  `src/app/app.routes.server.ts`.
-- Las páginas se cargan de forma diferida desde `src/app/pages/`.
-- Los colores de marca viven en `src/styles/_tokens.scss`.
+- Las rutas están en `frontend/src/app/app.routes.ts` y su estrategia de
+  renderizado en `frontend/src/app/app.routes.server.ts`.
+- Las páginas se cargan de forma diferida desde `frontend/src/app/pages/`.
+- Los colores de marca viven en `frontend/src/styles/_tokens.scss`.
 - Los estilos globales, tipografías y componentes compartidos viven en
-  `src/styles.scss`.
+  `frontend/src/styles.scss`.
 - Mantén los estilos específicos junto al componente correspondiente.
 - No uses `@apply` de Tailwind dentro de Sass.
 - Organiza el código principalmente por feature o dominio.

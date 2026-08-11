@@ -8,9 +8,10 @@ IA. Debe actualizarse después de cada avance importante.
 ## Estado general
 
 El frontend institucional está implementado y técnicamente funcional para su
-evaluación. Aún no está habilitado para operar comercialmente porque faltan
-datos oficiales de la empresa, documentos legales definitivos e integraciones
-reales.
+evaluación. La identidad empresarial ya fue contrastada con una Ficha RUC, pero
+no está habilitado para operar comercialmente porque el RUC figura en baja
+provisional por oficio y faltan registro turístico, documentos legales
+definitivos e integraciones reales.
 
 El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 `origin` configurado en GitHub.
@@ -18,13 +19,16 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 ## Implementado
 
 - Proyecto Angular 22 standalone con TypeScript, pnpm, Tailwind CSS 4 y SCSS.
+- Frontend Angular unificado en `frontend/` y backend NestJS en `backend/`,
+  coordinados desde el workspace pnpm de la raíz.
 - Node.js 24.19.0 fijado en `.nvmrc` y pnpm 11.20.0 fijado en `package.json`.
 - SSR con Express, hidratación y prerender.
 - TypeScript estricto y validación estricta de templates Angular.
 - Landing responsive con navegación, hero, propuesta de valor, experiencias,
   servicios, información de confianza, contacto y footer.
 - Ilustración editorial del hero completando todo su lienzo.
-- Imágenes editoriales para las tarjetas de experiencias.
+- Diez ilustraciones editoriales originales, una por tour, en WebP de
+  1122 × 1402 px y con una dirección visual andina coherente.
 - Footer basado en la referencia aprobada: cuatro columnas, bloque legal,
   estado institucional, redes sociales y franja inferior.
 - Hover turquesa de marca en enlaces e iconos sociales.
@@ -34,11 +38,12 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   `robots.txt`.
 - Descripciones y metadatos sociales actualizados por ruta tanto en navegación
   cliente como en el HTML prerenderizado.
-- Formulario demostrativo de contacto con validación local, sin transmisión.
+- Canales directos de WhatsApp, llamada y correo en portada, sin formulario ni
+  captación de datos personales.
 - Ficha `/informacion-institucional` con datos del prestador, estado del
   registro, controles previstos y acceso a los borradores documentales.
 - Fuente centralizada para incorporar datos oficiales en
-  `src/app/config/agency-profile.ts` sin duplicarlos entre vistas.
+  `frontend/src/app/config/agency-profile.ts` sin duplicarlos entre vistas.
 - Estado de evaluación visible, sin distintivo oficial, ventas, reservas ni
   captación real.
 - Newsletter retirado mientras no exista consentimiento y canal operativo.
@@ -47,6 +52,8 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Libro de Reclamaciones demostrativo con validación local, sin registro real.
 - Errores de formularios asociados a sus campos mediante texto, `aria-invalid`
   y `aria-describedby`.
+- Foco dirigido al primer campo inválido después de intentar validar cualquiera
+  de los formularios demostrativos.
 - Navegación interna con skip links, retorno de foco del menú móvil y foco al
   contenido principal después de cambiar de ruta.
 - Página 404 propia con estado HTTP 404 real para rutas desconocidas.
@@ -58,28 +65,59 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Páginas informativas de privacidad, términos y turismo responsable.
 - Servidor de desarrollo escuchando en `0.0.0.0` para pruebas dentro de la red
   local.
+- Backend NestJS mínimo incorporado al workspace con Prisma/PostgreSQL, health
+  check y contratos validados para contacto y reclamaciones.
+- Códigos públicos no secuenciales y registro de versión/fecha de aceptación de
+  privacidad preparados para las futuras recepciones.
+- Frontera HTTP tipada del frontend, proxy local `/api` y PostgreSQL de
+  desarrollo preparados; los envíos permanecen desactivados explícitamente.
+- Identidad legal, RUC, representante, partida, actividad y domicilio fiscal
+  incorporados desde la Ficha RUC del 10 de agosto de 2026.
+- Estado tributario de baja provisional por oficio visible en la ficha, el
+  footer y los borradores legales, sin confundirlo con una habilitación.
+- Correo general `kusiqumir@gmail.com` y número 908 990 666 para llamadas y
+  WhatsApp incorporados por confirmación del titular; los contactos personales
+  de SUNAT no se publican como canales oficiales.
+- Catálogo confirmado de 10 tours migrado a PostgreSQL mediante un seed
+  idempotente que no crea administradores, testimonios ni elimina otros datos.
+- Endpoints públicos `GET /api/v1/tours` y `GET /api/v1/tours/:slug`, con
+  listado resumido y detalle completo.
+- Rutas Angular `/tours` y `/tours/:slug` con loading, vacío, error, detalle,
+  itinerarios, precios, inclusiones, requisitos y consulta por WhatsApp.
+- Portada reestructurada para mostrar los 10 tours reales desde la API en lugar
+  de tres experiencias demostrativas escritas en la plantilla.
+- Tarjeta de tour reutilizable entre portada y catálogo; cada ficha apunta a su
+  propio recurso editorial local y cuenta con texto alternativo descriptivo.
+- `pnpm start` inicia conjuntamente API y frontend para evitar un catálogo vacío
+  por ejecutar solo Angular.
 
 ## Rutas actuales
 
-| Ruta                         | Propósito               | Estado                                  |
-| ---------------------------- | ----------------------- | --------------------------------------- |
-| `/`                          | Landing principal       | Implementada                            |
-| `/informacion-institucional` | Ficha del canal digital | Implementada; requiere datos oficiales  |
-| `/privacidad`                | Borrador de privacidad  | Requiere datos y revisión legal         |
-| `/terminos`                  | Borrador de términos    | Requiere políticas comerciales reales   |
-| `/turismo-responsable`       | Compromiso ESNNA        | Requiere materiales y canales oficiales |
-| `/libro-de-reclamaciones`    | Formulario demostrativo | Requiere backend y flujo legal completo |
-| `/**`                        | Página no encontrada    | HTTP 404 mediante SSR                   |
+| Ruta                         | Propósito               | Estado                                    |
+| ---------------------------- | ----------------------- | ----------------------------------------- |
+| `/`                          | Landing principal       | Implementada                              |
+| `/tours`                     | Catálogo de 10 tours    | Implementada; consulta informativa        |
+| `/tours/:slug`               | Ficha completa del tour | Implementada; reservas desactivadas       |
+| `/informacion-institucional` | Ficha del canal digital | Implementada; RUC requiere regularización |
+| `/privacidad`                | Borrador de privacidad  | Requiere datos y revisión legal           |
+| `/terminos`                  | Borrador de términos    | Requiere políticas comerciales reales     |
+| `/turismo-responsable`       | Compromiso ESNNA        | Requiere materiales y canales oficiales   |
+| `/libro-de-reclamaciones`    | Formulario demostrativo | Requiere backend y flujo legal completo   |
+| `/**`                        | Página no encontrada    | HTTP 404 mediante SSR                     |
 
 Las seis rutas públicas se prerenderizan; la ruta comodín se resuelve mediante
 SSR para devolver HTTP 404.
 
 ## Verificación técnica más reciente
 
-- `pnpm test:ci`: 15 pruebas superadas en 8 archivos.
+- `pnpm test:ci`: 19 pruebas superadas en 11 archivos.
 - `pnpm build`: finalizado correctamente, sin errores ni advertencias.
+- Backend: lint limpio, 7 pruebas superadas, schema Prisma válido y build NestJS
+  correcto.
+- Las 10 rutas de imágenes de tours son únicas y responden HTTP 200 desde el
+  servidor de desarrollo.
 - Seis rutas prerenderizadas.
-- Tamaño inicial estimado del navegador: 78.83 kB.
+- Tamaño inicial estimado del navegador: 85.29 kB.
 - Auditoría de dependencias de producción: sin vulnerabilidades conocidas.
 - Prueba directa del servidor: rutas públicas con HTTP 200 y ruta desconocida
   con HTTP 404.
@@ -89,17 +127,13 @@ ejecutar las verificaciones después de modificar código o dependencias.
 
 ## Datos y decisiones pendientes del propietario
 
-- Razón social o nombre completo del titular.
-- RUC real.
-- Representante legal y documento correspondiente.
-- Dirección legal y dirección pública de atención.
-- Teléfono, WhatsApp y correo oficiales.
+- Dirección pública de atención (distinta del domicilio fiscal, si corresponde).
+- Días y horas exactos del horario de oficina.
 - Enlaces reales de Facebook, Instagram, YouTube y TikTok.
 - Constancia de inscripción vigente ante GERCETUR/MINCETUR.
 - Autorización para mostrar el distintivo oficial, si corresponde.
 - Código de Conducta, afiche y canales oficiales relacionados con ESNNA.
-- Políticas reales de precios, reservas, pagos, cambios, cancelaciones y
-  reembolsos.
+- Políticas reales de reservas, pagos, cambios, cancelaciones y reembolsos.
 - Responsable de privacidad y canal para ejercer derechos sobre datos.
 - Fotografías reales y permisos de uso de imagen.
 - Proveedor de hosting, dominio final y correo transaccional.
@@ -117,15 +151,18 @@ al operador real en cada propuesta.
 
 ## Bloqueos para producción comercial
 
-- El formulario de contacto no tiene backend ni consentimiento definitivo; el
-  newsletter permanece retirado.
+- El RUC figura en baja provisional por oficio desde el 31 de julio de 2026;
+  debe regularizarse y contrastarse con una nueva consulta o ficha vigente.
+- Los formularios de contacto permanecen retirados; el backend de recepción está
+  preparado pero desconectado hasta aprobar privacidad, correo y operación.
 - El Libro de Reclamaciones no genera número de hoja, constancia, copia ni
   entrega el caso a un responsable.
 - No existe todavía un flujo real de reservas o pagos.
-- Los textos legales no contienen la identidad real del titular ni han sido
-  aprobados profesionalmente.
+- Los borradores legales ya contienen la identidad verificada, pero faltan
+  decisiones operativas y aprobación profesional.
 - No se ha configurado analítica con consentimiento ni una política de cookies.
-- Los datos de contacto y perfiles sociales siguen pendientes.
+- El correo general, teléfono y WhatsApp están confirmados; falta precisar el
+  horario y confirmar los perfiles sociales.
 - No debe mostrarse un número o distintivo de licencia ficticio.
 - Canonical, `og:url`, imagen social absoluta y sitemap permanecen pendientes
   hasta definir el dominio y habilitar indexación.
@@ -137,13 +174,14 @@ Consulta el detalle regulatorio en `docs/requisitos-publicacion.md`.
 
 ## Próximos pasos recomendados
 
-1. Recibir y validar los datos oficiales del propietario.
-2. Completar `src/app/config/agency-profile.ts` con los documentos sustentatorios.
+1. Regularizar el estado del RUC y obtener una Ficha RUC vigente.
+2. Obtener la constancia de inscripción turística y los materiales ESNNA.
 3. Completar y revisar profesionalmente los documentos legales.
-4. Definir hosting, dominio, correo y backend de formularios.
-5. Implementar Libro de Reclamaciones, consentimiento y tratamiento de datos.
-6. Incorporar destinos, paquetes, fichas de experiencia y flujo de consultas o
-   reservas del sitio completo.
+4. Confirmar canales de atención y definir hosting, dominio y correo transaccional.
+5. Activar de forma controlada el backend, Libro de Reclamaciones,
+   consentimiento y tratamiento de datos.
+6. Confirmar los paquetes del proyecto anterior e incorporar sus fichas cuando
+   corresponda; mantener reservas desactivadas hasta levantar los bloqueos.
 7. Ejecutar una revisión final de accesibilidad, rendimiento, seguridad, SEO y
    requisitos regulatorios antes de publicar funciones comerciales.
 

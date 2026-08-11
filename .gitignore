@@ -8,8 +8,18 @@
 
 # Node
 /node_modules
+/backend/node_modules
+/backend/dist
+/backend/coverage
+/backend/.env
+/frontend/node_modules
+/frontend/dist
+/frontend/.angular
 npm-debug.log
 yarn-error.log
+
+# Fuentes legales con contactos personales; conservar solo fuera de Git.
+/recursos/*.pdf
 
 # IDEs and editors
 .idea/

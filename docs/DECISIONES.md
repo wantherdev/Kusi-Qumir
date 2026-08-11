@@ -32,7 +32,8 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 
 ## 2026-08-08 — Recursos e iconos
 
-- Los recursos necesarios para la interfaz se sirven localmente desde `public/`.
+- Los recursos necesarios para la interfaz se sirven localmente desde
+  `frontend/public/`.
 - Las redes sociales utilizan Remix Icon; sus SVG se copian desde el paquete
   instalado durante el build y no dependen de un CDN.
 - Mientras no existan URLs oficiales, los iconos sociales no deben funcionar
@@ -64,8 +65,8 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - Se incorpora una ficha institucional para concentrar identidad, modalidad,
   clasificación, estado del registro y controles previstos.
 - Los datos verificables del prestador se centralizan en
-  `src/app/config/agency-profile.ts`; los campos sin sustento permanecen nulos y
-  nunca se sustituyen por datos ficticios.
+  `frontend/src/app/config/agency-profile.ts`; los campos sin sustento
+  permanecen nulos y nunca se sustituyen por datos ficticios.
 - La web no utiliza la denominación ni el distintivo reservado a una agencia
   inscrita mientras no exista constancia y autorización vigentes.
 - Se retira el newsletter demostrativo para evitar una captación aparente de
@@ -117,3 +118,96 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   una política especulativa que pueda romper hidratación o integraciones futuras.
 - Los formularios demostrativos exponen errores cercanos y programáticos, y la
   navegación gestiona foco en menú móvil y cambios de ruta.
+
+## 2026-08-10 — Backend propio mínimo
+
+- La API propia se implementa con NestJS, Prisma y PostgreSQL como aplicación
+  separada dentro del mismo workspace pnpm.
+- La primera frontera de backend incluye únicamente salud, solicitudes de
+  contacto y hojas de reclamación. Pagos, reservas, usuarios, uploads y
+  analítica permanecen fuera hasta existir requisitos y operación reales.
+- Cada recepción genera un código público no secuencial; la base conserva la
+  versión de privacidad aceptada y el instante de aceptación.
+- El frontend continúa en modo demostrativo hasta aprobar la política de
+  privacidad, disponer de PostgreSQL persistente y definir notificaciones y
+  responsables de atención.
+
+## 2026-08-10 — Workspace separado por aplicaciones
+
+- El frontend Angular vive íntegramente en `frontend/` y la API NestJS en
+  `backend/`.
+- La raíz conserva documentación, recursos de marca, configuración compartida y
+  scripts de orquestación; no contiene código fuente de ninguna aplicación.
+
+## 2026-08-10 — Activación controlada de formularios
+
+- La integración Angular–NestJS utiliza una URL relativa bajo `/api/v1` para
+  evitar acoplar el frontend a un proveedor de hosting.
+- La recepción se controla mediante un token de configuración apagado por
+  defecto. No se habilita hasta contar con privacidad aprobada, base persistente,
+  correo y responsables operativos.
+
+## 2026-08-10 — Identidad legal y estado tributario verificados
+
+- La Ficha RUC emitida por SUNAT el 10 de agosto de 2026 sustenta razón social,
+  RUC, representante, domicilio fiscal, partida registral y actividad económica.
+- El mismo documento muestra el RUC en baja provisional por oficio desde el 31
+  de julio de 2026. Este estado se informa de manera visible y bloquea toda
+  operación comercial hasta su regularización y nueva verificación.
+- El domicilio fiscal no se presenta como oficina ni como dirección pública de
+  atención. El teléfono y correo personal de SUNAT tampoco se publican sin
+  confirmación expresa.
+- `kusiqumir@gmail.com` se utiliza como correo general confirmado por el titular;
+  aún falta designar canales específicos para privacidad y reclamaciones.
+
+## 2026-08-10 — Catálogo vigente migrado desde el proyecto anterior
+
+- El titular confirmó como vigentes los 10 tours, itinerarios y precios de la
+  seed ubicada en el proyecto anterior.
+- El catálogo se migra a la API actual mediante un modelo Prisma acotado y un
+  seed idempotente por `slug`; no se trasladan el administrador con contraseña
+  conocida, los testimonios demostrativos ni el borrado masivo de tablas.
+- El listado devuelve una proyección resumida y la ficha individual entrega el
+  contenido completo para reducir transferencia innecesaria.
+- Las rutas de catálogo se renderizan en cliente durante la evaluación para que
+  el build no dependa de una base de datos disponible. Antes de habilitar
+  indexación deberá implementarse SSR o prerender con acceso seguro a la API.
+- Los documentos legales del proyecto anterior no sustituyen los borradores
+  actuales porque contienen correos, dirección, habilitaciones y condiciones no
+  confirmadas o incompatibles con el estado vigente.
+- El catálogo es informativo: la consulta por WhatsApp está disponible, pero las
+  reservas y pagos siguen desactivados.
+- El script de desarrollo del backend compila y ejecuta Node sin el modo watch
+  del CLI de Nest, que falla al construir comandos cuando la ruta contiene la
+  comilla de `Kusi-Q'umir`.
+
+## 2026-08-10 — Portada conectada al catálogo real
+
+- La portada deja de mantener tres experiencias demostrativas independientes y
+  consume el mismo endpoint resumido que `/tours` para mostrar los 10 tours.
+- La UI de tarjeta pertenece al feature de tours y se reutiliza en ambas páginas;
+  el acceso HTTP permanece encapsulado en `data-access` y el estado remoto se
+  modela como loading, loaded o error.
+- El servidor y el navegador no consultan la API durante el prerender de la
+  portada; el navegador carga el catálogo después de la hidratación. Esta
+  decisión evita que el build dependa de PostgreSQL mientras la web permanece
+  bloqueada para indexación.
+- La portada retira el formulario demostrativo y ofrece únicamente enlaces a los
+  canales confirmados. No se captan datos, se habilitan reservas ni se procesan
+  pagos.
+- El comando raíz `pnpm start` levanta API y frontend en conjunto con variables
+  locales de desarrollo, evitando que Angular quede activo sin el catálogo.
+
+## 2026-08-10 — Colección visual propia para los tours
+
+- Cada uno de los 10 tours dispone de una ilustración original derivada de su
+  descripción, destinos e itinerario, en lugar de reutilizar tres imágenes
+  genéricas entre todas las fichas.
+- La colección conserva el lenguaje editorial andino establecido: gouache con
+  textura de impresión, luz natural, paleta mineral con acentos turquesa y
+  personas a escala secundaria frente al destino.
+- Los activos finales se sirven localmente como WebP de 1122 × 1402 px, sin
+  texto, marcas ni dependencias de terceros, y se referencian desde el catálogo
+  del seed para mantener la API como fuente de verdad.
+- Las imágenes anteriores se conservan como recursos de respaldo; los nuevos
+  archivos no las sobrescriben.

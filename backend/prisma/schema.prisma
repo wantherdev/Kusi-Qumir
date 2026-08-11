@@ -1,0 +1,117 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+enum SubmissionStatus {
+  RECEIVED
+  IN_REVIEW
+  ANSWERED
+  CLOSED
+}
+
+enum ClaimType {
+  CLAIM
+  COMPLAINT
+}
+
+enum Difficulty {
+  Easy
+  Moderate
+  Challenging
+}
+
+enum GroupType {
+  Shared
+  Private
+}
+
+enum ServiceType {
+  HalfDay
+  FullDay
+  MultiDay
+}
+
+model Tour {
+  id               String      @id @default(cuid())
+  slug             String      @unique
+  code             String      @unique
+  title            String
+  subtitle         String?
+  shortDescription String
+  description      String
+  durationHours    Int
+  durationDays     Int
+  difficulty       Difficulty
+  groupType        GroupType
+  serviceType      ServiceType
+  featured         Boolean     @default(false)
+  active           Boolean     @default(true)
+  categorySlug     String
+  recommendedFor   Json
+  prices           Json
+  itineraryDays    Json
+  includes         Json
+  excludes         Json
+  faqs             Json
+  recommendations  Json
+  requirements     Json
+  images           Json
+  seo              Json?
+  destinations     Json
+  createdAt        DateTime    @default(now())
+  updatedAt        DateTime    @updatedAt
+
+  @@index([active, featured])
+  @@index([categorySlug, active])
+}
+
+model ContactRequest {
+  id                   String           @id @default(cuid())
+  trackingCode         String           @unique
+  name                 String
+  email                String
+  phone                String?
+  approximateDate      String?
+  travelers            Int?
+  interest             String?
+  message              String?
+  privacyPolicyVersion String
+  privacyAcceptedAt    DateTime
+  status               SubmissionStatus @default(RECEIVED)
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email, createdAt])
+}
+
+model Claim {
+  id                   String           @id @default(cuid())
+  trackingCode         String           @unique
+  type                 ClaimType
+  consumerName         String
+  isMinor              Boolean          @default(false)
+  guardianName         String?
+  identityDocument     String
+  address              String
+  phone                String
+  email                String
+  service              String
+  claimedAmount        Decimal?         @db.Decimal(12, 2)
+  detail               String
+  request              String
+  privacyPolicyVersion String
+  privacyAcceptedAt    DateTime
+  status               SubmissionStatus @default(RECEIVED)
+  answeredAt           DateTime?
+  createdAt            DateTime         @default(now())
+  updatedAt            DateTime         @updatedAt
+
+  @@index([status, createdAt])
+  @@index([email, createdAt])
+}

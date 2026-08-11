@@ -1,0 +1,168 @@
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
+
+<app-page-header />
+
+<main id="contenido" class="tour-page kq-shell" tabindex="-1">
+  @if (state().status === 'loading') {
+    <p class="state-card" role="status">Cargando el tour…</p>
+  } @else if (state().status === 'not-found') {
+    <section class="state-card">
+      <p class="kq-eyebrow">Tour no encontrado</p>
+      <h1>Esta ruta no está disponible</h1>
+      <a class="kq-button" routerLink="/tours">Volver al catálogo</a>
+    </section>
+  } @else if (state().status === 'error') {
+    <section class="state-card" role="alert">
+      <p class="kq-eyebrow">Error de conexión</p>
+      <h1>No pudimos cargar este tour</h1>
+      <p>Comprueba que la API esté disponible y vuelve a intentarlo.</p>
+    </section>
+  } @else if (tour(); as tour) {
+    <header class="tour-hero">
+      <div class="tour-hero__copy">
+        <p class="kq-eyebrow">{{ tour.code }} · {{ tour.categorySlug }}</p>
+        <h1 class="text-balance">{{ tour.title }}</h1>
+        @if (tour.subtitle) {
+          <p class="subtitle">{{ tour.subtitle }}</p>
+        }
+        <p class="lead">{{ tour.shortDescription }}</p>
+        <ul aria-label="Datos principales del tour">
+          <li>{{ durationFor(tour) }}</li>
+          <li>Dificultad {{ difficultyFor(tour) }}</li>
+          <li>{{ tour.groupType === 'Shared' ? 'Grupo compartido' : 'Grupo privado' }}</li>
+        </ul>
+      </div>
+      <img
+        [src]="imageFor(tour)"
+        width="1122"
+        height="1402"
+        [alt]="'Ilustración editorial para ' + tour.title"
+      />
+    </header>
+
+    <aside class="commercial-note">
+      <strong>Información vigente, contratación desactivada</strong>
+      <p>
+        Consulta disponibilidad por WhatsApp. Esta web no acepta reservas ni pagos mientras el RUC
+        permanezca en baja provisional y no exista constancia turística acreditada.
+      </p>
+    </aside>
+
+    <section class="tour-intro">
+      <div>
+        <p class="kq-eyebrow">La experiencia</p>
+        <h2>Una ruta explicada de principio a fin</h2>
+      </div>
+      <p>{{ tour.description }}</p>
+    </section>
+
+    <section>
+      <p class="kq-eyebrow">Precios informados</p>
+      <h2>Opciones del tour</h2>
+      <div class="price-grid">
+        @for (price of tour.prices; track price.name) {
+          <article>
+            <h3>{{ price.name }}</h3>
+            <p><small>Adulto</small> {{ price.currency }} {{ price.adult }}</p>
+            @if (price.child !== undefined) {
+              <p><small>Niño</small> {{ price.currency }} {{ price.child }}</p>
+            }
+            @if (price.private !== undefined) {
+              <p><small>Privado</small> {{ price.currency }} {{ price.private }}</p>
+            }
+          </article>
+        }
+      </div>
+      <p class="price-note">
+        La disponibilidad, condiciones e identidad del operador se confirman antes de contratar.
+      </p>
+    </section>
+
+    <section>
+      <p class="kq-eyebrow">Itinerario</p>
+      <h2>Cómo transcurre la experiencia</h2>
+      @for (day of tour.itineraryDays; track day.day) {
+        <article class="itinerary-day">
+          <h3>Día {{ day.day }} · {{ day.title }}</h3>
+          <ol>
+            @for (activity of day.activities; track activity.sortOrder) {
+              <li>
+                <time>{{ activity.time ?? 'Hora por confirmar' }}</time>
+                <div>
+                  <strong>{{ activity.title }}</strong>
+                  <p>{{ activity.description }}</p>
+                </div>
+              </li>
+            }
+          </ol>
+        </article>
+      }
+    </section>
+
+    <section class="included-grid">
+      <div>
+        <p class="kq-eyebrow">Incluye</p>
+        <ul>
+          @for (item of tour.includes; track item.title) {
+            <li>
+              <strong>{{ item.title }}</strong> {{ item.description ?? '' }}
+            </li>
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="kq-eyebrow">No incluye</p>
+        <ul>
+          @for (item of tour.excludes; track item.title) {
+            <li>
+              <strong>{{ item.title }}</strong> {{ item.description ?? '' }}
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+    <section class="included-grid">
+      <div>
+        <p class="kq-eyebrow">Requisitos</p>
+        <ul>
+          @for (item of tour.requirements; track item.requirement) {
+            <li>{{ item.requirement }}</li>
+          }
+        </ul>
+      </div>
+      <div>
+        <p class="kq-eyebrow">Recomendaciones</p>
+        <ul>
+          @for (item of tour.recommendations; track item.title) {
+            <li>
+              <strong>{{ item.title }}</strong> {{ item.description }}
+            </li>
+          }
+        </ul>
+      </div>
+    </section>
+
+    @if (tour.faqs.length) {
+      <section>
+        <p class="kq-eyebrow">Preguntas frecuentes</p>
+        <h2>Antes de salir</h2>
+        <div class="faq-list">
+          @for (faq of tour.faqs; track faq.sortOrder) {
+            <details>
+              <summary>{{ faq.question }}</summary>
+              <p>{{ faq.answer }}</p>
+            </details>
+          }
+        </div>
+      </section>
+    }
+
+    <nav class="tour-actions" aria-label="Acciones del tour">
+      <a class="kq-button" [href]="profile.whatsappHref" target="_blank" rel="noopener noreferrer"
+        >Consultar por WhatsApp</a
+      >
+      <a routerLink="/tours">← Volver a todos los tours</a>
+    </nav>
+  }
+</main>

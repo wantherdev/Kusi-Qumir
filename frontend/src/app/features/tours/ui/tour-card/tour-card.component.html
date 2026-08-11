@@ -1,0 +1,32 @@
+@let currentTour = tour();
+
+<article class="tour-card">
+  <div class="tour-card__visual">
+    <img
+      [src]="imageFor(currentTour)"
+      width="1122"
+      height="1402"
+      [alt]="'Ilustración editorial para ' + currentTour.title"
+      loading="lazy"
+      decoding="async"
+    />
+    @if (currentTour.featured) {
+      <span class="tour-card__badge">Destacado</span>
+    }
+  </div>
+
+  <div class="tour-card__body">
+    <p class="tour-card__meta">{{ durationFor(currentTour) }} · {{ difficultyFor(currentTour) }}</p>
+    <h3>{{ currentTour.title }}</h3>
+    <p class="tour-card__description">{{ currentTour.shortDescription }}</p>
+
+    <div class="tour-card__footer">
+      @if (startingPriceFor(currentTour); as price) {
+        <p class="tour-card__price"><small>Desde</small> {{ price.currency }} {{ price.adult }}</p>
+      }
+      <a [routerLink]="['/tours', currentTour.slug]">
+        Ver detalles <span aria-hidden="true">→</span>
+      </a>
+    </div>
+  </div>
+</article>

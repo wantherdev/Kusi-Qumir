@@ -1,0 +1,119 @@
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
+
+<app-page-header />
+
+<main id="contenido" class="legal-page kq-shell" tabindex="-1">
+  <p class="kq-eyebrow">Versión para evaluación institucional</p>
+
+  @switch (document) {
+    @case ('privacy') {
+      <h1 class="text-balance">Política de privacidad</h1>
+      <p class="lead">
+        Borrador informativo de {{ profile.legalName }}, RUC {{ profile.ruc }}, para su canal
+        exclusivamente digital. No se captan ni transmiten datos reales en esta versión.
+      </p>
+      <section>
+        <h2>Identidad y contacto</h2>
+        <p>
+          Titular: {{ profile.legalName }}. Domicilio fiscal declarado: {{ profile.fiscalAddress }}.
+          Correo general: {{ profile.email }}.
+        </p>
+      </section>
+      <section>
+        <h2>Marco y alcance previstos</h2>
+        <p>
+          La versión final se adecuará a la Ley N.° 29733, su reglamento aprobado por D.S. N.°
+          016-2024-JUS y las disposiciones aplicables de la Autoridad Nacional de Protección de
+          Datos Personales.
+        </p>
+        <p>
+          Actualmente no hay formularios operativos, analítica, publicidad personalizada, reservas
+          ni pagos. Antes de activarlos se informarán finalidad, base jurídica, campos obligatorios,
+          destinatarios, encargados, transferencias, conservación y medidas de seguridad.
+        </p>
+      </section>
+      <section>
+        <h2>Derechos y aspectos pendientes</h2>
+        <ul>
+          <li>Designar al responsable y un canal específico para derechos ARCO.</li>
+          <li>Definir los bancos de datos y realizar las inscripciones que correspondan.</li>
+          <li>Documentar finalidades, encargados, transferencias y proveedores de hosting.</li>
+          <li>Plazos de conservación y medidas de seguridad.</li>
+        </ul>
+      </section>
+      <aside>
+        Estado: borrador no vigente. Los formularios de esta versión son demostrativos y no
+        transmiten ni almacenan datos.
+      </aside>
+    }
+    @case ('terms') {
+      <h1 class="text-balance">Términos y condiciones</h1>
+      <p class="lead">
+        Borrador para la futura operación digital de {{ profile.legalName }}, RUC {{ profile.ruc }}.
+        El RUC figura en baja provisional por oficio y esta web no comercializa servicios mientras
+        esa situación no sea regularizada.
+      </p>
+      <section>
+        <h2>Información ya identificada</h2>
+        <ul>
+          <li>Nombre comercial: {{ profile.commercialName }}.</li>
+          <li>Domicilio fiscal declarado: {{ profile.fiscalAddress }}.</li>
+          <li>Correo general informado: {{ profile.email }}.</li>
+          <li>Teléfono para llamadas y WhatsApp: {{ profile.phone }}.</li>
+          <li>Atención: {{ profile.businessHours }}.</li>
+          <li>Modalidad prevista: {{ profile.modality }}.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Condiciones pendientes de aprobación</h2>
+        <ul>
+          <li>Flujo digital de consulta, cotización, asistencia y confirmación.</li>
+          <li>
+            Identificación de los tours operados por Kusi Q’umir y de los prestados por terceros.
+          </li>
+          <li>Alcance de intermediación, organización y operación de cada servicio.</li>
+          <li>Proceso de cotización, verificación de cupo y confirmación.</li>
+          <li>Moneda, impuestos, medios y cronograma de pago.</li>
+          <li>Políticas de cambios, cancelaciones, no presentación y reembolsos.</li>
+          <li>Responsabilidades, restricciones, seguros y atención de emergencias.</li>
+        </ul>
+      </section>
+      <aside>
+        Estado: borrador no vigente. La web no recibe consultas, reservas ni pagos reales.
+      </aside>
+    }
+    @case ('responsibleTourism') {
+      <h1 class="text-balance">Turismo responsable y protección de la niñez</h1>
+      <p class="lead">
+        Kusi Q’umir rechaza toda forma de explotación sexual de niñas, niños y adolescentes
+        vinculada a viajes y turismo. Este compromiso no equivale a una constancia de inscripción
+        turística. La versión final incorporará el material oficial y el Código de Conducta
+        suscrito.
+      </p>
+      <section>
+        <h2>Compromisos de publicación</h2>
+        <ul>
+          <li>Mostrar el afiche oficial contra la ESNNA sin alteraciones.</li>
+          <li>
+            Capacitar al personal y proveedores para detectar y comunicar situaciones de riesgo.
+          </li>
+          <li>
+            No promover actividades que vulneren la dignidad, cultura o derechos de comunidades.
+          </li>
+          <li>
+            Informar la Central Única de Denuncias del Ministerio del Interior, línea 1818, sin
+            sustituir los canales de emergencia aplicables.
+          </li>
+        </ul>
+      </section>
+      <aside>
+        Estado: contenido en preparación. El afiche oficial y la constancia de suscripción todavía
+        deben ser proporcionados por el titular.
+      </aside>
+    }
+  }
+
+  <nav class="institutional-nav" aria-label="Información complementaria">
+    <a routerLink="/informacion-institucional">Consultar la ficha institucional →</a>
+  </nav>
+</main>
