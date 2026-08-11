@@ -1,0 +1,111 @@
+<footer class="site-footer">
+  <div class="kq-shell footer-top">
+    <div class="footer-brand-column">
+      <a class="footer-brand" routerLink="/" aria-label="Ir al inicio de Kusi Q’umir">
+        <img
+          class="footer-logo"
+          src="/assets/brand/logo-horizontal-white.svg"
+          width="226"
+          height="82"
+          alt="Kusi Q’umir"
+        />
+      </a>
+      <address class="footer-contact">
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
+            <circle cx="12" cy="10" r="2.5" />
+          </svg>
+          <span
+            >Domicilio fiscal:<br />{{ profile.fiscalAddress }}<br />Dirección de atención pública
+            por confirmar</span
+          >
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <path
+              d="M7 3H4a1 1 0 0 0-1 1c0 9.39 7.61 17 17 17a1 1 0 0 0 1-1v-3l-4-1-1.25 2.25a15.6 15.6 0 0 1-10-10L8 7 7 3Z"
+            />
+          </svg>
+          <span>
+            <a [href]="profile.phoneHref">Llamadas: {{ profile.phone }}</a
+            ><br />
+            <a [href]="profile.whatsappHref" target="_blank" rel="noopener noreferrer"
+              >WhatsApp: {{ profile.whatsapp }}</a
+            >
+          </span>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="14" rx="1" />
+            <path d="m4 7 8 6 8-6" />
+          </svg>
+          <a [href]="profile.emailHref">{{ profile.email }}</a>
+        </p>
+        <p>
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <circle cx="12" cy="12" r="9" />
+            <path d="M12 7v5l3 2" />
+          </svg>
+          <span>{{ profile.businessHours }}</span>
+        </p>
+      </address>
+    </div>
+
+    <div class="footer-column">
+      <h2>Destinos principales</h2>
+      <nav class="footer-links" aria-label="Destinos principales">
+        <a routerLink="/tours/valle-sagrado">Valle Sagrado</a>
+        <a routerLink="/tours/city-tour-cusco">Cusco histórico</a>
+        <a routerLink="/tours/montana-colores">Montaña de 7 Colores</a>
+        <a routerLink="/tours/machu-picchu-full-day">Machu Picchu</a>
+        <a routerLink="/tours">Todos los tours</a>
+      </nav>
+    </div>
+
+    <div class="footer-column">
+      <h2>Información y respaldo</h2>
+      <nav class="footer-links" aria-label="Información institucional y legal">
+        <a routerLink="/informacion-institucional">Información institucional</a>
+        <a routerLink="/terminos">Términos y condiciones</a>
+        <a routerLink="/privacidad">Política de privacidad</a>
+        <a routerLink="/turismo-responsable">Turismo responsable</a>
+        <a routerLink="/libro-de-reclamaciones">Libro de Reclamaciones</a>
+      </nav>
+      <p class="footer-support-label">Estado de la operación:</p>
+      <div class="footer-support-list">
+        <span>RUC en baja provisional por oficio</span>
+        <span>Registro aún no acreditado</span>
+        <span>Sin distintivo oficial</span>
+      </div>
+    </div>
+
+    <div class="footer-column footer-community">
+      <h2>Redes en preparación</h2>
+      <div class="footer-socials" aria-hidden="true">
+        <span><i class="ri-facebook-fill"></i></span>
+        <span><i class="ri-instagram-line"></i></span>
+        <span><i class="ri-youtube-fill"></i></span>
+        <span><i class="ri-tiktok-fill"></i></span>
+      </div>
+      <p class="footer-social-note">Los perfiles oficiales se publicarán después de validarlos.</p>
+
+      <div class="footer-evaluation">
+        <strong>{{ profile.modality }} · {{ profile.registrationForm }}</strong>
+        <p>
+          Las consultas informativas están disponibles. Las reservas y los pagos permanecerán
+          desactivados hasta completar el registro y los controles correspondientes.
+        </p>
+        <a routerLink="/informacion-institucional">Ver ficha institucional →</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="kq-shell footer-bottom">
+    <p>
+      © {{ currentYear }} <strong>Kusi Q’umir</strong>. Todos los derechos reservados.
+      <span>RUC {{ profile.ruc }} · baja provisional por oficio.</span>
+    </p>
+    <p class="footer-commercial-status">Canal exclusivamente digital · sin ventas</p>
+  </div>
+</footer>

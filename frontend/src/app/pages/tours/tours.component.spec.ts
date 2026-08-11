@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { ToursApiService } from '../../features/tours/data-access/tours-api.service';
 import { TourSummary } from '../../features/tours/domain/tour.model';
@@ -9,17 +9,17 @@ import { ToursComponent } from './tours.component';
 const tour: TourSummary = {
   slug: 'city-tour-cusco',
   code: 'CTC-001',
-  title: 'City Tour Cusco',
+  title: 'Recorrido por la ciudad de Cusco',
   subtitle: 'Descubre Cusco',
   shortDescription: 'Recorre los principales atractivos de Cusco.',
   durationHours: 5,
   durationDays: 1,
-  difficulty: 'Easy',
-  groupType: 'Shared',
-  serviceType: 'HalfDay',
+  difficulty: 'Facil',
+  groupType: 'Compartido',
+  serviceType: 'MedioDia',
   featured: true,
   categorySlug: 'cultural',
-  prices: [{ name: 'General', currency: 'USD', adult: 35, child: 25 }],
+  prices: [{ name: 'General', currency: 'PEN', adult: 119, child: 85 }],
   images: [],
 };
 
@@ -37,9 +37,32 @@ describe('ToursComponent', () => {
     fixture.detectChanges();
     const content = fixture.nativeElement.textContent as string;
 
-    expect(content).toContain('City Tour Cusco');
-    expect(content).toContain('USD 35');
+    expect(content).toContain('Recorrido por la ciudad de Cusco');
+    expect(content).toContain('Fácil');
+    expect(content).toContain('S/ 119');
     expect(content).toContain('reservas y pagos desactivados');
     expect(fixture.nativeElement.querySelector('a[href="/tours/city-tour-cusco"]')).toBeTruthy();
+  });
+
+  it('lets the user retry after a catalog connection error', async () => {
+    const findAll = vi
+      .fn()
+      .mockReturnValueOnce(throwError(() => new Error('offline')))
+      .mockReturnValueOnce(of([tour]));
+
+    await TestBed.configureTestingModule({
+      imports: [ToursComponent],
+      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll } }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(ToursComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('[role="alert"]')).toBeTruthy();
+
+    (fixture.nativeElement.querySelector('.state-card button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(findAll).toHaveBeenCalledTimes(2);
+    expect(fixture.nativeElement.textContent).toContain('Recorrido por la ciudad de Cusco');
   });
 });

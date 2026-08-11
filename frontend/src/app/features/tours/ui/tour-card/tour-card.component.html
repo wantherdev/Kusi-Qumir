@@ -1,31 +1,42 @@
 @let currentTour = tour();
 
 <article class="tour-card">
-  <div class="tour-card__visual">
+  <picture class="tour-card__art">
     <img
       [src]="imageFor(currentTour)"
       width="1122"
       height="1402"
-      [alt]="'Ilustración editorial para ' + currentTour.title"
+      [alt]="imageAltFor(currentTour)"
       loading="lazy"
       decoding="async"
     />
+  </picture>
+
+  <div class="tour-card__topline">
+    @if (sequence(); as cardSequence) {
+      <span class="tour-card__number" aria-hidden="true">{{ cardNumber(cardSequence) }}</span>
+    }
     @if (currentTour.featured) {
       <span class="tour-card__badge">Destacado</span>
     }
   </div>
 
-  <div class="tour-card__body">
+  <div class="tour-card__content">
     <p class="tour-card__meta">{{ durationFor(currentTour) }} · {{ difficultyFor(currentTour) }}</p>
     <h3>{{ currentTour.title }}</h3>
     <p class="tour-card__description">{{ currentTour.shortDescription }}</p>
 
     <div class="tour-card__footer">
       @if (startingPriceFor(currentTour); as price) {
-        <p class="tour-card__price"><small>Desde</small> {{ price.currency }} {{ price.adult }}</p>
+        <p class="tour-card__price">
+          <small>Desde</small> {{ priceFor(price.adult, price.currency) }}
+        </p>
       }
-      <a [routerLink]="['/tours', currentTour.slug]">
-        Ver detalles <span aria-hidden="true">→</span>
+      <a
+        [routerLink]="['/tours', currentTour.slug]"
+        [attr.aria-label]="'Ver detalles de ' + currentTour.title"
+      >
+        Ver detalles <span aria-hidden="true">↗</span>
       </a>
     </div>
   </div>

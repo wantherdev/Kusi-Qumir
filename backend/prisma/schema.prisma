@@ -20,20 +20,20 @@ enum ClaimType {
 }
 
 enum Difficulty {
-  Easy
-  Moderate
-  Challenging
+  Facil
+  Moderada
+  Exigente
 }
 
 enum GroupType {
-  Shared
-  Private
+  Compartido
+  Privado
 }
 
 enum ServiceType {
-  HalfDay
-  FullDay
-  MultiDay
+  MedioDia
+  DiaCompleto
+  VariosDias
 }
 
 model Tour {

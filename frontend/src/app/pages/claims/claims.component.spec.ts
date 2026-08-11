@@ -55,4 +55,31 @@ describe('ClaimsComponent', () => {
       'representante',
     );
   });
+
+  it('clears hidden guardian data when the consumer is no longer marked as a minor', () => {
+    const fixture = TestBed.createComponent(ClaimsComponent);
+    fixture.detectChanges();
+
+    const checkbox = fixture.nativeElement.querySelector(
+      '[formcontrolname="menorEdad"]',
+    ) as HTMLInputElement;
+    checkbox.click();
+    fixture.detectChanges();
+
+    const guardian = fixture.nativeElement.querySelector(
+      '[formcontrolname="apoderado"]',
+    ) as HTMLInputElement;
+    guardian.value = 'Persona adulta responsable';
+    guardian.dispatchEvent(new Event('input'));
+
+    checkbox.click();
+    fixture.detectChanges();
+    checkbox.click();
+    fixture.detectChanges();
+
+    expect(
+      (fixture.nativeElement.querySelector('[formcontrolname="apoderado"]') as HTMLInputElement)
+        .value,
+    ).toBe('');
+  });
 });

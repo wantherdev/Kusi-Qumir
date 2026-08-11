@@ -16,6 +16,7 @@
     "frontend:test": "pnpm --dir frontend test:ci",
     "backend:start": "pnpm --dir backend start:dev",
     "backend:build": "pnpm --dir backend build",
+    "backend:lint": "pnpm --dir backend lint",
     "backend:test": "pnpm --dir backend test",
     "db:start": "docker compose -f compose.dev.yaml up -d postgres",
     "db:stop": "docker compose -f compose.dev.yaml stop postgres",

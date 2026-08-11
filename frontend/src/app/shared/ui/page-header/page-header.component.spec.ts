@@ -4,7 +4,7 @@ import { provideRouter } from '@angular/router';
 import { PageHeaderComponent } from './page-header.component';
 
 describe('PageHeaderComponent', () => {
-  it('provides a named home link and a visible return action', async () => {
+  it('provides a named home link and a visible catalog action', async () => {
     await TestBed.configureTestingModule({
       imports: [PageHeaderComponent],
       providers: [provideRouter([])],
@@ -16,6 +16,7 @@ describe('PageHeaderComponent', () => {
 
     expect(links).toHaveLength(2);
     expect(links[0].getAttribute('aria-label')).toContain('Volver al inicio');
-    expect(links[1].textContent).toContain('Volver al inicio');
+    expect(links[1].getAttribute('href')).toBe('/tours');
+    expect(links[1].textContent).toContain('Explorar tours');
   });
 });

@@ -83,7 +83,9 @@
       </div>
       <div [class.pending]="!profile.email">
         <dt>Correo electrónico</dt>
-        <dd>{{ profile.email }}</dd>
+        <dd>
+          <a [href]="profile.emailHref">{{ profile.email }}</a>
+        </dd>
       </div>
       <div>
         <dt>Horario de atención</dt>
@@ -206,3 +208,5 @@
     </nav>
   </section>
 </main>
+
+<app-site-footer />

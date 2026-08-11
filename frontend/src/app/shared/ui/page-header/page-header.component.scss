@@ -1,6 +1,10 @@
 .page-header {
+  position: sticky;
+  z-index: 90;
+  top: 0;
   border-bottom: 1px solid var(--kq-border);
-  background: white;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(14px);
 
   img {
     display: block;
@@ -9,12 +13,27 @@
   }
 }
 
-.back-link {
+.catalog-link {
   display: inline-flex;
   min-height: 2.75rem;
   align-items: center;
+  gap: 0.45rem;
+  border: 1px solid var(--kq-border);
+  border-radius: 999px;
+  padding: 0.5rem 0.9rem;
+  background: var(--kq-canvas);
   font-weight: 700;
   text-decoration: none;
+  transition:
+    border-color 160ms ease,
+    color 160ms ease,
+    transform 160ms ease;
+
+  &:hover {
+    border-color: var(--kq-action);
+    color: var(--kq-action);
+    transform: translateY(-1px);
+  }
 }
 
 @media (max-width: 480px) {
@@ -22,7 +41,7 @@
     width: 7.75rem;
   }
 
-  .back-link {
+  .catalog-link {
     font-size: 0.78rem;
   }
 }

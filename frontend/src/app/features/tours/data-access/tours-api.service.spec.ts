@@ -21,9 +21,12 @@ describe('ToursApiService', () => {
     const request = TestBed.inject(HttpTestingController).expectOne('/api/v1/tours');
 
     expect(request.request.method).toBe('GET');
-    request.flush([{ slug: 'city-tour-cusco', title: 'City Tour Cusco' }]);
+    request.flush([{ slug: 'city-tour-cusco', title: 'Recorrido por la ciudad de Cusco' }]);
     await expect(response).resolves.toEqual([
-      expect.objectContaining({ slug: 'city-tour-cusco', title: 'City Tour Cusco' }),
+      expect.objectContaining({
+        slug: 'city-tour-cusco',
+        title: 'Recorrido por la ciudad de Cusco',
+      }),
     ]);
   });
 });

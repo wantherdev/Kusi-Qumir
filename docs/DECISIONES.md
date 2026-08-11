@@ -27,6 +27,8 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - El hero debe cubrir su espacio visual sin márgenes vacíos accidentales.
 - Las tarjetas de experiencias pueden usar ilustraciones generadas siempre que
   mantengan el estilo aprobado y no se presenten como fotografías documentales.
+- Las tarjetas del catálogo real conservan la composición editorial original:
+  imagen a sangre, degradado oscuro, numeración, texto blanco y acento turquesa.
 - El footer conserva la estructura de cuatro columnas de la referencia aprobada.
 - El turquesa de marca es el hover común de enlaces e iconos sociales.
 
@@ -211,3 +213,51 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   del seed para mantener la API como fuente de verdad.
 - Las imágenes anteriores se conservan como recursos de respaldo; los nuevos
   archivos no las sobrescriben.
+
+## 2026-08-11 — Portada destacada y precios en soles
+
+- La portada muestra como máximo cuatro experiencias y prioriza los tours
+  marcados como destacados; `/tours` conserva el catálogo completo de 10 rutas.
+- A solicitud del titular, los precios del catálogo se expresan en soles
+  peruanos (`PEN`) y la interfaz utiliza el símbolo `S/`.
+- La conversión parte del tipo de cambio venta SBS de S/ 3.387 por USD publicado
+  el 10 de agosto de 2026 y redondea cada importe al sol más cercano.
+- Los importes continúan siendo informativos y deberán confirmarse comercialmente
+  antes de habilitar reservas o pagos; no se implementa conversión dinámica.
+
+## 2026-08-11 — Catálogo normalizado al español
+
+- Títulos, descripciones, itinerarios, preguntas, recomendaciones, opciones de
+  precio y metadatos del seed utilizan español de forma consistente.
+- Los valores de dificultad, grupo y tipo de servicio también se traducen en
+  Prisma y PostgreSQL mediante una migración que conserva los registros actuales.
+- Los slugs, códigos, rutas de imágenes, claves de destino, `PEN` y nombres
+  propios de servicios ferroviarios permanecen sin cambios porque son
+  identificadores o denominaciones oficiales, no textos editoriales.
+
+## 2026-08-11 — Revisión frontend integral
+
+- El footer editorial se extrae como componente compartido y se muestra en todas
+  las rutas para conservar contacto, estado comercial y navegación legal sin
+  duplicar implementación.
+- El encabezado de páginas internas mantiene el logotipo como regreso al inicio
+  y sustituye el segundo enlace redundante al inicio por un acceso al catálogo.
+- La composición de las tarjetas no se rediseña: se conservan imagen a sangre,
+  degradado, numeración, contenido superpuesto y acento turquesa. Se añade
+  respuesta equivalente al foco de teclado.
+- El turquesa brillante permanece como color de marca sobre superficies oscuras;
+  los botones con texto blanco usan un token de acción más profundo que alcanza
+  contraste WCAG AA.
+- Los estados remotos de portada, catálogo y detalle permiten reintentar sin una
+  recarga completa. Las fichas utilizan el `alt` real del catálogo y preparan una
+  consulta de WhatsApp contextual, sin activar reservas ni captación de datos.
+
+## 2026-08-11 — Mitigación de dependencias y arranque productivo
+
+- Se fijan overrides compatibles para `multer` 2.2.0, `body-parser` 1.20.6 y
+  `qs` 6.15.3. Con ello se eliminan los avisos altos sin actualizar versiones
+  mayores del stack obligatorio.
+- Los tres avisos moderados restantes no se ocultan ni se fuerzan: requieren una
+  migración probada de NestJS 10 a 11 y de su dependencia `file-type`.
+- `start:prod` ejecuta `dist/src/main.js`, que es la ruta realmente generada por
+  el build NestJS actual.

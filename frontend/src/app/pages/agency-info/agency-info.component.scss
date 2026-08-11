@@ -138,7 +138,7 @@ section {
   }
 
   span {
-    color: #007d7c;
+    color: var(--kq-action);
     font:
       400 1.35rem 'Fjalla One',
       sans-serif;
@@ -183,7 +183,7 @@ section {
     text-decoration: none;
 
     &:hover {
-      color: #007d7c;
+      color: var(--kq-action);
     }
   }
 }

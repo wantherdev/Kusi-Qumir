@@ -1,0 +1,263 @@
+:host {
+  display: block;
+}
+
+.site-footer {
+  padding-top: clamp(4rem, 7vw, 6rem);
+  background: var(--kq-ink);
+  color: white;
+}
+
+.footer-top {
+  display: grid;
+  grid-template-columns: minmax(15rem, 1.25fr) repeat(2, minmax(11rem, 1fr)) minmax(16rem, 1.15fr);
+  gap: clamp(2rem, 4vw, 4.5rem);
+  padding-bottom: clamp(3.5rem, 6vw, 5rem);
+
+  h2 {
+    margin: 0 0 1.15rem;
+    color: white;
+    font:
+      700 1rem 'Inter',
+      sans-serif;
+  }
+}
+
+.footer-brand-column,
+.footer-column {
+  min-width: 0;
+}
+
+.footer-brand {
+  display: inline-flex;
+}
+
+.footer-logo {
+  display: block;
+  width: min(14.5rem, 100%);
+  height: auto;
+  margin: -1.1rem 0 1.4rem;
+}
+
+.footer-contact {
+  display: grid;
+  gap: 0.85rem;
+  margin: 0;
+  color: #c7d2e5;
+  font-size: 0.84rem;
+  font-style: normal;
+
+  p {
+    display: grid;
+    grid-template-columns: 1.15rem 1fr;
+    gap: 0.7rem;
+    align-items: start;
+    margin: 0;
+    line-height: 1.5;
+  }
+
+  svg {
+    width: 1rem;
+    height: 1rem;
+    margin-top: 0.18rem;
+    fill: none;
+    stroke: var(--kq-teal);
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.8;
+  }
+
+  a {
+    color: inherit;
+    overflow-wrap: anywhere;
+    text-decoration-thickness: 1px;
+    text-underline-offset: 0.2rem;
+
+    &:hover {
+      color: var(--kq-teal);
+    }
+  }
+}
+
+.footer-links {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.9rem;
+
+  a {
+    color: #c7d2e5;
+    font-size: 0.86rem;
+    line-height: 1.35;
+    text-decoration: none;
+    transition:
+      color 160ms ease,
+      transform 160ms ease;
+
+    &:hover {
+      color: var(--kq-teal);
+      transform: translateX(2px);
+    }
+  }
+}
+
+.footer-support-label {
+  margin: 1.35rem 0 0.7rem;
+  color: #8fa4c5;
+  font-size: 0.75rem;
+}
+
+.footer-support-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.55rem;
+
+  span {
+    border: 1px solid rgba(155, 191, 230, 0.28);
+    border-radius: 999px;
+    padding: 0.55rem 0.75rem;
+    color: #d4def0;
+    font-size: 0.7rem;
+    line-height: 1.2;
+  }
+}
+
+.footer-socials {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1.25rem;
+
+  > span {
+    display: grid;
+    width: 2.5rem;
+    height: 2.5rem;
+    place-items: center;
+    border: 1px solid rgba(155, 191, 230, 0.08);
+    border-radius: 50%;
+    background: #273750;
+    color: #dbe5f5;
+  }
+
+  i {
+    display: block;
+    width: 1.05rem;
+    height: 1.05rem;
+    background: currentColor;
+    mask-position: center;
+    mask-repeat: no-repeat;
+    mask-size: contain;
+  }
+
+  .ri-facebook-fill {
+    mask-image: url('/assets/remixicon/facebook-fill.svg');
+  }
+
+  .ri-instagram-line {
+    mask-image: url('/assets/remixicon/instagram-line.svg');
+  }
+
+  .ri-youtube-fill {
+    mask-image: url('/assets/remixicon/youtube-fill.svg');
+  }
+
+  .ri-tiktok-fill {
+    mask-image: url('/assets/remixicon/tiktok-fill.svg');
+  }
+}
+
+.footer-social-note {
+  margin: -0.65rem 0 1.25rem;
+  color: #aebbd0;
+  font-size: 0.72rem;
+}
+
+.footer-evaluation {
+  border: 1px solid rgba(155, 191, 230, 0.08);
+  border-radius: 0.65rem;
+  padding: 1rem;
+  background: rgba(155, 191, 230, 0.1);
+
+  > strong {
+    display: block;
+    margin-bottom: 0.45rem;
+    font-size: 0.9rem;
+    font-weight: 600;
+  }
+
+  > p {
+    margin: 0 0 0.75rem;
+    color: #91a8cc;
+    font-size: 0.72rem;
+    line-height: 1.45;
+  }
+
+  > a {
+    color: var(--kq-teal);
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-decoration: none;
+  }
+}
+
+.footer-bottom {
+  display: flex;
+  min-height: 6.5rem;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
+  padding-block: 1.5rem;
+  color: #91a4c2;
+  font-size: 0.72rem;
+
+  p {
+    margin: 0;
+  }
+
+  strong {
+    color: var(--kq-teal);
+  }
+
+  span {
+    margin-left: 0.35rem;
+  }
+}
+
+.footer-commercial-status {
+  flex: 0 0 auto;
+  border: 1px solid rgba(155, 191, 230, 0.24);
+  border-radius: 999px;
+  padding: 0.45rem 0.7rem;
+  color: #afbdd3;
+  white-space: nowrap;
+}
+
+@media (max-width: 1100px) {
+  .footer-top {
+    grid-template-columns: 1.2fr 1fr;
+  }
+}
+
+@media (max-width: 640px) {
+  .footer-top {
+    grid-template-columns: 1fr;
+  }
+
+  .footer-bottom {
+    min-height: auto;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 1rem;
+    padding-block: 2rem;
+
+    span {
+      display: block;
+      margin: 0.35rem 0 0;
+    }
+  }
+
+  .footer-commercial-status {
+    white-space: normal;
+  }
+}

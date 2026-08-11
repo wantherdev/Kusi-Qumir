@@ -3,6 +3,7 @@
 
 @theme {
   --color-kq-teal: #{tokens.$teal};
+  --color-kq-action: #{tokens.$action};
   --color-kq-river: #{tokens.$river};
   --color-kq-mountain: #{tokens.$mountain};
   --color-kq-ink: #{tokens.$ink};
@@ -31,11 +32,14 @@
 
 :root {
   --kq-teal: #{tokens.$teal};
+  --kq-action: #{tokens.$action};
+  --kq-action-hover: #{tokens.$action-hover};
   --kq-river: #{tokens.$river};
   --kq-mountain: #{tokens.$mountain};
   --kq-ink: #{tokens.$ink};
   --kq-canvas: #{tokens.$canvas};
   --kq-surface: #{tokens.$surface};
+  --kq-surface-soft: #{tokens.$surface-soft};
   --kq-border: #{tokens.$border};
   --kq-muted: #{tokens.$muted};
   --kq-success: #{tokens.$success};
@@ -57,6 +61,21 @@ body {
     system-ui,
     sans-serif;
   -webkit-font-smoothing: antialiased;
+}
+
+img,
+picture {
+  display: block;
+}
+
+button,
+summary {
+  cursor: pointer;
+}
+
+::selection {
+  background: var(--kq-river);
+  color: var(--kq-ink);
 }
 
 body.menu-open {
@@ -95,20 +114,26 @@ summary {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 2px solid var(--kq-teal);
+  border: 2px solid var(--kq-action);
   border-radius: 0.875rem;
   padding: 0.75rem 1.35rem;
-  background: var(--kq-teal);
-  color: var(--kq-ink);
+  background: var(--kq-action);
+  color: white;
   font-weight: 700;
   text-decoration: none;
   transition:
+    border-color 160ms ease,
     transform 160ms ease,
     background-color 160ms ease;
 
   &:hover {
-    background: #18bdbc;
+    border-color: var(--kq-action-hover);
+    background: var(--kq-action-hover);
     transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
   }
 
   &--small {
@@ -120,11 +145,22 @@ summary {
     border-color: var(--kq-ink);
     background: var(--kq-ink);
     color: white;
+
+    &:hover {
+      border-color: #273750;
+      background: #273750;
+    }
   }
 
   &--light {
     border-color: white;
     background: white;
+    color: var(--kq-ink);
+
+    &:hover {
+      border-color: var(--kq-surface-soft);
+      background: var(--kq-surface-soft);
+    }
   }
 }
 

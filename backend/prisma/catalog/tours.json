@@ -2,36 +2,36 @@
   {
     "slug": "city-tour-cusco",
     "code": "CTC-001",
-    "title": "City Tour Cusco",
+    "title": "Recorrido por la ciudad de Cusco",
     "subtitle": "Descubre la capital del Imperio Inca",
     "shortDescription": "Recorre los principales atractivos de la ciudad de Cusco con guía profesional. Perfecto para tu primer día en la ciudad.",
-    "description": "Acompañanos en un recorrido por la ciudad imperial del Cusco, capital del Tahuantinsuyo y Patrimonio de la Humanidad. Caminarás por calles incas originales donde la piedra tallada convive con balcones coloniales, visitarás la majestuosa Catedral y el Templo del Sol o Qoricancha, donde los muros incas más finos del imperio sostienen un convento español. Luego ascenderás a Sacsayhuamán, la fortaleza ceremonial de piedras megalíticas que desafían toda explicación, y continuarás por los enigmáticos sitios de Qenqo, Puka Pukara y Tambomachay, cada uno con su propio misterio y propósito dentro de la cosmovisión andina. Una introducción perfecta a la historia viva de la capital inca.",
+    "description": "Acompáñanos en un recorrido por la ciudad imperial del Cusco, capital del Tahuantinsuyo y Patrimonio de la Humanidad. Caminarás por calles incas originales donde la piedra tallada convive con balcones coloniales, visitarás la majestuosa Catedral y el Templo del Sol o Qoricancha, donde los muros incas más finos del imperio sostienen un convento español. Luego ascenderás a Sacsayhuamán, la fortaleza ceremonial de piedras megalíticas que desafían toda explicación, y continuarás por los enigmáticos sitios de Qenqo, Puka Pukara y Tambomachay, cada uno con su propio misterio y propósito dentro de la cosmovisión andina. Una introducción perfecta a la historia viva de la capital inca.",
     "durationHours": 5,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "HalfDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "MedioDia",
     "featured": true,
     "active": true,
-    "recommendedFor": ["Primera vez en Cusco o tour de aclimatación"],
+    "recommendedFor": ["Primera vez en Cusco o recorrido de aclimatación"],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 35,
-        "child": 25
+        "currency": "PEN",
+        "adult": 119,
+        "child": 85
       }
     ],
     "itineraryDays": [
       {
         "day": 1,
-        "title": "City Tour Cusco",
+        "title": "Recorrido por la ciudad de Cusco",
         "activities": [
           {
             "sortOrder": 1,
             "time": "08:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel en el centro histórico",
+            "description": "Inicio del recorrido con recojo desde tu hotel en el centro histórico",
             "duration": 30
           },
           {
@@ -97,7 +97,7 @@
       },
       {
         "title": "Asistencia personalizada",
-        "description": "Atención durante todo el tour"
+        "description": "Atención durante todo el recorrido"
       }
     ],
     "excludes": [
@@ -122,7 +122,7 @@
         "sortOrder": 2
       },
       {
-        "question": "¿El tour es en inglés?",
+        "question": "¿El recorrido ofrece guía en inglés?",
         "answer": "Ofrecemos guía bilingüe español-inglés sin costo adicional.",
         "sortOrder": 3
       }
@@ -154,9 +154,9 @@
       }
     ],
     "seo": {
-      "title": "City Tour Cusco | Kusi Q'umir",
-      "description": "Reserva el City Tour Cusco y descubre la capital del Imperio Inca con guía profesional. Catedral, Coricancha, Sacsayhuamán y más.",
-      "keywords": ["City Tour Cusco", "Cusco", "tour Cusco", "visita Cusco"]
+      "title": "Recorrido por la ciudad de Cusco | Kusi Q'umir",
+      "description": "Consulta el recorrido por la ciudad de Cusco y descubre la capital del Imperio Inca con guía profesional. Catedral, Coricancha, Sacsayhuamán y más.",
+      "keywords": ["recorrido por Cusco", "Cusco", "visita guiada Cusco", "visita Cusco"]
     },
     "destinations": [
       {
@@ -172,24 +172,24 @@
     "title": "Valle Sagrado de los Incas",
     "subtitle": "El corazón del Imperio Inca",
     "shortDescription": "Recorre el majestuoso Valle Sagrado visitando Pisac, Urubamba, Ollantaytambo y Chinchero.",
-    "description": "El Valle Sagrado fue el corazón agrícola, espiritual y político del Imperio Inca, bendecido por el río Urubamba y una geografía de microclimas únicos. Iniciarás el viaje en Pisac, cuya ciudadela en la cima del cerro regala vistas panorámicas del valle y cuyo mercado artesanal es uno de los más vibrantes de la región. Tras un almuerzo buffet en Urubamba, llegarás a Ollantaytambo, la única ciudad inca viva del Perú, donde enormes terrazas de piedra y templos se alzan sobre calles empedradas aún habitadas. La última parada es Chinchero, con su palacio real de Túpac Inca Yupanqui y sus talleres textiles donde tejedoras quechuas preservan técnicas ancestrales de teñido natural.",
+    "description": "El Valle Sagrado fue el corazón agrícola, espiritual y político del Imperio Inca, bendecido por el río Urubamba y una geografía de microclimas únicos. Iniciarás el viaje en Pisac, cuya ciudadela en la cima del cerro regala vistas panorámicas del valle y cuyo mercado artesanal es uno de los más vibrantes de la región. Tras un almuerzo bufé en Urubamba, llegarás a Ollantaytambo, la única ciudad inca viva del Perú, donde enormes terrazas de piedra y templos se alzan sobre calles empedradas aún habitadas. La última parada es Chinchero, con su palacio real de Túpac Inca Yupanqui y sus talleres textiles donde tejedoras quechuas preservan técnicas ancestrales de teñido natural.",
     "durationHours": 10,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": true,
     "active": true,
     "recommendedFor": [
-      "Primera vez en Cusco o tour de aclimatación",
+      "Primera vez en Cusco o recorrido de aclimatación",
       "Amantes de la cultura e historia"
     ],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 45,
-        "child": 30
+        "currency": "PEN",
+        "adult": 152,
+        "child": 102
       }
     ],
     "itineraryDays": [
@@ -201,7 +201,7 @@
             "sortOrder": 1,
             "time": "06:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -222,7 +222,7 @@
             "sortOrder": 4,
             "time": "10:00",
             "title": "Urubamba",
-            "description": "Almuerzo buffet en un restaurante turístico del valle",
+            "description": "Almuerzo bufé en un restaurante turístico del valle",
             "duration": 60
           },
           {
@@ -259,8 +259,8 @@
         "description": "Guía bilingüe español-inglés"
       },
       {
-        "title": "Almuerzo buffet",
-        "description": "Almuerzo tipo buffet en restaurante turístico en Urubamba"
+        "title": "Almuerzo bufé",
+        "description": "Almuerzo tipo bufé en restaurante turístico en Urubamba"
       }
     ],
     "excludes": [
@@ -276,7 +276,7 @@
     "faqs": [
       {
         "question": "¿El almuerzo está incluido?",
-        "answer": "Sí, incluimos almuerzo buffet en un restaurante turístico en Urubamba.",
+        "answer": "Sí, incluimos almuerzo bufé en un restaurante turístico en Urubamba.",
         "sortOrder": 1
       },
       {
@@ -288,7 +288,7 @@
     "recommendations": [
       {
         "title": "Llegar temprano",
-        "description": "El tour empieza a las 6:00 am, recomendamos descansar bien la noche anterior"
+        "description": "El recorrido empieza a las 6:00 a. m.; recomendamos descansar bien la noche anterior"
       },
       {
         "title": "Llevar efectivo",
@@ -310,7 +310,7 @@
     ],
     "seo": {
       "title": "Valle Sagrado | Kusi Q'umir",
-      "description": "Reserva el tour al Valle Sagrado de los Incas. Visita Pisac, Ollantaytambo, Urubamba y Chinchero con guía profesional.",
+      "description": "Consulta el recorrido al Valle Sagrado de los Incas. Visita Pisac, Ollantaytambo, Urubamba y Chinchero con guía profesional.",
       "keywords": ["Valle Sagrado", "Cusco", "Pisac", "Ollantaytambo", "Chinchero"]
     },
     "destinations": [
@@ -331,21 +331,21 @@
     "title": "Maras y Moray",
     "subtitle": "Salineras milenarias y andenes circulares",
     "shortDescription": "Conoce las impresionantes salineras de Maras y los misteriosos andenes circulares de Moray.",
-    "description": "Este tour te sumerge en el ingenio agrícola y la explotación de recursos naturales de los incas. En Moray descubrirás un laboratorio agrícola circular de andenes concéntricos que alcanzan los 30 metros de profundidad, donde cada nivel genera su propio microclima, permitiendo a los incas experimentar con cultivos de diferentes regiones. Luego visitarás las Salineras de Maras, un espectáculo visual de miles de pozas de sal blanca talladas en la ladera de la montaña que han sido operadas por familias locales desde tiempos preincaicos. El contraste del blanco intenso de la sal contra el verde de los Andes y el azul del cielo crea una de las postales más fotogénicas de Cusco.",
+    "description": "Este recorrido te sumerge en el ingenio agrícola y la explotación de recursos naturales de los incas. En Moray descubrirás un laboratorio agrícola circular de andenes concéntricos que alcanzan los 30 metros de profundidad, donde cada nivel genera su propio microclima, permitiendo a los incas experimentar con cultivos de diferentes regiones. Luego visitarás las Salineras de Maras, un espectáculo visual de miles de pozas de sal blanca talladas en la ladera de la montaña que han sido operadas por familias locales desde tiempos preincaicos. El contraste del blanco intenso de la sal contra el verde de los Andes y el azul del cielo crea una de las postales más fotogénicas de Cusco.",
     "durationHours": 5,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "HalfDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "MedioDia",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de la fotografía", "Amantes de la cultura e historia"],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 30,
-        "child": 20
+        "currency": "PEN",
+        "adult": 102,
+        "child": 68
       }
     ],
     "itineraryDays": [
@@ -357,7 +357,7 @@
             "sortOrder": 1,
             "time": "08:30",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -411,8 +411,8 @@
         "sortOrder": 1
       },
       {
-        "question": "¿Es un tour muy exigente físicamente?",
-        "answer": "No, es un tour tranquilo con caminatas cortas. Ideal para cualquier persona.",
+        "question": "¿Es un recorrido muy exigente físicamente?",
+        "answer": "No, es un recorrido tranquilo con caminatas cortas. Es ideal para cualquier persona.",
         "sortOrder": 2
       }
     ],
@@ -437,7 +437,7 @@
     ],
     "seo": {
       "title": "Maras y Moray | Kusi Q'umir",
-      "description": "Reserva el tour a Maras y Moray. Conoce las salineras milenarias y los andenes circulares incas.",
+      "description": "Consulta el recorrido a Maras y Moray. Conoce las salineras milenarias y los andenes circulares incas.",
       "keywords": ["Maras", "Moray", "salineras", "Cusco"]
     },
     "destinations": [
@@ -455,33 +455,33 @@
   {
     "slug": "machu-picchu-full-day",
     "code": "MP-001",
-    "title": "Machu Picchu Full Day",
+    "title": "Machu Picchu en un día",
     "subtitle": "La maravilla del mundo en un día",
     "shortDescription": "Vive la experiencia de visitar Machu Picchu en un día completo desde Cusco. Tren, montaña y la ciudadela inca.",
-    "description": "El tour más emblemático del Perú te lleva en un solo día a una de las Siete Maravillas del Mundo Moderno. La aventura comienza antes del amanecer con un viaje en tren que serpentea el Valle Sagrado junto al río Urubamba, ascendiendo gradualmente hacia la ceja de selva. Desde el pintoresco pueblo de Aguas Calientes, un bus ecológico asciende en zigzag hasta la entrada de la ciudadela. Allí, entre la niebla mañanera que se disipa lentamente, aparece Machu Picchu en todo su esplendor. Un guía profesional te conducirá por los sectores principales: el Templo del Sol, el Intihuatana, el Templo de las Tres Ventanas y la Plaza Principal, revelando la historia y el misterio de esta obra maestra de la arquitectura inca.",
+    "description": "La experiencia más emblemática del Perú te lleva en un solo día a una de las Siete Maravillas del Mundo Moderno. La aventura comienza antes del amanecer con un viaje en tren que serpentea el Valle Sagrado junto al río Urubamba, ascendiendo gradualmente hacia la ceja de selva. Desde el pintoresco pueblo de Aguas Calientes, un autobús ecológico asciende en zigzag hasta la entrada de la ciudadela. Allí, entre la niebla mañanera que se disipa lentamente, aparece Machu Picchu en todo su esplendor. Un guía profesional te conducirá por los sectores principales: el Templo del Sol, el Intihuatana, el Templo de las Tres Ventanas y la Plaza Principal, revelando la historia y el misterio de esta obra maestra de la arquitectura inca.",
     "durationHours": 16,
     "durationDays": 1,
-    "difficulty": "Moderate",
-    "groupType": "Shared",
-    "serviceType": "MultiDay",
+    "difficulty": "Moderada",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": true,
     "active": true,
     "recommendedFor": [
-      "Primera vez en Cusco o tour de aclimatación",
+      "Primera vez en Cusco o recorrido de aclimatación",
       "Imperdible en tu visita a Perú"
     ],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 220,
-        "child": 190
+        "currency": "PEN",
+        "adult": 745,
+        "child": 644
       },
       {
-        "name": "VIP",
-        "currency": "USD",
-        "adult": 320,
-        "child": 280
+        "name": "Superior",
+        "currency": "PEN",
+        "adult": 1084,
+        "child": 948
       }
     ],
     "itineraryDays": [
@@ -500,14 +500,14 @@
             "sortOrder": 2,
             "time": "06:10",
             "title": "Tren a Aguas Calientes",
-            "description": "Viaje en tren Expedition con vistas panorámicas del valle",
+            "description": "Viaje en el servicio de tren turístico Expedition con vistas panorámicas del valle",
             "duration": 120
           },
           {
             "sortOrder": 3,
             "time": "08:15",
-            "title": "Bus a Machu Picchu",
-            "description": "Ascenso en bus desde Aguas Calientes hasta la entrada de la ciudadela",
+            "title": "Autobús a Machu Picchu",
+            "description": "Ascenso en autobús desde Aguas Calientes hasta la entrada de la ciudadela",
             "duration": 30
           },
           {
@@ -528,7 +528,7 @@
             "sortOrder": 6,
             "time": "14:00",
             "title": "Descenso a Aguas Calientes",
-            "description": "Bus de retorno al pueblo de Aguas Calientes",
+            "description": "Autobús de retorno al pueblo de Aguas Calientes",
             "duration": 30
           },
           {
@@ -554,12 +554,12 @@
         "description": "Recojo y retorno desde hotel céntrico en Cusco"
       },
       {
-        "title": "Tren Expedition",
+        "title": "Tren turístico Expedition",
         "description": "Tren ida y vuelta Ollantaytambo - Aguas Calientes"
       },
       {
-        "title": "Bus",
-        "description": "Bus de subida y bajada Aguas Calientes - Machu Picchu"
+        "title": "Autobús",
+        "description": "Autobús de subida y bajada entre Aguas Calientes y Machu Picchu"
       },
       {
         "title": "Guía profesional",
@@ -567,7 +567,7 @@
       },
       {
         "title": "Entrada a Machu Picchu",
-        "description": "Ticket de ingreso a la ciudadela incluido"
+        "description": "Boleto de ingreso a la ciudadela incluido"
       }
     ],
     "excludes": [
@@ -577,12 +577,12 @@
       },
       {
         "title": "Alimentación",
-        "description": "Comidas y bebidas durante el tour"
+        "description": "Comidas y bebidas durante el recorrido"
       }
     ],
     "faqs": [
       {
-        "question": "¿El tour incluye la entrada a Machu Picchu?",
+        "question": "¿El recorrido incluye la entrada a Machu Picchu?",
         "answer": "Sí, la entrada general a la ciudadela está incluida.",
         "sortOrder": 1
       },
@@ -593,7 +593,7 @@
       },
       {
         "question": "¿Qué tipo de tren se utiliza?",
-        "answer": "Incluimos tren Expedition. Se puede mejorar a Vistadome por un costo adicional.",
+        "answer": "Incluimos el servicio de tren turístico Expedition. Se puede cambiar a Vistadome por un costo adicional.",
         "sortOrder": 3
       }
     ],
@@ -624,9 +624,9 @@
       }
     ],
     "seo": {
-      "title": "Machu Picchu Full Day | Kusi Q'umir",
-      "description": "Reserva el tour a Machu Picchu en un día desde Cusco. Incluye tren, bus, guía y entrada a la ciudadela.",
-      "keywords": ["Machu Picchu", "tour Machu Picchu", "Cusco", "maravilla del mundo"]
+      "title": "Machu Picchu en un día | Kusi Q'umir",
+      "description": "Consulta el recorrido a Machu Picchu en un día desde Cusco. Incluye tren, autobús, guía y entrada a la ciudadela.",
+      "keywords": ["Machu Picchu", "recorrido Machu Picchu", "Cusco", "maravilla del mundo"]
     },
     "destinations": [
       {
@@ -642,21 +642,21 @@
     "title": "Laguna Humantay",
     "subtitle": "La joya turquesa de los Andes",
     "shortDescription": "Camina hasta la impresionante laguna turquesa de Humantay, rodeada de nevados y paisajes de alta montaña.",
-    "description": "Una experiencia de trekking que te lleva a una de las lagunas más hermosas del Perú, enclavada en la cordillera de Vilcabamba a los pies del imponente nevado Humantay. La caminata asciende a través de paisajes altoandinos de ensueño, con vistas al nevado Salkantay que se alza majestuoso al fondo. Al llegar, la laguna revela un color turquesa intenso y casi irreal, producto de la harina glaciar —partículas minerales finamente molidas por el hielo que reflejan la luz solar. El silencio andino solo interrumpido por el viento y el ocasional vuelo de un cóndor hacen de este lugar una experiencia casi mística. Ideal para amantes de la naturaleza y la fotografía de montaña.",
+    "description": "Una experiencia de senderismo que te lleva a una de las lagunas más hermosas del Perú, enclavada en la cordillera de Vilcabamba a los pies del imponente nevado Humantay. La caminata asciende a través de paisajes altoandinos de ensueño, con vistas al nevado Salkantay que se alza majestuoso al fondo. Al llegar, la laguna revela un color turquesa intenso y casi irreal, producto de la harina glaciar —partículas minerales finamente molidas por el hielo que reflejan la luz solar. El silencio andino solo interrumpido por el viento y el ocasional vuelo de un cóndor hacen de este lugar una experiencia casi mística. Ideal para amantes de la naturaleza y la fotografía de montaña.",
     "durationHours": 12,
     "durationDays": 1,
-    "difficulty": "Moderate",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Moderada",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": false,
     "active": true,
-    "recommendedFor": ["Amantes de las caminatas", "Para quienes les gusta el trekking ligero"],
+    "recommendedFor": ["Amantes de las caminatas", "Para quienes disfrutan del senderismo ligero"],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 45,
-        "child": 35
+        "currency": "PEN",
+        "adult": 152,
+        "child": 119
       }
     ],
     "itineraryDays": [
@@ -668,7 +668,7 @@
             "sortOrder": 1,
             "time": "04:30",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -682,7 +682,7 @@
             "sortOrder": 3,
             "time": "08:30",
             "title": "Inicio de caminata",
-            "description": "Inicio del trekking desde Soraypampa hacia la laguna",
+            "description": "Inicio de la caminata desde Soraypampa hacia la laguna",
             "duration": 15
           },
           {
@@ -737,7 +737,7 @@
     "excludes": [
       {
         "title": "Entrada a la laguna",
-        "description": "Ticket de ingreso (S/ 20) no incluido"
+        "description": "Entrada de S/ 20 no incluida"
       },
       {
         "title": "Caballo de alquiler",
@@ -764,7 +764,7 @@
     "recommendations": [
       {
         "title": "Aclimatación previa",
-        "description": "Recomendamos estar al menos 2 días en Cusco antes de hacer este tour"
+        "description": "Recomendamos estar al menos 2 días en Cusco antes de realizar este recorrido"
       },
       {
         "title": "Ropa de abrigo",
@@ -789,8 +789,8 @@
     ],
     "seo": {
       "title": "Laguna Humantay | Kusi Q'umir",
-      "description": "Reserva el tour a la Laguna Humantay. Camina hasta la laguna turquesa de los Andes con guía profesional.",
-      "keywords": ["Laguna Humantay", "Humantay", "trekking", "Cusco"]
+      "description": "Consulta el recorrido a la Laguna Humantay. Camina hasta la laguna turquesa de los Andes con guía profesional.",
+      "keywords": ["Laguna Humantay", "Humantay", "senderismo", "Cusco"]
     },
     "destinations": [
       {
@@ -809,22 +809,22 @@
     "description": "La Montaña Vinicunca, también conocida como la Montaña Arcoíris, es el segundo destino más visitado de Cusco y una de las maravillas naturales más impresionantes de Sudamérica. Sus laderas exhiben franjas de rojo, amarillo, verde, lavanda, rosa y terracota, formadas por la sedimentación de minerales durante millones de años y reveladas por el retroceso glaciar. La caminata atraviesa paisajes altoandinos salpicados de llamas y alpacas, con el nevado Ausangate como testigo silencioso. Al alcanzar la cumbre a 5,200 msnm, la vista panorámica de la cordillera de Vilcanota y el Valle Rojo es una recompensa que pocos lugares en el mundo pueden ofrecer.",
     "durationHours": 14,
     "durationDays": 1,
-    "difficulty": "Challenging",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Exigente",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": true,
     "active": true,
     "recommendedFor": [
       "Amantes de las caminatas",
-      "Para quienes les gusta el trekking",
+      "Para quienes disfrutan del senderismo",
       "Amantes de la fotografía"
     ],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 50,
-        "child": 40
+        "currency": "PEN",
+        "adult": 169,
+        "child": 135
       }
     ],
     "itineraryDays": [
@@ -836,7 +836,7 @@
             "sortOrder": 1,
             "time": "04:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -850,7 +850,7 @@
             "sortOrder": 3,
             "time": "07:30",
             "title": "Inicio de caminata",
-            "description": "Inicio del trekking desde el punto de control",
+            "description": "Inicio de la caminata desde el punto de control",
             "duration": 15
           },
           {
@@ -871,7 +871,7 @@
             "sortOrder": 6,
             "time": "13:00",
             "title": "Almuerzo",
-            "description": "Almuerzo buffet en Pitumarca",
+            "description": "Almuerzo bufé en Pitumarca",
             "duration": 60
           },
           {
@@ -898,14 +898,14 @@
         "description": "Desayuno ligero en Pitumarca"
       },
       {
-        "title": "Almuerzo buffet",
-        "description": "Almuerzo buffet en restaurante local"
+        "title": "Almuerzo bufé",
+        "description": "Almuerzo bufé en restaurante local"
       }
     ],
     "excludes": [
       {
         "title": "Entrada",
-        "description": "Ticket de ingreso (S/ 30) no incluido"
+        "description": "Entrada de S/ 30 no incluida"
       },
       {
         "title": "Caballo de alquiler",
@@ -920,7 +920,7 @@
       },
       {
         "question": "¿Necesito aclimatación?",
-        "answer": "Sí, recomendamos mínimo 3 días en Cusco antes de realizar este tour.",
+        "answer": "Sí, recomendamos como mínimo 3 días en Cusco antes de realizar este recorrido.",
         "sortOrder": 2
       },
       {
@@ -960,7 +960,7 @@
     ],
     "seo": {
       "title": "Montaña de 7 Colores | Kusi Q'umir",
-      "description": "Reserva el tour a la Montaña de 7 Colores Vinicunca. Trekking inolvidable a 5,200 msnm con guía profesional.",
+      "description": "Consulta el recorrido a la Montaña de 7 Colores Vinicunca. Caminata inolvidable a 5,200 msnm con guía profesional.",
       "keywords": ["Montaña de 7 Colores", "Vinicunca", "Montaña Arcoíris", "Cusco"]
     },
     "destinations": [
@@ -980,21 +980,21 @@
     "description": "Una ruta menos transitada pero igualmente fascinante que recorre tres hitos históricos del sur cusqueño. Comienzas en Tipón, el Templo del Agua, donde canales, acueductos y fuentes ceremoniales de piedra tallada aún conducen agua con una precisión hidráulica asombrosa, demostrando el dominio inca de la ingeniería. Continúas en Pikillaqta, la ciudad mejor conservada de la cultura Wari (preincaica), con sus 50 hectáreas de recintos rectangulares, plazas y calles que albergaron a miles de habitantes. Finalizas en Andahuaylillas, cuya modesta fachada de adobe esconde la llamada Capilla Sixtina de América, un tesoro de murales barrocos, pan de oro y arte colonial que cubre cada centímetro de sus muros y techos.",
     "durationHours": 5,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "HalfDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "MedioDia",
     "featured": false,
     "active": true,
     "recommendedFor": [
-      "Primera vez en Cusco o tour de aclimatación",
+      "Primera vez en Cusco o recorrido de aclimatación",
       "Amantes de la cultura e historia"
     ],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 35,
-        "child": 25
+        "currency": "PEN",
+        "adult": 119,
+        "child": 85
       }
     ],
     "itineraryDays": [
@@ -1006,7 +1006,7 @@
             "sortOrder": 1,
             "time": "08:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -1069,8 +1069,8 @@
     ],
     "recommendations": [
       {
-        "title": "Tour complementario",
-        "description": "Ideal para combinar con el City Tour Cusco si te gusta la historia"
+        "title": "Recorrido complementario",
+        "description": "Ideal para combinar con el recorrido por la ciudad de Cusco si te gusta la historia"
       }
     ],
     "requirements": [
@@ -1088,7 +1088,7 @@
     ],
     "seo": {
       "title": "Valle Sur del Cusco | Kusi Q'umir",
-      "description": "Reserva el tour al Valle Sur del Cusco. Visita Tipón, Pikillaqta y Andahuaylillas con guía profesional.",
+      "description": "Consulta el recorrido al Valle Sur del Cusco. Visita Tipón, Pikillaqta y Andahuaylillas con guía profesional.",
       "keywords": ["Valle Sur", "Tipón", "Pikillaqta", "Andahuaylillas", "Cusco"]
     },
     "destinations": [
@@ -1113,24 +1113,24 @@
     "title": "Waqrapukara",
     "subtitle": "La fortaleza secreta de los Andes",
     "shortDescription": "Descubre la imponente fortaleza de Waqrapukara, un tesoro escondido fuera de las rutas turísticas tradicionales.",
-    "description": "Una aventura fuera de las rutas turísticas convencionales hacia una fortaleza ceremonial inca enclavada en lo alto de un acantilado, con vistas al imponente cañón del río Apurímac. El nombre quechua significa fortaleza con cuernos, por las formaciones rocosas que enmarcan el sitio. El trekking de día completo atraviesa comunidades altoandinas remotas, paisajes abiertos de puna y rebaños de llamas, culminando en un sitio arqueológico de una espectacularidad difícil de igualar: plazas, terrazas, nichos trapezoidales y recintos ceremoniales integrados con la roca natural, suspendidos sobre un abismo de vértigo. La ausencia de multitudes y la energía del lugar hacen de esta caminata una experiencia inolvidable para quienes buscan algo más allá de los destinos masificados.",
+    "description": "Una aventura fuera de las rutas turísticas convencionales hacia una fortaleza ceremonial inca enclavada en lo alto de un acantilado, con vistas al imponente cañón del río Apurímac. El nombre quechua significa fortaleza con cuernos, por las formaciones rocosas que enmarcan el sitio. La caminata de día completo atraviesa comunidades altoandinas remotas, paisajes abiertos de puna y rebaños de llamas, culminando en un sitio arqueológico de una espectacularidad difícil de igualar: plazas, terrazas, nichos trapezoidales y recintos ceremoniales integrados con la roca natural, suspendidos sobre un abismo de vértigo. La ausencia de multitudes y la energía del lugar hacen de esta caminata una experiencia inolvidable para quienes buscan algo más allá de los destinos masificados.",
     "durationHours": 12,
     "durationDays": 1,
-    "difficulty": "Challenging",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Exigente",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": false,
     "active": true,
     "recommendedFor": [
-      "Para quienes les gusta el trekking",
+      "Para quienes disfrutan del senderismo",
       "Aventureros fuera de la ruta turística"
     ],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 55,
-        "child": 40
+        "currency": "PEN",
+        "adult": 186,
+        "child": 135
       }
     ],
     "itineraryDays": [
@@ -1142,7 +1142,7 @@
             "sortOrder": 1,
             "time": "05:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -1156,7 +1156,7 @@
             "sortOrder": 3,
             "time": "09:00",
             "title": "Inicio de caminata",
-            "description": "Inicio del trekking hacia la fortaleza",
+            "description": "Inicio de la caminata hacia la fortaleza",
             "duration": 15
           },
           {
@@ -1211,12 +1211,12 @@
     "excludes": [
       {
         "title": "Entrada",
-        "description": "Ticket de ingreso (S/ 15) no incluido"
+        "description": "Entrada de S/ 15 no incluida"
       }
     ],
     "faqs": [
       {
-        "question": "¿Es seguro el tour?",
+        "question": "¿Es seguro el recorrido?",
         "answer": "Sí, vamos con guías experimentados que conocen la ruta perfectamente.",
         "sortOrder": 1
       },
@@ -1229,11 +1229,11 @@
     "recommendations": [
       {
         "title": "Para aventureros",
-        "description": "Este tour es ideal si ya hiciste los clásicos y buscas algo diferente"
+        "description": "Este recorrido es ideal si ya conoces los destinos clásicos y buscas algo diferente"
       },
       {
-        "title": "Llevar snacks",
-        "description": "La caminata es larga, lleva snacks energéticos adicionales"
+        "title": "Llevar refrigerios",
+        "description": "La caminata es larga; lleva refrigerios energéticos adicionales"
       }
     ],
     "requirements": [
@@ -1254,8 +1254,8 @@
     ],
     "seo": {
       "title": "Waqrapukara | Kusi Q'umir",
-      "description": "Reserva el tour a Waqrapukara, la fortaleza secreta de los Andes. Trekking fuera de la ruta turística.",
-      "keywords": ["Waqrapukara", "fortaleza", "trekking", "Cusco", "fuera de ruta"]
+      "description": "Consulta el recorrido a Waqrapukara, la fortaleza secreta de los Andes. Caminata fuera de la ruta turística habitual.",
+      "keywords": ["Waqrapukara", "fortaleza", "senderismo", "Cusco", "fuera de ruta"]
     },
     "destinations": [
       {
@@ -1271,21 +1271,21 @@
     "title": "Puente Q'eswachaka",
     "subtitle": "El último puente inca tejido a mano",
     "shortDescription": "Conoce el puente Q'eswachaka, la última muestra viva de la ingeniería inca reconstruida cada año por las comunidades locales.",
-    "description": "Un viaje al último puente colgante inca construido íntegramente con fibra vegetal de ichu, declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO. Suspendido a 30 metros sobre el río Apurímac, este puente de 28 metros de longitud es reconstruido cada mes de junio por cuatro comunidades locales en una ceremonia ancestral que se ha transmitido de generación en generación durante más de 500 años. Durante la visita podrás cruzar esta maravilla de la ingeniería precolombina y sentir la conexión con una tradición viva que resiste al tiempo. El tour también incluye el circuito de las Cuatro Lagunas —Pomacanchi, Acopia, Asnaqocha y Pampamarca—, un paisaje de alta montaña de una belleza serena y espectacular.",
+    "description": "Un viaje al último puente colgante inca construido íntegramente con fibra vegetal de ichu, declarado Patrimonio Cultural Inmaterial de la Humanidad por la UNESCO. Suspendido a 30 metros sobre el río Apurímac, este puente de 28 metros de longitud es reconstruido cada mes de junio por cuatro comunidades locales en una ceremonia ancestral que se ha transmitido de generación en generación durante más de 500 años. Durante la visita podrás cruzar esta maravilla de la ingeniería precolombina y sentir la conexión con una tradición viva que resiste al tiempo. El recorrido también incluye el circuito de las Cuatro Lagunas —Pomacanchi, Acopia, Asnaqocha y Pampamarca—, un paisaje de alta montaña de una belleza serena y espectacular.",
     "durationHours": 12,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de la cultura e historia", "Para conocer tradiciones vivas"],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 50,
-        "child": 35
+        "currency": "PEN",
+        "adult": 169,
+        "child": 119
       }
     ],
     "itineraryDays": [
@@ -1297,7 +1297,7 @@
             "sortOrder": 1,
             "time": "05:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -1395,7 +1395,7 @@
     ],
     "seo": {
       "title": "Puente Q'eswachaka | Kusi Q'umir",
-      "description": "Reserva el tour al Puente Q'eswachaka, el último puente inca tejido a mano. Patrimonio Cultural de la Humanidad.",
+      "description": "Consulta el recorrido al Puente Q'eswachaka, el último puente inca tejido a mano. Patrimonio Cultural de la Humanidad.",
       "keywords": ["Q'eswachaka", "puente inca", "Cusco", "tradición", "cultura viva"]
     },
     "destinations": [
@@ -1415,18 +1415,18 @@
     "description": "La alternativa ideal para quienes desean maravillarse con los colores del arcoíris andino sin someterse a la exigente caminata de Vinicunca. Palcoyo ofrece un sendero corto y de pendiente suave de apenas 30 a 45 minutos, accesible para la mayoría de viajeros. El paisaje es surrealista: tres montañas de colores se despliegan ante tus ojos, acompañadas de un bosque de piedras de formaciones rocosas esculpidas por el viento y la erosión. Todo ello con el imponente nevado Ausangate como telón de fondo. La baja afluencia de visitantes permite una experiencia tranquila y auténtica, perfecta para fotografiar sin multitudes.",
     "durationHours": 10,
     "durationDays": 1,
-    "difficulty": "Easy",
-    "groupType": "Shared",
-    "serviceType": "FullDay",
+    "difficulty": "Facil",
+    "groupType": "Compartido",
+    "serviceType": "DiaCompleto",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de las caminatas", "Alternativa a la Montaña de 7 Colores"],
     "prices": [
       {
         "name": "General",
-        "currency": "USD",
-        "adult": 45,
-        "child": 35
+        "currency": "PEN",
+        "adult": 152,
+        "child": 119
       }
     ],
     "itineraryDays": [
@@ -1438,7 +1438,7 @@
             "sortOrder": 1,
             "time": "05:00",
             "title": "Recojo del hotel",
-            "description": "Inicio del tour con recojo desde tu hotel",
+            "description": "Inicio del recorrido con recojo desde tu hotel",
             "duration": 30
           },
           {
@@ -1452,7 +1452,7 @@
             "sortOrder": 3,
             "time": "08:30",
             "title": "Inicio de caminata",
-            "description": "Inicio del trekking hacia la montaña de colores",
+            "description": "Inicio de la caminata hacia la montaña de colores",
             "duration": 15
           },
           {
@@ -1507,7 +1507,7 @@
     "excludes": [
       {
         "title": "Entrada",
-        "description": "Ticket de ingreso (S/ 20) no incluido"
+        "description": "Entrada de S/ 20 no incluida"
       }
     ],
     "faqs": [
@@ -1546,7 +1546,7 @@
     ],
     "seo": {
       "title": "Montaña Palcoyo | Kusi Q'umir",
-      "description": "Reserva el tour a la Montaña Palcoyo. La alternativa más accesible a la Montaña de 7 Colores.",
+      "description": "Consulta el recorrido a la Montaña Palcoyo. La alternativa más accesible a la Montaña de 7 Colores.",
       "keywords": ["Palcoyo", "Montaña de Colores", "Cusco", "alternativa Vinicunca"]
     },
     "destinations": [

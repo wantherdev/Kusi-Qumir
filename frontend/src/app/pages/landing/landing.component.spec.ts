@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
-import { of } from 'rxjs';
+import { of, throwError } from 'rxjs';
 
 import { ToursApiService } from '../../features/tours/data-access/tours-api.service';
 import { TourSummary } from '../../features/tours/domain/tour.model';
@@ -9,19 +9,33 @@ import { LandingComponent } from './landing.component';
 const tour: TourSummary = {
   slug: 'city-tour-cusco',
   code: 'CTC-001',
-  title: 'City Tour Cusco',
+  title: 'Recorrido por la ciudad de Cusco',
   subtitle: 'Descubre Cusco',
   shortDescription: 'Recorre los principales atractivos de Cusco.',
   durationHours: 5,
   durationDays: 1,
-  difficulty: 'Easy',
-  groupType: 'Shared',
-  serviceType: 'HalfDay',
+  difficulty: 'Facil',
+  groupType: 'Compartido',
+  serviceType: 'MedioDia',
   featured: true,
   categorySlug: 'cultural',
-  prices: [{ name: 'General', currency: 'USD', adult: 35, child: 25 }],
+  prices: [{ name: 'General', currency: 'PEN', adult: 119, child: 85 }],
   images: [],
 };
+
+const catalog: TourSummary[] = [
+  tour,
+  { ...tour, slug: 'valle-sagrado', code: 'VSI-002', title: 'Valle Sagrado' },
+  { ...tour, slug: 'machu-picchu-full-day', code: 'MPF-004', title: 'Machu Picchu' },
+  { ...tour, slug: 'montana-colores', code: 'M7C-006', title: 'Montaña de 7 Colores' },
+  {
+    ...tour,
+    slug: 'maras-moray',
+    code: 'MYM-003',
+    title: 'Maras y Moray',
+    featured: false,
+  },
+];
 
 describe('LandingComponent', () => {
   beforeEach(async () => {
@@ -29,7 +43,7 @@ describe('LandingComponent', () => {
       imports: [LandingComponent],
       providers: [
         provideRouter([]),
-        { provide: ToursApiService, useValue: { findAll: () => of([tour]) } },
+        { provide: ToursApiService, useValue: { findAll: () => of(catalog) } },
       ],
     }).compileComponents();
   });
@@ -44,8 +58,19 @@ describe('LandingComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Anexo II');
     expect(fixture.nativeElement.textContent).toContain('Tours propios');
     expect(fixture.nativeElement.textContent).toContain('Tours de terceros');
-    expect(fixture.nativeElement.textContent).toContain('City Tour Cusco');
-    expect(fixture.nativeElement.textContent).toContain('USD 35');
+    expect(fixture.nativeElement.textContent).toContain('Recorrido por la ciudad de Cusco');
+    expect(fixture.nativeElement.textContent).toContain('S/ 119');
+  });
+
+  it('shows only four featured tours and links to the complete catalog', () => {
+    const fixture = TestBed.createComponent(LandingComponent);
+    fixture.detectChanges();
+
+    const content = fixture.nativeElement.textContent as string;
+    expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(4);
+    expect(fixture.nativeElement.querySelector('.tour-card__number')?.textContent).toContain('01');
+    expect(content).not.toContain('Maras y Moray');
+    expect(fixture.nativeElement.querySelector('a[href="/tours"]')).toBeTruthy();
   });
 
   it('offers the confirmed contact channels without collecting data', () => {
@@ -86,5 +111,29 @@ describe('LandingComponent', () => {
     fixture.destroy();
 
     expect(document.body.classList.contains('menu-open')).toBe(false);
+  });
+});
+
+describe('LandingComponent catalog recovery', () => {
+  it('retries the API without reloading the complete page', async () => {
+    const findAll = vi
+      .fn()
+      .mockReturnValueOnce(throwError(() => new Error('offline')))
+      .mockReturnValueOnce(of(catalog));
+
+    await TestBed.configureTestingModule({
+      imports: [LandingComponent],
+      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll } }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(LandingComponent);
+    fixture.detectChanges();
+    expect(fixture.nativeElement.querySelector('.catalog-state--error')).toBeTruthy();
+
+    (fixture.nativeElement.querySelector('.catalog-state button') as HTMLButtonElement).click();
+    fixture.detectChanges();
+
+    expect(findAll).toHaveBeenCalledTimes(2);
+    expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(4);
   });
 });

@@ -23,7 +23,8 @@
   } @else if (hasError()) {
     <section class="state-card state-card--error" role="alert">
       <h2>No pudimos cargar los tours</h2>
-      <p>Comprueba que la API esté disponible y vuelve a recargar esta página.</p>
+      <p>Comprueba tu conexión o que la API esté disponible y vuelve a intentarlo.</p>
+      <button class="kq-button kq-button--small" type="button" (click)="retry()">Reintentar</button>
     </section>
   } @else if (tours().length === 0) {
     <section class="state-card">
@@ -32,9 +33,11 @@
     </section>
   } @else {
     <section class="tour-grid" aria-label="Tours disponibles">
-      @for (tour of tours(); track tour.slug) {
-        <app-tour-card [tour]="tour" />
+      @for (tour of tours(); track tour.slug; let index = $index) {
+        <app-tour-card [tour]="tour" [sequence]="index + 1" />
       }
     </section>
   }
 </main>
+
+<app-site-footer />

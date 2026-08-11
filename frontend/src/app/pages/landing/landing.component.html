@@ -98,11 +98,11 @@
       <div class="section-heading reveal">
         <div>
           <p class="kq-eyebrow mb-3">Catálogo conectado a nuestra API</p>
-          <h2 id="experiences-title" class="text-balance">Los 10 tours que ofrecemos</h2>
+          <h2 id="experiences-title" class="text-balance">Cuatro tours para comenzar</h2>
         </div>
         <p>
-          Información vigente confirmada por el titular. Consulta la ficha completa para revisar el
-          itinerario y las condiciones de cada experiencia.
+          Una selección de nuestras experiencias destacadas. Abre el catálogo completo para revisar
+          los 10 itinerarios y las condiciones de cada tour.
         </p>
       </div>
 
@@ -114,12 +114,15 @@
       } @else if (catalogError()) {
         <div class="catalog-state catalog-state--error" role="alert">
           <strong>No pudimos conectar con el catálogo</strong>
-          <p>La API no está disponible. Recarga la página o comunícate por WhatsApp.</p>
+          <p>La API no está disponible. Puedes intentarlo nuevamente o comunicarte por WhatsApp.</p>
+          <button class="kq-button kq-button--small" type="button" (click)="retryCatalog()">
+            Reintentar
+          </button>
         </div>
       } @else {
         <div class="landing-tour-grid">
-          @for (tour of tours(); track tour.slug) {
-            <app-tour-card [tour]="tour" />
+          @for (tour of tours(); track tour.slug; let index = $index) {
+            <app-tour-card [tour]="tour" [sequence]="index + 1" />
           } @empty {
             <div class="catalog-state">
               <strong>No hay tours publicados</strong>
@@ -129,7 +132,7 @@
         </div>
         <div class="catalog-actions">
           <a class="kq-button" routerLink="/tours">Abrir catálogo completo</a>
-          <span>10 tours · precios en USD · disponibilidad por confirmar</span>
+          <span>10 tours en el catálogo · precios en soles · disponibilidad por confirmar</span>
         </div>
       }
     </div>
@@ -354,121 +357,4 @@
   </section>
 </main>
 
-<footer class="site-footer">
-  <div class="kq-shell footer-top">
-    <div class="footer-brand-column">
-      <img
-        class="footer-logo"
-        src="/assets/brand/logo-horizontal-white.svg"
-        width="226"
-        height="82"
-        alt="Kusi Q’umir"
-      />
-      <div class="footer-contact">
-        <p>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path d="M20 10c0 5-8 11-8 11S4 15 4 10a8 8 0 1 1 16 0Z" />
-            <circle cx="12" cy="10" r="2.5" />
-          </svg>
-          <span
-            >Domicilio fiscal:<br />{{ agencyProfile.fiscalAddress }}<br />Dirección de atención
-            pública por confirmar</span
-          >
-        </p>
-        <p>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <path
-              d="M7 3H4a1 1 0 0 0-1 1c0 9.39 7.61 17 17 17a1 1 0 0 0 1-1v-3l-4-1-1.25 2.25a15.6 15.6 0 0 1-10-10L8 7 7 3Z"
-            />
-          </svg>
-          <span>
-            <a [href]="agencyProfile.phoneHref">Llamadas: {{ agencyProfile.phone }}</a
-            ><br />
-            <a [href]="agencyProfile.whatsappHref" target="_blank" rel="noopener noreferrer"
-              >WhatsApp: {{ agencyProfile.whatsapp }}</a
-            >
-          </span>
-        </p>
-        <p>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <rect x="3" y="5" width="18" height="14" rx="1" />
-            <path d="m4 7 8 6 8-6" />
-          </svg>
-          <span>{{ agencyProfile.email }}</span>
-        </p>
-        <p>
-          <svg viewBox="0 0 24 24" aria-hidden="true">
-            <circle cx="12" cy="12" r="9" />
-            <path d="M12 7v5l3 2" />
-          </svg>
-          <span>{{ agencyProfile.businessHours }}</span>
-        </p>
-      </div>
-    </div>
-
-    <div class="footer-column">
-      <h2>Destinos principales</h2>
-      <nav class="footer-links" aria-label="Destinos principales">
-        <a routerLink="/tours/valle-sagrado">Valle Sagrado</a>
-        <a routerLink="/tours/city-tour-cusco">Cusco histórico</a>
-        <a routerLink="/tours/montana-colores">Montaña de 7 Colores</a>
-        <a routerLink="/tours/machu-picchu-full-day">Machu Picchu</a>
-        <a routerLink="/tours">Todos los tours</a>
-      </nav>
-    </div>
-
-    <div class="footer-column">
-      <h2>Información legal</h2>
-      <nav class="footer-links" aria-label="Información legal">
-        <a routerLink="/informacion-institucional">Información institucional</a>
-        <a routerLink="/terminos">Términos y condiciones</a>
-        <a routerLink="/privacidad">Política de privacidad</a>
-        <a routerLink="/terminos">Cancelaciones y reembolsos</a>
-        <a routerLink="/turismo-responsable">Turismo responsable</a>
-        <a routerLink="/libro-de-reclamaciones">Libro de Reclamaciones</a>
-      </nav>
-      <p class="footer-support-label">Estado y documentación:</p>
-      <div class="footer-support-list">
-        <span>RUC en baja provisional por oficio</span>
-        <span>Registro aún no acreditado</span>
-        <span>Sin distintivo oficial</span>
-      </div>
-    </div>
-
-    <div class="footer-column footer-community">
-      <h2>Síguenos</h2>
-      <div class="footer-socials" aria-hidden="true">
-        <span title="Facebook por configurar">
-          <i class="ri-facebook-fill" aria-hidden="true"></i>
-        </span>
-        <span title="Instagram por configurar">
-          <i class="ri-instagram-line" aria-hidden="true"></i>
-        </span>
-        <span title="YouTube por configurar">
-          <i class="ri-youtube-fill" aria-hidden="true"></i>
-        </span>
-        <span title="TikTok por configurar">
-          <i class="ri-tiktok-fill" aria-hidden="true"></i>
-        </span>
-      </div>
-      <p class="footer-social-note">Los perfiles oficiales se publicarán después de validarlos.</p>
-
-      <div class="footer-evaluation">
-        <strong>{{ agencyProfile.modality }} · {{ agencyProfile.registrationForm }}</strong>
-        <p>
-          Las consultas informativas están disponibles. Las reservas y los pagos permanecerán
-          desactivados hasta completar el registro y los controles correspondientes.
-        </p>
-        <a routerLink="/informacion-institucional">Ver ficha institucional →</a>
-      </div>
-    </div>
-  </div>
-
-  <div class="kq-shell footer-bottom">
-    <p>
-      © {{ currentYear }} <strong>Kusi Q’umir</strong>. Todos los derechos reservados.
-      <span>RUC {{ agencyProfile.ruc }} · baja provisional por oficio.</span>
-    </p>
-    <p class="footer-commercial-status">Canal exclusivamente digital · sin ventas</p>
-  </div>
-</footer>
+<app-site-footer />

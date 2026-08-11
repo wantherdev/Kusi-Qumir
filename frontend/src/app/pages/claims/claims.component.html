@@ -36,11 +36,15 @@
       </div>
       <div>
         <dt>Teléfono y WhatsApp</dt>
-        <dd>{{ profile.phone }}</dd>
+        <dd>
+          <a [href]="profile.phoneHref">{{ profile.phone }}</a>
+        </dd>
       </div>
       <div>
         <dt>Correo electrónico</dt>
-        <dd>{{ profile.email }}</dd>
+        <dd>
+          <a [href]="profile.emailHref">{{ profile.email }}</a>
+        </dd>
       </div>
     </dl>
   </div>
@@ -296,3 +300,5 @@
     </p>
   </form>
 </main>
+
+<app-site-footer />

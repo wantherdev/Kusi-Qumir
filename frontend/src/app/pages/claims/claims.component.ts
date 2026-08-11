@@ -7,15 +7,17 @@ import {
   viewChild,
 } from '@angular/core';
 import { NonNullableFormBuilder, ReactiveFormsModule, Validators } from '@angular/forms';
+import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { agencyProfile } from '../../config/agency-profile';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
 type ClaimFeedback = { kind: 'error' | 'success'; message: string };
 
 @Component({
   selector: 'app-claims',
-  imports: [PageHeaderComponent, ReactiveFormsModule],
+  imports: [PageHeaderComponent, ReactiveFormsModule, SiteFooterComponent],
   templateUrl: './claims.component.html',
   styleUrl: './claims.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -42,6 +44,10 @@ export class ClaimsComponent {
     pedido: ['', [Validators.required, Validators.minLength(5)]],
   });
 
+  constructor() {
+    this.claimForm.valueChanges.pipe(takeUntilDestroyed()).subscribe(() => this.feedback.set(null));
+  }
+
   protected prepareClaim(): void {
     this.claimForm.markAllAsTouched();
 
@@ -67,7 +73,7 @@ export class ClaimsComponent {
       guardian.setValidators(Validators.required);
     } else {
       guardian.clearValidators();
-      guardian.markAsUntouched();
+      guardian.reset('');
     }
 
     guardian.updateValueAndValidity();

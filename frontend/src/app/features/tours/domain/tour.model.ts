@@ -1,6 +1,6 @@
-export type TourDifficulty = 'Easy' | 'Moderate' | 'Challenging';
-export type TourGroupType = 'Shared' | 'Private';
-export type TourServiceType = 'HalfDay' | 'FullDay' | 'MultiDay';
+export type TourDifficulty = 'Facil' | 'Moderada' | 'Exigente';
+export type TourGroupType = 'Compartido' | 'Privado';
+export type TourServiceType = 'MedioDia' | 'DiaCompleto' | 'VariosDias';
 
 export type TourPrice = {
   name: string;

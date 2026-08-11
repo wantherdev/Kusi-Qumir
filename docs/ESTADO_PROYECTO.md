@@ -1,6 +1,6 @@
 # Estado del proyecto Kusi Q’umir
 
-Última actualización: 10 de agosto de 2026.
+Última actualización: 11 de agosto de 2026.
 
 Este archivo es el punto de reanudación para una persona o una nueva sesión de
 IA. Debe actualizarse después de cada avance importante.
@@ -29,8 +29,9 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Ilustración editorial del hero completando todo su lienzo.
 - Diez ilustraciones editoriales originales, una por tour, en WebP de
   1122 × 1402 px y con una dirección visual andina coherente.
-- Footer basado en la referencia aprobada: cuatro columnas, bloque legal,
-  estado institucional, redes sociales y franja inferior.
+- Footer compartido en todas las rutas, basado en la referencia aprobada: cuatro
+  columnas, bloque legal, estado institucional, redes en preparación y franja
+  inferior.
 - Hover turquesa de marca en enlaces e iconos sociales.
 - Iconos sociales de Remix Icon servidos como recursos locales.
 - Recursos de marca, fuentes e imágenes servidos localmente.
@@ -61,7 +62,8 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   experiencias con carga diferida y dimensiones reservadas.
 - Servidor SSR sin exposición de `X-Powered-By`, con encabezados básicos de
   seguridad y caché diferenciada para HTML, bundles versionados y activos.
-- Encabezado reutilizable para las páginas internas.
+- Encabezado reutilizable que permanece visible durante el desplazamiento y con
+  acceso directo al catálogo en todas las páginas internas.
 - Páginas informativas de privacidad, términos y turismo responsable.
 - Servidor de desarrollo escuchando en `0.0.0.0` para pruebas dentro de la red
   local.
@@ -84,12 +86,28 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   listado resumido y detalle completo.
 - Rutas Angular `/tours` y `/tours/:slug` con loading, vacío, error, detalle,
   itinerarios, precios, inclusiones, requisitos y consulta por WhatsApp.
-- Portada reestructurada para mostrar los 10 tours reales desde la API en lugar
-  de tres experiencias demostrativas escritas en la plantilla.
+- Estados de error recuperables mediante reintento sin recargar la aplicación en
+  portada, catálogo y ficha de tour.
+- Consulta de WhatsApp contextualizada con el nombre y código del tour,
+  categorías legibles, texto alternativo procedente del catálogo y metadatos
+  sociales dinámicos.
+- Portada reestructurada para mostrar cuatro tours destacados desde la API y
+  mantener el acceso al catálogo completo de 10 experiencias.
 - Tarjeta de tour reutilizable entre portada y catálogo; cada ficha apunta a su
-  propio recurso editorial local y cuenta con texto alternativo descriptivo.
+  propio recurso editorial local, cuenta con texto alternativo descriptivo y
+  conserva el estilo original de imagen completa con contenido superpuesto.
+- Precios referenciales expresados en soles peruanos y presentados con el símbolo
+  `S/` en tarjetas y fichas completas.
+- Contenido completo del seed y enums públicos del catálogo normalizados al
+  español; los slugs, códigos y nombres propios comerciales permanecen estables.
 - `pnpm start` inicia conjuntamente API y frontend para evitar un catálogo vacío
   por ejecutar solo Angular.
+- Sistema visual reforzado con tokens semánticos de acción y contraste WCAG AA;
+  las tarjetas mantienen su composición editorial original.
+- Script productivo de NestJS alineado con la salida real de compilación
+  `dist/src/main.js`.
+- Overrides compatibles de `multer`, `body-parser` y `qs` eliminan las
+  vulnerabilidades altas detectadas sin migrar versiones mayores del stack.
 
 ## Rutas actuales
 
@@ -105,20 +123,27 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 | `/libro-de-reclamaciones`    | Formulario demostrativo | Requiere backend y flujo legal completo   |
 | `/**`                        | Página no encontrada    | HTTP 404 mediante SSR                     |
 
-Las seis rutas públicas se prerenderizan; la ruta comodín se resuelve mediante
-SSR para devolver HTTP 404.
+Se prerenderizan seis rutas institucionales. El catálogo y sus fichas se cargan
+en cliente durante la evaluación para no depender de PostgreSQL en el build; la
+ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 
 ## Verificación técnica más reciente
 
-- `pnpm test:ci`: 19 pruebas superadas en 11 archivos.
+- `pnpm test:ci`: 30 pruebas superadas en 14 archivos.
 - `pnpm build`: finalizado correctamente, sin errores ni advertencias.
 - Backend: lint limpio, 7 pruebas superadas, schema Prisma válido y build NestJS
   correcto.
 - Las 10 rutas de imágenes de tours son únicas y responden HTTP 200 desde el
   servidor de desarrollo.
 - Seis rutas prerenderizadas.
-- Tamaño inicial estimado del navegador: 85.29 kB.
-- Auditoría de dependencias de producción: sin vulnerabilidades conocidas.
+- Tamaño inicial estimado del navegador: 85.38 kB.
+- Contraste de texto y acciones principales verificado mediante cálculo: las
+  combinaciones revisadas superan WCAG AA (mínimo medido 4.97:1).
+- DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
+  footer presente, sin IDs duplicados, imágenes sin `alt` ni enlaces sin nombre.
+- Auditoría de dependencias de producción: las vulnerabilidades altas quedaron
+  corregidas; permanecen 3 moderadas transitivas que requieren una migración
+  dedicada de NestJS 10 a 11 y `file-type` 20 a una versión compatible.
 - Prueba directa del servidor: rutas públicas con HTTP 200 y ruta desconocida
   con HTTP 404.
 
@@ -169,6 +194,9 @@ al operador real en cada propuesta.
 - Falta desplegar sobre el dominio definitivo, definir la política CSP del
   hosting y validar accesibilidad, rendimiento y comportamiento en dispositivos
   y navegadores reales.
+- Antes de una salida comercial debe planificarse y probarse la migración de
+  NestJS 10 a 11 para cerrar los tres avisos moderados restantes sin forzar
+  dependencias mayores incompatibles.
 
 Consulta el detalle regulatorio en `docs/requisitos-publicacion.md`.
 
@@ -182,8 +210,11 @@ Consulta el detalle regulatorio en `docs/requisitos-publicacion.md`.
    consentimiento y tratamiento de datos.
 6. Confirmar los paquetes del proyecto anterior e incorporar sus fichas cuando
    corresponda; mantener reservas desactivadas hasta levantar los bloqueos.
-7. Ejecutar una revisión final de accesibilidad, rendimiento, seguridad, SEO y
-   requisitos regulatorios antes de publicar funciones comerciales.
+7. Migrar NestJS 10 a 11 en una tarea dedicada y volver a ejecutar la auditoría
+   de dependencias.
+8. Ejecutar una revisión final de accesibilidad, rendimiento, seguridad, SEO y
+   requisitos regulatorios en dispositivos y navegadores reales antes de
+   publicar funciones comerciales.
 
 ## Cómo reanudar el trabajo
 

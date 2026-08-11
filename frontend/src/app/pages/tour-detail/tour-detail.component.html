@@ -16,11 +16,12 @@
       <p class="kq-eyebrow">Error de conexión</p>
       <h1>No pudimos cargar este tour</h1>
       <p>Comprueba que la API esté disponible y vuelve a intentarlo.</p>
+      <button class="kq-button" type="button" (click)="retry()">Reintentar</button>
     </section>
   } @else if (tour(); as tour) {
     <header class="tour-hero">
       <div class="tour-hero__copy">
-        <p class="kq-eyebrow">{{ tour.code }} · {{ tour.categorySlug }}</p>
+        <p class="kq-eyebrow">{{ tour.code }} · {{ categoryFor(tour) }}</p>
         <h1 class="text-balance">{{ tour.title }}</h1>
         @if (tour.subtitle) {
           <p class="subtitle">{{ tour.subtitle }}</p>
@@ -29,14 +30,16 @@
         <ul aria-label="Datos principales del tour">
           <li>{{ durationFor(tour) }}</li>
           <li>Dificultad {{ difficultyFor(tour) }}</li>
-          <li>{{ tour.groupType === 'Shared' ? 'Grupo compartido' : 'Grupo privado' }}</li>
+          <li>{{ tour.groupType === 'Compartido' ? 'Grupo compartido' : 'Grupo privado' }}</li>
         </ul>
       </div>
       <img
         [src]="imageFor(tour)"
         width="1122"
         height="1402"
-        [alt]="'Ilustración editorial para ' + tour.title"
+        [alt]="imageAltFor(tour)"
+        decoding="async"
+        fetchpriority="high"
       />
     </header>
 
@@ -63,12 +66,12 @@
         @for (price of tour.prices; track price.name) {
           <article>
             <h3>{{ price.name }}</h3>
-            <p><small>Adulto</small> {{ price.currency }} {{ price.adult }}</p>
+            <p><small>Adulto</small> {{ priceFor(price.adult, price.currency) }}</p>
             @if (price.child !== undefined) {
-              <p><small>Niño</small> {{ price.currency }} {{ price.child }}</p>
+              <p><small>Niño</small> {{ priceFor(price.child, price.currency) }}</p>
             }
             @if (price.private !== undefined) {
-              <p><small>Privado</small> {{ price.currency }} {{ price.private }}</p>
+              <p><small>Privado</small> {{ priceFor(price.private, price.currency) }}</p>
             }
           </article>
         }
@@ -87,7 +90,9 @@
           <ol>
             @for (activity of day.activities; track activity.sortOrder) {
               <li>
-                <time>{{ activity.time ?? 'Hora por confirmar' }}</time>
+                <time [attr.datetime]="activity.time ?? null">{{
+                  activity.time ?? 'Hora por confirmar'
+                }}</time>
                 <div>
                   <strong>{{ activity.title }}</strong>
                   <p>{{ activity.description }}</p>
@@ -159,10 +164,12 @@
     }
 
     <nav class="tour-actions" aria-label="Acciones del tour">
-      <a class="kq-button" [href]="profile.whatsappHref" target="_blank" rel="noopener noreferrer"
+      <a class="kq-button" [href]="whatsappHref()" target="_blank" rel="noopener noreferrer"
         >Consultar por WhatsApp</a
       >
       <a routerLink="/tours">← Volver a todos los tours</a>
     </nav>
   }
 </main>
+
+<app-site-footer />

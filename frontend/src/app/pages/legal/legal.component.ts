@@ -3,6 +3,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 
 import { agencyProfile } from '../../config/agency-profile';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
 type LegalDocument = 'privacy' | 'terms' | 'responsibleTourism';
 
@@ -12,7 +13,7 @@ function isLegalDocument(value: unknown): value is LegalDocument {
 
 @Component({
   selector: 'app-legal',
-  imports: [PageHeaderComponent, RouterLink],
+  imports: [PageHeaderComponent, RouterLink, SiteFooterComponent],
   templateUrl: './legal.component.html',
   styleUrl: './legal.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -56,6 +56,7 @@ atención. El catálogo de tours sí consume endpoints públicos de solo lectura
 
 ```bash
 pnpm backend:build
+pnpm backend:lint
 pnpm backend:test
 pnpm backend:start
 pnpm --dir backend prisma:seed

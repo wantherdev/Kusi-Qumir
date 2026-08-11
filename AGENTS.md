@@ -17,6 +17,19 @@ Antes de modificar el proyecto, lee también:
 - `docs/DECISIONES.md`
 - `docs/requisitos-publicacion.md`
 
+## Uso de skills
+
+- Usa `.agents/skills/frontend-master-skill/SKILL.md` como skill orquestadora
+  cuando una tarea frontend sea transversal: auditoría integral, rediseño amplio
+  o feature que combine varias áreas como UX/UI, Angular, testing,
+  accesibilidad, SEO, seguridad y performance.
+- Para una tarea acotada, carga únicamente la skill Angular especializada que
+  corresponda. No cargues la skill maestra junto con varias skills específicas
+  si no aporta una coordinación real.
+- La skill maestra complementa estas instrucciones; el stack obligatorio, las
+  reglas legales, la seguridad y las convenciones de este archivo conservan
+  precedencia dentro del proyecto.
+
 ## Stack obligatorio
 
 - Angular 22 con componentes standalone.
