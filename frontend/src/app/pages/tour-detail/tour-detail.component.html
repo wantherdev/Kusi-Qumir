@@ -19,6 +19,14 @@
       <button class="kq-button" type="button" (click)="retry()">Reintentar</button>
     </section>
   } @else if (tour(); as tour) {
+    <nav class="breadcrumbs" aria-label="Ruta de navegación">
+      <a routerLink="/">Inicio</a>
+      <span aria-hidden="true">/</span>
+      <a routerLink="/tours">Tours</a>
+      <span aria-hidden="true">/</span>
+      <span aria-current="page">{{ tour.title }}</span>
+    </nav>
+
     <header class="tour-hero">
       <div class="tour-hero__copy">
         <p class="kq-eyebrow">{{ tour.code }} · {{ categoryFor(tour) }}</p>
@@ -31,7 +39,22 @@
           <li>{{ durationFor(tour) }}</li>
           <li>Dificultad {{ difficultyFor(tour) }}</li>
           <li>{{ tour.groupType === 'Compartido' ? 'Grupo compartido' : 'Grupo privado' }}</li>
+          <li>{{ operationFor(tour) }}</li>
         </ul>
+        <div class="hero-inquiry">
+          @if (startingPrice(); as price) {
+            <p>
+              <small>Precio referencial desde</small>
+              <strong>{{ priceFor(price.adult, price.currency) }}</strong>
+            </p>
+          }
+          <div>
+            <a class="kq-button" [href]="whatsappHref()" target="_blank" rel="noopener noreferrer"
+              >Consultar este tour</a
+            >
+            <small>Consulta informativa; no inicia una reserva.</small>
+          </div>
+        </div>
       </div>
       <img
         [src]="imageFor(tour)"
@@ -50,6 +73,24 @@
         permanezca en baja provisional y no exista constancia turística acreditada.
       </p>
     </aside>
+
+    <section class="service-origin">
+      <div>
+        <p class="kq-eyebrow">Prestación del servicio</p>
+        <h2>{{ operationFor(tour) }}</h2>
+      </div>
+      @if (tour.operationType === 'PROPIO') {
+        <p>
+          Esta es una experiencia propia del catálogo de Kusi Q’umir. La coordinación operativa se
+          realizará directamente cuando la operación comercial esté habilitada.
+        </p>
+      } @else {
+        <p>
+          Esta ruta se ofrece como tour de terceros. Aún no publicamos un operador aliado: su
+          identidad, disponibilidad y condiciones se validan antes de cualquier contratación.
+        </p>
+      }
+    </section>
 
     <section class="tour-intro">
       <div>

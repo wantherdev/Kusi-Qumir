@@ -8,6 +8,13 @@
         alt="Kusi Q’umir"
       />
     </a>
-    <a class="catalog-link" routerLink="/tours">Explorar tours <span aria-hidden="true">→</span></a>
+    <a
+      class="catalog-link"
+      routerLink="/tours"
+      routerLinkActive="catalog-link--active"
+      [routerLinkActiveOptions]="{ exact: true }"
+      ariaCurrentWhenActive="page"
+      >Explorar tours <span aria-hidden="true">→</span></a
+    >
   </div>
 </header>

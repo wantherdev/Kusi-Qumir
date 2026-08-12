@@ -1,5 +1,5 @@
 import { TourSummary } from './tour.model';
-import { formatTourPrice, tourCategory, tourImageAlt } from './tour-view';
+import { formatTourPrice, tourCategory, tourImageAlt, tourOperation } from './tour-view';
 
 const tour: TourSummary = {
   slug: 'valle-sagrado',
@@ -12,6 +12,7 @@ const tour: TourSummary = {
   difficulty: 'Facil',
   groupType: 'Compartido',
   serviceType: 'DiaCompleto',
+  operationType: 'PROPIO',
   featured: true,
   categorySlug: 'historia',
   prices: [],
@@ -39,5 +40,6 @@ describe('tour presentation helpers', () => {
   it('uses the catalog alt text and a readable category label', () => {
     expect(tourImageAlt(tour)).toBe('Terrazas del Valle Sagrado bajo la luz de la mañana');
     expect(tourCategory(tour)).toBe('Historia');
+    expect(tourOperation(tour)).toBe('Tour propio');
   });
 });

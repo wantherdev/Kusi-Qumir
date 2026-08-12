@@ -261,3 +261,47 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   migración probada de NestJS 10 a 11 y de su dependencia `file-type`.
 - `start:prod` ejecuta `dist/src/main.js`, que es la ruta realmente generada por
   el build NestJS actual.
+
+## 2026-08-12 — Titularidad de tours y transparencia de terceros
+
+- El catálogo persiste el tipo de prestación de cada tour mediante
+  `operationType`, que la API expone tanto en el listado como en la ficha.
+- City Tour Cusco, Valle VIP, Montaña de 7 Colores y Laguna Humantay se
+  clasifican como experiencias propias. Maras y Moray, Machu Picchu, Valle Sur,
+  Waqrapukara, Puente Q’eswachaka y Palcoyo se clasifican como tours de terceros.
+- Los tours de terceros siguen visibles en el catálogo informativo, pero no se
+  publican operadores, logos ni licencias mientras no haya aliados directos
+  confirmados. La web exige validar responsable, disponibilidad y condiciones
+  antes de cualquier contratación.
+- El producto antes titulado Valle Sagrado de los Incas se presenta como Valle
+  VIP. Se mantiene el slug `valle-sagrado`, los contenidos geográficos sobre el
+  Valle Sagrado y la imagen existente para evitar romper enlaces o alterar la
+  descripción real de la ruta.
+
+## 2026-08-12 — Revisión integral backend y frontend
+
+- La API expone paginación opcional (`limit` máx. 100, `offset`) en
+  `GET /api/v1/tours`; sin parámetros conserva el comportamiento actual y
+  devuelve el catálogo completo. El slug de `GET /tours/:slug` se valida con
+  longitud y formato (`[a-z0-9-]`).
+- Se incorpora un filtro global de excepciones con logger: los errores Prisma
+  conocidos (P2002, P2025) se mapean a respuestas HTTP estructuradas y los
+  errores internos no exponen detalles técnicos.
+- El build de backend usa `tsconfig.build.json` y elimina `dist/` antes de
+  compilar; la salida productiva es `dist/main.js` (sin specs ni `.d.ts`).
+- `CONTACT_RECIPIENT_EMAIL` es opcional en la validación de entorno hasta
+  implementar el flujo real de notificaciones; el `.env.example` usa únicamente
+  placeholders y no contiene datos reales del prestador.
+- `@types/express` se incorpora como dependencia de desarrollo para tipar el
+  filtro de excepciones; no cambia el stack productivo.
+- La portada deriva los conteos de tours, propios y de terceros del catálogo
+  cargado en lugar de textos fijos, con respaldo a los valores actuales mientras
+  el estado está en carga o error.
+- La portada y el catálogo eliminan el envoltorio sin estilos `.catalog-loading`;
+  los estados de carga conservan `role="status"` y los esqueletos decorativos.
+- El feedback del Libro de Reclamaciones solo se anuncia cuando contiene un
+  mensaje, con `role` condicional (`alert` o `status`).
+- El HTML base incorpora `og:image` con el recurso local preparado
+  (`cusco-andes-og.jpg`); canonical, `og:url` e imagen absoluta siguen
+  pendientes hasta definir dominio e indexación.
+

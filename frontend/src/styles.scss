@@ -44,7 +44,11 @@
   --kq-muted: #{tokens.$muted};
   --kq-success: #{tokens.$success};
   --kq-warning: #{tokens.$warning};
+  --kq-warning-surface: #{tokens.$warning-surface};
+  --kq-warning-border: #{tokens.$warning-border};
   --kq-danger: #{tokens.$danger};
+  --kq-danger-surface: #{tokens.$danger-surface};
+  --kq-danger-border: #{tokens.$danger-border};
 }
 
 html {

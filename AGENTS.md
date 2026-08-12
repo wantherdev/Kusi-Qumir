@@ -26,6 +26,9 @@ Antes de modificar el proyecto, lee también:
 - Para una tarea acotada, carga únicamente la skill Angular especializada que
   corresponda. No cargues la skill maestra junto con varias skills específicas
   si no aporta una coordinación real.
+- Para tareas de backend (crear, revisar o alinear módulos, configuraciones o
+  pruebas de la API), usa `.agents/skills/nestjs-backend-architecture/SKILL.md`
+  como referencia de arquitectura NestJS 10 y Prisma 5.22.
 - La skill maestra complementa estas instrucciones; el stack obligatorio, las
   reglas legales, la seguridad y las convenciones de este archivo conservan
   precedencia dentro del proyecto.
@@ -44,6 +47,10 @@ Antes de modificar el proyecto, lee también:
 - RxJS para streams asíncronos y composición temporal cuando aporte valor.
 - Vitest para pruebas unitarias y de componentes.
 - Playwright para recorridos E2E críticos cuando exista una suite configurada.
+- Backend en `backend/` con NestJS 10, Prisma 5.22 + PostgreSQL, TypeScript
+  estricto, validación con class-validator/Joi, seguridad con Helmet y
+  throttling, Jest + ts-jest para pruebas y ESLint (typescript-eslint) para
+  lint. El build usa `tsconfig.build.json` y emite en `dist/main.js`.
 
 No actualices versiones mayores ni cambies herramientas de pruebas como parte
 de una tarea no relacionada.
@@ -58,6 +65,10 @@ pnpm test:ci
 pnpm build
 pnpm serve:ssr
 ```
+
+Para cambios de backend, ejecuta también `pnpm backend:lint`,
+`pnpm backend:test` y `pnpm backend:build`; con `pnpm build:all` y
+`pnpm test:all` se validan ambas aplicaciones.
 
 Antes de entregar cambios de código, ejecuta al menos `pnpm test:ci` y
 `pnpm build`. No edites artefactos dentro de `frontend/dist/`, `backend/dist/`

@@ -18,6 +18,7 @@ const tour: Tour = {
   difficulty: 'Facil',
   groupType: 'Compartido',
   serviceType: 'DiaCompleto',
+  operationType: 'PROPIO',
   featured: true,
   categorySlug: 'historia',
   recommendedFor: ['Viajeros culturales'],
@@ -81,11 +82,18 @@ describe('TourDetailComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
     const image = element.querySelector('.tour-hero > img') as HTMLImageElement;
     const whatsapp = element.querySelector('.tour-actions .kq-button') as HTMLAnchorElement;
+    const primaryInquiry = element.querySelector('.hero-inquiry .kq-button') as HTMLAnchorElement;
 
     expect(element.querySelector('h1')?.textContent).toContain(tour.title);
     expect(element.querySelector('.tour-hero .kq-eyebrow')?.textContent).toContain('Historia');
     expect(image.alt).toBe(tour.images[0].alt);
     expect(new URL(whatsapp.href).searchParams.get('text')).toContain(tour.title);
+    expect(new URL(primaryInquiry.href).searchParams.get('text')).toContain(tour.title);
+    expect(element.querySelector('.hero-inquiry')?.textContent).toContain('S/ 180');
+    expect(element.querySelector('.service-origin')?.textContent).toContain('experiencia propia');
+    expect(element.querySelector('.breadcrumbs [aria-current="page"]')?.textContent).toContain(
+      tour.title,
+    );
     expect(document.title).toBe(tour.seo?.title);
     expect(document.head.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe(
       tour.seo?.title,

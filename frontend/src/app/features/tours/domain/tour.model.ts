@@ -1,6 +1,7 @@
 export type TourDifficulty = 'Facil' | 'Moderada' | 'Exigente';
 export type TourGroupType = 'Compartido' | 'Privado';
 export type TourServiceType = 'MedioDia' | 'DiaCompleto' | 'VariosDias';
+export type TourOperationType = 'PROPIO' | 'TERCERO';
 
 export type TourPrice = {
   name: string;
@@ -74,6 +75,7 @@ export type Tour = {
   difficulty: TourDifficulty;
   groupType: TourGroupType;
   serviceType: TourServiceType;
+  operationType: TourOperationType;
   featured: boolean;
   categorySlug: string;
   recommendedFor: string[];
@@ -101,6 +103,7 @@ export type TourSummary = Pick<
   | 'difficulty'
   | 'groupType'
   | 'serviceType'
+  | 'operationType'
   | 'featured'
   | 'categorySlug'
   | 'prices'

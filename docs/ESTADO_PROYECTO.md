@@ -1,6 +1,6 @@
 # Estado del proyecto Kusi Q’umir
 
-Última actualización: 11 de agosto de 2026.
+Última actualización: 12 de agosto de 2026.
 
 Este archivo es el punto de reanudación para una persona o una nueva sesión de
 IA. Debe actualizarse después de cada avance importante.
@@ -98,6 +98,18 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   conserva el estilo original de imagen completa con contenido superpuesto.
 - Precios referenciales expresados en soles peruanos y presentados con el símbolo
   `S/` en tarjetas y fichas completas.
+- Catálogo con búsqueda tolerante a tildes, filtros accesibles por categoría,
+  contador de resultados y recuperación clara cuando no existen coincidencias.
+- Esqueletos reutilizables en portada y catálogo para reservar el espacio de las
+  tarjetas y comunicar la carga sin saltos visuales.
+- Fichas de tour con ruta de navegación y bloque inicial de precio/consulta por
+  WhatsApp; la acción permanece informativa y no inicia una reserva.
+- Catálogo clasificado desde la base de datos como tour propio o de terceros:
+  City Tour Cusco, Valle VIP, Montaña de 7 Colores y Laguna Humantay son
+  experiencias propias; las otras seis rutas se mantienen visibles como tours
+  de terceros, sin publicar aliados u operadores no confirmados.
+- El tour `valle-sagrado` conserva su slug estable y se presenta públicamente
+  como Valle VIP en el catálogo, ficha, footer y metadatos SEO.
 - Contenido completo del seed y enums públicos del catálogo normalizados al
   español; los slugs, códigos y nombres propios comerciales permanecen estables.
 - `pnpm start` inicia conjuntamente API y frontend para evitar un catálogo vacío
@@ -108,6 +120,12 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   `dist/src/main.js`.
 - Overrides compatibles de `multer`, `body-parser` y `qs` eliminan las
   vulnerabilidades altas detectadas sin migrar versiones mayores del stack.
+- Paginación opcional y validación de slug en los endpoints públicos de tours;
+  filtro global de excepciones con logger y mapeo de errores Prisma.
+- Build de backend limpio con `tsconfig.build.json` y salida `dist/main.js`;
+  `@types/express` como dependencia de desarrollo para el filtro.
+- Conteos de la portada (tours, propios, terceros) derivados del catálogo
+  cargado; feedback del Libro de Reclamaciones anunciado solo con mensaje.
 
 ## Rutas actuales
 
@@ -129,14 +147,14 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 
 ## Verificación técnica más reciente
 
-- `pnpm test:ci`: 30 pruebas superadas en 14 archivos.
+- `pnpm test:ci`: 39 pruebas superadas en 16 archivos.
 - `pnpm build`: finalizado correctamente, sin errores ni advertencias.
-- Backend: lint limpio, 7 pruebas superadas, schema Prisma válido y build NestJS
-  correcto.
+- Backend: lint limpio, 8 pruebas superadas, schema Prisma válido y build NestJS
+  correcto hacia `dist/main.js`.
 - Las 10 rutas de imágenes de tours son únicas y responden HTTP 200 desde el
   servidor de desarrollo.
 - Seis rutas prerenderizadas.
-- Tamaño inicial estimado del navegador: 85.38 kB.
+- Tamaño inicial estimado del navegador: 86.36 kB.
 - Contraste de texto y acciones principales verificado mediante cálculo: las
   combinaciones revisadas superan WCAG AA (mínimo medido 4.97:1).
 - DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
@@ -146,6 +164,12 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   dedicada de NestJS 10 a 11 y `file-type` 20 a una versión compatible.
 - Prueba directa del servidor: rutas públicas con HTTP 200 y ruta desconocida
   con HTTP 404.
+- Catálogo y ficha de tour revisados visualmente con Firefox en escritorio
+  (1440 px) y móvil (500 px); imágenes, controles, jerarquía y CTA respondieron
+  correctamente.
+- La migración `20260812140000_tour_operation_type` y el seed se aplicaron en
+  PostgreSQL local; la API respondió los 10 tours con su tipo correcto y Valle
+  VIP con metadatos actualizados.
 
 Estos resultados describen la última revisión realizada. Hay que volver a
 ejecutar las verificaciones después de modificar código o dependencias.
@@ -171,8 +195,10 @@ borradores legales y el Libro de Reclamaciones demostrativo. La dirección se
 presenta como dirección de contacto para asistencia y no como oficina física.
 
 La clasificación también fue confirmada: minorista y operador de turismo. La
-web distingue los tours propios de los prestados por terceros y exige identificar
-al operador real en cada propuesta.
+web distingue los tours propios de los prestados por terceros. No existen aún
+aliados directos confirmados para las seis rutas de terceros, por lo que no se
+publican nombres, logos ni licencias; el operador real se valida e identifica en
+cualquier propuesta antes de contratar.
 
 ## Bloqueos para producción comercial
 

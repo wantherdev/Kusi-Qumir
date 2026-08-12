@@ -36,6 +36,11 @@ enum ServiceType {
   VariosDias
 }
 
+enum TourOperationType {
+  PROPIO
+  TERCERO
+}
+
 model Tour {
   id               String      @id @default(cuid())
   slug             String      @unique
@@ -49,6 +54,7 @@ model Tour {
   difficulty       Difficulty
   groupType        GroupType
   serviceType      ServiceType
+  operationType    TourOperationType @default(TERCERO)
   featured         Boolean     @default(false)
   active           Boolean     @default(true)
   categorySlug     String
@@ -67,6 +73,7 @@ model Tour {
   updatedAt        DateTime    @updatedAt
 
   @@index([active, featured])
+  @@index([operationType, active])
   @@index([categorySlug, active])
 }
 

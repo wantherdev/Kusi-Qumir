@@ -289,15 +289,18 @@
       Esta vista no transmite ni conserva la información. La versión operativa deberá generar una
       hoja numerada, entregar constancia y permitir el seguimiento del caso.
     </p>
-    <p
-      class="claim-status"
-      [class.claim-status--error]="feedback()?.kind === 'error'"
-      [class.claim-status--success]="feedback()?.kind === 'success'"
-      [attr.role]="feedback()?.kind === 'error' ? 'alert' : 'status'"
-      aria-live="polite"
-    >
-      {{ feedback()?.message }}
-    </p>
+    @let currentFeedback = feedback();
+    @if (currentFeedback) {
+      <p
+        class="claim-status"
+        [class.claim-status--error]="currentFeedback.kind === 'error'"
+        [class.claim-status--success]="currentFeedback.kind === 'success'"
+        [attr.role]="currentFeedback.kind === 'error' ? 'alert' : 'status'"
+        aria-live="polite"
+      >
+        {{ currentFeedback.message }}
+      </p>
+    }
   </form>
 </main>
 

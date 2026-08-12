@@ -58,7 +58,7 @@
         <p class="kq-eyebrow mb-4">Cultura · paisaje · acompañamiento</p>
         <h1 id="hero-title" class="text-balance">Cusco auténtico, a tu propio ritmo.</h1>
         <p class="hero-lead">
-          Explora 10 tours vigentes con itinerarios, precios, inclusiones y nivel de dificultad,
+          Explora {{ tourTotal() }} tours vigentes con itinerarios, precios, inclusiones y nivel de dificultad,
           acompañados por atención digital directa desde Cusco.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-5">
@@ -68,7 +68,7 @@
           >
         </div>
         <ul class="trust-list" aria-label="Beneficios">
-          <li><span aria-hidden="true">✓</span> 10 rutas vigentes</li>
+          <li><span aria-hidden="true">✓</span> {{ tourTotal() }} rutas vigentes</li>
           <li><span aria-hidden="true">✓</span> Precios visibles</li>
           <li><span aria-hidden="true">✓</span> Atención por WhatsApp</li>
         </ul>
@@ -97,19 +97,23 @@
     <div class="kq-shell">
       <div class="section-heading reveal">
         <div>
-          <p class="kq-eyebrow mb-3">Catálogo conectado a nuestra API</p>
+          <p class="kq-eyebrow mb-3">Tours destacados</p>
           <h2 id="experiences-title" class="text-balance">Cuatro tours para comenzar</h2>
         </div>
         <p>
-          Una selección de nuestras experiencias destacadas. Abre el catálogo completo para revisar
-          los 10 itinerarios y las condiciones de cada tour.
+          Conoce primero nuestras {{ ownToursCount() }} experiencias propias. Abre el catálogo completo para
+          revisar los {{ tourTotal() }} itinerarios, sus condiciones y el tipo de prestación de cada tour.
         </p>
       </div>
 
       @if (catalogLoading()) {
-        <div class="catalog-state" role="status">
-          <strong>Cargando los tours…</strong>
-          <p>Estamos consultando el catálogo vigente.</p>
+        <div role="status">
+          <p class="sr-only">Cargando los tours del catálogo vigente…</p>
+          <div class="landing-tour-grid" aria-hidden="true">
+            @for (card of loadingCards; track card) {
+              <app-tour-card-skeleton />
+            }
+          </div>
         </div>
       } @else if (catalogError()) {
         <div class="catalog-state catalog-state--error" role="alert">
@@ -132,7 +136,7 @@
         </div>
         <div class="catalog-actions">
           <a class="kq-button" routerLink="/tours">Abrir catálogo completo</a>
-          <span>10 tours en el catálogo · precios en soles · disponibilidad por confirmar</span>
+          <span>{{ tourTotal() }} tours en el catálogo · precios en soles · disponibilidad por confirmar</span>
         </div>
       }
     </div>
@@ -191,21 +195,70 @@
     <div class="kq-shell">
       <div class="section-heading reveal">
         <div>
-          <p class="kq-eyebrow mb-3">Todo conectado</p>
-          <h2 id="services-title">Tours propios y de terceros</h2>
+          <p class="kq-eyebrow mb-3">Servicios y operadores</p>
+          <h2 id="services-title">Un catálogo, dos formas de viajar</h2>
         </div>
         <p>
-          Kusi Q’umir ofrecerá directamente tours operados por la agencia y tours prestados por
-          terceros. Cada propuesta identificará quién opera el servicio y detallará sus condiciones
-          antes de cualquier pago.
+          {{ ownToursCount() }} experiencias forman parte de nuestro catálogo propio. Las demás rutas se muestran
+          como referencia y se coordinan con terceros solo después de validar responsable,
+          disponibilidad y condiciones reales.
         </p>
       </div>
-      <ul class="service-list">
-        <li class="reveal">
-          <img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours propios</span>
+      <ul class="service-list" aria-label="Tipos de tours disponibles">
+        <li class="service-card service-card--own reveal">
+          <div class="service-card__topline">
+            <span class="service-card__number" aria-hidden="true">01</span>
+            <span class="service-card__count">{{ ownToursCount() }} rutas</span>
+          </div>
+          <div class="service-card__heading">
+            <span class="service-card__icon"
+              ><img src="/assets/icons/icono-tours.svg" alt=""
+            /></span>
+            <div>
+              <p class="service-card__eyebrow">Operación propia</p>
+              <h3>Experiencias Kusi Q’umir</h3>
+            </div>
+          </div>
+          <p class="service-card__description">
+            Rutas que diseñamos y coordinamos directamente cuando la operación comercial esté
+            habilitada.
+          </p>
+          <ul class="service-card__tours" aria-label="Experiencias propias">
+            <li>City Tour Cusco</li>
+            <li>Valle VIP</li>
+            <li>Montaña de 7 Colores</li>
+            <li>Laguna Humantay</li>
+          </ul>
         </li>
-        <li class="reveal">
-          <img src="/assets/icons/icono-tours.svg" alt="" /><span>Tours de terceros</span>
+        <li class="service-card service-card--third-party reveal">
+          <div class="service-card__topline">
+            <span class="service-card__number" aria-hidden="true">02</span>
+            <span class="service-card__count">{{ thirdToursCount() }} rutas</span>
+          </div>
+          <div class="service-card__heading">
+            <span class="service-card__icon"
+              ><img src="/assets/icons/icono-tours.svg" alt=""
+            /></span>
+            <div>
+              <p class="service-card__eyebrow">Prestación de terceros</p>
+              <h3>Rutas por coordinar</h3>
+            </div>
+          </div>
+          <p class="service-card__description">
+            Experiencias disponibles como referencia dentro del catálogo informativo.
+          </p>
+          <ul class="service-card__tours" aria-label="Tours de terceros">
+            <li>Maras y Moray</li>
+            <li>Machu Picchu</li>
+            <li>Valle Sur</li>
+            <li>Waqrapukara</li>
+            <li>Puente Q’eswachaka</li>
+            <li>Montaña Palcoyo</li>
+          </ul>
+          <p class="service-card__notice">
+            <span aria-hidden="true">i</span> El operador responsable se confirma antes de cualquier
+            contratación.
+          </p>
         </li>
       </ul>
     </div>

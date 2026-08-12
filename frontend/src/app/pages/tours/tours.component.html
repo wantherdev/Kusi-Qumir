@@ -19,7 +19,14 @@
   </aside>
 
   @if (isLoading()) {
-    <p class="state-card" role="status">Cargando el catálogo…</p>
+    <div role="status">
+      <p class="sr-only">Cargando el catálogo de tours…</p>
+      <div class="tour-grid" aria-hidden="true">
+        @for (card of loadingCards; track card) {
+          <app-tour-card-skeleton />
+        }
+      </div>
+    </div>
   } @else if (hasError()) {
     <section class="state-card state-card--error" role="alert">
       <h2>No pudimos cargar los tours</h2>
@@ -32,11 +39,66 @@
       <p>Los tours aparecerán aquí cuando estén disponibles.</p>
     </section>
   } @else {
-    <section class="tour-grid" aria-label="Tours disponibles">
-      @for (tour of tours(); track tour.slug; let index = $index) {
-        <app-tour-card [tour]="tour" [sequence]="index + 1" />
-      }
+    <section class="catalog-tools" aria-labelledby="catalog-tools-title">
+      <div class="catalog-search">
+        <label id="catalog-tools-title" for="tour-search">Encuentra tu próxima ruta</label>
+        <p>Busca por lugar, experiencia o nivel de dificultad.</p>
+        <input
+          id="tour-search"
+          type="search"
+          autocomplete="off"
+          placeholder="Ej. Machu Picchu o naturaleza"
+          [value]="searchQuery()"
+          (input)="updateSearch($event)"
+        />
+      </div>
+
+      <fieldset class="category-filter">
+        <legend>Tipo de experiencia</legend>
+        <div>
+          <button
+            type="button"
+            [attr.aria-pressed]="selectedCategory() === 'todas'"
+            (click)="selectCategory('todas')"
+          >
+            Todas
+          </button>
+          @for (category of categories(); track category.value) {
+            <button
+              type="button"
+              [attr.aria-pressed]="selectedCategory() === category.value"
+              (click)="selectCategory(category.value)"
+            >
+              {{ category.label }}
+            </button>
+          }
+        </div>
+      </fieldset>
+
+      <div class="catalog-results" aria-live="polite" aria-atomic="true">
+        <span>Mostrando {{ filteredTours().length }} de {{ tours().length }} tours</span>
+        @if (hasActiveFilters()) {
+          <button type="button" (click)="clearFilters()">Limpiar filtros</button>
+        }
+      </div>
     </section>
+
+    @if (filteredTours().length > 0) {
+      <section class="tour-grid" aria-label="Tours disponibles">
+        @for (tour of filteredTours(); track tour.slug; let index = $index) {
+          <app-tour-card [tour]="tour" [sequence]="index + 1" />
+        }
+      </section>
+    } @else {
+      <section class="state-card state-card--empty" aria-live="polite">
+        <p class="kq-eyebrow">Sin coincidencias</p>
+        <h2>No encontramos una ruta con esos filtros</h2>
+        <p>Prueba otro destino o vuelve a ver el catálogo completo.</p>
+        <button class="kq-button kq-button--small" type="button" (click)="clearFilters()">
+          Ver todos los tours
+        </button>
+      </section>
+    }
   }
 </main>
 

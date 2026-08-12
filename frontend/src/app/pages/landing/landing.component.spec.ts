@@ -17,6 +17,7 @@ const tour: TourSummary = {
   difficulty: 'Facil',
   groupType: 'Compartido',
   serviceType: 'MedioDia',
+  operationType: 'PROPIO',
   featured: true,
   categorySlug: 'cultural',
   prices: [{ name: 'General', currency: 'PEN', adult: 119, child: 85 }],
@@ -25,14 +26,28 @@ const tour: TourSummary = {
 
 const catalog: TourSummary[] = [
   tour,
-  { ...tour, slug: 'valle-sagrado', code: 'VSI-002', title: 'Valle Sagrado' },
-  { ...tour, slug: 'machu-picchu-full-day', code: 'MPF-004', title: 'Machu Picchu' },
+  { ...tour, slug: 'valle-sagrado', code: 'VSI-002', title: 'Valle VIP' },
+  {
+    ...tour,
+    slug: 'machu-picchu-full-day',
+    code: 'MPF-004',
+    title: 'Machu Picchu',
+    operationType: 'TERCERO',
+  },
   { ...tour, slug: 'montana-colores', code: 'M7C-006', title: 'Montaña de 7 Colores' },
+  {
+    ...tour,
+    slug: 'laguna-humantay',
+    code: 'LHU-005',
+    title: 'Laguna Humantay',
+    featured: false,
+  },
   {
     ...tour,
     slug: 'maras-moray',
     code: 'MYM-003',
     title: 'Maras y Moray',
+    operationType: 'TERCERO',
     featured: false,
   },
 ];
@@ -56,8 +71,8 @@ describe('LandingComponent', () => {
     expect(heading.textContent).toContain('Cusco auténtico');
     expect(fixture.nativeElement.textContent).toContain('Canal exclusivamente digital');
     expect(fixture.nativeElement.textContent).toContain('Anexo II');
-    expect(fixture.nativeElement.textContent).toContain('Tours propios');
-    expect(fixture.nativeElement.textContent).toContain('Tours de terceros');
+    expect(fixture.nativeElement.textContent).toContain('Experiencias Kusi Q’umir');
+    expect(fixture.nativeElement.textContent).toContain('Rutas por coordinar');
     expect(fixture.nativeElement.textContent).toContain('Recorrido por la ciudad de Cusco');
     expect(fixture.nativeElement.textContent).toContain('S/ 119');
   });
@@ -67,9 +82,15 @@ describe('LandingComponent', () => {
     fixture.detectChanges();
 
     const content = fixture.nativeElement.textContent as string;
+    const cardContent = [...fixture.nativeElement.querySelectorAll('app-tour-card')]
+      .map((card) => card.textContent)
+      .join(' ');
     expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(4);
     expect(fixture.nativeElement.querySelector('.tour-card__number')?.textContent).toContain('01');
-    expect(content).not.toContain('Maras y Moray');
+    expect(cardContent).toContain('Valle VIP');
+    expect(cardContent).toContain('Laguna Humantay');
+    expect(cardContent).not.toContain('Machu Picchu');
+    expect(cardContent).not.toContain('Maras y Moray');
     expect(fixture.nativeElement.querySelector('a[href="/tours"]')).toBeTruthy();
   });
 
@@ -135,5 +156,34 @@ describe('LandingComponent catalog recovery', () => {
 
     expect(findAll).toHaveBeenCalledTimes(2);
     expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(4);
+  });
+
+  it('derives catalog counts from the loaded data', async () => {
+    await TestBed.configureTestingModule({
+      imports: [LandingComponent],
+      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll: () => of(catalog) } }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(LandingComponent);
+    fixture.detectChanges();
+
+    const content = fixture.nativeElement.textContent as string;
+    expect(content).toContain('Explora 6 tours vigentes');
+    expect(content).toContain('6 tours en el catálogo');
+    expect(content).toContain('4 rutas');
+    expect(content).toContain('2 rutas');
+  });
+
+  it('shows a clear empty state when the catalog has no tours', async () => {
+    await TestBed.configureTestingModule({
+      imports: [LandingComponent],
+      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll: () => of([]) } }],
+    }).compileComponents();
+
+    const fixture = TestBed.createComponent(LandingComponent);
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(0);
+    expect(fixture.nativeElement.textContent).toContain('No hay tours publicados');
   });
 });

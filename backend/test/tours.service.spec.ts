@@ -8,8 +8,20 @@ describe('ToursService', () => {
     const findMany = jest.fn().mockResolvedValue([{ slug: 'city-tour-cusco' }]);
     const service = new ToursService({ tour: { findMany } } as unknown as PrismaService);
 
-    await expect(service.findAll()).resolves.toEqual([{ slug: 'city-tour-cusco' }]);
-    expect(findMany).toHaveBeenCalledTimes(1);
+    await expect(service.findAll({})).resolves.toEqual([{ slug: 'city-tour-cusco' }]);
+    expect(findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ where: { active: true }, skip: 0, take: 10 }),
+    );
+  });
+
+  it('applies the requested pagination window', async () => {
+    const findMany = jest.fn().mockResolvedValue([]);
+    const service = new ToursService({ tour: { findMany } } as unknown as PrismaService);
+
+    await expect(service.findAll({ limit: 5, offset: 10 })).resolves.toEqual([]);
+    expect(findMany).toHaveBeenCalledWith(
+      expect.objectContaining({ skip: 10, take: 5 }),
+    );
   });
 
   it('does not expose missing or inactive tours', async () => {

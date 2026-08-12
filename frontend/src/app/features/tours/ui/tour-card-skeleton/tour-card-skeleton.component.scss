@@ -1,0 +1,97 @@
+:host {
+  display: block;
+  min-width: 0;
+}
+
+.tour-card-skeleton {
+  position: relative;
+  isolation: isolate;
+  display: flex;
+  min-height: 30rem;
+  height: 100%;
+  flex-direction: column;
+  justify-content: space-between;
+  overflow: hidden;
+  border: 1px solid var(--kq-border);
+  border-radius: 1.5rem;
+  padding: 1.5rem;
+  background:
+    linear-gradient(180deg, transparent 42%, rgba(15, 23, 42, 0.08)), var(--kq-surface-soft);
+
+  &::after {
+    position: absolute;
+    z-index: -1;
+    inset: 0;
+    background: linear-gradient(
+      110deg,
+      transparent 25%,
+      rgba(255, 255, 255, 0.7) 43%,
+      transparent 61%
+    );
+    content: '';
+    transform: translateX(-100%);
+    animation: skeleton-shimmer 1.6s ease-in-out infinite;
+  }
+
+  &__number,
+  &__line,
+  &__footer {
+    display: block;
+    border-radius: 999px;
+    background: rgba(90, 105, 123, 0.2);
+  }
+
+  &__number {
+    width: 3.5rem;
+    height: 3.5rem;
+  }
+
+  &__content {
+    display: grid;
+    gap: 0.75rem;
+  }
+
+  &__line {
+    width: 100%;
+    height: 0.75rem;
+
+    &--meta {
+      width: 48%;
+      height: 0.65rem;
+    }
+
+    &--title {
+      width: 76%;
+      height: 2rem;
+    }
+
+    &--short {
+      width: 68%;
+    }
+  }
+
+  &__footer {
+    width: 100%;
+    height: 3.25rem;
+    margin-top: 0.5rem;
+    border-radius: 0.75rem;
+  }
+}
+
+@keyframes skeleton-shimmer {
+  to {
+    transform: translateX(100%);
+  }
+}
+
+@media (max-width: 640px) {
+  .tour-card-skeleton {
+    min-height: 28rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tour-card-skeleton::after {
+    animation: none;
+  }
+}

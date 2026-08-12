@@ -5,6 +5,6 @@ export const envValidationSchema = Joi.object({
   PORT: Joi.number().port().default(3000),
   DATABASE_URL: Joi.string().uri().required(),
   CORS_ORIGINS: Joi.string().required(),
-  CONTACT_RECIPIENT_EMAIL: Joi.string().email().required(),
+  CONTACT_RECIPIENT_EMAIL: Joi.string().email().optional(),
   PRIVACY_POLICY_VERSION: Joi.string().min(1).required(),
 });

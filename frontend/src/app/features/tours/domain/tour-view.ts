@@ -20,6 +20,11 @@ const categoryLabels: Record<string, string> = {
   naturaleza: 'Naturaleza',
 };
 
+const operationLabels = {
+  PROPIO: 'Tour propio',
+  TERCERO: 'Tour de terceros',
+} as const;
+
 function featuredTourImage(tour: TourSummary) {
   return tour.images.find((image) => image.featured) ?? tour.images[0];
 }
@@ -40,6 +45,10 @@ export function tourCategory(tour: TourSummary): string {
 
 export function tourDifficulty(tour: TourSummary): string {
   return difficultyLabels[tour.difficulty];
+}
+
+export function tourOperation(tour: TourSummary): string {
+  return operationLabels[tour.operationType];
 }
 
 export function tourDuration(tour: TourSummary): string {

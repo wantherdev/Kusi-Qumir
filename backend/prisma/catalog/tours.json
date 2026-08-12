@@ -11,6 +11,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "MedioDia",
+    "operationType": "PROPIO",
     "featured": true,
     "active": true,
     "recommendedFor": ["Primera vez en Cusco o recorrido de aclimatación"],
@@ -169,7 +170,7 @@
   {
     "slug": "valle-sagrado",
     "code": "VS-001",
-    "title": "Valle Sagrado de los Incas",
+    "title": "Valle VIP",
     "subtitle": "El corazón del Imperio Inca",
     "shortDescription": "Recorre el majestuoso Valle Sagrado visitando Pisac, Urubamba, Ollantaytambo y Chinchero.",
     "description": "El Valle Sagrado fue el corazón agrícola, espiritual y político del Imperio Inca, bendecido por el río Urubamba y una geografía de microclimas únicos. Iniciarás el viaje en Pisac, cuya ciudadela en la cima del cerro regala vistas panorámicas del valle y cuyo mercado artesanal es uno de los más vibrantes de la región. Tras un almuerzo bufé en Urubamba, llegarás a Ollantaytambo, la única ciudad inca viva del Perú, donde enormes terrazas de piedra y templos se alzan sobre calles empedradas aún habitadas. La última parada es Chinchero, con su palacio real de Túpac Inca Yupanqui y sus talleres textiles donde tejedoras quechuas preservan técnicas ancestrales de teñido natural.",
@@ -178,6 +179,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "PROPIO",
     "featured": true,
     "active": true,
     "recommendedFor": [
@@ -195,7 +197,7 @@
     "itineraryDays": [
       {
         "day": 1,
-        "title": "Valle Sagrado",
+        "title": "Valle VIP por el Valle Sagrado",
         "activities": [
           {
             "sortOrder": 1,
@@ -309,9 +311,9 @@
       }
     ],
     "seo": {
-      "title": "Valle Sagrado | Kusi Q'umir",
-      "description": "Consulta el recorrido al Valle Sagrado de los Incas. Visita Pisac, Ollantaytambo, Urubamba y Chinchero con guía profesional.",
-      "keywords": ["Valle Sagrado", "Cusco", "Pisac", "Ollantaytambo", "Chinchero"]
+      "title": "Valle VIP | Kusi Q'umir",
+      "description": "Consulta Valle VIP por el Valle Sagrado. Visita Pisac, Ollantaytambo, Urubamba y Chinchero con guía profesional.",
+      "keywords": ["Valle VIP", "Valle Sagrado", "Cusco", "Pisac", "Ollantaytambo", "Chinchero"]
     },
     "destinations": [
       {
@@ -337,6 +339,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "MedioDia",
+    "operationType": "TERCERO",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de la fotografía", "Amantes de la cultura e historia"],
@@ -464,6 +467,7 @@
     "difficulty": "Moderada",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "TERCERO",
     "featured": true,
     "active": true,
     "recommendedFor": [
@@ -648,6 +652,7 @@
     "difficulty": "Moderada",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "PROPIO",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de las caminatas", "Para quienes disfrutan del senderismo ligero"],
@@ -812,6 +817,7 @@
     "difficulty": "Exigente",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "PROPIO",
     "featured": true,
     "active": true,
     "recommendedFor": [
@@ -983,6 +989,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "MedioDia",
+    "operationType": "TERCERO",
     "featured": false,
     "active": true,
     "recommendedFor": [
@@ -1119,6 +1126,7 @@
     "difficulty": "Exigente",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "TERCERO",
     "featured": false,
     "active": true,
     "recommendedFor": [
@@ -1277,6 +1285,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "TERCERO",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de la cultura e historia", "Para conocer tradiciones vivas"],
@@ -1418,6 +1427,7 @@
     "difficulty": "Facil",
     "groupType": "Compartido",
     "serviceType": "DiaCompleto",
+    "operationType": "TERCERO",
     "featured": false,
     "active": true,
     "recommendedFor": ["Amantes de las caminatas", "Alternativa a la Montaña de 7 Colores"],

@@ -8,6 +8,7 @@ import {
   tourDuration,
   tourImage,
   tourImageAlt,
+  tourOperation,
   tourStartingPrice,
 } from '../../domain/tour-view';
 
@@ -26,6 +27,7 @@ export class TourCardComponent {
   protected readonly imageAltFor = tourImageAlt;
   protected readonly durationFor = tourDuration;
   protected readonly difficultyFor = tourDifficulty;
+  protected readonly operationFor = tourOperation;
   protected readonly startingPriceFor = tourStartingPrice;
   protected readonly priceFor = formatTourPrice;
 

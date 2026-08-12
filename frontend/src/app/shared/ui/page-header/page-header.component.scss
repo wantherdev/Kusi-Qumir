@@ -34,6 +34,12 @@
     color: var(--kq-action);
     transform: translateY(-1px);
   }
+
+  &--active {
+    border-color: var(--kq-ink);
+    background: var(--kq-ink);
+    color: white;
+  }
 }
 
 @media (max-width: 480px) {

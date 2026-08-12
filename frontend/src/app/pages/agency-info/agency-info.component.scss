@@ -33,10 +33,10 @@
   display: grid;
   grid-template-columns: 0.8rem 1fr;
   gap: 1rem;
-  border: 1px solid #d9c18c;
+  border: 1px solid var(--kq-warning-border);
   border-radius: 1rem;
   padding: 1.25rem;
-  background: #fff8e8;
+  background: var(--kq-warning-surface);
 
   > span {
     width: 0.75rem;

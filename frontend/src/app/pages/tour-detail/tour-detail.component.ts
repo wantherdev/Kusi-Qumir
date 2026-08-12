@@ -14,6 +14,8 @@ import {
   tourDuration,
   tourImage,
   tourImageAlt,
+  tourOperation,
+  tourStartingPrice,
 } from '../../features/tours/domain/tour-view';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
@@ -69,7 +71,12 @@ export class TourDetailComponent {
   protected readonly categoryFor = tourCategory;
   protected readonly durationFor = tourDuration;
   protected readonly difficultyFor = tourDifficulty;
+  protected readonly operationFor = tourOperation;
   protected readonly priceFor = formatTourPrice;
+  protected readonly startingPrice = computed(() => {
+    const tour = this.tour();
+    return tour ? tourStartingPrice(tour) : null;
+  });
   protected readonly whatsappHref = computed(() => {
     const tour = this.tour();
     if (!tour) return this.profile.whatsappHref;

@@ -4,13 +4,15 @@ const tours = require('./catalog/tours.json');
 const prisma = new PrismaClient();
 
 async function main() {
-  for (const tour of tours) {
-    await prisma.tour.upsert({
-      where: { slug: tour.slug },
-      update: tour,
-      create: tour,
-    });
-  }
+  await prisma.$transaction(
+    tours.map((tour) =>
+      prisma.tour.upsert({
+        where: { slug: tour.slug },
+        update: tour,
+        create: tour,
+      }),
+    ),
+  );
 
   console.log(`Catálogo actualizado: ${tours.length} tours.`);
 }

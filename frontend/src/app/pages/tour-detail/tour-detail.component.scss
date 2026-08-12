@@ -8,6 +8,29 @@
   padding-block: clamp(3.5rem, 8vw, 7rem);
 }
 
+.breadcrumbs {
+  display: flex;
+  overflow: hidden;
+  align-items: center;
+  gap: 0.55rem;
+  margin-bottom: 2rem;
+  color: var(--kq-muted);
+  font-size: 0.78rem;
+
+  a {
+    flex: 0 0 auto;
+    color: var(--kq-action);
+    font-weight: 700;
+    text-underline-offset: 0.2em;
+  }
+
+  span[aria-current='page'] {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
 .tour-hero {
   display: grid;
   grid-template-columns: minmax(0, 1.15fr) minmax(18rem, 0.85fr);
@@ -60,16 +83,64 @@
   }
 }
 
+.hero-inquiry {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 1.5rem;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 1.5rem;
+  border: 1px solid var(--kq-border);
+  border-radius: 1rem;
+  padding: 1rem;
+  background: var(--kq-surface);
+  box-shadow: 0 14px 34px rgba(15, 23, 42, 0.07);
+
+  p {
+    margin: 0;
+  }
+
+  p small,
+  > div > small {
+    display: block;
+    color: var(--kq-muted);
+    font-size: 0.7rem;
+  }
+
+  strong {
+    display: block;
+    margin-top: 0.15rem;
+    font-size: 1.35rem;
+  }
+
+  > div {
+    display: grid;
+    gap: 0.4rem;
+  }
+}
+
 .commercial-note {
   margin: 3rem 0 0;
-  border: 1px solid #d9c18c;
+  border: 1px solid var(--kq-warning-border);
   border-radius: 1rem;
   padding: 1.25rem;
-  background: #fff8e8;
+  background: var(--kq-warning-surface);
 
   p {
     max-width: 78ch;
     margin: 0.35rem 0 0;
+    color: var(--kq-muted);
+  }
+}
+
+.service-origin {
+  display: grid;
+  grid-template-columns: minmax(14rem, 0.7fr) minmax(0, 1.3fr);
+  gap: clamp(2rem, 6vw, 5rem);
+
+  > p {
+    max-width: 62ch;
+    margin: 0;
     color: var(--kq-muted);
   }
 }
@@ -238,11 +309,18 @@ section {
 @media (max-width: 760px) {
   .tour-hero,
   .tour-intro,
+  .service-origin,
   .included-grid {
     grid-template-columns: 1fr;
   }
 
   .tour-hero > img {
     max-height: 24rem;
+  }
+
+  .hero-inquiry,
+  .hero-inquiry > div,
+  .hero-inquiry .kq-button {
+    width: 100%;
   }
 }

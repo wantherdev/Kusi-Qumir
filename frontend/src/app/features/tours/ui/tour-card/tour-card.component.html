@@ -22,7 +22,10 @@
   </div>
 
   <div class="tour-card__content">
-    <p class="tour-card__meta">{{ durationFor(currentTour) }} · {{ difficultyFor(currentTour) }}</p>
+    <p class="tour-card__meta">
+      {{ operationFor(currentTour) }} · {{ durationFor(currentTour) }} ·
+      {{ difficultyFor(currentTour) }}
+    </p>
     <h3>{{ currentTour.title }}</h3>
     <p class="tour-card__description">{{ currentTour.shortDescription }}</p>
 
