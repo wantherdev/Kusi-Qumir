@@ -466,7 +466,7 @@
   &__description {
     max-width: 42ch;
     margin: 1.5rem 0 1.25rem;
-    color: var(--kq-muted);
+    color: var(--kq-soft-ink);
     font-size: 0.9rem;
   }
 
@@ -526,6 +526,10 @@
 
 .trust-section {
   background: var(--kq-surface-soft);
+
+  .kq-eyebrow::before {
+    background: var(--kq-ink);
+  }
 }
 
 .trust-grid {
@@ -540,7 +544,7 @@
 
   > div > p:last-child {
     max-width: 52ch;
-    color: var(--kq-muted);
+    color: var(--kq-soft-ink);
   }
 }
 
@@ -552,7 +556,7 @@
   padding: 1.2rem 0;
 
   > span {
-    color: var(--kq-action);
+    color: var(--kq-ink);
     font:
       400 1.25rem 'Fjalla One',
       sans-serif;
@@ -562,7 +566,7 @@
   }
   p {
     margin: 0.2rem 0 0;
-    color: var(--kq-muted);
+    color: var(--kq-soft-ink);
     font-size: 0.88rem;
   }
 }
@@ -571,7 +575,7 @@
   display: inline-flex;
   gap: 0.75rem;
   margin-top: 1.5rem;
-  border-bottom: 2px solid var(--kq-teal);
+  border-bottom: 2px solid var(--kq-ink);
   padding-block: 0.5rem;
   font-weight: 700;
   text-decoration: none;
