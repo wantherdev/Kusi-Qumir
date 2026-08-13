@@ -32,6 +32,7 @@
 
 :root {
   --kq-teal: #{tokens.$teal};
+  --kq-teal-hover: #{tokens.$teal-hover};
   --kq-action: #{tokens.$action};
   --kq-action-hover: #{tokens.$action-hover};
   --kq-river: #{tokens.$river};
@@ -50,6 +51,94 @@
   --kq-danger: #{tokens.$danger};
   --kq-danger-surface: #{tokens.$danger-surface};
   --kq-danger-border: #{tokens.$danger-border};
+}
+
+.ri-icon {
+  display: inline-block;
+  width: 1em;
+  height: 1em;
+  flex: 0 0 auto;
+  background: currentColor;
+  mask-position: center;
+  mask-repeat: no-repeat;
+  mask-size: contain;
+  vertical-align: -0.125em;
+}
+
+.ri-add-line {
+  mask-image: url('/assets/remixicon/add-line.svg');
+}
+
+.ri-arrow-left-line {
+  mask-image: url('/assets/remixicon/arrow-left-line.svg');
+}
+
+.ri-arrow-right-line {
+  mask-image: url('/assets/remixicon/arrow-right-line.svg');
+}
+
+.ri-arrow-right-up-line {
+  mask-image: url('/assets/remixicon/arrow-right-up-line.svg');
+}
+
+.ri-building-2-line {
+  mask-image: url('/assets/remixicon/building-2-line.svg');
+}
+
+.ri-bus-2-line {
+  mask-image: url('/assets/remixicon/bus-2-line.svg');
+}
+
+.ri-calendar-check-line {
+  mask-image: url('/assets/remixicon/calendar-check-line.svg');
+}
+
+.ri-chat-3-line {
+  mask-image: url('/assets/remixicon/chat-3-line.svg');
+}
+
+.ri-check-line {
+  mask-image: url('/assets/remixicon/check-line.svg');
+}
+
+.ri-customer-service-2-line {
+  mask-image: url('/assets/remixicon/customer-service-2-line.svg');
+}
+
+.ri-file-info-line {
+  mask-image: url('/assets/remixicon/file-info-line.svg');
+}
+
+.ri-file-list-3-line {
+  mask-image: url('/assets/remixicon/file-list-3-line.svg');
+}
+
+.ri-information-line {
+  mask-image: url('/assets/remixicon/information-line.svg');
+}
+
+.ri-map-pin-2-line {
+  mask-image: url('/assets/remixicon/map-pin-2-line.svg');
+}
+
+.ri-mail-line {
+  mask-image: url('/assets/remixicon/mail-line.svg');
+}
+
+.ri-phone-line {
+  mask-image: url('/assets/remixicon/phone-line.svg');
+}
+
+.ri-route-line {
+  mask-image: url('/assets/remixicon/route-line.svg');
+}
+
+.ri-shield-check-line {
+  mask-image: url('/assets/remixicon/shield-check-line.svg');
+}
+
+.ri-whatsapp-line {
+  mask-image: url('/assets/remixicon/whatsapp-line.svg');
 }
 
 html {
@@ -119,11 +208,11 @@ summary {
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  border: 2px solid var(--kq-action);
+  border: 2px solid var(--kq-teal);
   border-radius: 0.875rem;
   padding: 0.75rem 1.35rem;
-  background: var(--kq-action);
-  color: white;
+  background: var(--kq-teal);
+  color: var(--kq-ink);
   font-weight: 700;
   text-decoration: none;
   transition:
@@ -132,8 +221,8 @@ summary {
     background-color 160ms ease;
 
   &:hover {
-    border-color: var(--kq-action-hover);
-    background: var(--kq-action-hover);
+    border-color: var(--kq-teal-hover);
+    background: var(--kq-teal-hover);
     transform: translateY(-2px);
   }
 

@@ -314,8 +314,9 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   referencia histórica.
 - El tono nuevo mejora el contraste del teal sobre las superficies oscuras
   (footer y overlay de tarjetas) y mantiene la dirección visual de marca.
-- La superficie suave de marca (`$surface-soft`) adopta el jade `#00B8B7` en
-  lugar del gris verdoso `#EAF4F4`; el texto sobre esas superficies usa el token
-  nuevo `$soft-ink` para conservar contraste WCAG AA sobre el jade.
+- La superficie suave de marca (`$surface-soft`) adopta un tinte jade pálido
+  `#E0F5F4` en lugar del gris verdoso `#EAF4F4`; el jade pleno `#00B8B7` queda
+  para botones, iconos y acentos. El texto sobre esas superficies usa el token
+  `$soft-ink` para conservar contraste WCAG AA.
 
 

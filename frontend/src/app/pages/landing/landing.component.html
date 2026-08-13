@@ -64,13 +64,13 @@
         <div class="mt-8 flex flex-wrap items-center gap-5">
           <a class="kq-button" href="#experiencias">Ver los tours</a>
           <a class="text-link" routerLink="/informacion-institucional"
-            >Ver ficha institucional <span aria-hidden="true">→</span></a
-          >
+            >Ver ficha institucional <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
+          ></a>
         </div>
         <ul class="trust-list" aria-label="Beneficios">
-          <li><span aria-hidden="true">✓</span> {{ tourTotal() }} rutas vigentes</li>
-          <li><span aria-hidden="true">✓</span> Precios visibles</li>
-          <li><span aria-hidden="true">✓</span> Atención por WhatsApp</li>
+          <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> {{ tourTotal() }} rutas vigentes</li>
+          <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> Precios visibles</li>
+          <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> Atención por WhatsApp</li>
         </ul>
       </div>
     </div>
@@ -160,28 +160,28 @@
 
       <ol class="steps">
         <li class="reveal">
-          <span>01</span>
+          <span><i class="ri-icon ri-chat-3-line" aria-hidden="true"></i></span>
           <div>
             <h3>Conversemos</h3>
             <p>Fechas, viajeros, intereses y ritmo en un brief corto.</p>
           </div>
         </li>
         <li class="reveal">
-          <span>02</span>
+          <span><i class="ri-icon ri-file-list-3-line" aria-hidden="true"></i></span>
           <div>
             <h3>Recibe tu propuesta</h3>
             <p>Itinerario, inclusiones, esfuerzo y precio explicados sin letra pequeña.</p>
           </div>
         </li>
         <li class="reveal">
-          <span>03</span>
+          <span><i class="ri-icon ri-calendar-check-line" aria-hidden="true"></i></span>
           <div>
             <h3>Confirma con claridad</h3>
             <p>Validamos disponibilidad y te indicamos el siguiente paso.</p>
           </div>
         </li>
         <li class="reveal">
-          <span>04</span>
+          <span><i class="ri-icon ri-map-pin-2-line" aria-hidden="true"></i></span>
           <div>
             <h3>Viaja acompañado</h3>
             <p>Asistencia local y recomendaciones útiles durante el recorrido.</p>
@@ -212,8 +212,8 @@
           </div>
           <div class="service-card__heading">
             <span class="service-card__icon"
-              ><img src="/assets/icons/icono-tours.svg" alt=""
-            /></span>
+              ><i class="ri-icon ri-route-line" aria-hidden="true"></i
+            ></span>
             <div>
               <p class="service-card__eyebrow">Operación propia</p>
               <h3>Experiencias Kusi Q’umir</h3>
@@ -237,8 +237,8 @@
           </div>
           <div class="service-card__heading">
             <span class="service-card__icon"
-              ><img src="/assets/icons/icono-tours.svg" alt=""
-            /></span>
+              ><i class="ri-icon ri-bus-2-line" aria-hidden="true"></i
+            ></span>
             <div>
               <p class="service-card__eyebrow">Prestación de terceros</p>
               <h3>Rutas por coordinar</h3>
@@ -256,15 +256,15 @@
             <li>Montaña Palcoyo</li>
           </ul>
           <p class="service-card__notice">
-            <span aria-hidden="true">i</span> El operador responsable se confirma antes de cualquier
-            contratación.
+            <span aria-hidden="true"><i class="ri-icon ri-information-line"></i></span> El
+            operador responsable se confirma antes de cualquier contratación.
           </p>
         </li>
       </ul>
     </div>
   </section>
 
-  <section class="trust-section py-20 lg:py-28" aria-labelledby="trust-title">
+  <section class="trust-section py-20 lg:py-32" aria-labelledby="trust-title">
     <div class="kq-shell trust-grid">
       <div class="reveal">
         <p class="kq-eyebrow mb-3">Claridad antes de contratar</p>
@@ -277,16 +277,16 @@
       </div>
       <ul class="compliance-list">
         <li class="reveal">
-          <span>01</span>
+          <span><i class="ri-icon ri-building-2-line" aria-hidden="true"></i></span>
           <div>
-            <strong>{{ agencyProfile.legalName }}</strong>
+            <h3>{{ agencyProfile.legalName }}</h3>
             <p>RUC {{ agencyProfile.ruc }} · partida {{ agencyProfile.registryEntry }}.</p>
           </div>
         </li>
         <li class="reveal">
-          <span>02</span>
+          <span><i class="ri-icon ri-customer-service-2-line" aria-hidden="true"></i></span>
           <div>
-            <strong>Canales confirmados</strong>
+            <h3>Canales confirmados</h3>
             <p>
               {{ agencyProfile.phone }} · {{ agencyProfile.email }} ·
               {{ agencyProfile.businessHours }}.
@@ -294,16 +294,16 @@
           </div>
         </li>
         <li class="reveal">
-          <span>03</span>
+          <span><i class="ri-icon ri-file-info-line" aria-hidden="true"></i></span>
           <div>
-            <strong>Estado tributario visible</strong>
+            <h3>Estado tributario visible</h3>
             <p>{{ agencyProfile.taxStatus }} desde el {{ agencyProfile.taxStatusDate }}.</p>
           </div>
         </li>
         <li class="reveal">
-          <span>04</span>
+          <span><i class="ri-icon ri-shield-check-line" aria-hidden="true"></i></span>
           <div>
-            <strong>Registro turístico pendiente</strong>
+            <h3>Registro turístico pendiente</h3>
             <p>
               Modalidad {{ agencyProfile.modality }} bajo {{ agencyProfile.registrationForm }}; sin
               constancia ni distintivo oficial acreditados.
@@ -312,7 +312,8 @@
         </li>
       </ul>
       <a class="institutional-link reveal" routerLink="/informacion-institucional">
-        Consultar la ficha completa del canal digital <span aria-hidden="true">→</span>
+        Consultar la ficha completa del canal digital
+        <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
       </a>
     </div>
   </section>
@@ -326,35 +327,35 @@
       </div>
       <div>
         <details class="reveal">
-          <summary>¿Puedo personalizar una ruta?<span aria-hidden="true">+</span></summary>
+          <summary>¿Puedo personalizar una ruta?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
           <p>
             Sí. Ajustamos duración, intereses y ritmo. La propuesta final depende de disponibilidad
             y condiciones operativas.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿Cómo sé si una caminata es para mí?<span aria-hidden="true">+</span></summary>
+          <summary>¿Cómo sé si una caminata es para mí?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
           <p>
             Antes de confirmar indicamos altitud, desnivel, duración, terreno, equipo y
             restricciones.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿La consulta confirma una reserva?<span aria-hidden="true">+</span></summary>
+          <summary>¿La consulta confirma una reserva?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
           <p>
             No. Primero verificamos cupos y servicios. Recibirás precio, inclusiones y pasos de
             confirmación.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿La atención será presencial?<span aria-hidden="true">+</span></summary>
+          <summary>¿La atención será presencial?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
           <p>
             No. Kusi Q’umir operará exclusivamente mediante canales digitales. La dirección de
             atención es digital mediante el teléfono, WhatsApp y correo publicados en esta página.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿Con cuánto tiempo debo planificar?<span aria-hidden="true">+</span></summary>
+          <summary>¿Con cuánto tiempo debo planificar?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
           <p>
             Depende de la temporada y ruta. Con tus fechas tentativas podremos orientarte según
             disponibilidad real.
@@ -387,19 +388,32 @@
           target="_blank"
           rel="noopener noreferrer"
         >
-          <span>WhatsApp</span>
+          <span class="contact-option__icon" aria-hidden="true"
+            ><i class="ri-icon ri-whatsapp-line"></i
+          ></span>
+          <span class="contact-option__label">WhatsApp</span>
           <strong>{{ agencyProfile.whatsapp }}</strong>
-          <small>Abrir conversación <span aria-hidden="true">→</span></small>
+          <small>Abrir conversación <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i></small>
         </a>
         <a class="contact-option" [href]="agencyProfile.phoneHref">
-          <span>Llamadas</span>
+          <span class="contact-option__icon" aria-hidden="true"
+            ><i class="ri-icon ri-phone-line"></i
+          ></span>
+          <span class="contact-option__label">Llamadas</span>
           <strong>{{ agencyProfile.phone }}</strong>
-          <small>{{ agencyProfile.businessHours }}</small>
+          <small>
+            Iniciar llamada <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
+          </small>
         </a>
         <a class="contact-option" [href]="agencyProfile.emailHref">
-          <span>Correo</span>
+          <span class="contact-option__icon" aria-hidden="true"
+            ><i class="ri-icon ri-mail-line"></i
+          ></span>
+          <span class="contact-option__label">Correo</span>
           <strong>{{ agencyProfile.email }}</strong>
-          <small>Canal general de información</small>
+          <small>
+            Escribir un mensaje <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
+          </small>
         </a>
         <p>
           Atención exclusivamente digital. La consulta no confirma disponibilidad ni genera una
