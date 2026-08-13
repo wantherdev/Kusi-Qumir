@@ -157,6 +157,8 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 - Tamaño inicial estimado del navegador: 86.36 kB.
 - Contraste de texto y acciones principales verificado mediante cálculo: las
   combinaciones revisadas superan WCAG AA (mínimo medido 4.97:1).
+- Jade de marca aclarado por decisión del titular a `#00B8B7` (token único en
+  `_tokens.scss`); el contraste sobre el footer oscuro sube a ~4.9:1.
 - DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
   footer presente, sin IDs duplicados, imágenes sin `alt` ni enlaces sin nombre.
 - Auditoría de dependencias de producción: las vulnerabilidades altas quedaron

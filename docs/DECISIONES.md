@@ -305,3 +305,14 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   (`cusco-andes-og.jpg`); canonical, `og:url` e imagen absoluta siguen
   pendientes hasta definir dominio e indexación.
 
+## 2026-08-12 — Jade de marca aclarado por decisión del titular
+
+- El titular solicita aclarar el jade de marca: el token `$teal` pasa de
+  `#00ABAA` (canónico del manual) a `#00B8B7`.
+- El cambio se aplica únicamente al frontend (`_tokens.scss`); el paquete del
+  diseñador `Kusi_Qumir_Sistema_Marca_Digital_v2.1/` permanece intacto como
+  referencia histórica.
+- El tono nuevo mejora el contraste del teal sobre las superficies oscuras
+  (footer y overlay de tarjetas) y mantiene la dirección visual de marca.
+
+
