@@ -173,6 +173,23 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - La operación comercial continúa desactivada: no hay constancia de inscripción
   ante GERCETUR/MINCETUR, distintivo oficial ni flujos reales de reserva o pago.
 
+## 2026-08-14 — Aplicación de la prevención ESNNA en la página web
+
+- La investigación oficial (trámite gob.pe de la Declaración Jurada del Código
+  de Conducta, Ley N.° 30802 y D.S. N.° 005-2020-MINCETUR) confirma que las
+  agencias de viajes deben colocar el afiche contra la ESNNA en su página web y
+  denunciar cualquier caso ante las autoridades.
+- `/turismo-responsable` publica desde el 14 de agosto de 2026 el texto legal
+  estandarizado de MINCETUR (artículo 179-A del Código Penal, Ley N.° 30802 y
+  D.S. N.° 005-2020-MINCETUR) y los canales de denuncia verificados: Línea 1818
+  (MININTER), Línea 100 (MIMP), emergencias 105 (PNP) y
+  `prevencionesnna@mincetur.gob.pe`.
+- El afiche oficial en versión gráfica se integrará cuando la autoridad
+  competente lo proporcione; la página no afirma haber suscrito el Código de
+  Conducta ni contar con constancia de inscripción turística.
+- No se publican números no verificados: la Policía de Turismo de Cusco (POLTUR)
+  se menciona solo como referencia institucional hasta confirmar su contacto.
+
 ## 2026-08-10 — Catálogo vigente migrado desde el proyecto anterior
 
 - El titular confirmó como vigentes los 10 tours, itinerarios y precios de la

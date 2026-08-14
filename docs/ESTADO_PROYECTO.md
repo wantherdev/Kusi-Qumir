@@ -65,6 +65,11 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Encabezado reutilizable que permanece visible durante el desplazamiento y con
   acceso directo al catálogo en todas las páginas internas.
 - Páginas informativas de privacidad, términos y turismo responsable.
+- Página `/turismo-responsable` con el texto legal estandarizado de MINCETUR
+  contra la ESNNA (artículo 179-A del Código Penal) y los canales de denuncia
+  oficiales (Línea 1818, Línea 100, emergencias 105 y
+  `prevencionesnna@mincetur.gob.pe`); el afiche oficial gráfico se integrará
+  cuando lo proporcione la autoridad competente.
 - Servidor de desarrollo escuchando en `0.0.0.0` para pruebas dentro de la red
   local.
 - Backend NestJS mínimo incorporado al workspace con Prisma/PostgreSQL, health
@@ -137,7 +142,7 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 | `/informacion-institucional` | Ficha del canal digital | Implementada; falta constancia turística |
 | `/privacidad`                | Borrador de privacidad  | Requiere datos y revisión legal           |
 | `/terminos`                  | Borrador de términos    | Requiere políticas comerciales reales     |
-| `/turismo-responsable`       | Compromiso ESNNA        | Requiere materiales y canales oficiales   |
+| `/turismo-responsable`       | Compromiso ESNNA        | Texto oficial y canales publicados; falta afiche gráfico y suscripción |
 | `/libro-de-reclamaciones`    | Formulario demostrativo | Requiere backend y flujo legal completo   |
 | `/**`                        | Página no encontrada    | HTTP 404 mediante SSR                     |
 
@@ -169,6 +174,10 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 - Ficha RUC del 14 de agosto de 2026 contrastada: estado ACTIVO, domicilio
   Habido; se retiraron los textos de baja provisional manteniendo la operación
   comercial desactivada hasta la constancia turística.
+- `/turismo-responsable` muestra el texto legal estandarizado de MINCETUR contra
+  la ESNNA (artículo 179-A del Código Penal) y los canales de denuncia oficiales;
+  la página declara que el afiche gráfico y la suscripción del Código de
+  Conducta aún deben ser proporcionados por el titular ante GERCETUR.
 - `scripts/dev.mjs` corregido: compila y ejecuta `dist/main.js` y usa el correo
   placeholder `contacto@example.com` como valor por defecto.
 - DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
@@ -195,7 +204,8 @@ ejecutar las verificaciones después de modificar código o dependencias.
 - Enlaces reales de Facebook, Instagram, YouTube y TikTok.
 - Constancia de inscripción vigente ante GERCETUR/MINCETUR.
 - Autorización para mostrar el distintivo oficial, si corresponde.
-- Código de Conducta, afiche y canales oficiales relacionados con ESNNA.
+- Suscripción del Código de Conducta ESNNA ante GERCETUR y afiche oficial en
+  versión gráfica (la web ya muestra el texto legal y los canales de denuncia).
 - Políticas reales de reservas, pagos, cambios, cancelaciones y reembolsos.
 - Responsable de privacidad y canal para ejercer derechos sobre datos.
 - Fotografías reales y permisos de uso de imagen.
@@ -243,8 +253,9 @@ Consulta el detalle regulatorio en `docs/requisitos-publicacion.md`.
 
 ## Próximos pasos recomendados
 
-1. Obtener la constancia de inscripción turística ante GERCETUR/MINCETUR y los
-   materiales ESNNA (el RUC ya figura activo).
+1. Obtener la constancia de inscripción turística ante GERCETUR/MINCETUR y
+   suscribir el Código de Conducta ESNNA para recibir el afiche oficial gráfico
+   (el RUC ya figura activo y la web ya muestra el texto legal y los canales).
 2. Completar y revisar profesionalmente los documentos legales.
 3. Confirmar canales de atención y definir hosting, dominio y correo transaccional.
 4. Activar de forma controlada el backend, Libro de Reclamaciones,

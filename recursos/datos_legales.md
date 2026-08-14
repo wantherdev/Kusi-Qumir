@@ -88,6 +88,9 @@ confirmación. El propietario confirmó por separado el correo público
 - Constancia de inscripción ante GERCETUR/MINCETUR
 - Número y fecha de inscripción turística
 - Autorización para utilizar el distintivo oficial
-- Código de Conducta ESNNA suscrito y afiche oficial
+- Código de Conducta ESNNA suscrito ante GERCETUR y afiche oficial en versión
+  gráfica. La web ya muestra el texto legal estandarizado de MINCETUR y los
+  canales de denuncia desde el 14 de agosto de 2026; el afiche impreso se
+  exhibirá al completar la suscripción (D.S. N.° 005-2020-MINCETUR, art. 17.2).
 - Políticas definitivas de cobro, cancelación y reembolso
 - Proveedor de hosting, base de datos y correo transaccional
