@@ -166,9 +166,18 @@ legend {
   font-size: 0.75rem;
 }
 .claim-status {
+  display: flex;
   min-height: 1.5rem;
+  align-items: center;
+  gap: 0.75rem;
   color: var(--kq-muted);
   font-weight: 700;
+
+  &__mascot {
+    flex: 0 0 auto;
+    height: 2.75rem;
+    width: auto;
+  }
 
   &--error {
     color: var(--kq-danger);

@@ -389,6 +389,19 @@
         [attr.role]="currentFeedback.kind === 'error' ? 'alert' : 'status'"
         aria-live="polite"
       >
+        <img
+          class="claim-status__mascot"
+          [src]="
+            currentFeedback.kind === 'error'
+              ? '/assets/mascot/08-disculpa-y-ayuda.png'
+              : '/assets/mascot/02-agradecimiento.png'
+          "
+          alt=""
+          width="316"
+          height="526"
+          loading="lazy"
+          decoding="async"
+        />
         {{ currentFeedback.message }}
       </p>
     }

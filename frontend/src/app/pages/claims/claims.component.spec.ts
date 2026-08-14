@@ -100,6 +100,19 @@ describe('ClaimsComponent', () => {
     );
   });
 
+  it('shows a mascot next to the feedback message', () => {
+    const fixture = TestBed.createComponent(ClaimsComponent);
+    fixture.detectChanges();
+
+    const form = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    const mascot = fixture.nativeElement.querySelector('.claim-status__mascot') as HTMLImageElement;
+    expect(mascot).toBeTruthy();
+    expect(mascot.src).toContain('08-disculpa-y-ayuda.png');
+  });
+
   it('clears hidden guardian data when the consumer is no longer marked as a minor', () => {
     const fixture = TestBed.createComponent(ClaimsComponent);
     fixture.detectChanges();

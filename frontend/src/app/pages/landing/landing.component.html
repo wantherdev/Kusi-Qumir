@@ -58,8 +58,8 @@
         <p class="kq-eyebrow mb-4">Cultura · paisaje · acompañamiento</p>
         <h1 id="hero-title" class="text-balance">Cusco auténtico, a tu propio ritmo.</h1>
         <p class="hero-lead">
-          Explora {{ tourTotal() }} tours vigentes con itinerarios, precios, inclusiones y nivel de dificultad,
-          acompañados por atención digital directa desde Cusco.
+          Explora {{ tourTotal() }} tours vigentes con itinerarios, precios, inclusiones y nivel de
+          dificultad, acompañados por atención digital directa desde Cusco.
         </p>
         <div class="mt-8 flex flex-wrap items-center gap-5">
           <a class="kq-button" href="#experiencias">Ver los tours</a>
@@ -68,7 +68,10 @@
           ></a>
         </div>
         <ul class="trust-list" aria-label="Beneficios">
-          <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> {{ tourTotal() }} rutas vigentes</li>
+          <li>
+            <i class="ri-icon ri-check-line" aria-hidden="true"></i> {{ tourTotal() }} rutas
+            vigentes
+          </li>
           <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> Precios visibles</li>
           <li><i class="ri-icon ri-check-line" aria-hidden="true"></i> Atención por WhatsApp</li>
         </ul>
@@ -101,8 +104,9 @@
           <h2 id="experiences-title" class="text-balance">Cuatro tours para comenzar</h2>
         </div>
         <p>
-          Conoce primero nuestras {{ ownToursCount() }} experiencias propias. Abre el catálogo completo para
-          revisar los {{ tourTotal() }} itinerarios, sus condiciones y el tipo de prestación de cada tour.
+          Conoce primero nuestras {{ ownToursCount() }} experiencias propias. Abre el catálogo
+          completo para revisar los {{ tourTotal() }} itinerarios, sus condiciones y el tipo de
+          prestación de cada tour.
         </p>
       </div>
 
@@ -136,7 +140,10 @@
         </div>
         <div class="catalog-actions">
           <a class="kq-button" routerLink="/tours">Abrir catálogo completo</a>
-          <span>{{ tourTotal() }} tours en el catálogo · precios en soles · disponibilidad por confirmar</span>
+          <span
+            >{{ tourTotal() }} tours en el catálogo · precios en soles · disponibilidad por
+            confirmar</span
+          >
         </div>
       }
     </div>
@@ -156,6 +163,16 @@
         <a class="kq-button kq-button--light mt-4" routerLink="/informacion-institucional"
           >Revisar el canal digital</a
         >
+        <figure class="process-mascot" aria-hidden="true">
+          <img
+            src="/assets/mascot/02-saludo.png"
+            alt=""
+            width="393"
+            height="540"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
       </div>
 
       <ol class="steps">
@@ -199,9 +216,9 @@
           <h2 id="services-title">Un catálogo, dos formas de viajar</h2>
         </div>
         <p>
-          {{ ownToursCount() }} experiencias forman parte de nuestro catálogo propio. Las demás rutas se muestran
-          como referencia y se coordinan con terceros solo después de validar responsable,
-          disponibilidad y condiciones reales.
+          {{ ownToursCount() }} experiencias forman parte de nuestro catálogo propio. Las demás
+          rutas se muestran como referencia y se coordinan con terceros solo después de validar
+          responsable, disponibilidad y condiciones reales.
         </p>
       </div>
       <ul class="service-list" aria-label="Tipos de tours disponibles">
@@ -256,8 +273,8 @@
             <li>Montaña Palcoyo</li>
           </ul>
           <p class="service-card__notice">
-            <span aria-hidden="true"><i class="ri-icon ri-information-line"></i></span> El
-            operador responsable se confirma antes de cualquier contratación.
+            <span aria-hidden="true"><i class="ri-icon ri-information-line"></i></span> El operador
+            responsable se confirma antes de cualquier contratación.
           </p>
         </li>
       </ul>
@@ -327,35 +344,51 @@
       </div>
       <div>
         <details class="reveal">
-          <summary>¿Puedo personalizar una ruta?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
+          <summary>
+            ¿Puedo personalizar una ruta?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
+          </summary>
           <p>
             Sí. Ajustamos duración, intereses y ritmo. La propuesta final depende de disponibilidad
             y condiciones operativas.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿Cómo sé si una caminata es para mí?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
+          <summary>
+            ¿Cómo sé si una caminata es para mí?<i
+              class="ri-icon ri-add-line"
+              aria-hidden="true"
+            ></i>
+          </summary>
           <p>
             Antes de confirmar indicamos altitud, desnivel, duración, terreno, equipo y
             restricciones.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿La consulta confirma una reserva?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
+          <summary>
+            ¿La consulta confirma una reserva?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
+          </summary>
           <p>
             No. Primero verificamos cupos y servicios. Recibirás precio, inclusiones y pasos de
             confirmación.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿La atención será presencial?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
+          <summary>
+            ¿La atención será presencial?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
+          </summary>
           <p>
             No. Kusi Q’umir operará exclusivamente mediante canales digitales. La dirección de
             atención es digital mediante el teléfono, WhatsApp y correo publicados en esta página.
           </p>
         </details>
         <details class="reveal">
-          <summary>¿Con cuánto tiempo debo planificar?<i class="ri-icon ri-add-line" aria-hidden="true"></i></summary>
+          <summary>
+            ¿Con cuánto tiempo debo planificar?<i
+              class="ri-icon ri-add-line"
+              aria-hidden="true"
+            ></i>
+          </summary>
           <p>
             Depende de la temporada y ruta. Con tus fechas tentativas podremos orientarte según
             disponibilidad real.
@@ -379,6 +412,16 @@
         >
           <span class="text-kq-teal" aria-hidden="true">●</span> Consultas informativas disponibles
         </p>
+        <figure class="contact-mascot" aria-hidden="true">
+          <img
+            src="/assets/mascot/01-atencion-con-auriculares.png"
+            alt=""
+            width="324"
+            height="530"
+            loading="lazy"
+            decoding="async"
+          />
+        </figure>
       </div>
 
       <div class="contact-options reveal">
@@ -393,7 +436,9 @@
           ></span>
           <span class="contact-option__label">WhatsApp</span>
           <strong>{{ agencyProfile.whatsapp }}</strong>
-          <small>Abrir conversación <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i></small>
+          <small
+            >Abrir conversación <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
+          ></small>
         </a>
         <a class="contact-option" [href]="agencyProfile.phoneHref">
           <span class="contact-option__icon" aria-hidden="true"

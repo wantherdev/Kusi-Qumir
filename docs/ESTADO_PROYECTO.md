@@ -229,6 +229,10 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   política refuerza la nota de campos obligatorios por ley, la precisión de que
   el reclamo no impide otras vías ni es requisito previo ante Indecopi, y la
   privacidad incorpora la confidencialidad de los datos de salud.
+- Mascota de marca integrada (14 de agosto de 2026): cinco poses PNG desde
+  `frontend/public/assets/mascot/` en el proceso y el panel de contacto de la
+  portada, la página 404 y el feedback del Libro de Reclamaciones. Se descartó
+  la conversión WebP para conservar la fidelidad cromática de la mascota.
 - La migración `20260812140000_tour_operation_type` y el seed se aplicaron en
   PostgreSQL local; la API respondió los 10 tours con su tipo correcto y Valle
   VIP con metadatos actualizados.

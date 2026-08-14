@@ -294,6 +294,18 @@
   }
 }
 
+.process-mascot {
+  margin: 2rem 0 0;
+  max-width: 11rem;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0.4rem 0.8rem rgba(15, 23, 42, 0.35));
+  }
+}
+
 .steps,
 .service-list,
 .compliance-list {
@@ -601,28 +613,28 @@
     }
   }
 
-    summary {
-      display: flex;
-      min-height: 4.75rem;
-      align-items: center;
-      justify-content: space-between;
-      cursor: pointer;
-      font-weight: 700;
-      list-style: none;
+  summary {
+    display: flex;
+    min-height: 4.75rem;
+    align-items: center;
+    justify-content: space-between;
+    cursor: pointer;
+    font-weight: 700;
+    list-style: none;
 
-      &::-webkit-details-marker {
-        display: none;
-      }
-      i {
-        color: var(--kq-teal);
-        font-size: 1.5rem;
-        transition: transform 160ms ease;
-      }
+    &::-webkit-details-marker {
+      display: none;
     }
+    i {
+      color: var(--kq-teal);
+      font-size: 1.5rem;
+      transition: transform 160ms ease;
+    }
+  }
 
-    details[open] summary i {
-      transform: rotate(45deg);
-    }
+  details[open] summary i {
+    transform: rotate(45deg);
+  }
   details p {
     padding-right: 3rem;
     color: var(--kq-muted);
@@ -656,6 +668,18 @@
 .status-pill {
   font-size: 0.8rem;
   font-weight: 600;
+}
+
+.contact-mascot {
+  max-width: 8.5rem;
+  margin: 2rem 0 0;
+
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    filter: drop-shadow(0 0.4rem 0.8rem rgba(15, 23, 42, 0.35));
+  }
 }
 
 .contact-options {

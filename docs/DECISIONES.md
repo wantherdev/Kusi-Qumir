@@ -417,3 +417,22 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   revisión, el dictamen y los originales firmados obran en el expediente interno
   del titular, a disposición de INDECOPI, GERCETUR o ANPD; el contrato se firma
   en cada transacción.
+
+## 2026-08-14 — Mascota de marca integrada en la web
+
+- El diseñador entrega la carpeta "mascota Kusi Q'umir" con 48 poses PNG
+  (6 categorías: web-cta, tours-exploración, consejos-seguridad,
+  atención-reservas, emociones y video-presentadora). El paquete v2.1 no la
+  documenta todavía; se usa como recurso decorativo y se solicitará al
+  diseñador una mini-especificación antes de tratarla como elemento canónico.
+- Los PNG quedan como fuente única para conservar el color y la fidelidad
+  visual de la mascota; las conversiones WebP se descartan.
+- Se integran cinco poses en la web desde `frontend/public/assets/mascot/`
+  (`width/height` reservados, `loading="lazy"`,
+  decorativas con `alt=""`): saludo en el proceso de la portada, atención con
+  auriculares en el panel de contacto, cartel vacío en la página 404, y
+  disculpa/agradecimiento junto al feedback del Libro de Reclamaciones.
+- La carpeta `06-video-presentadora` queda reservada para contenido audiovisual
+  futuro; las poses de consejos-seguridad se usarán cuando las fichas de tour
+  tengan una sección de recomendaciones. No se trata la mascota como prueba de
+  prestación de servicios.
