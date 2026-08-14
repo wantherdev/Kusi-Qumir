@@ -162,6 +162,17 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - `kusiqumir@gmail.com` se utiliza como correo general confirmado por el titular;
   aún falta designar canales específicos para privacidad y reclamaciones.
 
+## 2026-08-14 — RUC activo según nueva Ficha RUC
+
+- La Ficha RUC del 14 de agosto de 2026 reporta el estado ACTIVO y el domicilio
+  fiscal HABIDO; se descarta la baja provisional por oficio que mostraba la
+  ficha del 10 de agosto.
+- El frontend retira los textos de baja provisional y muestra "RUC activo" sin
+  fechas ni referencias de trazabilidad en los textos públicos; los textos
+  internos y documentales conservan la fuente para auditoría.
+- La operación comercial continúa desactivada: no hay constancia de inscripción
+  ante GERCETUR/MINCETUR, distintivo oficial ni flujos reales de reserva o pago.
+
 ## 2026-08-10 — Catálogo vigente migrado desde el proyecto anterior
 
 - El titular confirmó como vigentes los 10 tours, itinerarios y precios de la

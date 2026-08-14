@@ -1,6 +1,6 @@
 # Datos legales de Kusi Q’umir
 
-Fuente: Reporte de Ficha RUC emitido por SUNAT el 10 de agosto de 2026. Los
+Fuente: Reporte de Ficha RUC emitido por SUNAT el 14 de agosto de 2026. Los
 datos deben volver a verificarse antes de publicarse o presentarse ante una
 autoridad.
 
@@ -19,13 +19,13 @@ autoridad.
 
 ## Estado tributario
 
-- Estado del contribuyente: BAJA PROVISIONAL POR OFICIO
-- Fecha de baja indicada por SUNAT: 31 de julio de 2026
+- Estado del contribuyente: ACTIVO
 - Condición del domicilio fiscal: Habido
 - Dependencia SUNAT: ITI.CUSCO-MEPECO
 
-> Bloqueo: no presentar a la empresa como activa ni habilitar operaciones
-> comerciales hasta regularizar y volver a verificar el estado del RUC.
+> Nota: el RUC ya figura activo en la Ficha RUC del 14 de agosto de 2026. La
+> operación comercial sigue desactivada hasta obtener la constancia de
+> inscripción turística ante GERCETUR/MINCETUR.
 
 ## Actividad económica y tributación
 
@@ -85,7 +85,6 @@ confirmación. El propietario confirmó por separado el correo público
 - Días y horas exactos de atención
 - Dominio definitivo
 - Dirección pública de contacto
-- Estado del RUC regularizado y nueva ficha vigente
 - Constancia de inscripción ante GERCETUR/MINCETUR
 - Número y fecha de inscripción turística
 - Autorización para utilizar el distintivo oficial

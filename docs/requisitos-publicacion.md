@@ -40,7 +40,7 @@ Fuentes: [INDECOPI — Libro de Reclamaciones](https://www.gob.pe/institucion/in
 ## Datos pendientes del titular
 
 - [x] Razón social o nombre completo.
-- [x] RUC (actualmente en baja provisional por oficio; debe regularizarse).
+- [x] RUC activo según Ficha RUC del 14 de agosto de 2026.
 - [x] Representante legal identificado en la Ficha RUC.
 - [ ] Domicilio legal verificado; falta confirmar una dirección pública de atención.
 - [x] Correo general, teléfono y WhatsApp confirmados.
@@ -60,8 +60,8 @@ documentos sustentatorios.
 
 ## Bloqueos de salida a producción
 
-No activar envíos, analítica, pagos ni ventas mientras el RUC figure en baja
-provisional por oficio y hasta completar privacidad y condiciones. No mostrar el
+No activar envíos, analítica, pagos ni ventas hasta obtener la constancia de
+inscripción turística y completar privacidad y condiciones. No mostrar el
 distintivo ni afirmar que la empresa está registrada sin la constancia vigente.
 La ilustración del hero es decorativa y no debe presentarse como evidencia de
 una experiencia real.

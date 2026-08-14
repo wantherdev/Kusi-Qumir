@@ -23,7 +23,7 @@ describe('LegalComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Exclusivamente digital');
     expect(fixture.nativeElement.textContent).toContain('prestados por terceros');
     expect(fixture.nativeElement.textContent).toContain('20615150984');
-    expect(fixture.nativeElement.textContent).toContain('baja provisional por oficio');
+    expect(fixture.nativeElement.textContent).toContain('El RUC está activo');
   });
 
   it('falls back safely when route data is invalid', async () => {

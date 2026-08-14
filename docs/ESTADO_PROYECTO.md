@@ -1,6 +1,6 @@
 # Estado del proyecto Kusi Q’umir
 
-Última actualización: 12 de agosto de 2026.
+Última actualización: 14 de agosto de 2026.
 
 Este archivo es el punto de reanudación para una persona o una nueva sesión de
 IA. Debe actualizarse después de cada avance importante.
@@ -8,9 +8,9 @@ IA. Debe actualizarse después de cada avance importante.
 ## Estado general
 
 El frontend institucional está implementado y técnicamente funcional para su
-evaluación. La identidad empresarial ya fue contrastada con una Ficha RUC, pero
-no está habilitado para operar comercialmente porque el RUC figura en baja
-provisional por oficio y faltan registro turístico, documentos legales
+evaluación. La identidad empresarial está contrastada con una Ficha RUC vigente
+del 14 de agosto de 2026 (estado ACTIVO), pero la web no está habilitada para
+operar comercialmente porque faltan registro turístico, documentos legales
 definitivos e integraciones reales.
 
 El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
@@ -75,8 +75,8 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   desarrollo preparados; los envíos permanecen desactivados explícitamente.
 - Identidad legal, RUC, representante, partida, actividad y domicilio fiscal
   incorporados desde la Ficha RUC del 10 de agosto de 2026.
-- Estado tributario de baja provisional por oficio visible en la ficha, el
-  footer y los borradores legales, sin confundirlo con una habilitación.
+- Estado tributario activo visible en la ficha, el footer y los borradores
+  legales, sin confundirlo con una habilitación comercial.
 - Correo general `kusiqumir@gmail.com` y número 908 990 666 para llamadas y
   WhatsApp incorporados por confirmación del titular; los contactos personales
   de SUNAT no se publican como canales oficiales.
@@ -117,7 +117,7 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Sistema visual reforzado con tokens semánticos de acción y contraste WCAG AA;
   las tarjetas mantienen su composición editorial original.
 - Script productivo de NestJS alineado con la salida real de compilación
-  `dist/src/main.js`.
+  `dist/main.js`.
 - Overrides compatibles de `multer`, `body-parser` y `qs` eliminan las
   vulnerabilidades altas detectadas sin migrar versiones mayores del stack.
 - Paginación opcional y validación de slug en los endpoints públicos de tours;
@@ -134,7 +134,7 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 | `/`                          | Landing principal       | Implementada                              |
 | `/tours`                     | Catálogo de 10 tours    | Implementada; consulta informativa        |
 | `/tours/:slug`               | Ficha completa del tour | Implementada; reservas desactivadas       |
-| `/informacion-institucional` | Ficha del canal digital | Implementada; RUC requiere regularización |
+| `/informacion-institucional` | Ficha del canal digital | Implementada; falta constancia turística |
 | `/privacidad`                | Borrador de privacidad  | Requiere datos y revisión legal           |
 | `/terminos`                  | Borrador de términos    | Requiere políticas comerciales reales     |
 | `/turismo-responsable`       | Compromiso ESNNA        | Requiere materiales y canales oficiales   |
@@ -159,6 +159,18 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   combinaciones revisadas superan WCAG AA (mínimo medido 4.97:1).
 - Jade de marca aclarado por decisión del titular a `#00B8B7` (token único en
   `_tokens.scss`); el contraste sobre el footer oscuro sube a ~4.9:1.
+- Botones primarios en jade con texto `--kq-ink` (contraste AA) y token nuevo
+  `$teal-hover`; las superficies suaves usan un tinte jade pálido `#E0F5F4`
+  que deja el jade pleno para botones, iconos y acentos.
+- Iconos Remix servidos localmente en `public/assets/remixicon/` aplicados en
+  pasos, compliance, tarjetas de servicios, FAQ, flechas de CTA y canales de
+  contacto (WhatsApp, llamadas y correo con badges propios y focus visible);
+  las tarjetas de contacto ganaron icono por canal y microacciones con flecha.
+- Ficha RUC del 14 de agosto de 2026 contrastada: estado ACTIVO, domicilio
+  Habido; se retiraron los textos de baja provisional manteniendo la operación
+  comercial desactivada hasta la constancia turística.
+- `scripts/dev.mjs` corregido: compila y ejecuta `dist/main.js` y usa el correo
+  placeholder `contacto@example.com` como valor por defecto.
 - DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
   footer presente, sin IDs duplicados, imágenes sin `alt` ni enlaces sin nombre.
 - Auditoría de dependencias de producción: las vulnerabilidades altas quedaron
@@ -204,8 +216,9 @@ cualquier propuesta antes de contratar.
 
 ## Bloqueos para producción comercial
 
-- El RUC figura en baja provisional por oficio desde el 31 de julio de 2026;
-  debe regularizarse y contrastarse con una nueva consulta o ficha vigente.
+- Falta la constancia de inscripción ante GERCETUR/MINCETUR y la autorización
+  para el distintivo; el RUC ya figura activo en la Ficha RUC del 14 de agosto
+  de 2026.
 - Los formularios de contacto permanecen retirados; el backend de recepción está
   preparado pero desconectado hasta aprobar privacidad, correo y operación.
 - El Libro de Reclamaciones no genera número de hoja, constancia, copia ni
@@ -230,17 +243,17 @@ Consulta el detalle regulatorio en `docs/requisitos-publicacion.md`.
 
 ## Próximos pasos recomendados
 
-1. Regularizar el estado del RUC y obtener una Ficha RUC vigente.
-2. Obtener la constancia de inscripción turística y los materiales ESNNA.
-3. Completar y revisar profesionalmente los documentos legales.
-4. Confirmar canales de atención y definir hosting, dominio y correo transaccional.
-5. Activar de forma controlada el backend, Libro de Reclamaciones,
+1. Obtener la constancia de inscripción turística ante GERCETUR/MINCETUR y los
+   materiales ESNNA (el RUC ya figura activo).
+2. Completar y revisar profesionalmente los documentos legales.
+3. Confirmar canales de atención y definir hosting, dominio y correo transaccional.
+4. Activar de forma controlada el backend, Libro de Reclamaciones,
    consentimiento y tratamiento de datos.
-6. Confirmar los paquetes del proyecto anterior e incorporar sus fichas cuando
+5. Confirmar los paquetes del proyecto anterior e incorporar sus fichas cuando
    corresponda; mantener reservas desactivadas hasta levantar los bloqueos.
-7. Migrar NestJS 10 a 11 en una tarea dedicada y volver a ejecutar la auditoría
+6. Migrar NestJS 10 a 11 en una tarea dedicada y volver a ejecutar la auditoría
    de dependencias.
-8. Ejecutar una revisión final de accesibilidad, rendimiento, seguridad, SEO y
+7. Ejecutar una revisión final de accesibilidad, rendimiento, seguridad, SEO y
    requisitos regulatorios en dispositivos y navegadores reales antes de
    publicar funciones comerciales.
 

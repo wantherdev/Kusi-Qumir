@@ -32,7 +32,7 @@ describe('AgencyInfoComponent', () => {
     expect(content).toContain('Razón social o titular');
     expect(content).toContain("KUSI Q'UMIR AGENCIA DE VIAJES Y TURISMO E.I.R.L.");
     expect(content).toContain('20615150984');
-    expect(content).toContain('Baja provisional por oficio');
+    expect(content).toContain('Activo');
     expect(content).toContain('908 990 666');
     expect(content).toContain('Horario de oficina');
     expect(content).toContain('Sin constancia acreditada');

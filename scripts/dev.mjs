@@ -41,7 +41,7 @@ try {
   console.log('Compilando la API…');
   await waitFor(run('pnpm', ['--dir', 'backend', 'build']));
 
-  const api = run('node', ['dist/src/main.js'], {
+  const api = run('node', ['dist/main.js'], {
     cwd: `${workspace}/backend`,
     env: {
       ...process.env,
@@ -53,7 +53,7 @@ try {
       CORS_ORIGINS:
         process.env.CORS_ORIGINS ??
         'http://localhost:4200,http://127.0.0.1:4200,http://192.168.18.39:4200',
-      CONTACT_RECIPIENT_EMAIL: process.env.CONTACT_RECIPIENT_EMAIL ?? 'kusiqumir@gmail.com',
+      CONTACT_RECIPIENT_EMAIL: process.env.CONTACT_RECIPIENT_EMAIL ?? 'contacto@example.com',
       PRIVACY_POLICY_VERSION: process.env.PRIVACY_POLICY_VERSION ?? 'draft-disabled',
     },
   });
