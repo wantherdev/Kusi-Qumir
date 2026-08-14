@@ -65,6 +65,21 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 - Encabezado reutilizable que permanece visible durante el desplazamiento y con
   acceso directo al catálogo en todas las páginas internas.
 - Páginas informativas de privacidad, términos y turismo responsable.
+- Página `/cancelaciones` con la propuesta de política de cancelaciones y
+  reembolsos (pendiente de aprobación y revisión legal), enlazada desde
+  `/terminos` y el footer.
+- Borradores completos de privacidad, términos, cancelaciones y contrato de
+  servicios en `recursos/08_*` a `recursos/11_*`, adaptados a la identidad
+  verificada y a la modalidad exclusivamente digital (sin declarar registros
+  no obtenidos ni usar correos o direcciones no confirmados).
+- Borradores legales fusionados: la privacidad incorpora bancos de datos,
+  plazos de conservación y cookies; los términos incorporan IGV 0% de
+  exportación, moneda, depósitos y fuerza mayor Cusco; las cancelaciones usan
+  la escala de penalidades de 45/30/15 días. Los borradores originales
+  `01_*` y `02_*` fueron reemplazados por los fusionados.
+- Formularios operativos para el registro institucional en `recursos/04_*` a
+  `recursos/07_*`: carta y Declaración Jurada ESNNA, Anexo II de agencia
+  digital y checklist de entrega en GERCETUR Cusco.
 - Página `/turismo-responsable` con el texto legal estandarizado de MINCETUR
   contra la ESNNA (artículo 179-A del Código Penal) y los canales de denuncia
   oficiales (Línea 1818, Línea 100, emergencias 105 y
@@ -134,26 +149,28 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
 
 ## Rutas actuales
 
-| Ruta                         | Propósito               | Estado                                    |
-| ---------------------------- | ----------------------- | ----------------------------------------- |
-| `/`                          | Landing principal       | Implementada                              |
-| `/tours`                     | Catálogo de 10 tours    | Implementada; consulta informativa        |
-| `/tours/:slug`               | Ficha completa del tour | Implementada; reservas desactivadas       |
-| `/informacion-institucional` | Ficha del canal digital | Implementada; falta constancia turística |
-| `/privacidad`                | Borrador de privacidad  | Requiere datos y revisión legal           |
-| `/terminos`                  | Borrador de términos    | Requiere políticas comerciales reales     |
-| `/turismo-responsable`       | Compromiso ESNNA        | Texto oficial y canales publicados; falta afiche gráfico y suscripción |
-| `/libro-de-reclamaciones`    | Formulario demostrativo | Requiere backend y flujo legal completo   |
-| `/**`                        | Página no encontrada    | HTTP 404 mediante SSR                     |
+| Ruta                         | Propósito                 | Estado                                                                                       |
+| ---------------------------- | ------------------------- | -------------------------------------------------------------------------------------------- |
+| `/`                          | Landing principal         | Implementada                                                                                 |
+| `/tours`                     | Catálogo de 10 tours      | Implementada; consulta informativa                                                           |
+| `/tours/:slug`               | Ficha completa del tour   | Implementada; reservas desactivadas                                                          |
+| `/informacion-institucional` | Ficha del canal digital   | Implementada; falta constancia turística                                                     |
+| `/privacidad`                | Borrador de privacidad    | Ampliado (bancos, cookies, datos sensibles y menores); requiere revisión legal               |
+| `/terminos`                  | Borrador de términos      | Ampliado (IGV 0%, depósitos, fuerza mayor, blindaje fase 1); requiere revisión legal         |
+| `/cancelaciones`             | Política de cancelaciones | Propuesta escala 45/30/15 días; pendiente de aprobación                                      |
+| `/turismo-responsable`       | Compromiso ESNNA          | Texto oficial y canales publicados; falta afiche gráfico y suscripción                       |
+| `/libro-de-reclamaciones`    | Formulario demostrativo   | Aviso Anexo II, política, fecha de viaje y declaración jurada; requiere backend y flujo real |
+| `/**`                        | Página no encontrada      | HTTP 404 mediante SSR                                                                        |
 
-Se prerenderizan seis rutas institucionales. El catálogo y sus fichas se cargan
+Se prerenderizan siete rutas institucionales. El catálogo y sus fichas se cargan
 en cliente durante la evaluación para no depender de PostgreSQL en el build; la
 ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 
 ## Verificación técnica más reciente
 
-- `pnpm test:ci`: 39 pruebas superadas en 16 archivos.
-- `pnpm build`: finalizado correctamente, sin errores ni advertencias.
+- `pnpm test:ci`: 44 pruebas superadas en 16 archivos.
+- `pnpm build`: finalizado correctamente, sin errores ni advertencias; se
+  prerenderizan 7 rutas estáticas.
 - Backend: lint limpio, 8 pruebas superadas, schema Prisma válido y build NestJS
   correcto hacia `dist/main.js`.
 - Las 10 rutas de imágenes de tours son únicas y responden HTTP 200 desde el
@@ -178,6 +195,15 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   la ESNNA (artículo 179-A del Código Penal) y los canales de denuncia oficiales;
   la página declara que el afiche gráfico y la suscripción del Código de
   Conducta aún deben ser proporcionados por el titular ante GERCETUR.
+- Privacidad y términos ampliados con las secciones de los borradores
+  (`recursos/08_*` a `recursos/11_*`) y nueva página `/cancelaciones`
+  prerenderizada con la propuesta de política; la ruta queda enlazada desde
+  `/terminos` y el footer.
+- Borradores legales fusionados desde el proyecto anterior: privacidad con
+  bancos de datos, conservación de 5 años y cookies; términos con IGV 0% de
+  exportación, depósitos 30–50% y fuerza mayor (art. 1315); cancelaciones con
+  escala de penalidades 45/30/15 días; contrato con cláusulas de pago y
+  penalidades. Los borradores `01_*` y `02_*` fueron reemplazados.
 - `scripts/dev.mjs` corregido: compila y ejecuta `dist/main.js` y usa el correo
   placeholder `contacto@example.com` como valor por defecto.
 - DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
@@ -190,6 +216,19 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 - Catálogo y ficha de tour revisados visualmente con Firefox en escritorio
   (1440 px) y móvil (500 px); imágenes, controles, jerarquía y CTA respondieron
   correctamente.
+- Blindaje legal fase 1 verificado: el HTML prerenderizado de
+  `/libro-de-reclamaciones` incluye el Aviso del Anexo II y la política de
+  atención (15 días hábiles, Indecopi); `/terminos` incluye las cláusulas
+  nuevas (cancelación por el proveedor, exactitud de datos, menores, sin
+  retracto, enlaces y propiedad intelectual, modificaciones); `/privacidad`
+  incluye las secciones de datos sensibles y menores. El footer exhibe el aviso
+  del Libro de Reclamaciones en todas las rutas.
+- Referente de mercado aplicado (14 de agosto de 2026): el formulario del
+  Libro de Reclamaciones añade "Fecha del viaje contratado" y la declaración
+  jurada obligatoria (veracidad, titularidad y aceptación de privacidad), la
+  política refuerza la nota de campos obligatorios por ley, la precisión de que
+  el reclamo no impide otras vías ni es requisito previo ante Indecopi, y la
+  privacidad incorpora la confidencialidad de los datos de salud.
 - La migración `20260812140000_tour_operation_type` y el seed se aplicaron en
   PostgreSQL local; la API respondió los 10 tours con su tipo correcto y Valle
   VIP con metadatos actualizados.
@@ -206,8 +245,15 @@ ejecutar las verificaciones después de modificar código o dependencias.
 - Autorización para mostrar el distintivo oficial, si corresponde.
 - Suscripción del Código de Conducta ESNNA ante GERCETUR y afiche oficial en
   versión gráfica (la web ya muestra el texto legal y los canales de denuncia).
-- Políticas reales de reservas, pagos, cambios, cancelaciones y reembolsos.
+- Aprobación del titular y revisión legal de las políticas de reservas, pagos,
+  cambios, cancelaciones y reembolsos y del Libro de Reclamaciones (borradores
+  preparados en `recursos/08_*` a `recursos/12_*`).
+- Entrega en Mesa de Partes de GERCETUR de los formularios de registro y ESNNA
+  (`recursos/04_*` a `recursos/07_*`) y recepción del afiche oficial gráfico.
 - Responsable de privacidad y canal para ejercer derechos sobre datos.
+- Pasar a operativo el proceso del Libro de Reclamaciones (hoja, constancia,
+  copia y respuesta en 15 días hábiles) con el backend correspondiente, el
+  correo específico y los responsables de atención.
 - Fotografías reales y permisos de uso de imagen.
 - Proveedor de hosting, dominio final y correo transaccional.
 

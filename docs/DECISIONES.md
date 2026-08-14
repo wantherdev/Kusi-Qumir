@@ -190,6 +190,25 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - No se publican números no verificados: la Policía de Turismo de Cusco (POLTUR)
   se menciona solo como referencia institucional hasta confirmar su contacto.
 
+## 2026-08-14 — Fusión de los documentos legales (agencia digital)
+
+- Los borradores 01 (privacidad LPDP) y 02 (términos comerciales) del
+  repositorio se fusionan con los borradores 08–11 (base verificada) y quedan
+  reemplazados: una sola versión por documento evita conflictos de contenido.
+- La privacidad incorpora bancos de datos (clientes y usuarios de la web),
+  conservación de cinco años, flujo transfronterizo y cookies; se corrige el
+  reglamento citado (D.S. N.° 016-2024-JUS en lugar del 003-2013-JUS) y se
+  descartan las afirmaciones de analítica y bancos inscritos inexistentes.
+- Los términos incorporan IGV 0% por exportación de servicios, moneda PEN/USD,
+  depósitos del 30–50% y fuerza mayor Cusco (art. 1315 del Código Civil); no se
+  declaran registros ni habilitaciones no obtenidas.
+- La política de cancelaciones adopta la escala detallada de penalidades del
+  proyecto anterior (45/30/15 días: depósito, 50%, 75%, 100% para no-show), que
+  reemplaza a la escala simple propuesta inicialmente; permanece pendiente de
+  aprobación del titular y revisión legal.
+- Todos los documentos conservan su condición de borradores informativos con
+  aviso visible y requieren revisión de un abogado peruano antes de su uso.
+
 ## 2026-08-10 — Catálogo vigente migrado desde el proyecto anterior
 
 - El titular confirmó como vigentes los 10 tours, itinerarios y precios de la
@@ -347,4 +366,54 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   para botones, iconos y acentos. El texto sobre esas superficies usa el token
   `$soft-ink` para conservar contraste WCAG AA.
 
+## 2026-08-14 — Blindaje legal de la fase 1
 
+- Se incorpora la política del Libro de Reclamaciones digital
+  (`recursos/12_politica_libro_reclamaciones.md`): reclamo vs. queja, hoja
+  conforme al Anexo I del D.S. N.° 011-2011-PCM, respuesta en 15 días hábiles
+  improrrogables, constancia y copia, derivación a Indecopi y el Aviso del
+  Anexo II ("Si tienes alguna queja o reclamo…").
+- La página `/libro-de-reclamaciones` muestra el Aviso del Anexo II y una
+  sección de política de atención (15 días hábiles, constancia, Indecopi),
+  manteniendo el modo demostración. El footer exhibe permanentemente el aviso y
+  el enlace, en línea con la Ley N.° 32495 para plataformas digitales.
+- Los términos (`recursos/09` y `/terminos`) incorporan: tasas de cambio
+  (referencia BCR/SBS del día del cargo), exactitud de datos y errores
+  nominativos, cancelación por el proveedor con devolución sin penalidad,
+  menores de edad en viajes, inexistencia del derecho de retracto, imágenes
+  referenciales, enlaces de terceros, propiedad intelectual, modificaciones,
+  divisibilidad y renuncia.
+- La privacidad (`recursos/08` y `/privacidad`) incorpora dos secciones
+  nuevas: datos sensibles (restricciones médicas o alimentarias, art. 2.6 de la
+  Ley N.° 29733) con consentimiento específico, y datos de menores de edad con
+  consentimiento del representante legal y finalidad acotada.
+- El contrato (`recursos/11`) refleja las cláusulas nuevas (tasa de cambio,
+  exactitud de datos, cancelación por el proveedor, menores y disposiciones
+  generales) para evitar contradicciones entre los documentos fusionados.
+- Todos los documentos conservan la condición de borradores informativos y
+  requieren revisión por abogado peruano antes de su uso definitivo.
+
+## 2026-08-14 — Referentes del mercado y blindaje del Libro de Reclamaciones
+
+- Se revisan páginas públicas de agencias cusqueñas como referencia estructural
+  (no se copian textos ni identidad): Illa Kuntur Travel, Cusco Terra Travel,
+  Llamitas Travel, Machupicchu Peru Tours y Viajes Perú Trips.
+- El Libro de Reclamaciones digital se enriquece con prácticas verificadas del
+  mercado: nota de campos obligatorios por ley (información mínima del Anexo I),
+  declaración jurada del consumidor sobre veracidad y titularidad del servicio
+  con reserva de acciones legales ante falsedad, precisión de que la
+  formulación no impide otras vías ni es requisito previo para una denuncia ante
+  Indecopi, campo "fecha del viaje contratado" y compromiso de copia al correo y
+  atención a la brevedad.
+- El formulario web añade los campos "Fecha del viaje contratado" y la
+  declaración jurada obligatoria; el detalle de privacidad de datos sensibles
+  (alergias, medicamentos, restricciones dietéticas) se refuerza con el
+  compromiso de confidencialidad y uso exclusivo para la salud y seguridad del
+  pasajero.
+- No se replican los distintivos MINCETUR/GERCETUR ni los logos de agencia que
+  exhiben los referentes: está prohibido mostrar habilitaciones sin constancia
+  vigente.
+- Las firmas de abogado no se publican en la web (no es requisito legal): la
+  revisión, el dictamen y los originales firmados obran en el expediente interno
+  del titular, a disposición de INDECOPI, GERCETUR o ANPD; el contrato se firma
+  en cada transacción.
