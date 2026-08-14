@@ -16,6 +16,8 @@ describe('SiteFooterComponent', () => {
 
     expect(element.querySelector('a[href="tel:+51908990666"]')).toBeTruthy();
     expect(element.querySelector('a[href="mailto:kusiqumir@gmail.com"]')).toBeTruthy();
+    expect(element.querySelector('a[href="/libro-de-reclamaciones"]')).toBeTruthy();
+    expect(element.textContent).toContain('Si tienes alguna queja o reclamo');
     expect(element.textContent).toContain('Canal exclusivamente digital · sin ventas');
   });
 });

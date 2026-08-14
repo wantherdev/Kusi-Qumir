@@ -107,6 +107,24 @@
   font-size: 0.75rem;
 }
 
+.footer-claim-notice {
+  margin: 1.25rem 0 0;
+  border-left: 3px solid var(--kq-teal);
+  padding: 0.7rem 0.9rem;
+  color: #c7d2e5;
+  font-size: 0.72rem;
+  line-height: 1.5;
+
+  a {
+    color: var(--kq-teal);
+    text-decoration: none;
+
+    &:hover {
+      text-decoration: underline;
+    }
+  }
+}
+
 .footer-support-list {
   display: flex;
   flex-wrap: wrap;

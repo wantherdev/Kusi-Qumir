@@ -30,13 +30,38 @@
   }
 }
 
+.notice-card,
+.policy-card,
 .provider-card,
 form {
-  margin-top: 3rem;
+  margin-top: 2rem;
   border: 1px solid var(--kq-border);
   border-radius: 1rem;
   padding: clamp(1.25rem, 4vw, 2.5rem);
   background: white;
+}
+
+.notice-card {
+  border-left: 4px solid var(--kq-teal);
+  background: var(--kq-surface-soft);
+}
+
+.policy-card {
+  h2 {
+    margin-top: 0;
+  }
+  ul {
+    padding-left: 1.2rem;
+    margin-bottom: 1rem;
+  }
+  li {
+    margin-bottom: 0.5rem;
+  }
+}
+.policy-pending {
+  margin-bottom: 0;
+  color: var(--kq-muted);
+  font-size: 0.8rem;
 }
 
 .provider-card {
@@ -109,6 +134,30 @@ legend {
     width: 1.15rem;
     height: 1.15rem;
     accent-color: var(--kq-teal);
+  }
+}
+.affidavit-choice {
+  display: flex;
+  gap: 0.75rem;
+  align-items: flex-start;
+  padding: 1rem 1.25rem;
+  border: 1px solid var(--kq-border);
+  border-left: 4px solid var(--kq-teal);
+  border-radius: 0.75rem;
+  background: var(--kq-surface-soft);
+  margin-bottom: 0.75rem;
+
+  input {
+    flex: 0 0 auto;
+    width: 1.2rem;
+    height: 1.2rem;
+    margin-top: 0.2rem;
+    accent-color: var(--kq-teal);
+  }
+
+  span {
+    font-size: 0.82rem;
+    line-height: 1.55;
   }
 }
 .privacy-note {

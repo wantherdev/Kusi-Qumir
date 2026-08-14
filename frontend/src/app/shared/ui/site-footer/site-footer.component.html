@@ -68,10 +68,16 @@
       <nav class="footer-links" aria-label="Información institucional y legal">
         <a routerLink="/informacion-institucional">Información institucional</a>
         <a routerLink="/terminos">Términos y condiciones</a>
+        <a routerLink="/cancelaciones">Cancelaciones y reembolsos</a>
         <a routerLink="/privacidad">Política de privacidad</a>
         <a routerLink="/turismo-responsable">Turismo responsable</a>
         <a routerLink="/libro-de-reclamaciones">Libro de Reclamaciones</a>
       </nav>
+      <p class="footer-claim-notice">
+        Si tienes alguna queja o reclamo, puedes dejarlo en nuestro Libro de Reclamaciones:
+        <a [href]="profile.emailHref">{{ profile.email }}</a> o el
+        <a routerLink="/libro-de-reclamaciones">formulario en línea</a>.
+      </p>
       <p class="footer-support-label">Estado de la operación:</p>
       <div class="footer-support-list">
         <span>RUC activo</span>

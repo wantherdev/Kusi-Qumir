@@ -11,6 +11,24 @@ describe('ClaimsComponent', () => {
     }).compileComponents();
   });
 
+  it('shows the required notice and the claims handling policy', () => {
+    const fixture = TestBed.createComponent(ClaimsComponent);
+    fixture.detectChanges();
+
+    const notice = fixture.nativeElement.querySelector(
+      '#claims-notice-title',
+    ) as HTMLHeadingElement;
+    expect(notice.textContent).toContain('Aviso del Libro de Reclamaciones');
+    expect(fixture.nativeElement.textContent).toContain('Si tienes alguna queja o reclamo');
+
+    const policy = fixture.nativeElement.querySelector(
+      '#claims-policy-title',
+    ) as HTMLHeadingElement;
+    expect(policy.textContent).toContain('Política de atención de quejas y reclamos');
+    expect(fixture.nativeElement.textContent).toContain('quince (15) días hábiles');
+    expect(fixture.nativeElement.textContent).toContain('Indecopi');
+  });
+
   it('shows field-level accessible errors for an incomplete form', () => {
     const fixture = TestBed.createComponent(ClaimsComponent);
     fixture.detectChanges();
@@ -53,6 +71,32 @@ describe('ClaimsComponent', () => {
     expect(guardian.getAttribute('aria-invalid')).toBe('true');
     expect(fixture.nativeElement.querySelector('#claim-guardian-error')?.textContent).toContain(
       'representante',
+    );
+  });
+
+  it('requires the travel date and the sworn statement before validating', () => {
+    const fixture = TestBed.createComponent(ClaimsComponent);
+    fixture.detectChanges();
+
+    const travelDate = fixture.nativeElement.querySelector(
+      '[formcontrolname="fechaViaje"]',
+    ) as HTMLInputElement;
+    expect(travelDate).toBeTruthy();
+
+    const affidavit = fixture.nativeElement.querySelector(
+      '[formcontrolname="declaracionJurada"]',
+    ) as HTMLInputElement;
+    expect(affidavit).toBeTruthy();
+
+    const form = fixture.nativeElement.querySelector('form') as HTMLFormElement;
+    form.dispatchEvent(new Event('submit'));
+    fixture.detectChanges();
+
+    expect(fixture.nativeElement.querySelector('#claim-travel-date-error')?.textContent).toContain(
+      'fecha del viaje',
+    );
+    expect(fixture.nativeElement.querySelector('#claim-affidavit-error')?.textContent).toContain(
+      'declaración jurada',
     );
   });
 

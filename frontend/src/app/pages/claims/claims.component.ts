@@ -39,9 +39,11 @@ export class ClaimsComponent {
     telefono: ['', Validators.required],
     correo: ['', [Validators.required, Validators.email]],
     servicio: ['', Validators.required],
+    fechaViaje: ['', Validators.required],
     monto: [''],
     detalle: ['', [Validators.required, Validators.minLength(10)]],
     pedido: ['', [Validators.required, Validators.minLength(5)]],
+    declaracionJurada: [false, Validators.requiredTrue],
   });
 
   constructor() {

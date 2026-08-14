@@ -19,6 +19,42 @@
     </aside>
   </div>
 
+  <section class="notice-card" aria-labelledby="claims-notice-title">
+    <h2 id="claims-notice-title">Aviso del Libro de Reclamaciones</h2>
+    <p>
+      «Si tienes alguna queja o reclamo, puedes dejarlo en nuestro Libro de Reclamaciones. Puedes
+      enviarnos un correo a <a [href]="profile.emailHref">{{ profile.email }}</a> o llenar el
+      formulario disponible en el sitio web.»
+    </p>
+  </section>
+
+  <section class="policy-card" aria-labelledby="claims-policy-title">
+    <h2 id="claims-policy-title">Política de atención de quejas y reclamos</h2>
+    <ul>
+      <li>
+        Reclamo: disconformidad con el servicio contratado. Queja: malestar respecto de la atención
+        recibida.
+      </li>
+      <li>
+        Cada hoja de reclamación generará un número correlativo, una constancia de presentación y
+        una copia para el consumidor.
+      </li>
+      <li>
+        La respuesta se entregará dentro de los quince (15) días hábiles improrrogables siguientes a
+        la recepción.
+      </li>
+      <li>
+        Si la respuesta no resulta satisfactoria, el consumidor podrá acudir al Indecopi (Servicio
+        de Atención al Ciudadano). La formulación del reclamo no impide acudir a otras vías ni es
+        requisito previo para interponer una denuncia.
+      </li>
+    </ul>
+    <p class="policy-pending">
+      Este proceso se activará junto con el backend y los responsables de atención antes de iniciar
+      operaciones comerciales; hoy el formulario es demostrativo.
+    </p>
+  </section>
+
   <div class="provider-card">
     <h2>Identificación del proveedor</h2>
     <dl>
@@ -236,6 +272,29 @@
             <small id="claim-service-error" class="kq-error">Describe el servicio.</small>
           }
         </label>
+        <label class="kq-field">
+          Fecha del viaje contratado
+          <input
+            formControlName="fechaViaje"
+            type="date"
+            required
+            [attr.aria-invalid]="
+              claimForm.controls.fechaViaje.touched && claimForm.controls.fechaViaje.invalid
+                ? 'true'
+                : null
+            "
+            [attr.aria-describedby]="
+              claimForm.controls.fechaViaje.touched && claimForm.controls.fechaViaje.invalid
+                ? 'claim-travel-date-error'
+                : null
+            "
+          />
+          @if (claimForm.controls.fechaViaje.touched && claimForm.controls.fechaViaje.invalid) {
+            <small id="claim-travel-date-error" class="kq-error"
+              >Indica la fecha del viaje contratado.</small
+            >
+          }
+        </label>
         <label class="kq-field"
           >Monto reclamado (opcional) <input formControlName="monto" inputmode="decimal"
         /></label>
@@ -283,6 +342,38 @@
         }
       </label>
     </fieldset>
+
+    <label class="affidavit-choice">
+      <input
+        type="checkbox"
+        formControlName="declaracionJurada"
+        required
+        [attr.aria-invalid]="
+          claimForm.controls.declaracionJurada.touched &&
+          claimForm.controls.declaracionJurada.invalid
+            ? 'true'
+            : null
+        "
+        [attr.aria-describedby]="
+          claimForm.controls.declaracionJurada.touched &&
+          claimForm.controls.declaracionJurada.invalid
+            ? 'claim-affidavit-error'
+            : null
+        "
+      />
+      <span>
+        Declaro ser el titular del servicio contratado, que los hechos descritos son verdaderos y
+        que acepto la Política de Privacidad del canal. Kusi Q'umir se reserva el derecho de tomar
+        las acciones legales pertinentes ante declaraciones falsas o inexactas.
+      </span>
+    </label>
+    @if (
+      claimForm.controls.declaracionJurada.touched && claimForm.controls.declaracionJurada.invalid
+    ) {
+      <small id="claim-affidavit-error" class="kq-error"
+        >Debes aceptar la declaración jurada para validar la vista.</small
+      >
+    }
 
     <button class="kq-button kq-button--dark" type="submit">Validar formulario</button>
     <p id="claims-privacy-note" class="privacy-note">

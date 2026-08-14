@@ -67,6 +67,17 @@ export const routes: Routes = [
     },
   },
   {
+    path: 'cancelaciones',
+    title: 'Política de cancelaciones y reembolsos | Kusi Q’umir',
+    loadComponent: () =>
+      import('./pages/legal/legal.component').then((module) => module.LegalComponent),
+    data: {
+      document: 'cancelaciones',
+      description:
+        'Propuesta de política de cancelaciones y reembolsos de Kusi Q’umir, pendiente de aprobación y sin operaciones activas.',
+    },
+  },
+  {
     path: 'turismo-responsable',
     title: 'Turismo responsable y protección de la niñez | Kusi Q’umir',
     loadComponent: () =>

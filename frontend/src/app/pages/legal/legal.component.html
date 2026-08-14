@@ -15,9 +15,10 @@
       <section>
         <h2>Identidad y contacto</h2>
         <p>
-          Titular: {{ profile.legalName }}. Domicilio fiscal declarado: {{ profile.fiscalAddress }}.
-          Correo general: <a [href]="profile.emailHref">{{ profile.email }}</a
-          >.
+          Titular: {{ profile.legalName }}. RUC {{ profile.ruc }}. Domicilio fiscal declarado:
+          {{ profile.fiscalAddress }}. Modalidad: exclusivamente digital. Correo general:
+          <a [href]="profile.emailHref">{{ profile.email }}</a
+          >. Teléfono y WhatsApp: {{ profile.phone }}.
         </p>
       </section>
       <section>
@@ -25,7 +26,8 @@
         <p>
           La versión final se adecuará a la Ley N.° 29733, su reglamento aprobado por D.S. N.°
           016-2024-JUS y las disposiciones aplicables de la Autoridad Nacional de Protección de
-          Datos Personales.
+          Datos Personales, así como a la normativa turística aplicable (Ley N.° 29408 y D.S. N.°
+          005-2020-MINCETUR).
         </p>
         <p>
           Actualmente no hay formularios operativos, analítica, publicidad personalizada, reservas
@@ -34,12 +36,103 @@
         </p>
       </section>
       <section>
-        <h2>Derechos y aspectos pendientes</h2>
+        <h2>Bancos de datos y conservación previstos</h2>
+        <ul>
+          <li>
+            Banco "Clientes": gestión de reservas, comprobantes, pasajes de tren, boletos de ingreso
+            y contratación de transporte y guiado. Datos previstos: identidad, documento o
+            pasaporte, fecha de nacimiento, nacionalidad, correo y teléfono.
+          </li>
+          <li>
+            Banco "Usuarios de la web": control de accesos, soporte técnico y mejora del canal.
+          </li>
+          <li>
+            Ambos bancos se inscribirán ante el Registro Nacional de Protección de Datos Personales
+            antes de activar la captación de datos (hoy no figuran inscritos).
+          </li>
+          <li>
+            Conservación prevista: cinco (5) años desde el fin de la relación contractual, con
+            eliminación segura posterior.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Cookies y analítica</h2>
+        <p>
+          Este sitio usa únicamente cookies técnicas necesarias para su funcionamiento. No hay
+          analítica ni seguimiento (por ejemplo, Google Analytics). Si en el futuro se implementaran
+          cookies no técnicas, se mostrará un banner de consentimiento que permita aceptar, rechazar
+          o configurar, sin recopilar información identificable sin autorización expresa.
+        </p>
+      </section>
+      <section>
+        <h2>Datos que se recopilarían</h2>
+        <ul>
+          <li>Datos de contacto: nombre, teléfono, correo electrónico.</li>
+          <li>Datos de reserva y viaje: itinerario, fechas, preferencias, datos de pasajeros.</li>
+          <li>Datos de gestión comercial: cotizaciones, confirmaciones, comprobantes.</li>
+          <li>Datos de pago, solo mediante pasarelas seguras y con el alcance mínimo necesario.</li>
+          <li>
+            Datos técnicos (IP, navegador, uso), únicamente si se implementara analítica con
+            consentimiento.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Datos sensibles</h2>
+        <p>
+          Las restricciones médicas o alimentarias relevantes para el viaje son datos sensibles
+          (art. 2.6 de la Ley N.° 29733). Solo se recopilarían cuando sean estrictamente necesarias
+          para la prestación del servicio y con consentimiento específico e informado; su suministro
+          es voluntario y no condiciona la contratación. No se usarían para fines comerciales. Esta
+          información se tratará como estrictamente confidencial y solo se empleará para
+          salvaguardar la salud y la seguridad del pasajero durante el viaje, comunicándose
+          únicamente a los operadores que deban conocerla para ese fin.
+        </p>
+      </section>
+      <section>
+        <h2>Datos de menores de edad</h2>
+        <p>
+          Cuando un pasajero sea menor de edad, sus datos se tratarán únicamente con el
+          consentimiento del padre, madre o representante legal, con la finalidad acotada a la
+          prestación del servicio, sin uso comercial ni elaboración de perfiles.
+        </p>
+      </section>
+      <section>
+        <h2>Finalidades y base legal previstas</h2>
+        <ul>
+          <li>Gestionar consultas, cotizaciones y reservas de servicios turísticos.</li>
+          <li>Coordinar los servicios con prestadores propios y terceros.</li>
+          <li>Emitir comprobantes y cumplir obligaciones legales y tributarias.</li>
+          <li>
+            Comunicar información sobre el viaje y enviar información de interés solo con
+            consentimiento.
+          </li>
+          <li>
+            Base jurídica prevista: ejecución del contrato, cumplimiento legal, consentimiento
+            cuando corresponda e interés legítimo en la operación segura del canal.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Destinatarios, conservación y seguridad</h2>
+        <p>
+          Los datos se compartirían solo con los prestadores necesarios para el viaje y las
+          autoridades cuando la ley lo exija, y se conservarían mientras sean necesarios para el
+          servicio, el cumplimiento legal y la resolución de reclamos.
+        </p>
+        <p>
+          Se implementarán medidas técnicas y organizativas para proteger los datos, incluida la
+          protección de la interfaz de compras en línea cuando se activen pagos.
+        </p>
+      </section>
+      <section>
+        <h2>Derechos ARCO y aspectos pendientes</h2>
         <ul>
           <li>Designar al responsable y un canal específico para derechos ARCO.</li>
           <li>Definir los bancos de datos y realizar las inscripciones que correspondan.</li>
           <li>Documentar finalidades, encargados, transferencias y proveedores de hosting.</li>
-          <li>Plazos de conservación y medidas de seguridad.</li>
+          <li>Plazos de conservación y medidas de seguridad definitivas.</li>
         </ul>
       </section>
       <aside>
@@ -55,7 +148,14 @@
         constancia turística acreditada.
       </p>
       <section>
-        <h2>Información ya identificada</h2>
+        <h2>Identidad y ámbito del servicio</h2>
+        <p>
+          Kusi Q’umir ofrece y comercializa sus servicios exclusivamente a través de canales
+          digitales, conforme al Anexo II del Reglamento de Agencias de Viajes y Turismo. Los
+          servicios incluyen paquetes turísticos, excursiones, traslados y otros productos
+          detallados en cada ficha; cuando un componente sea operado por un tercero, se indicará
+          expresamente.
+        </p>
         <ul>
           <li>Nombre comercial: {{ profile.commercialName }}.</li>
           <li>Domicilio fiscal declarado: {{ profile.fiscalAddress }}.</li>
@@ -66,21 +166,246 @@
         </ul>
       </section>
       <section>
-        <h2>Condiciones pendientes de aprobación</h2>
+        <h2>Registro y cumplimiento normativo</h2>
+        <p>
+          El RUC está activo y el prestador solicitará su inscripción en el Directorio Nacional de
+          Prestadores de Servicios Turísticos Calificados ante la GERCETUR Cusco. Esta sección se
+          actualizará con el número de la constancia una vez obtenida. El canal se somete a la
+          supervisión de la GERCETUR de Cusco cuando corresponda.
+        </p>
+      </section>
+      <section>
+        <h2>Reservas, precios y pagos (a activar tras la inscripción)</h2>
         <ul>
-          <li>Flujo digital de consulta, cotización, asistencia y confirmación.</li>
           <li>
-            Identificación de los tours operados por Kusi Q’umir y de los prestados por terceros.
+            Las reservas requerirán un depósito o el pago total según la política del producto.
           </li>
-          <li>Alcance de intermediación, organización y operación de cada servicio.</li>
-          <li>Proceso de cotización, verificación de cupo y confirmación.</li>
-          <li>Moneda, impuestos, medios y cronograma de pago.</li>
-          <li>Políticas de cambios, cancelaciones, no presentación y reembolsos.</li>
-          <li>Responsabilidades, restricciones, seguros y atención de emergencias.</li>
+          <li>
+            La confirmación se emitirá por correo cuando se acredite el pago o se acepte la
+            solicitud.
+          </li>
+          <li>
+            Los precios podrán variar según temporada, disponibilidad y cambios de tasas oficiales.
+          </li>
+          <li>
+            Los precios publicados incluyen los impuestos indicados y no incluyen gastos personales.
+          </li>
+          <li>Los importes actuales del catálogo son referenciales.</li>
+          <li>
+            Moneda prevista: soles (PEN) y dólares (USD); depósito inicial no reembolsable de entre
+            el 30% y el 50% según el servicio, con saldo antes del inicio del viaje.
+          </li>
+          <li>
+            Tasa de cambio: cuando la cotización sea en dólares y el pago en soles, se aplica el
+            tipo de cambio venta del Banco Central o la SBS del día del cargo, o la tasa indicada en
+            la cotización.
+          </li>
+          <li>
+            Pagos mediante pasarelas seguras sin almacenar credenciales de tarjetas; comisiones
+            informadas antes de contratar.
+          </li>
+        </ul>
+      </section>
+      <section>
+        <h2>Exactitud de datos y emisión nominativa</h2>
+        <p>
+          El cliente responde por la exactitud de los datos de los pasajeros (nombres, documento o
+          pasaporte) y asume los costos de reemisión o pérdida derivados de datos incorrectos. Los
+          boletos de Machu Picchu, Camino Inca y tren son nominativos, personales e intransferibles
+          según las normas de la DDC Cusco y las empresas ferroviarias.
+        </p>
+      </section>
+      <section>
+        <h2>Exportación de servicios (IGV 0%)</h2>
+        <p>
+          Para la inafectación del 18% de IGV, el cliente extranjero debe acreditar que no reside en
+          el Perú, que ingresó con fines turísticos y que su permanencia regular no excede los 60
+          días. De no acreditarse, se retendrá y facturará el IGV correspondiente.
+        </p>
+      </section>
+      <section>
+        <h2>Servicios propios y de terceros</h2>
+        <p>
+          Cuando el servicio es prestado por Kusi Q’umir, la responsabilidad corresponde a la
+          agencia. Cuando es prestado por un tercero, la agencia actúa como intermediaria y facilita
+          la contratación; la responsabilidad por la ejecución corresponde al prestador tercero, sin
+          perjuicio de la diligencia de la agencia en selección y coordinación.
+        </p>
+      </section>
+      <section>
+        <h2>Obligaciones del cliente</h2>
+        <p>
+          El cliente debe proporcionar información veraz, portar la documentación requerida,
+          presentarse en los horarios indicados y cumplir las instrucciones de seguridad y conducta.
+          El incumplimiento puede dar lugar a la rescisión del servicio sin derecho a reembolso.
+        </p>
+      </section>
+      <section>
+        <h2>Cancelación por el proveedor</h2>
+        <p>
+          La agencia podrá cancelar o suspender la prestación, sin penalidad para el cliente, ante
+          impago del saldo, sobreventa o indisponibilidad técnica, o cancelación de un prestador
+          tercero sin alternativa equivalente. En esos casos se devolverá lo pagado por el
+          componente afectado, salvo acuerdo de reprogramación o servicio equivalente.
+        </p>
+      </section>
+      <section>
+        <h2>Cambios, cancelaciones y reembolsos</h2>
+        <p>
+          Los boletos de Machu Picchu, las autorizaciones de la Red de Caminos Inca y los pasajes de
+          tren son nominativos, personales, intransferibles y no reembolsables según las normas de
+          la DDC Cusco y las empresas ferroviarias. Las solicitudes anticipadas podrán atenderse con
+          menor penalidad; las cancelaciones de último minuto pueden no ser reembolsables.
+        </p>
+        <p>
+          <a routerLink="/cancelaciones">Ver la política de cancelaciones y reembolsos propuesta</a
+          >.
+        </p>
+      </section>
+      <section>
+        <h2>Menores de edad en viajes</h2>
+        <p>
+          Los pasajeros menores de edad deben viajar con su documento de identidad o pasaporte
+          vigente y, cuando la normativa o el prestador lo exijan, acompañados y con las
+          autorizaciones correspondientes. Sus datos se tratan conforme a la política de privacidad.
+        </p>
+      </section>
+      <section>
+        <h2>Sin derecho de retracto</h2>
+        <p>
+          Por la naturaleza de los servicios turísticos (reservas indisponibles y ejecución
+          inmediata), no existe derecho de retracto una vez confirmada la reserva o iniciada la
+          prestación, conforme a las excepciones de la legislación de protección al consumidor. Las
+          cancelaciones se rigen por la política de cancelaciones.
+        </p>
+      </section>
+      <section>
+        <h2>Imágenes e información del canal</h2>
+        <p>
+          Las imágenes del catálogo son informativas; algunas son ilustraciones de referencia y
+          pueden no corresponder con exactitud al servicio real. La información esencial se
+          confirmará en la cotización antes de contratar.
+        </p>
+      </section>
+      <section>
+        <h2>Enlaces de terceros y propiedad intelectual</h2>
+        <p>
+          El canal puede enlazar sitios externos (autoridades, prestadores, servicios de pago) de
+          cuyo contenido la agencia no responde. La marca, el sitio y sus contenidos e ilustraciones
+          son de titularidad de Kusi Q’umir: queda prohibida su reproducción o uso comercial sin
+          autorización.
+        </p>
+      </section>
+      <section>
+        <h2>Modificaciones, divisibilidad y renuncia</h2>
+        <p>
+          La agencia podrá actualizar estos términos con aviso previo publicado en el canal; la
+          versión aplicable será la vigente al momento de la contratación. Si una disposición
+          resultara inválida, las restantes conservan su validez, y la falta de ejercicio de un
+          derecho no implica renuncia.
+        </p>
+      </section>
+      <section>
+        <h2>Fuerza mayor (art. 1315 del Código Civil)</h2>
+        <p>
+          La agencia queda eximida de responsabilidad por bloqueos de vías, huelgas y disturbios;
+          fenómenos climáticos extremos, huaycos o sismos; suspensiones de la DDC Cusco o del
+          SERNANP; y estados de emergencia o paros de aerolíneas. Se buscará reprogramar, modificar
+          rutas o proponer itinerarios alternativos; los costos adicionales derivados serían
+          asumidos por el cliente.
+        </p>
+      </section>
+      <section>
+        <h2>Seguros, responsabilidad y fuerza mayor</h2>
+        <ul>
+          <li>
+            Se recomienda un seguro de viaje; la cobertura mínima incluida se informará en la ficha.
+          </li>
+          <li>
+            La responsabilidad se limita, en general, al monto pagado por el servicio afectado.
+          </li>
+          <li>En fuerza mayor se buscará reprogramación o soluciones alternativas razonables.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Protección al consumidor, datos y controversias</h2>
+        <ul>
+          <li>Derechos de protección al consumidor, Libro de Reclamaciones e INDECOPI.</li>
+          <li>Tratamiento de datos conforme a la política de privacidad y la Ley N.° 29733.</li>
+          <li>Rechazo de la ESNNA y difusión de los canales de denuncia oficiales.</li>
+          <li>Controversias: jurisdicción de los tribunales competentes del Cusco.</li>
         </ul>
       </section>
       <aside>
         Estado: borrador no vigente. La web no recibe consultas, reservas ni pagos reales.
+      </aside>
+    }
+    @case ('cancelaciones') {
+      <h1 class="text-balance">Política de cancelaciones y reembolsos</h1>
+      <p class="lead">
+        Propuesta comercial pendiente de aprobación para la futura operación digital de
+        {{ profile.legalName }}, RUC {{ profile.ruc }}. No está vigente: la web no recibe reservas
+        ni pagos reales.
+      </p>
+      <section>
+        <h2>Resumen</h2>
+        <ul>
+          <li>Plazos de cancelación transparentes.</li>
+          <li>Reembolsos procesados al método original.</li>
+          <li>Excepciones por fuerza mayor.</li>
+        </ul>
+        <p>
+          Las condiciones concretas aplican según el paquete y la fecha de contratación; estas
+          reglas generales ofrecen un marco para tramitar solicitudes.
+        </p>
+      </section>
+      <section>
+        <h2>Solicitudes de cambio y cancelación</h2>
+        <p>
+          Las solicitudes se remitirán por escrito a
+          <a [href]="profile.emailHref">{{ profile.email }}</a> indicando número de reserva, nombre
+          del titular y motivo de la solicitud.
+        </p>
+      </section>
+      <section>
+        <h2>Plazos y penalidades (propuesta)</h2>
+        <ul>
+          <li>Más de 45 días de antelación: retención del depósito inicial no reembolsable.</li>
+          <li>Entre 44 y 30 días de antelación: penalidad del 50% del valor total.</li>
+          <li>Entre 29 y 15 días de antelación: penalidad del 75% del valor total.</li>
+          <li>Menos de 14 días o no presentación: penalidad del 100% del valor total.</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Servicios no endosables por ley</h2>
+        <p>
+          Los boletos de ingreso a Machu Picchu, las autorizaciones para la Red de Caminos Inca y
+          los pasajes de tren confirmados son nominativos, personales, intransferibles y no
+          reembolsables según las normas de la DDC Cusco y las empresas ferroviarias. No se admiten
+          cambios de nombres, números de pasaporte ni fechas una vez emitidos.
+        </p>
+      </section>
+      <section>
+        <h2>Reembolsos y excepciones</h2>
+        <p>
+          Los reembolsos procederán por falla operativa de la agencia o cuando los proveedores
+          terceros otorguen devoluciones, y se procesarán en un plazo máximo de 30 días hábiles
+          mediante el mismo método de pago, con las deducciones legales aplicables. En fuerza mayor
+          o medidas gubernamentales que impidan el viaje se buscarán reprogramaciones o créditos
+          para futuras reservas.
+        </p>
+      </section>
+      <section>
+        <h2>Servicios de terceros</h2>
+        <p>
+          Cuando el servicio dependa de prestadores terceros con políticas propias (trenes,
+          permisos, entradas), se aplicarán las reglas del operador correspondiente, que se
+          informarán en la cotización.
+        </p>
+      </section>
+      <aside>
+        Estado: propuesta pendiente de aprobación y revisión legal. No regula operaciones reales
+        mientras las reservas permanezcan desactivadas.
       </aside>
     }
     @case ('responsibleTourism') {
@@ -94,11 +419,11 @@
       <section>
         <h2>Afiche oficial contra la explotación sexual de niñas, niños y adolescentes</h2>
         <p>
-          En el Perú, la explotación y el turismo sexual de niñas, niños y adolescentes es un
-          delito grave que se sanciona con penas de cárcel de acuerdo con el artículo 179-A del
-          Código Penal. Nuestra agencia rechaza firmemente la ESNNA y cumple con la Ley N.° 30802
-          y el D.S. N.° 005-2020-MINCETUR. Si eres testigo o sospechas de un caso ESNNA, denúncialo
-          ante las autoridades.
+          En el Perú, la explotación y el turismo sexual de niñas, niños y adolescentes es un delito
+          grave que se sanciona con penas de cárcel de acuerdo con el artículo 179-A del Código
+          Penal. Nuestra agencia rechaza firmemente la ESNNA y cumple con la Ley N.° 30802 y el D.S.
+          N.° 005-2020-MINCETUR. Si eres testigo o sospechas de un caso ESNNA, denúncialo ante las
+          autoridades.
         </p>
         <p>
           El afiche oficial en su versión gráfica se integrará a esta página cuando sea
@@ -124,10 +449,10 @@
       <section>
         <h2>Canales de denuncia</h2>
         <ul>
+          <li>Línea 1818: Central Única de Denuncias del Ministerio del Interior.</li>
           <li>
-            Línea 1818: Central Única de Denuncias del Ministerio del Interior.
+            Línea 100: servicio de atención del Ministerio de la Mujer y Poblaciones Vulnerables.
           </li>
-          <li>Línea 100: servicio de atención del Ministerio de la Mujer y Poblaciones Vulnerables.</li>
           <li>Emergencias 105: Policía Nacional del Perú.</li>
           <li>Correo: prevencionesnna@mincetur.gob.pe</li>
           <li>
@@ -145,7 +470,8 @@
 
   <nav class="institutional-nav" aria-label="Información complementaria">
     <a routerLink="/informacion-institucional"
-      >Consultar la ficha institucional <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
+      >Consultar la ficha institucional
+      <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
     ></a>
   </nav>
 </main>

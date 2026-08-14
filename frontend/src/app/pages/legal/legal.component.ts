@@ -5,10 +5,12 @@ import { agencyProfile } from '../../config/agency-profile';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
-type LegalDocument = 'privacy' | 'terms' | 'responsibleTourism';
+type LegalDocument = 'privacy' | 'terms' | 'cancelaciones' | 'responsibleTourism';
 
 function isLegalDocument(value: unknown): value is LegalDocument {
-  return value === 'privacy' || value === 'terms' || value === 'responsibleTourism';
+  return (
+    value === 'privacy' || value === 'terms' || value === 'cancelaciones' || value === 'responsibleTourism'
+  );
 }
 
 @Component({

@@ -7,6 +7,7 @@ export const serverRoutes: ServerRoute[] = [
   { path: 'informacion-institucional', renderMode: RenderMode.Prerender },
   { path: 'privacidad', renderMode: RenderMode.Prerender },
   { path: 'terminos', renderMode: RenderMode.Prerender },
+  { path: 'cancelaciones', renderMode: RenderMode.Prerender },
   { path: 'turismo-responsable', renderMode: RenderMode.Prerender },
   { path: 'libro-de-reclamaciones', renderMode: RenderMode.Prerender },
   { path: '**', renderMode: RenderMode.Server, status: 404 },
