@@ -1,4 +1,5 @@
 <footer class="site-footer">
+  <div class="footer-accent" aria-hidden="true"></div>
   <div class="kq-shell footer-top">
     <div class="footer-brand-column">
       <a class="footer-brand" routerLink="/" aria-label="Ir al inicio de Kusi Q’umir">
@@ -78,12 +79,6 @@
         <a [href]="profile.emailHref">{{ profile.email }}</a> o el
         <a routerLink="/libro-de-reclamaciones">formulario en línea</a>.
       </p>
-      <p class="footer-support-label">Estado de la operación:</p>
-      <div class="footer-support-list">
-        <span>RUC activo</span>
-        <span>Registro aún no acreditado</span>
-        <span>Sin distintivo oficial</span>
-      </div>
     </div>
 
     <div class="footer-column footer-community">
@@ -110,10 +105,18 @@
   </div>
 
   <div class="kq-shell footer-bottom">
-    <p>
+    <p class="footer-copyright">
       © {{ currentYear }} <strong>Kusi Q’umir</strong>. Todos los derechos reservados.
       <span>RUC {{ profile.ruc }} · activo.</span>
     </p>
-    <p class="footer-commercial-status">Canal exclusivamente digital · sin ventas</p>
+    <div class="footer-operation" aria-label="Estado de la operación">
+      <span class="footer-status-label">Estado de la operación:</span>
+      <ul class="footer-support-list">
+        <li>RUC activo</li>
+        <li>Registro aún no acreditado</li>
+        <li>Sin distintivo oficial</li>
+      </ul>
+      <span class="footer-commercial-status">Canal exclusivamente digital · sin ventas</span>
+    </div>
   </div>
 </footer>
