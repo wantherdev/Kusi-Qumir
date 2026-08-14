@@ -88,9 +88,23 @@ confirmación. El propietario confirmó por separado el correo público
 - Constancia de inscripción ante GERCETUR/MINCETUR
 - Número y fecha de inscripción turística
 - Autorización para utilizar el distintivo oficial
-- Código de Conducta ESNNA suscrito ante GERCETUR y afiche oficial en versión
-  gráfica. La web ya muestra el texto legal estandarizado de MINCETUR y los
-  canales de denuncia desde el 14 de agosto de 2026; el afiche impreso se
-  exhibirá al completar la suscripción (D.S. N.° 005-2020-MINCETUR, art. 17.2).
-- Políticas definitivas de cobro, cancelación y reembolso
+- Entrega en Mesa de Partes de GERCETUR de los formularios de registro y
+  ESNNA ya preparados (`04`–`07` en `recursos/`); falta firma del titular y
+  dirección pública de contacto
+- Suscripción del Código de Conducta ESNNA y recepción del afiche oficial en
+  versión gráfica para publicar en la web
+- Aprobación del titular y revisión legal de las políticas de privacidad,
+  términos, cancelaciones, contrato y del Libro de Reclamaciones (borradores
+  fusionados `08`–`12` en `recursos/`; la escala de penalidades adoptada es la
+  de 45/30/15 días y el IGV 0% de exportación quedó incorporado a los términos)
+- Revisión legal de los refuerzos incorporados desde el referente de mercado
+  (14 de agosto de 2026): declaración jurada del consumidor, nota de campos
+  obligatorios por ley, "fecha del viaje contratado" y confidencialidad de los
+  datos de salud en la política de privacidad
+- Firma de los originales por el abogado y el titular para el expediente interno
+  (no se publican en la web); opcionalmente, línea de crédito de revisión legal
+  al pie de las políticas
+- Pasar a operativo el proceso del Libro de Reclamaciones (`12_politica`):
+  número de hoja, constancia, copia y respuesta en 15 días hábiles, con el
+  backend correspondiente y el correo específico de reclamaciones
 - Proveedor de hosting, base de datos y correo transaccional
