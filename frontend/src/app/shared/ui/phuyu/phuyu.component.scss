@@ -1,0 +1,33 @@
+:host {
+  display: inline-block;
+  max-width: 100%;
+  line-height: 0;
+}
+
+.phuyu {
+  display: block;
+  max-width: 100%;
+  height: auto;
+  object-fit: contain;
+}
+
+.phuyu--xs {
+  width: auto;
+  height: var(--phuyu-size-xs);
+}
+
+.phuyu--sm {
+  width: var(--phuyu-size-sm);
+}
+
+.phuyu--md {
+  width: var(--phuyu-size-md);
+}
+
+.phuyu--lg {
+  width: var(--phuyu-size-lg);
+}
+
+.phuyu--xl {
+  width: var(--phuyu-size-xl);
+}

@@ -28,6 +28,12 @@ describe('LegalComponent', () => {
     expect(fixture.nativeElement.textContent).toContain('Cancelación por el proveedor');
     expect(fixture.nativeElement.textContent).toContain('Menores de edad en viajes');
     expect(fixture.nativeElement.textContent).toContain('Sin derecho de retracto');
+    const sections = [
+      ...(fixture.nativeElement.querySelectorAll('.legal-page section') as NodeListOf<HTMLElement>),
+    ];
+    expect(sections.length).toBeGreaterThan(10);
+    expect(sections.every((section) => section.querySelector('h2'))).toBe(true);
+    expect(fixture.nativeElement.querySelector('.legal-page aside')).toBeTruthy();
   });
 
   it('renders the privacy draft with sensitive data and minors sections', async () => {
@@ -114,5 +120,8 @@ describe('LegalComponent', () => {
       'Política de privacidad',
     );
     expect(fixture.nativeElement.textContent).toContain('D.S. N.° 016-2024-JUS');
+    expect(fixture.nativeElement.querySelector('a[aria-current="page"]')?.textContent).toContain(
+      'Privacidad',
+    );
   });
 });

@@ -1,10 +1,34 @@
 .page-header {
   position: sticky;
-  z-index: 90;
+  z-index: 100;
   top: 0;
   border-bottom: 1px solid var(--kq-border);
-  background: rgba(255, 255, 255, 0.94);
+  background: rgba(246, 249, 249, 0.96);
   backdrop-filter: blur(14px);
+
+  &::after {
+    position: absolute;
+    right: 0;
+    bottom: -1px;
+    left: 0;
+    height: 1px;
+    background: linear-gradient(90deg, var(--kq-teal), transparent 32%);
+    content: '';
+  }
+}
+
+.header-layout {
+  position: relative;
+  display: flex;
+  min-height: var(--kq-header-height);
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+}
+
+.header-brand {
+  display: inline-flex;
+  flex: 0 0 auto;
 
   img {
     display: block;
@@ -13,41 +37,137 @@
   }
 }
 
-.catalog-link {
-  display: inline-flex;
-  min-height: 2.75rem;
+.site-navigation {
+  display: flex;
   align-items: center;
-  gap: 0.45rem;
-  border: 1px solid var(--kq-border);
-  border-radius: 999px;
-  padding: 0.5rem 0.9rem;
-  background: var(--kq-canvas);
-  font-weight: 700;
-  text-decoration: none;
-  transition:
-    border-color 160ms ease,
-    color 160ms ease,
-    transform 160ms ease;
+  gap: clamp(0.85rem, 2vw, 1.5rem);
 
-  &:hover {
-    border-color: var(--kq-action);
-    color: var(--kq-action);
-    transform: translateY(-1px);
+  > a:not(.kq-button) {
+    position: relative;
+    display: inline-flex;
+    min-height: 2.75rem;
+    align-items: center;
+    color: var(--kq-soft-ink);
+    font-size: 0.84rem;
+    font-weight: 700;
+    text-decoration: none;
+
+    &::after {
+      position: absolute;
+      right: 0;
+      bottom: 0.2rem;
+      left: 0;
+      height: 2px;
+      background: var(--kq-action);
+      content: '';
+      transform: scaleX(0);
+      transform-origin: right;
+      transition: transform 160ms ease;
+    }
+
+    &:hover,
+    &.site-navigation__link--active {
+      color: var(--kq-action);
+
+      &::after {
+        transform: scaleX(1);
+        transform-origin: left;
+      }
+    }
+  }
+}
+
+.menu-toggle {
+  display: none;
+  width: 3rem;
+  height: 3rem;
+  border: 1px solid var(--kq-border);
+  border-radius: var(--kq-radius-md);
+  padding: 0.65rem;
+  background: var(--kq-surface);
+
+  span:not(.sr-only) {
+    display: block;
+    width: 1.4rem;
+    height: 2px;
+    margin: 0.28rem auto;
+    background: var(--kq-ink);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease;
   }
 
-  &--active {
-    border-color: var(--kq-ink);
-    background: var(--kq-ink);
-    color: white;
+  &--open {
+    span:nth-of-type(2) {
+      transform: translateY(0.38rem) rotate(45deg);
+    }
+
+    span:nth-of-type(3) {
+      opacity: 0;
+    }
+
+    span:nth-of-type(4) {
+      transform: translateY(-0.38rem) rotate(-45deg);
+    }
+  }
+}
+
+@media (max-width: 1040px) {
+  .menu-toggle {
+    display: block;
+    flex: 0 0 auto;
+  }
+
+  .site-navigation {
+    position: absolute;
+    top: calc(100% + 1px);
+    right: 0;
+    left: 0;
+    display: grid;
+    max-height: calc(100svh - var(--kq-header-height));
+    gap: 0.25rem;
+    overflow-y: auto;
+    border: 1px solid var(--kq-border);
+    border-top: 0;
+    border-radius: 0 0 var(--kq-radius-lg) var(--kq-radius-lg);
+    padding: 1rem;
+    background: var(--kq-canvas);
+    box-shadow: var(--kq-shadow-elevated);
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(-0.5rem);
+    transition:
+      opacity 160ms ease,
+      transform 160ms ease,
+      visibility 160ms ease;
+    visibility: hidden;
+
+    > a:not(.kq-button) {
+      min-height: 3rem;
+      border-bottom: 1px solid var(--kq-border);
+      padding-inline: 0.5rem;
+
+      &::after {
+        display: none;
+      }
+    }
+
+    .kq-button {
+      width: 100%;
+      margin-top: 0.5rem;
+    }
+
+    &--open {
+      opacity: 1;
+      pointer-events: auto;
+      transform: none;
+      visibility: visible;
+    }
   }
 }
 
 @media (max-width: 480px) {
-  .page-header img {
-    width: 7.75rem;
-  }
-
-  .catalog-link {
-    font-size: 0.78rem;
+  .header-brand img {
+    width: 8.5rem;
   }
 }

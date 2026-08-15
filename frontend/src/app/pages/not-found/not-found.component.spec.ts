@@ -15,7 +15,7 @@ describe('NotFoundComponent', () => {
     const element = fixture.nativeElement as HTMLElement;
 
     expect(element.querySelector('h1')?.textContent).toContain('no forma parte del recorrido');
-    expect(element.querySelector('a.kq-button')?.textContent).toContain('Volver al inicio');
+    expect(element.querySelector('main a.kq-button')?.textContent).toContain('Volver al inicio');
   });
 
   it('shows a decorative mascot figure', async () => {
@@ -32,5 +32,6 @@ describe('NotFoundComponent', () => {
     expect(mascot).toBeTruthy();
     expect(mascot.getAttribute('loading')).toBe('lazy');
     expect(mascot.getAttribute('alt')).toBe('');
+    expect(mascot.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-empty.webp');
   });
 });

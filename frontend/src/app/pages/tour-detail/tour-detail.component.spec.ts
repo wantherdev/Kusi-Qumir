@@ -38,8 +38,8 @@ const tour: Tour = {
       ],
     },
   ],
-  includes: [{ title: 'Guía profesional' }],
-  excludes: [{ title: 'Boleto turístico' }],
+  includes: [{ title: 'Guía profesional', description: 'Acompañamiento durante el recorrido.' }],
+  excludes: [{ title: 'Boleto turístico', description: 'Ingreso pagado por el viajero.' }],
   faqs: [{ question: '¿Qué llevar?', answer: 'Protección solar.', sortOrder: 1 }],
   recommendations: [{ title: 'Ropa', description: 'Lleva capas ligeras.' }],
   requirements: [{ requirement: 'Documento de identidad' }],
@@ -98,6 +98,56 @@ describe('TourDetailComponent', () => {
     expect(document.head.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe(
       tour.seo?.title,
     );
+  });
+
+  it('visually and semantically distinguishes included and excluded services', async () => {
+    await configure({ findOne: vi.fn().mockReturnValue(of(tour)) });
+
+    const fixture = TestBed.createComponent(TourDetailComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const included = element.querySelector('.coverage-card--included') as HTMLElement;
+    const excluded = element.querySelector('.coverage-card--excluded') as HTMLElement;
+
+    expect(included.querySelector('h2')?.textContent).toContain('Incluye');
+    expect(excluded.querySelector('h2')?.textContent).toContain('No incluye');
+    expect(included.querySelector('.coverage-list__marker .ri-check-line')).toBeTruthy();
+    expect(excluded.querySelector('.coverage-list__marker')?.textContent).toContain('×');
+    expect(included.textContent).toContain('Confirmado en el servicio');
+    expect(excluded.textContent).toContain('Considera aparte');
+    expect(included.getAttribute('aria-labelledby')).toBe('included-title');
+    expect(excluded.getAttribute('aria-labelledby')).toBe('excluded-title');
+    expect(element.querySelector('.coverage-card--requirements h2')?.textContent).toContain(
+      'Requisitos',
+    );
+    expect(element.querySelector('.coverage-card--recommendations h2')?.textContent).toContain(
+      'Recomendaciones',
+    );
+    expect(element.querySelector('.faq-list summary .ri-add-line')).toBeTruthy();
+  });
+
+  it('presents each price option as a comparable rate card', async () => {
+    await configure({ findOne: vi.fn().mockReturnValue(of(tour)) });
+
+    const fixture = TestBed.createComponent(TourDetailComponent);
+    fixture.detectChanges();
+    const element = fixture.nativeElement as HTMLElement;
+    const priceCard = element.querySelector('.price-card') as HTMLElement;
+    const rateLabels = [...priceCard.querySelectorAll('dt')].map((label) =>
+      label.textContent?.trim(),
+    );
+    const rateAmounts = [...priceCard.querySelectorAll('dd')].map((amount) =>
+      amount.textContent?.trim(),
+    );
+
+    expect(priceCard.querySelector('.price-card__header')?.textContent).toContain('Opción 1');
+    expect(priceCard.querySelector('.price-card__header')?.textContent).toContain(
+      'Servicio compartido',
+    );
+    expect(priceCard.querySelector('.price-card__header')?.textContent).toContain('PEN');
+    expect(rateLabels).toEqual(['Adulto', 'Niño']);
+    expect(rateAmounts).toEqual(['S/ 180', 'S/ 140']);
+    expect(element.querySelector('.price-note .ri-information-line')).toBeTruthy();
   });
 
   it('lets the user retry when the API temporarily fails', async () => {

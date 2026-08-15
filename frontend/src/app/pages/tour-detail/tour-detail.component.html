@@ -2,17 +2,20 @@
 
 <app-page-header />
 
-<main id="contenido" class="tour-page kq-shell" tabindex="-1">
+<main id="contenido" class="tour-page kq-page kq-shell" tabindex="-1">
   @if (state().status === 'loading') {
-    <p class="state-card" role="status">Cargando el tour…</p>
+    <p class="state-card kq-state-card kq-state-card--spacious" role="status">Cargando el tour…</p>
   } @else if (state().status === 'not-found') {
-    <section class="state-card">
+    <section class="state-card kq-state-card kq-state-card--spacious">
       <p class="kq-eyebrow">Tour no encontrado</p>
       <h1>Esta ruta no está disponible</h1>
       <a class="kq-button" routerLink="/tours">Volver al catálogo</a>
     </section>
   } @else if (state().status === 'error') {
-    <section class="state-card" role="alert">
+    <section
+      class="state-card kq-state-card kq-state-card--error kq-state-card--spacious"
+      role="alert"
+    >
       <p class="kq-eyebrow">Error de conexión</p>
       <h1>No pudimos cargar este tour</h1>
       <p>Comprueba que la API esté disponible y vuelve a intentarlo.</p>
@@ -30,11 +33,11 @@
     <header class="tour-hero">
       <div class="tour-hero__copy">
         <p class="kq-eyebrow">{{ tour.code }} · {{ categoryFor(tour) }}</p>
-        <h1 class="text-balance">{{ tour.title }}</h1>
+        <h1 class="kq-page-title text-balance">{{ tour.title }}</h1>
         @if (tour.subtitle) {
           <p class="subtitle">{{ tour.subtitle }}</p>
         }
-        <p class="lead">{{ tour.shortDescription }}</p>
+        <p class="kq-page-lead">{{ tour.shortDescription }}</p>
         <ul aria-label="Datos principales del tour">
           <li>{{ durationFor(tour) }}</li>
           <li>Dificultad {{ difficultyFor(tour) }}</li>
@@ -104,21 +107,42 @@
       <p class="kq-eyebrow">Precios informados</p>
       <h2>Opciones del tour</h2>
       <div class="price-grid">
-        @for (price of tour.prices; track price.name) {
-          <article>
-            <h3>{{ price.name }}</h3>
-            <p><small>Adulto</small> {{ priceFor(price.adult, price.currency) }}</p>
-            @if (price.child !== undefined) {
-              <p><small>Niño</small> {{ priceFor(price.child, price.currency) }}</p>
-            }
-            @if (price.private !== undefined) {
-              <p><small>Privado</small> {{ priceFor(price.private, price.currency) }}</p>
-            }
+        @for (price of tour.prices; track price.name; let index = $index) {
+          <article class="price-card">
+            <header class="price-card__header">
+              <div>
+                <p>Opción {{ index + 1 }}</p>
+                <h3>{{ price.name }}</h3>
+              </div>
+              <span>{{ price.currency }}</span>
+            </header>
+            <dl class="price-card__rates">
+              <div class="price-card__rate price-card__rate--primary">
+                <dt>Adulto</dt>
+                <dd>{{ priceFor(price.adult, price.currency) }}</dd>
+              </div>
+              @if (price.child !== undefined) {
+                <div class="price-card__rate">
+                  <dt>Niño</dt>
+                  <dd>{{ priceFor(price.child, price.currency) }}</dd>
+                </div>
+              }
+              @if (price.private !== undefined) {
+                <div class="price-card__rate">
+                  <dt>Privado</dt>
+                  <dd>{{ priceFor(price.private, price.currency) }}</dd>
+                </div>
+              }
+            </dl>
           </article>
         }
       </div>
       <p class="price-note">
-        La disponibilidad, condiciones e identidad del operador se confirman antes de contratar.
+        <i class="ri-icon ri-information-line" aria-hidden="true"></i>
+        <span
+          >La disponibilidad, condiciones e identidad del operador se confirman antes de
+          contratar.</span
+        >
       </p>
     </section>
 
@@ -145,48 +169,107 @@
       }
     </section>
 
-    <section class="included-grid">
-      <div>
-        <p class="kq-eyebrow">Incluye</p>
-        <ul>
+    <section class="coverage-grid" aria-label="Cobertura del tour">
+      <article class="coverage-card coverage-card--included" aria-labelledby="included-title">
+        <header class="coverage-card__header">
+          <span class="coverage-card__icon" aria-hidden="true">
+            <i class="ri-icon ri-check-line"></i>
+          </span>
+          <div>
+            <p>Confirmado en el servicio</p>
+            <h2 id="included-title">Incluye</h2>
+          </div>
+        </header>
+        <ul class="coverage-list">
           @for (item of tour.includes; track item.title) {
             <li>
-              <strong>{{ item.title }}</strong> {{ item.description ?? '' }}
+              <span class="coverage-list__marker" aria-hidden="true">
+                <i class="ri-icon ri-check-line"></i>
+              </span>
+              <div>
+                <strong>{{ item.title }}</strong>
+                @if (item.description) {
+                  <p>{{ item.description }}</p>
+                }
+              </div>
             </li>
           }
         </ul>
-      </div>
-      <div>
-        <p class="kq-eyebrow">No incluye</p>
-        <ul>
+      </article>
+      <article class="coverage-card coverage-card--excluded" aria-labelledby="excluded-title">
+        <header class="coverage-card__header">
+          <span class="coverage-card__icon" aria-hidden="true">×</span>
+          <div>
+            <p>Considera aparte</p>
+            <h2 id="excluded-title">No incluye</h2>
+          </div>
+        </header>
+        <ul class="coverage-list">
           @for (item of tour.excludes; track item.title) {
             <li>
-              <strong>{{ item.title }}</strong> {{ item.description ?? '' }}
+              <span class="coverage-list__marker" aria-hidden="true">×</span>
+              <div>
+                <strong>{{ item.title }}</strong>
+                @if (item.description) {
+                  <p>{{ item.description }}</p>
+                }
+              </div>
             </li>
           }
         </ul>
-      </div>
+      </article>
     </section>
 
-    <section class="included-grid">
-      <div>
-        <p class="kq-eyebrow">Requisitos</p>
-        <ul>
+    <section class="coverage-grid" aria-label="Preparación para el tour">
+      <article
+        class="coverage-card coverage-card--requirements"
+        aria-labelledby="requirements-title"
+      >
+        <header class="coverage-card__header">
+          <span class="coverage-card__icon" aria-hidden="true">
+            <i class="ri-icon ri-file-list-3-line"></i>
+          </span>
+          <div>
+            <p>Antes de participar</p>
+            <h2 id="requirements-title">Requisitos</h2>
+          </div>
+        </header>
+        <ul class="coverage-list">
           @for (item of tour.requirements; track item.requirement) {
-            <li>{{ item.requirement }}</li>
-          }
-        </ul>
-      </div>
-      <div>
-        <p class="kq-eyebrow">Recomendaciones</p>
-        <ul>
-          @for (item of tour.recommendations; track item.title) {
             <li>
-              <strong>{{ item.title }}</strong> {{ item.description }}
+              <span class="coverage-list__marker" aria-hidden="true">!</span>
+              <strong>{{ item.requirement }}</strong>
             </li>
           }
         </ul>
-      </div>
+      </article>
+      <article
+        class="coverage-card coverage-card--recommendations"
+        aria-labelledby="recommendations-title"
+      >
+        <header class="coverage-card__header">
+          <span class="coverage-card__icon" aria-hidden="true">
+            <i class="ri-icon ri-information-line"></i>
+          </span>
+          <div>
+            <p>Para viajar mejor</p>
+            <h2 id="recommendations-title">Recomendaciones</h2>
+          </div>
+        </header>
+        <ul class="coverage-list">
+          @for (item of tour.recommendations; track item.title) {
+            <li>
+              <span class="coverage-list__marker" aria-hidden="true">
+                <i class="ri-icon ri-information-line"></i>
+              </span>
+              <div>
+                <strong>{{ item.title }}</strong>
+                <p>{{ item.description }}</p>
+              </div>
+            </li>
+          }
+        </ul>
+      </article>
     </section>
 
     @if (tour.faqs.length) {
@@ -196,7 +279,9 @@
         <div class="faq-list">
           @for (faq of tour.faqs; track faq.sortOrder) {
             <details>
-              <summary>{{ faq.question }}</summary>
+              <summary>
+                {{ faq.question }}<i class="ri-icon ri-add-line" aria-hidden="true"></i>
+              </summary>
               <p>{{ faq.answer }}</p>
             </details>
           }

@@ -1,6 +1,11 @@
 <header class="page-header">
-  <div class="kq-shell flex min-h-20 items-center justify-between gap-6">
-    <a routerLink="/" aria-label="Volver al inicio de Kusi Q’umir">
+  <div class="kq-shell header-layout">
+    <a
+      class="header-brand"
+      routerLink="/"
+      aria-label="Ir al inicio de Kusi Q’umir"
+      (click)="closeMenu()"
+    >
       <img
         src="/assets/brand/logo-horizontal-color.svg"
         width="178"
@@ -8,13 +13,47 @@
         alt="Kusi Q’umir"
       />
     </a>
-    <a
-      class="catalog-link"
-      routerLink="/tours"
-      routerLinkActive="catalog-link--active"
-      [routerLinkActiveOptions]="{ exact: true }"
-      ariaCurrentWhenActive="page"
-      >Explorar tours <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i></a
+
+    <button
+      #menuToggle
+      class="menu-toggle"
+      type="button"
+      [class.menu-toggle--open]="menuOpen()"
+      [attr.aria-expanded]="menuOpen()"
+      aria-controls="site-navigation"
+      (click)="toggleMenu()"
     >
+      <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+      <span aria-hidden="true"></span>
+    </button>
+
+    <nav
+      id="site-navigation"
+      class="site-navigation"
+      [class.site-navigation--open]="menuOpen()"
+      aria-label="Navegación principal"
+    >
+      <a
+        routerLink="/tours"
+        routerLinkActive="site-navigation__link--active"
+        ariaCurrentWhenActive="page"
+        (click)="closeMenu()"
+        >Tours</a
+      >
+      <a routerLink="/" fragment="como-viajamos" (click)="closeMenu()">Cómo viajamos</a>
+      <a routerLink="/" fragment="servicios" (click)="closeMenu()">Servicios</a>
+      <a
+        routerLink="/informacion-institucional"
+        routerLinkActive="site-navigation__link--active"
+        ariaCurrentWhenActive="page"
+        (click)="closeMenu()"
+        >Información institucional</a
+      >
+      <a class="kq-button kq-button--small" routerLink="/" fragment="contacto" (click)="closeMenu()"
+        >Canales de atención</a
+      >
+    </nav>
   </div>
 </header>

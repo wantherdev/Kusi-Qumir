@@ -27,6 +27,8 @@ describe('ClaimsComponent', () => {
     expect(policy.textContent).toContain('Política de atención de quejas y reclamos');
     expect(fixture.nativeElement.textContent).toContain('quince (15) días hábiles');
     expect(fixture.nativeElement.textContent).toContain('Indecopi');
+    expect(fixture.nativeElement.querySelectorAll('.provider-card dl > div')).toHaveLength(5);
+    expect(fixture.nativeElement.querySelectorAll('form fieldset')).toHaveLength(3);
   });
 
   it('shows field-level accessible errors for an incomplete form', () => {
@@ -108,9 +110,12 @@ describe('ClaimsComponent', () => {
     form.dispatchEvent(new Event('submit'));
     fixture.detectChanges();
 
-    const mascot = fixture.nativeElement.querySelector('.claim-status__mascot') as HTMLImageElement;
+    const mascot = fixture.nativeElement.querySelector(
+      '.claim-status__mascot img',
+    ) as HTMLImageElement;
     expect(mascot).toBeTruthy();
-    expect(mascot.src).toContain('08-disculpa-y-ayuda.png');
+    expect(mascot.src).toContain('/assets/phuyu/static/phuyu-help.webp');
+    expect(mascot.getAttribute('aria-hidden')).toBe('true');
   });
 
   it('clears hidden guardian data when the consumer is no longer marked as a minor', () => {

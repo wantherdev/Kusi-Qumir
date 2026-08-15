@@ -420,19 +420,69 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 
 ## 2026-08-14 — Mascota de marca integrada en la web
 
-- El diseñador entrega la carpeta "mascota Kusi Q'umir" con 48 poses PNG
-  (6 categorías: web-cta, tours-exploración, consejos-seguridad,
-  atención-reservas, emociones y video-presentadora). El paquete v2.1 no la
-  documenta todavía; se usa como recurso decorativo y se solicitará al
-  diseñador una mini-especificación antes de tratarla como elemento canónico.
-- Los PNG quedan como fuente única para conservar el color y la fidelidad
-  visual de la mascota; las conversiones WebP se descartan.
-- Se integran cinco poses en la web desde `frontend/public/assets/mascot/`
-  (`width/height` reservados, `loading="lazy"`,
-  decorativas con `alt=""`): saludo en el proceso de la portada, atención con
+- El diseñador entrega
+  `phuyu-48-poses-individuales-corregidas-v2/` con 48 poses PNG, seis categorías
+  y el manual de implementación web v1.0. Esta carpeta se considera la fuente
+  maestra de Phuyu; las copias de la entrega anterior quedan reemplazadas.
+- Los PNG maestros no se sirven directamente. La aplicación publica únicamente
+  las cinco poses que utiliza como WebP sin pérdida en
+  `frontend/public/assets/phuyu/static/`, reduciendo su peso conjunto de
+  aproximadamente 764 kB a 556 kB sin alterar dimensiones ni transparencia.
+- Se incorpora `app-phuyu` como primitive visual compartido con poses y tamaños
+  tipados, dimensiones reservadas, carga diferida por defecto y opciones
+  explícitas para contenido informativo o prioritario. Las páginas dejan de
+  acoplarse a nombres de archivo.
+- Las poses actuales siguen siendo decorativas (`alt=""` y
+  `aria-hidden="true"`): saludo en el proceso de la portada, atención con
   auriculares en el panel de contacto, cartel vacío en la página 404, y
-  disculpa/agradecimiento junto al feedback del Libro de Reclamaciones.
+  ayuda/agradecimiento junto al feedback del Libro de Reclamaciones.
 - La carpeta `06-video-presentadora` queda reservada para contenido audiovisual
   futuro; las poses de consejos-seguridad se usarán cuando las fichas de tour
-  tengan una sección de recomendaciones. No se trata la mascota como prueba de
-  prestación de servicios.
+  tengan una sección de recomendaciones. No se añaden todavía animación,
+  mensajes contextuales, voz, analítica ni asistencia inteligente; no se trata
+  la mascota como prueba de prestación de servicios.
+
+## 2026-08-14 — Jerarquía visual transversal para contenido informativo
+
+- Las tarjetas se reservan para grupos con significado propio: estados,
+  cobertura del tour, preparación, datos institucionales y avisos; el resto del
+  contenido conserva la composición editorial para evitar contenedores
+  innecesarios.
+- Los estados y diferencias relevantes se comunican mediante texto visible,
+  encabezados semánticos, iconos y estructura además del color.
+- Los documentos legales organizan sus cláusulas como bloques numerados de
+  lectura, con ancho de línea controlado y el estado provisional en una
+  superficie de advertencia; el contenido jurídico no se modifica.
+- Portada, tarjetas de tours, encabezado, footer y página 404 conservan su
+  estructura porque ya cumplen este lenguaje visual.
+
+## 2026-08-14 — Unificación visual y auditoría UI/UX transversal
+
+- La portada adopta el mismo encabezado compartido que las rutas internas. El
+  componente ofrece navegación completa, responsive y rastreable hacia tours,
+  proceso, servicios, información institucional y canales de atención.
+- El menú móvil conserva bloqueo de scroll, cierre con Escape, retorno de foco
+  y restauración del `body` al destruir el componente; no se incorpora una
+  dependencia ni un sistema de navegación adicional.
+- La escala de página, títulos, introducciones, radios, sombras, controles y
+  estados remotos se centraliza mediante tokens y clases semánticas. Las
+  composiciones editoriales específicas se mantienen encapsuladas.
+- Los estados de carga, error y vacío de portada, catálogo y detalle usan una
+  presentación compartida. El estado vacío de la portada ocupa correctamente
+  todo el ancho de su grilla.
+- Las tarjetas de tours y los enlaces del footer aumentan sus objetivos de
+  interacción; los documentos legales incorporan navegación cruzada con estado
+  actual y la ficha institucional enlaza también cancelaciones y reembolsos.
+- El número decorativo de la página 404 sale del flujo para que el mensaje, la
+  mascota y la acción de retorno permanezcan visibles en el primer viewport de
+  escritorio sin perder el tratamiento editorial.
+- La ficha institucional aclara que las consultas informativas están
+  disponibles, sin sugerir reservas, pagos o reclamos operativos.
+- Los canales institucionales y las tarjetas de contacto reservan todo el ancho
+  necesario para teléfono y correo, evitando cortes de texto difíciles de leer.
+- La auditoría final combina pruebas de componentes, build SSR, revisión del DOM
+  prerenderizado, códigos HTTP, destinos de enlaces internos y cálculo de
+  contraste. Además, se recorren con Firefox las vistas de escritorio y móvil de
+  portada, navegación, catálogo real, ficha de tour, precios, inclusiones,
+  documentos, reclamos y página 404; esta inspección visual complementa las
+  verificaciones automatizadas sin presentarse como una certificación WCAG.

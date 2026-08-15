@@ -36,5 +36,8 @@ describe('AgencyInfoComponent', () => {
     expect(content).toContain('908 990 666');
     expect(content).toContain('Horario de oficina');
     expect(content).toContain('Sin constancia acreditada');
+    expect(fixture.nativeElement.querySelectorAll('.control-grid > li')).toHaveLength(4);
+    expect(fixture.nativeElement.querySelectorAll('.data-grid .pending').length).toBeGreaterThan(0);
+    expect(fixture.nativeElement.querySelector('a[href="/cancelaciones"]')).toBeTruthy();
   });
 });

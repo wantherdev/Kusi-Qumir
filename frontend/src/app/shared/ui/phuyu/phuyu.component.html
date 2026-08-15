@@ -1,0 +1,11 @@
+<img
+  [class]="'phuyu phuyu--' + size()"
+  [src]="asset().src"
+  [alt]="resolvedAlt()"
+  [attr.aria-hidden]="decorative() ? 'true' : null"
+  [attr.width]="asset().width"
+  [attr.height]="asset().height"
+  [attr.loading]="priority() ? 'eager' : 'lazy'"
+  [attr.fetchpriority]="priority() ? 'high' : null"
+  decoding="async"
+/>

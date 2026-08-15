@@ -11,13 +11,14 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 
 import { agencyProfile } from '../../config/agency-profile';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { PhuyuComponent } from '../../shared/ui/phuyu/phuyu.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
 type ClaimFeedback = { kind: 'error' | 'success'; message: string };
 
 @Component({
   selector: 'app-claims',
-  imports: [PageHeaderComponent, ReactiveFormsModule, SiteFooterComponent],
+  imports: [PageHeaderComponent, PhuyuComponent, ReactiveFormsModule, SiteFooterComponent],
   templateUrl: './claims.component.html',
   styleUrl: './claims.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

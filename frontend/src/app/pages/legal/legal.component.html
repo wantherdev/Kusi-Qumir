@@ -2,13 +2,13 @@
 
 <app-page-header />
 
-<main id="contenido" class="legal-page kq-shell" tabindex="-1">
+<main id="contenido" class="legal-page kq-page kq-shell" tabindex="-1">
   <p class="kq-eyebrow">Versión para evaluación institucional</p>
 
   @switch (document) {
     @case ('privacy') {
-      <h1 class="text-balance">Política de privacidad</h1>
-      <p class="lead">
+      <h1 class="kq-page-title text-balance">Política de privacidad</h1>
+      <p class="kq-page-lead">
         Borrador informativo de {{ profile.legalName }}, RUC {{ profile.ruc }}, para su canal
         exclusivamente digital. No se captan ni transmiten datos reales en esta versión.
       </p>
@@ -141,8 +141,8 @@
       </aside>
     }
     @case ('terms') {
-      <h1 class="text-balance">Términos y condiciones</h1>
-      <p class="lead">
+      <h1 class="kq-page-title text-balance">Términos y condiciones</h1>
+      <p class="kq-page-lead">
         Borrador para la futura operación digital de {{ profile.legalName }}, RUC {{ profile.ruc }}.
         El RUC está activo. Esta web no comercializa servicios ni inicia reservas mientras no exista
         constancia turística acreditada.
@@ -341,8 +341,8 @@
       </aside>
     }
     @case ('cancelaciones') {
-      <h1 class="text-balance">Política de cancelaciones y reembolsos</h1>
-      <p class="lead">
+      <h1 class="kq-page-title text-balance">Política de cancelaciones y reembolsos</h1>
+      <p class="kq-page-lead">
         Propuesta comercial pendiente de aprobación para la futura operación digital de
         {{ profile.legalName }}, RUC {{ profile.ruc }}. No está vigente: la web no recibe reservas
         ni pagos reales.
@@ -409,8 +409,8 @@
       </aside>
     }
     @case ('responsibleTourism') {
-      <h1 class="text-balance">Turismo responsable y protección de la niñez</h1>
-      <p class="lead">
+      <h1 class="kq-page-title text-balance">Turismo responsable y protección de la niñez</h1>
+      <p class="kq-page-lead">
         Kusi Q’umir rechaza toda forma de explotación sexual de niñas, niños y adolescentes
         vinculada a viajes y turismo. Este compromiso no equivale a una constancia de inscripción
         turística. La versión final incorporará el material oficial y el Código de Conducta
@@ -468,11 +468,27 @@
     }
   }
 
-  <nav class="institutional-nav" aria-label="Información complementaria">
-    <a routerLink="/informacion-institucional"
-      >Consultar la ficha institucional
-      <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
-    ></a>
+  <nav class="institutional-nav" aria-label="Documentos e información complementaria">
+    <p>Continúa revisando</p>
+    <div>
+      <a routerLink="/informacion-institucional">Ficha institucional</a>
+      <a routerLink="/privacidad" [attr.aria-current]="document === 'privacy' ? 'page' : null"
+        >Privacidad</a
+      >
+      <a routerLink="/terminos" [attr.aria-current]="document === 'terms' ? 'page' : null"
+        >Términos</a
+      >
+      <a
+        routerLink="/cancelaciones"
+        [attr.aria-current]="document === 'cancelaciones' ? 'page' : null"
+        >Cancelaciones</a
+      >
+      <a
+        routerLink="/turismo-responsable"
+        [attr.aria-current]="document === 'responsibleTourism' ? 'page' : null"
+        >Turismo responsable</a
+      >
+    </div>
   </nav>
 </main>
 

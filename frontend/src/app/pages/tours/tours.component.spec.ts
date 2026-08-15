@@ -54,6 +54,7 @@ describe('ToursComponent', () => {
     expect(content).toContain('Tour propio');
     expect(content).toContain('S/ 119');
     expect(content).toContain('reservas y pagos desactivados');
+    expect(fixture.nativeElement.querySelector('.catalog-status__icon')).toBeTruthy();
     expect(fixture.nativeElement.querySelector('a[href="/tours/city-tour-cusco"]')).toBeTruthy();
   });
 
@@ -126,7 +127,9 @@ describe('ToursComponent', () => {
     fixture.detectChanges();
     expect(fixture.nativeElement.textContent).toContain('No encontramos una ruta con esos filtros');
 
-    (fixture.nativeElement.querySelector('.state-card--empty button') as HTMLButtonElement).click();
+    (
+      fixture.nativeElement.querySelector('.kq-state-card--empty button') as HTMLButtonElement
+    ).click();
     fixture.detectChanges();
     expect(fixture.nativeElement.querySelectorAll('app-tour-card')).toHaveLength(2);
     expect(input.value).toBe('');

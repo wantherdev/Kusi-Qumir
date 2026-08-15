@@ -2,15 +2,16 @@
 
 <app-page-header />
 
-<main id="contenido" class="institutional-page kq-shell" tabindex="-1">
+<main id="contenido" class="institutional-page kq-page kq-shell" tabindex="-1">
   <div class="institutional-hero">
     <div>
       <p class="kq-eyebrow">Ficha del canal digital</p>
-      <h1 class="text-balance">Información institucional</h1>
-      <p class="lead">
+      <h1 class="kq-page-title text-balance">Información institucional</h1>
+      <p class="kq-page-lead">
         Esta versión presenta la operación exclusivamente digital de {{ profile.commercialName }} y
         su preparación conforme al {{ profile.registrationForm }}. Durante la evaluación no recibe
-        pagos, reservas, consultas ni reclamos reales.
+        pagos, reservas ni reclamos reales; las consultas informativas continúan disponibles por los
+        canales confirmados.
       </p>
     </div>
     <aside class="evaluation-card" aria-label="Estado del canal digital">
@@ -202,6 +203,9 @@
       ></a>
       <a routerLink="/terminos"
         >Términos y condiciones <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
+      ></a>
+      <a routerLink="/cancelaciones"
+        >Cancelaciones y reembolsos <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
       ></a>
       <a routerLink="/turismo-responsable"
         >Turismo responsable y ESNNA <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i

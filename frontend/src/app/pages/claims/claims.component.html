@@ -2,12 +2,12 @@
 
 <app-page-header />
 
-<main id="contenido" class="claims-page kq-shell" tabindex="-1">
+<main id="contenido" class="claims-page kq-page kq-shell" tabindex="-1">
   <div class="claims-heading">
     <div>
       <p class="kq-eyebrow">Atención al consumidor</p>
-      <h1 id="claims-title" class="text-balance">Libro de Reclamaciones</h1>
-      <p>
+      <h1 id="claims-title" class="kq-page-title text-balance">Libro de Reclamaciones</h1>
+      <p class="kq-page-lead">
         Vista del formulario previsto para la operación exclusivamente digital. La numeración, el
         registro, la constancia y el seguimiento se conectarán antes de iniciar operaciones
         comerciales.
@@ -389,18 +389,10 @@
         [attr.role]="currentFeedback.kind === 'error' ? 'alert' : 'status'"
         aria-live="polite"
       >
-        <img
+        <app-phuyu
           class="claim-status__mascot"
-          [src]="
-            currentFeedback.kind === 'error'
-              ? '/assets/mascot/08-disculpa-y-ayuda.png'
-              : '/assets/mascot/02-agradecimiento.png'
-          "
-          alt=""
-          width="316"
-          height="526"
-          loading="lazy"
-          decoding="async"
+          [pose]="currentFeedback.kind === 'error' ? 'help' : 'thanks'"
+          size="xs"
         />
         {{ currentFeedback.message }}
       </p>

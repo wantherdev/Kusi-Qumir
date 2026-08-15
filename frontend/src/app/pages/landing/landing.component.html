@@ -1,40 +1,6 @@
 <a class="skip-link" href="#contenido">Ir al contenido principal</a>
 
-<header class="site-header" [class.scrolled]="headerScrolled()">
-  <div class="kq-shell flex min-h-20 items-center justify-between">
-    <a class="brand" href="#inicio" aria-label="Kusi Q’umir, inicio" (click)="closeMenu()">
-      <img
-        src="/assets/brand/logo-horizontal-color.svg"
-        width="190"
-        height="54"
-        alt="Kusi Q’umir"
-      />
-    </a>
-
-    <button
-      #menuToggle
-      class="menu-toggle"
-      type="button"
-      [attr.aria-expanded]="menuOpen()"
-      aria-controls="site-nav"
-      (click)="toggleMenu()"
-    >
-      <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
-      <span></span><span></span><span></span>
-    </button>
-
-    <nav id="site-nav" class="site-nav" [class.open]="menuOpen()" aria-label="Navegación principal">
-      <a href="#experiencias" (click)="closeMenu()">Experiencias</a>
-      <a routerLink="/tours" (click)="closeMenu()">Tours</a>
-      <a href="#como-viajamos" (click)="closeMenu()">Cómo viajamos</a>
-      <a href="#servicios" (click)="closeMenu()">Servicios</a>
-      <a routerLink="/informacion-institucional" (click)="closeMenu()">Información institucional</a>
-      <a class="kq-button kq-button--small" href="#contacto" (click)="closeMenu()"
-        >Ver canal de consulta</a
-      >
-    </nav>
-  </div>
-</header>
+<app-page-header />
 
 <main id="contenido" tabindex="-1">
   <section class="hero" id="inicio" aria-labelledby="hero-title">
@@ -84,14 +50,38 @@
 
   <section class="bg-white py-20 lg:py-32">
     <div class="kq-shell intro-grid reveal">
-      <p class="kq-eyebrow">01 / Nuestra forma de viajar</p>
-      <div>
+      <div class="intro-heading">
+        <p class="kq-eyebrow">01 / Nuestra forma de viajar</p>
         <h2 class="text-balance">Elige con información antes de salir.</h2>
-        <p>
-          Cada ficha explica horarios, recorrido, exigencia, inclusiones, exclusiones y preparación.
-          El catálogo es real; la contratación permanece desactivada hasta regularizar los
-          requisitos comerciales.
-        </p>
+      </div>
+      <div class="intro-summary">
+        <p>Cada ficha reúne lo necesario para comparar una experiencia antes de consultar.</p>
+        <dl class="intro-facts mt-7 grid gap-3 sm:grid-cols-3">
+          <div class="rounded-2xl border border-kq-border bg-kq-canvas p-4">
+            <dt class="text-xs font-extrabold tracking-wider text-kq-action uppercase">
+              Itinerario
+            </dt>
+            <dd class="mt-2 text-sm leading-6 font-semibold text-kq-ink">
+              Horarios, recorrido y nivel de exigencia.
+            </dd>
+          </div>
+          <div class="rounded-2xl border border-kq-border bg-kq-canvas p-4">
+            <dt class="text-xs font-extrabold tracking-wider text-kq-action uppercase">
+              Condiciones
+            </dt>
+            <dd class="mt-2 text-sm leading-6 font-semibold text-kq-ink">
+              Inclusiones, exclusiones y preparación.
+            </dd>
+          </div>
+          <div class="rounded-2xl border border-kq-border bg-kq-canvas p-4">
+            <dt class="text-xs font-extrabold tracking-wider text-kq-action uppercase">
+              Estado actual
+            </dt>
+            <dd class="mt-2 text-sm leading-6 font-semibold text-kq-ink">
+              Catálogo informativo; contratación desactivada.
+            </dd>
+          </div>
+        </dl>
       </div>
     </div>
   </section>
@@ -120,8 +110,8 @@
           </div>
         </div>
       } @else if (catalogError()) {
-        <div class="catalog-state catalog-state--error" role="alert">
-          <strong>No pudimos conectar con el catálogo</strong>
+        <div class="catalog-state kq-state-card kq-state-card--error" role="alert">
+          <h3>No pudimos conectar con el catálogo</h3>
           <p>La API no está disponible. Puedes intentarlo nuevamente o comunicarte por WhatsApp.</p>
           <button class="kq-button kq-button--small" type="button" (click)="retryCatalog()">
             Reintentar
@@ -132,18 +122,28 @@
           @for (tour of tours(); track tour.slug; let index = $index) {
             <app-tour-card [tour]="tour" [sequence]="index + 1" />
           } @empty {
-            <div class="catalog-state">
-              <strong>No hay tours publicados</strong>
+            <div class="catalog-state kq-state-card kq-state-card--empty">
+              <h3>No hay tours publicados</h3>
               <p>El catálogo se actualizará cuando existan rutas disponibles.</p>
             </div>
           }
         </div>
         <div class="catalog-actions">
           <a class="kq-button" routerLink="/tours">Abrir catálogo completo</a>
-          <span
-            >{{ tourTotal() }} tours en el catálogo · precios en soles · disponibilidad por
-            confirmar</span
+          <ul
+            class="catalog-summary m-0 flex list-none flex-wrap gap-2 p-0 text-xs text-kq-muted"
+            aria-label="Resumen del catálogo"
           >
+            <li class="rounded-full border border-kq-border bg-white px-3 py-2">
+              <strong class="text-kq-ink">{{ tourTotal() }}</strong> tours
+            </li>
+            <li class="rounded-full border border-kq-border bg-white px-3 py-2">
+              Precios en soles
+            </li>
+            <li class="rounded-full border border-kq-border bg-white px-3 py-2">
+              Disponibilidad por confirmar
+            </li>
+          </ul>
         </div>
       }
     </div>
@@ -164,45 +164,78 @@
           >Revisar el canal digital</a
         >
         <figure class="process-mascot" aria-hidden="true">
-          <img
-            src="/assets/mascot/02-saludo.png"
-            alt=""
-            width="393"
-            height="540"
-            loading="lazy"
-            decoding="async"
-          />
+          <app-phuyu pose="welcome" size="md" />
         </figure>
       </div>
 
-      <ol class="steps">
-        <li class="reveal">
-          <span><i class="ri-icon ri-chat-3-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Conversemos</h3>
-            <p>Fechas, viajeros, intereses y ritmo en un brief corto.</p>
+      <ol class="steps grid gap-4 sm:grid-cols-2">
+        <li class="reveal flex min-h-56 flex-col rounded-2xl border border-white/15 bg-white/5 p-5">
+          <div class="mb-7 flex items-center justify-between gap-4">
+            <span
+              class="grid size-12 place-items-center rounded-xl border border-white/20 bg-white/5 text-xl text-kq-teal"
+              aria-hidden="true"
+              ><i class="ri-icon ri-chat-3-line"></i
+            ></span>
+            <span
+              class="rounded-full border border-white/20 px-2.5 py-1 text-[0.68rem] font-extrabold tracking-[0.08em] text-white/70 uppercase"
+              >Paso 01</span
+            >
           </div>
+          <h3 class="mb-2 font-kq-text text-lg font-bold">Conversemos</h3>
+          <p class="m-0 text-sm leading-6 text-white/70">
+            Fechas, viajeros, intereses y ritmo en una consulta breve.
+          </p>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-file-list-3-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Recibe tu propuesta</h3>
-            <p>Itinerario, inclusiones, esfuerzo y precio explicados sin letra pequeña.</p>
+        <li class="reveal flex min-h-56 flex-col rounded-2xl border border-white/15 bg-white/5 p-5">
+          <div class="mb-7 flex items-center justify-between gap-4">
+            <span
+              class="grid size-12 place-items-center rounded-xl border border-white/20 bg-white/5 text-xl text-kq-teal"
+              aria-hidden="true"
+              ><i class="ri-icon ri-file-list-3-line"></i
+            ></span>
+            <span
+              class="rounded-full border border-white/20 px-2.5 py-1 text-[0.68rem] font-extrabold tracking-[0.08em] text-white/70 uppercase"
+              >Paso 02</span
+            >
           </div>
+          <h3 class="mb-2 font-kq-text text-lg font-bold">Recibe tu propuesta</h3>
+          <p class="m-0 text-sm leading-6 text-white/70">
+            Itinerario, inclusiones, esfuerzo y precio explicados sin letra pequeña.
+          </p>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-calendar-check-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Confirma con claridad</h3>
-            <p>Validamos disponibilidad y te indicamos el siguiente paso.</p>
+        <li class="reveal flex min-h-56 flex-col rounded-2xl border border-white/15 bg-white/5 p-5">
+          <div class="mb-7 flex items-center justify-between gap-4">
+            <span
+              class="grid size-12 place-items-center rounded-xl border border-white/20 bg-white/5 text-xl text-kq-teal"
+              aria-hidden="true"
+              ><i class="ri-icon ri-calendar-check-line"></i
+            ></span>
+            <span
+              class="rounded-full border border-white/20 px-2.5 py-1 text-[0.68rem] font-extrabold tracking-[0.08em] text-white/70 uppercase"
+              >Paso 03</span
+            >
           </div>
+          <h3 class="mb-2 font-kq-text text-lg font-bold">Confirma con claridad</h3>
+          <p class="m-0 text-sm leading-6 text-white/70">
+            Validamos disponibilidad y te indicamos el siguiente paso.
+          </p>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-map-pin-2-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Viaja acompañado</h3>
-            <p>Asistencia local y recomendaciones útiles durante el recorrido.</p>
+        <li class="reveal flex min-h-56 flex-col rounded-2xl border border-white/15 bg-white/5 p-5">
+          <div class="mb-7 flex items-center justify-between gap-4">
+            <span
+              class="grid size-12 place-items-center rounded-xl border border-white/20 bg-white/5 text-xl text-kq-teal"
+              aria-hidden="true"
+              ><i class="ri-icon ri-map-pin-2-line"></i
+            ></span>
+            <span
+              class="rounded-full border border-white/20 px-2.5 py-1 text-[0.68rem] font-extrabold tracking-[0.08em] text-white/70 uppercase"
+              >Paso 04</span
+            >
           </div>
+          <h3 class="mb-2 font-kq-text text-lg font-bold">Viaja acompañado</h3>
+          <p class="m-0 text-sm leading-6 text-white/70">
+            Asistencia local y recomendaciones útiles durante el recorrido.
+          </p>
         </li>
       </ol>
     </div>
@@ -291,47 +324,115 @@
           bloqueos actuales para no confundir un catálogo informativo con una habilitación
           comercial.
         </p>
+        <a class="institutional-link" routerLink="/informacion-institucional">
+          Consultar la ficha completa
+          <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
+        </a>
       </div>
-      <ul class="compliance-list">
-        <li class="reveal">
-          <span><i class="ri-icon ri-building-2-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>{{ agencyProfile.legalName }}</h3>
-            <p>RUC {{ agencyProfile.ruc }} · partida {{ agencyProfile.registryEntry }}.</p>
+      <ul class="compliance-list" aria-label="Resumen institucional">
+        <li class="compliance-card reveal">
+          <div class="compliance-card__topline">
+            <span class="compliance-card__icon" aria-hidden="true">
+              <i class="ri-icon ri-building-2-line"></i>
+            </span>
+            <span class="compliance-card__status compliance-card__status--verified">
+              <i class="ri-icon ri-check-line" aria-hidden="true"></i> Verificado
+            </span>
           </div>
+          <p class="compliance-card__eyebrow">Identidad legal</p>
+          <h3>{{ agencyProfile.legalName }}</h3>
+          <dl class="compliance-card__facts">
+            <div>
+              <dt>RUC</dt>
+              <dd>{{ agencyProfile.ruc }}</dd>
+            </div>
+            <div>
+              <dt>Partida</dt>
+              <dd>{{ agencyProfile.registryEntry }}</dd>
+            </div>
+          </dl>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-customer-service-2-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Canales confirmados</h3>
-            <p>
-              {{ agencyProfile.phone }} · {{ agencyProfile.email }} ·
-              {{ agencyProfile.businessHours }}.
-            </p>
+        <li class="compliance-card compliance-card--contact reveal">
+          <div class="compliance-card__topline">
+            <span class="compliance-card__icon" aria-hidden="true">
+              <i class="ri-icon ri-customer-service-2-line"></i>
+            </span>
+            <span class="compliance-card__status compliance-card__status--verified">
+              <i class="ri-icon ri-check-line" aria-hidden="true"></i> Confirmados
+            </span>
           </div>
+          <p class="compliance-card__eyebrow">Canales de atención</p>
+          <h3>Atención digital directa</h3>
+          <dl class="compliance-card__facts">
+            <div>
+              <dt>Llamadas</dt>
+              <dd>
+                <a [href]="agencyProfile.phoneHref">{{ agencyProfile.phone }}</a>
+              </dd>
+            </div>
+            <div>
+              <dt>Correo</dt>
+              <dd>
+                <a [href]="agencyProfile.emailHref">{{ agencyProfile.email }}</a>
+              </dd>
+            </div>
+          </dl>
+          <p class="compliance-card__note">
+            <i class="ri-icon ri-information-line" aria-hidden="true"></i>
+            Horario exacto de atención por confirmar.
+          </p>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-file-info-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Estado tributario visible</h3>
-            <p>{{ agencyProfile.taxStatus }}.</p>
+        <li class="compliance-card reveal">
+          <div class="compliance-card__topline">
+            <span class="compliance-card__icon" aria-hidden="true">
+              <i class="ri-icon ri-file-info-line"></i>
+            </span>
+            <span class="compliance-card__status compliance-card__status--verified">
+              <i class="ri-icon ri-check-line" aria-hidden="true"></i>
+              {{ agencyProfile.taxStatus }}
+            </span>
           </div>
+          <p class="compliance-card__eyebrow">Situación tributaria</p>
+          <h3>RUC activo y domicilio habido</h3>
+          <dl class="compliance-card__facts">
+            <div>
+              <dt>Estado del RUC</dt>
+              <dd>{{ agencyProfile.taxStatus }}</dd>
+            </div>
+            <div>
+              <dt>Domicilio</dt>
+              <dd>{{ agencyProfile.domicileStatus }}</dd>
+            </div>
+          </dl>
+          <p class="compliance-card__note">
+            Información tributaria visible y separada de la habilitación turística.
+          </p>
         </li>
-        <li class="reveal">
-          <span><i class="ri-icon ri-shield-check-line" aria-hidden="true"></i></span>
-          <div>
-            <h3>Registro turístico pendiente</h3>
-            <p>
-              Modalidad {{ agencyProfile.modality }} bajo {{ agencyProfile.registrationForm }}; sin
-              constancia ni distintivo oficial acreditados.
-            </p>
+        <li class="compliance-card compliance-card--pending reveal">
+          <div class="compliance-card__topline">
+            <span class="compliance-card__icon" aria-hidden="true">
+              <i class="ri-icon ri-shield-check-line"></i>
+            </span>
+            <span class="compliance-card__status compliance-card__status--pending">Pendiente</span>
           </div>
+          <p class="compliance-card__eyebrow">Habilitación turística</p>
+          <h3>Registro turístico pendiente</h3>
+          <dl class="compliance-card__facts">
+            <div>
+              <dt>Modalidad</dt>
+              <dd>{{ agencyProfile.modality }}</dd>
+            </div>
+            <div>
+              <dt>Formulario</dt>
+              <dd>{{ agencyProfile.registrationForm }}</dd>
+            </div>
+          </dl>
+          <p class="compliance-card__note">
+            <i class="ri-icon ri-information-line" aria-hidden="true"></i>
+            Aún no existe constancia ni autorización para usar el distintivo oficial.
+          </p>
         </li>
       </ul>
-      <a class="institutional-link reveal" routerLink="/informacion-institucional">
-        Consultar la ficha completa del canal digital
-        <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
-      </a>
     </div>
   </section>
 
@@ -340,9 +441,9 @@
       <div class="reveal">
         <p class="kq-eyebrow mb-3">Antes de escribirnos</p>
         <h2 id="faq-title">Preguntas frecuentes</h2>
-        <p>La información concreta hace mejores viajes.</p>
+        <p>Resolvemos las dudas más comunes antes de que abras el canal de consulta.</p>
       </div>
-      <div>
+      <div class="faq-list grid gap-3">
         <details class="reveal">
           <summary>
             ¿Puedo personalizar una ruta?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
@@ -413,14 +514,7 @@
           <span class="text-kq-teal" aria-hidden="true">●</span> Consultas informativas disponibles
         </p>
         <figure class="contact-mascot" aria-hidden="true">
-          <img
-            src="/assets/mascot/01-atencion-con-auriculares.png"
-            alt=""
-            width="324"
-            height="530"
-            loading="lazy"
-            decoding="async"
-          />
+          <app-phuyu pose="support" size="md" />
         </figure>
       </div>
 

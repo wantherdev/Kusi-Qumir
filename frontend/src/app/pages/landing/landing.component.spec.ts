@@ -2,6 +2,7 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { of, throwError } from 'rxjs';
 
+import { agencyProfile } from '../../config/agency-profile';
 import { ToursApiService } from '../../features/tours/data-access/tours-api.service';
 import { TourSummary } from '../../features/tours/domain/tour.model';
 import { LandingComponent } from './landing.component';
@@ -105,33 +106,40 @@ describe('LandingComponent', () => {
     expect(fixture.nativeElement.querySelector('a[href="https://wa.me/51908990666"]')).toBeTruthy();
   });
 
-  it('closes the mobile menu with Escape', () => {
+  it('presents the institutional summary as scannable facts and explicit states', () => {
     const fixture = TestBed.createComponent(LandingComponent);
     fixture.detectChanges();
 
-    const toggle = fixture.nativeElement.querySelector('.menu-toggle') as HTMLButtonElement;
-    toggle.click();
-    fixture.detectChanges();
-    expect(toggle.getAttribute('aria-expanded')).toBe('true');
+    const cards = fixture.nativeElement.querySelectorAll('.compliance-card');
+    const content = fixture.nativeElement.textContent as string;
 
-    document.dispatchEvent(new KeyboardEvent('keydown', { key: 'Escape' }));
-    fixture.detectChanges();
-
-    expect(toggle.getAttribute('aria-expanded')).toBe('false');
-    expect(document.body.classList.contains('menu-open')).toBe(false);
-    expect(document.activeElement).toBe(toggle);
+    expect(cards).toHaveLength(4);
+    expect(content).toContain('Identidad legal');
+    expect(content).toContain('Situación tributaria');
+    expect(content).toContain('Registro turístico pendiente');
+    expect(content).toContain('Horario exacto de atención por confirmar');
+    expect(
+      fixture.nativeElement.querySelector(`a[href="${agencyProfile.phoneHref}"]`),
+    ).toBeTruthy();
+    expect(
+      fixture.nativeElement.querySelector(`a[href="${agencyProfile.emailHref}"]`),
+    ).toBeTruthy();
   });
 
-  it('restores body scrolling when the page is destroyed', () => {
+  it('organizes the main explanatory content into scannable groups', () => {
     const fixture = TestBed.createComponent(LandingComponent);
     fixture.detectChanges();
 
-    (fixture.nativeElement.querySelector('.menu-toggle') as HTMLButtonElement).click();
-    expect(document.body.classList.contains('menu-open')).toBe(true);
+    const processSteps = fixture.nativeElement.querySelectorAll('.steps > li');
+    const content = fixture.nativeElement.textContent as string;
 
-    fixture.destroy();
-
-    expect(document.body.classList.contains('menu-open')).toBe(false);
+    expect(fixture.nativeElement.querySelectorAll('.intro-facts > div')).toHaveLength(3);
+    expect(fixture.nativeElement.querySelectorAll('.catalog-summary > li')).toHaveLength(3);
+    expect(processSteps).toHaveLength(4);
+    expect(processSteps[0].textContent).toContain('Paso 01');
+    expect(processSteps[3].textContent).toContain('Paso 04');
+    expect(fixture.nativeElement.querySelectorAll('.faq-list details')).toHaveLength(5);
+    expect(content).toContain('contratación desactivada');
   });
 });
 
@@ -149,7 +157,7 @@ describe('LandingComponent catalog recovery', () => {
 
     const fixture = TestBed.createComponent(LandingComponent);
     fixture.detectChanges();
-    expect(fixture.nativeElement.querySelector('.catalog-state--error')).toBeTruthy();
+    expect(fixture.nativeElement.querySelector('.kq-state-card--error')).toBeTruthy();
 
     (fixture.nativeElement.querySelector('.catalog-state button') as HTMLButtonElement).click();
     fixture.detectChanges();
@@ -161,7 +169,10 @@ describe('LandingComponent catalog recovery', () => {
   it('derives catalog counts from the loaded data', async () => {
     await TestBed.configureTestingModule({
       imports: [LandingComponent],
-      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll: () => of(catalog) } }],
+      providers: [
+        provideRouter([]),
+        { provide: ToursApiService, useValue: { findAll: () => of(catalog) } },
+      ],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(LandingComponent);
@@ -169,7 +180,9 @@ describe('LandingComponent catalog recovery', () => {
 
     const content = fixture.nativeElement.textContent as string;
     expect(content).toContain('Explora 6 tours vigentes');
-    expect(content).toContain('6 tours en el catálogo');
+    expect(fixture.nativeElement.querySelector('.catalog-summary li')?.textContent).toContain(
+      '6 tours',
+    );
     expect(content).toContain('4 rutas');
     expect(content).toContain('2 rutas');
   });
@@ -177,7 +190,10 @@ describe('LandingComponent catalog recovery', () => {
   it('shows a clear empty state when the catalog has no tours', async () => {
     await TestBed.configureTestingModule({
       imports: [LandingComponent],
-      providers: [provideRouter([]), { provide: ToursApiService, useValue: { findAll: () => of([]) } }],
+      providers: [
+        provideRouter([]),
+        { provide: ToursApiService, useValue: { findAll: () => of([]) } },
+      ],
     }).compileComponents();
 
     const fixture = TestBed.createComponent(LandingComponent);

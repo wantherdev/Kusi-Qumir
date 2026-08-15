@@ -1,17 +1,5 @@
-import { DOCUMENT, isPlatformBrowser } from '@angular/common';
-import {
-  afterNextRender,
-  ChangeDetectionStrategy,
-  Component,
-  computed,
-  DestroyRef,
-  ElementRef,
-  HostListener,
-  inject,
-  PLATFORM_ID,
-  signal,
-  viewChild,
-} from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { ChangeDetectionStrategy, Component, computed, inject, PLATFORM_ID } from '@angular/core';
 import { toSignal } from '@angular/core/rxjs-interop';
 import { RouterLink } from '@angular/router';
 import { catchError, map, of, startWith, Subject, switchMap } from 'rxjs';
@@ -21,36 +9,39 @@ import { ToursApiService } from '../../features/tours/data-access/tours-api.serv
 import { TourSummary } from '../../features/tours/domain/tour.model';
 import { TourCardSkeletonComponent } from '../../features/tours/ui/tour-card-skeleton/tour-card-skeleton.component';
 import { TourCardComponent } from '../../features/tours/ui/tour-card/tour-card.component';
+import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
+import { PhuyuComponent } from '../../shared/ui/phuyu/phuyu.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
 type CatalogState =
   { status: 'loading' } | { status: 'loaded'; tours: TourSummary[] } | { status: 'error' };
 
 const HOME_TOUR_LIMIT = 4;
-const NAV_DESKTOP_BREAKPOINT = 1100;
 const CATALOG_FALLBACK_TOTAL = 10;
 const CATALOG_FALLBACK_OWN = 4;
 const CATALOG_FALLBACK_THIRD = 6;
 
 @Component({
   selector: 'app-landing',
-  imports: [RouterLink, SiteFooterComponent, TourCardComponent, TourCardSkeletonComponent],
+  imports: [
+    PageHeaderComponent,
+    PhuyuComponent,
+    RouterLink,
+    SiteFooterComponent,
+    TourCardComponent,
+    TourCardSkeletonComponent,
+  ],
   templateUrl: './landing.component.html',
   styleUrl: './landing.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class LandingComponent {
-  private readonly document = inject(DOCUMENT);
-  private readonly destroyRef = inject(DestroyRef);
   private readonly platformId = inject(PLATFORM_ID);
   private readonly toursApi = inject(ToursApiService);
   private readonly catalogReload = new Subject<void>();
-  private readonly menuToggle = viewChild<ElementRef<HTMLButtonElement>>('menuToggle');
 
   protected readonly agencyProfile = agencyProfile;
   protected readonly loadingCards = [1, 2, 3, 4];
-  protected readonly menuOpen = signal(false);
-  protected readonly headerScrolled = signal(false);
   protected readonly catalogState = toSignal(
     isPlatformBrowser(this.platformId)
       ? this.catalogReload.pipe(
@@ -92,41 +83,6 @@ export class LandingComponent {
       ? state.tours.filter((tour) => tour.operationType !== 'PROPIO').length
       : CATALOG_FALLBACK_THIRD;
   });
-
-  constructor() {
-    afterNextRender(() => this.onWindowScroll());
-    this.destroyRef.onDestroy(() => this.document.body.classList.remove('menu-open'));
-  }
-
-  @HostListener('window:scroll')
-  protected onWindowScroll(): void {
-    this.headerScrolled.set(window.scrollY > 20);
-  }
-
-  @HostListener('window:resize')
-  protected onWindowResize(): void {
-    if (window.innerWidth > NAV_DESKTOP_BREAKPOINT && this.menuOpen()) {
-      this.closeMenu();
-    }
-  }
-
-  @HostListener('document:keydown.escape')
-  protected onEscape(): void {
-    if (this.menuOpen()) {
-      this.closeMenu();
-      this.menuToggle()?.nativeElement.focus();
-    }
-  }
-
-  protected toggleMenu(): void {
-    this.menuOpen.update((open) => !open);
-    this.document.body.classList.toggle('menu-open', this.menuOpen());
-  }
-
-  protected closeMenu(): void {
-    this.menuOpen.set(false);
-    this.document.body.classList.remove('menu-open');
-  }
 
   protected retryCatalog(): void {
     this.catalogReload.next();

@@ -3,30 +3,19 @@
   min-height: 100vh;
   background: var(--kq-canvas);
 }
-.claims-page {
-  padding-block: clamp(4rem, 8vw, 7rem);
-}
-
 .claims-heading {
   display: grid;
   grid-template-columns: 1.4fr 0.6fr;
   gap: 3rem;
   align-items: end;
 
-  h1 {
-    max-width: 12ch;
-    margin: 1rem 0 1.5rem;
-    font-size: clamp(3rem, 8vw, 5.5rem);
-    line-height: 1.04;
-  }
-  > div > p:last-child {
-    max-width: 65ch;
-    color: var(--kq-muted);
-  }
   aside {
-    border-left: 4px solid var(--kq-warning);
-    padding: 1rem;
+    border: 1px solid var(--kq-warning-border);
+    border-top: 4px solid var(--kq-warning);
+    border-radius: var(--kq-radius-lg);
+    padding: 1.25rem;
     background: var(--kq-warning-surface);
+    line-height: 1.55;
   }
 }
 
@@ -36,45 +25,101 @@
 form {
   margin-top: 2rem;
   border: 1px solid var(--kq-border);
-  border-radius: 1rem;
+  border-radius: var(--kq-radius-lg);
   padding: clamp(1.25rem, 4vw, 2.5rem);
   background: white;
 }
 
+.notice-card,
+.policy-card,
+.provider-card {
+  h2 {
+    margin: 0 0 1.25rem;
+    border-bottom: 1px solid var(--kq-border);
+    padding-bottom: 1rem;
+    font-size: clamp(1.65rem, 3vw, 2rem);
+    line-height: 1.15;
+  }
+}
+
 .notice-card {
-  border-left: 4px solid var(--kq-teal);
+  border-color: rgba(0, 125, 124, 0.25);
   background: var(--kq-surface-soft);
+  box-shadow: inset 0 4px 0 var(--kq-action);
+
+  p {
+    margin-bottom: 0;
+    line-height: 1.7;
+  }
 }
 
 .policy-card {
-  h2 {
-    margin-top: 0;
-  }
+  box-shadow: inset 0 4px 0 var(--kq-mountain);
+
   ul {
-    padding-left: 1.2rem;
-    margin-bottom: 1rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
   }
+
   li {
-    margin-bottom: 0.5rem;
+    position: relative;
+    margin: 0;
+    border-top: 1px solid var(--kq-border);
+    padding: 0.8rem 0 0.8rem 1.5rem;
+    line-height: 1.6;
+
+    &::before {
+      position: absolute;
+      top: 1.45rem;
+      left: 0;
+      width: 0.65rem;
+      height: 2px;
+      background: var(--kq-mountain);
+      content: '';
+    }
+
+    &:first-child {
+      border-top: 0;
+      padding-top: 0;
+
+      &::before {
+        top: 0.65rem;
+      }
+    }
+
+    &:last-child {
+      padding-bottom: 0;
+    }
   }
 }
 .policy-pending {
-  margin-bottom: 0;
+  margin: 1.25rem 0 0;
+  border-top: 1px solid var(--kq-border);
+  padding-top: 1rem;
   color: var(--kq-muted);
   font-size: 0.8rem;
+  line-height: 1.55;
 }
 
 .provider-card {
-  h2 {
-    margin-top: 0;
-    font-size: 1.8rem;
-  }
+  box-shadow: inset 0 4px 0 var(--kq-teal);
+
   dl {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    gap: 1rem;
+    gap: 0.75rem;
     margin-bottom: 0;
   }
+
+  dl > div {
+    min-width: 0;
+    border: 1px solid var(--kq-border);
+    border-radius: 0.8rem;
+    padding: 1rem;
+    background: var(--kq-canvas);
+  }
+
   dt {
     color: var(--kq-muted);
     font-size: 0.72rem;
@@ -84,11 +129,13 @@ form {
   dd {
     margin: 0.25rem 0 0;
     font-weight: 600;
+    overflow-wrap: anywhere;
   }
 }
 
 form {
   max-width: 58rem;
+  box-shadow: inset 0 4px 0 var(--kq-ink);
 }
 fieldset {
   margin: 0 0 2rem;
@@ -99,11 +146,13 @@ fieldset {
 legend {
   margin-bottom: 1.2rem;
   font:
-    400 1.6rem 'Fjalla One',
+    400 clamp(1.6rem, 3vw, 1.9rem) 'Fjalla One',
     sans-serif;
+  line-height: 1.15;
 }
 .choice-row {
   display: flex;
+  flex-wrap: wrap;
   gap: 2rem;
 }
 .choice-row label {
@@ -175,8 +224,6 @@ legend {
 
   &__mascot {
     flex: 0 0 auto;
-    height: 2.75rem;
-    width: auto;
   }
 
   &--error {
@@ -194,5 +241,9 @@ legend {
   }
   .provider-card dl {
     grid-template-columns: 1fr;
+  }
+
+  form > .kq-button {
+    width: 100%;
   }
 }

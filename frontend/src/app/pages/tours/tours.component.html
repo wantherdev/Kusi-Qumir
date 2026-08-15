@@ -2,11 +2,11 @@
 
 <app-page-header />
 
-<main id="contenido" class="tours-page kq-shell" tabindex="-1">
+<main id="contenido" class="tours-page kq-page kq-shell" tabindex="-1">
   <header class="tours-hero">
     <p class="kq-eyebrow">Catálogo vigente</p>
-    <h1 class="text-balance">Tours para descubrir Cusco con contexto</h1>
-    <p>
+    <h1 class="kq-page-title text-balance">Tours para descubrir Cusco con contexto</h1>
+    <p class="kq-page-lead">
       Consulta itinerarios, exigencia, inclusiones y precios informados. La disponibilidad se valida
       antes de cualquier contratación y, durante la evaluación, no aceptamos reservas ni pagos en
       esta web.
@@ -14,8 +14,13 @@
   </header>
 
   <aside class="catalog-status" aria-label="Estado comercial">
-    <strong>Catálogo informativo</strong>
-    <span>RUC activo · reservas y pagos desactivados</span>
+    <span class="catalog-status__icon" aria-hidden="true">
+      <i class="ri-icon ri-information-line"></i>
+    </span>
+    <div>
+      <strong>Catálogo informativo</strong>
+      <span>RUC activo · reservas y pagos desactivados</span>
+    </div>
   </aside>
 
   @if (isLoading()) {
@@ -28,13 +33,13 @@
       </div>
     </div>
   } @else if (hasError()) {
-    <section class="state-card state-card--error" role="alert">
+    <section class="state-card kq-state-card kq-state-card--error" role="alert">
       <h2>No pudimos cargar los tours</h2>
       <p>Comprueba tu conexión o que la API esté disponible y vuelve a intentarlo.</p>
       <button class="kq-button kq-button--small" type="button" (click)="retry()">Reintentar</button>
     </section>
   } @else if (tours().length === 0) {
-    <section class="state-card">
+    <section class="state-card kq-state-card">
       <h2>El catálogo está vacío</h2>
       <p>Los tours aparecerán aquí cuando estén disponibles.</p>
     </section>
@@ -90,7 +95,7 @@
         }
       </section>
     } @else {
-      <section class="state-card state-card--empty" aria-live="polite">
+      <section class="state-card kq-state-card kq-state-card--empty" aria-live="polite">
         <p class="kq-eyebrow">Sin coincidencias</p>
         <h2>No encontramos una ruta con esos filtros</h2>
         <p>Prueba otro destino o vuelve a ver el catálogo completo.</p>

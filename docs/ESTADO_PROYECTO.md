@@ -62,8 +62,10 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   experiencias con carga diferida y dimensiones reservadas.
 - Servidor SSR sin exposición de `X-Powered-By`, con encabezados básicos de
   seguridad y caché diferenciada para HTML, bundles versionados y activos.
-- Encabezado reutilizable que permanece visible durante el desplazamiento y con
-  acceso directo al catálogo en todas las páginas internas.
+- Encabezado reutilizable en todas las rutas, incluida la portada, con
+  navegación principal responsive, estado activo, cierre con Escape, retorno
+  de foco y acceso consistente a catálogo, servicios, ficha institucional y
+  canales de atención.
 - Páginas informativas de privacidad, términos y turismo responsable.
 - Página `/cancelaciones` con la propuesta de política de cancelaciones y
   reembolsos (pendiente de aprobación y revisión legal), enlazada desde
@@ -136,6 +138,14 @@ El repositorio Git está inicializado sobre la rama `main` y tiene el remoto
   por ejecutar solo Angular.
 - Sistema visual reforzado con tokens semánticos de acción y contraste WCAG AA;
   las tarjetas mantienen su composición editorial original.
+- Fundamentos visuales compartidos para altura del encabezado, espaciado de
+  página, títulos, textos introductorios, radios, elevación, controles y estados
+  de carga/error/vacío; las páginas conservan composiciones propias donde el
+  contenido lo requiere.
+- Jerarquía visual transversal aplicada a las rutas públicas: estados, datos
+  institucionales, cobertura y preparación de tours, documentos legales y
+  Libro de Reclamaciones usan encabezados diferenciados, agrupación semántica e
+  iconografía complementaria sin depender únicamente del color.
 - Script productivo de NestJS alineado con la salida real de compilación
   `dist/main.js`.
 - Overrides compatibles de `multer`, `body-parser` y `qs` eliminan las
@@ -168,17 +178,17 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
 
 ## Verificación técnica más reciente
 
-- `pnpm test:ci`: 44 pruebas superadas en 16 archivos.
+- `pnpm test:ci`: 52 pruebas superadas en 17 archivos.
 - `pnpm build`: finalizado correctamente, sin errores ni advertencias; se
   prerenderizan 7 rutas estáticas.
 - Backend: lint limpio, 8 pruebas superadas, schema Prisma válido y build NestJS
   correcto hacia `dist/main.js`.
 - Las 10 rutas de imágenes de tours son únicas y responden HTTP 200 desde el
   servidor de desarrollo.
-- Seis rutas prerenderizadas.
-- Tamaño inicial estimado del navegador: 86.36 kB.
+- Siete rutas prerenderizadas.
+- Tamaño inicial estimado del navegador: 88.53 kB.
 - Contraste de texto y acciones principales verificado mediante cálculo: las
-  combinaciones revisadas superan WCAG AA (mínimo medido 4.97:1).
+  combinaciones revisadas superan WCAG AA (mínimo medido 4.70:1).
 - Jade de marca aclarado por decisión del titular a `#00B8B7` (token único en
   `_tokens.scss`); el contraste sobre el footer oscuro sube a ~4.9:1.
 - Botones primarios en jade con texto `--kq-ink` (contraste AA) y token nuevo
@@ -206,8 +216,14 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   penalidades. Los borradores `01_*` y `02_*` fueron reemplazados.
 - `scripts/dev.mjs` corregido: compila y ejecuta `dist/main.js` y usa el correo
   placeholder `contacto@example.com` como valor por defecto.
-- DOM prerenderizado de las seis rutas verificado: un `h1` y un `main` por ruta,
-  footer presente, sin IDs duplicados, imágenes sin `alt` ni enlaces sin nombre.
+- Auditoría DOM actualizada sobre las siete rutas prerenderizadas: un `main` y
+  un `h1` por ruta, encabezado y footer compartidos, skip link, foco del
+  contenido, IDs únicos, imágenes con `alt` y dimensiones, controles con nombre
+  accesible y jerarquía de encabezados sin saltos. Todos los enlaces internos
+  renderizados responden HTTP 200 al seguir redirecciones.
+- Contraste de las combinaciones semánticas principales recalculado tras la
+  unificación: mínimo 4.70:1 (`action` sobre `canvas`) y máximo 16.86:1
+  (`ink` sobre `canvas`), sin alterar la paleta aprobada.
 - Auditoría de dependencias de producción: las vulnerabilidades altas quedaron
   corregidas; permanecen 3 moderadas transitivas que requieren una migración
   dedicada de NestJS 10 a 11 y `file-type` 20 a una versión compatible.
@@ -229,10 +245,11 @@ ruta comodín se resuelve mediante SSR para devolver HTTP 404.
   política refuerza la nota de campos obligatorios por ley, la precisión de que
   el reclamo no impide otras vías ni es requisito previo ante Indecopi, y la
   privacidad incorpora la confidencialidad de los datos de salud.
-- Mascota de marca integrada (14 de agosto de 2026): cinco poses PNG desde
-  `frontend/public/assets/mascot/` en el proceso y el panel de contacto de la
-  portada, la página 404 y el feedback del Libro de Reclamaciones. Se descartó
-  la conversión WebP para conservar la fidelidad cromática de la mascota.
+- Sistema Phuyu integrado (14 de agosto de 2026): la carpeta corregida con 48
+  PNG y manual v1.0 es la fuente maestra. Las cinco poses que usa la web se
+  sirven como WebP sin pérdida mediante `app-phuyu` en el proceso y el panel de
+  contacto de la portada, la página 404 y el feedback del Libro de
+  Reclamaciones; las restantes no se incorporan al directorio público.
 - La migración `20260812140000_tour_operation_type` y el seed se aplicaron en
   PostgreSQL local; la API respondió los 10 tours con su tipo correcto y Valle
   VIP con metadatos actualizados.
