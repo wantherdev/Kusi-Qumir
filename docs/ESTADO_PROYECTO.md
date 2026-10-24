@@ -1,9 +1,21 @@
 # Estado del proyecto Kusi Q’umir
 
-Última actualización: 14 de agosto de 2026.
+Última actualización: 24 de octubre de 2026.
 
 Este archivo es el punto de reanudación para una persona o una nueva sesión de
 IA. Debe actualizarse después de cada avance importante.
+
+## Verificación y preparación de Pages — 24 de octubre de 2026
+
+- Checkout revisado: `27fb7a1`. Frontend: 53 pruebas aprobadas en 17 archivos después de añadir cobertura del catálogo estático.
+- Backend sin cambios: lint, 8 pruebas y build correctos.
+- Build SSR y build estático de Pages correctos; siete páginas institucionales prerenderizadas.
+- Entorno local: Node 24.22.1 (difiere del 24.19.0 fijado) y pnpm 11.20.0. Sin prueba de integración contra PostgreSQL real.
+- El catálogo estático se genera desde `backend/prisma/catalog/tours.json`; diez fichas tienen entrada para navegación directa.
+- Subida bloqueada: la integración GitHub rechazó crear el árbol con HTTP 403 (Resource not accessible by integration). No se modificaron ramas remotas.
+- En la verificación inicial, Pages estaba activo desde la raíz de gh-pages y mostraba el README. La publicación de la web se traslada al flujo de Actions.
+- `.github/workflows/pages.yml` prueba y compila en pull requests y main; publica únicamente `.pages-site/` desde main. El estado de cada publicación queda registrado en Actions y en el entorno github-pages.
+- Verificación estática: 347 referencias de recursos existentes, diez entradas de fichas y diez imágenes de catálogo correctas. No se pudo ejecutar la revisión visual en Chromium porque su descarga no produjo un ZIP válido.
 
 ## Estado general
 

@@ -486,3 +486,19 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
   portada, navegación, catálogo real, ficha de tour, precios, inclusiones,
   documentos, reclamos y página 404; esta inspección visual complementa las
   verificaciones automatizadas sin presentarse como una certificación WCAG.
+
+## 2026-10-24 — Vista de evaluación en GitHub Pages
+
+- Se incorpora un build estático separado; el build SSR y la API existentes no cambian.
+- Pages utiliza el catálogo confirmado del seed como instantánea JSON pública.
+- La frontera de datos mantiene el contrato de catálogo y detalle; el modo API sigue siendo el predeterminado.
+- Los activos se ajustan al subdirectorio del repositorio solo en la copia de publicación.
+- Las siete rutas institucionales se prerenderizan; catálogo y diez fichas disponen de entradas estáticas con renderizado cliente.
+- Se conservan noindex, borradores y recepción de formularios desactivada. La API no se despliega en Pages.
+
+## 2026-10-24 — Publicación automática desde el mismo repositorio
+
+- GitHub Actions compila desde main y publica solamente `.pages-site/`.
+- No se sube un ZIP al repositorio ni se versionan archivos compilados.
+- `docs/` conserva la documentación del proyecto y la API no se despliega.
+- El despliegue depende de las pruebas y del build estático; usa los permisos de Pages e identidad OIDC solo en el job de publicación.

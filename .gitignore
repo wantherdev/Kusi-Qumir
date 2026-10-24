@@ -52,3 +52,7 @@ __screenshots__/
 # System files
 .DS_Store
 Thumbs.db
+
+# GitHub Pages build and publication staging
+/.pages-build
+/.pages-site

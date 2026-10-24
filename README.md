@@ -99,3 +99,23 @@ leer en este orden:
 
 Después de cada avance importante, actualizar el estado y las decisiones antes
 de hacer commit y push.
+
+## Vista estática en GitHub Pages
+
+El flujo `.github/workflows/pages.yml` ejecuta pruebas y compila desde `main`,
+y publica únicamente `.pages-site/`. En Settings → Pages se debe seleccionar
+GitHub Actions como fuente. La URL prevista es
+`https://wantherdev.github.io/Kusi-Qumir/`.
+
+`pnpm build:pages` permite reproducir el build localmente. Esta variante incluye
+una instantánea de los 10 tours del catálogo confirmado y no necesita API,
+PostgreSQL ni servidor Node. Cada ficha tiene un archivo de entrada para admitir
+acceso directo y recargas. Los cambios del catálogo se publican al ejecutar de
+nuevo el flujo desde el código actualizado.
+
+Se conservan `noindex`, el estado de evaluación y los formularios desactivados.
+Los archivos compilados no se guardan en Git ni se publica el contenido de
+`docs/`, recursos internos o backend. El build SSR habitual sigue disponible
+mediante `pnpm build`.
+
+Para otra ruta de publicación: `PAGES_BASE_PATH=/otra-ruta/ pnpm build:pages`.
