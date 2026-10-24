@@ -10,9 +10,9 @@ describe('PhuyuComponent', () => {
     fixture.detectChanges();
 
     const image = fixture.nativeElement.querySelector('img') as HTMLImageElement;
-    expect(image.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-welcome.webp');
-    expect(image.getAttribute('width')).toBe('393');
-    expect(image.getAttribute('height')).toBe('540');
+    expect(image.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-official.webp');
+    expect(image.getAttribute('width')).toBe('512');
+    expect(image.getAttribute('height')).toBe('768');
     expect(image.getAttribute('loading')).toBe('lazy');
     expect(image.classList).toContain('phuyu--md');
     expect(image.getAttribute('alt')).toBe('');
