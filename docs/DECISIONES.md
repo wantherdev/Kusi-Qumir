@@ -508,3 +508,9 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - El titular confirma como referencia la ilustración de Phuyu con mapa de la página City Tour del PDF de tours diarios, versión 2. Sustituye la referencia visual de las 48 poses del 14 de agosto para la web.
 - Los espacios existentes usan un único WebP sin pérdida y con transparencia; no se añaden apariciones ni se generan nuevas poses.
 - Se conservan los slots semánticos del componente para permitir incorporar otras poses cuando sean aprobadas.
+
+## 2026-10-24 — Retiro de Phuyu de la web
+
+- Por solicitud del titular, se retira Phuyu de portada, contacto, página 404 y mensajes del Libro de Reclamaciones.
+- Se eliminan contenedores, estilos e imports asociados en esas páginas; los mensajes y las acciones conservan su funcionamiento.
+- Los recursos de marca se conservan como referencia; no se añaden nuevas apariciones.
