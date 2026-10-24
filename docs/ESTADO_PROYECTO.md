@@ -365,3 +365,8 @@ Prompt sugerido para una nueva sesión:
 > `docs/DECISIONES.md` y `docs/requisitos-publicacion.md`. Revisa `git status` y
 > los últimos commits. Resume el estado y continúa desde “Próximos pasos” sin
 > inventar datos comerciales o legales.
+
+## Phuyu — 24 de octubre de 2026
+
+- Referencia confirmada por el titular: Phuyu con mapa de City Tour en el PDF de tours diarios (versión 2).
+- La imagen aprobada sustituye las variantes anteriores en los espacios existentes mediante el componente compartido; no se añaden ubicaciones.
