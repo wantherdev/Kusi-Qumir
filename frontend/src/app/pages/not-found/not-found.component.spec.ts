@@ -32,6 +32,6 @@ describe('NotFoundComponent', () => {
     expect(mascot).toBeTruthy();
     expect(mascot.getAttribute('loading')).toBe('lazy');
     expect(mascot.getAttribute('alt')).toBe('');
-    expect(mascot.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-empty.webp');
+    expect(mascot.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-official.webp');
   });
 });
