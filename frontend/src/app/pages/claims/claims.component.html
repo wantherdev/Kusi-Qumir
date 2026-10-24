@@ -389,11 +389,6 @@
         [attr.role]="currentFeedback.kind === 'error' ? 'alert' : 'status'"
         aria-live="polite"
       >
-        <app-phuyu
-          class="claim-status__mascot"
-          [pose]="currentFeedback.kind === 'error' ? 'help' : 'thanks'"
-          size="xs"
-        />
         {{ currentFeedback.message }}
       </p>
     }

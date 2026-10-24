@@ -10,7 +10,6 @@ import { TourSummary } from '../../features/tours/domain/tour.model';
 import { TourCardSkeletonComponent } from '../../features/tours/ui/tour-card-skeleton/tour-card-skeleton.component';
 import { TourCardComponent } from '../../features/tours/ui/tour-card/tour-card.component';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
-import { PhuyuComponent } from '../../shared/ui/phuyu/phuyu.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
 
 type CatalogState =
@@ -25,7 +24,6 @@ const CATALOG_FALLBACK_THIRD = 6;
   selector: 'app-landing',
   imports: [
     PageHeaderComponent,
-    PhuyuComponent,
     RouterLink,
     SiteFooterComponent,
     TourCardComponent,

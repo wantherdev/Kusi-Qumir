@@ -231,16 +231,6 @@
   }
 }
 
-.process-mascot {
-  margin: 2rem 0 0;
-  max-width: 11rem;
-
-  app-phuyu {
-    display: block;
-    width: 100%;
-    filter: drop-shadow(0 0.4rem 0.8rem rgba(15, 23, 42, 0.35));
-  }
-}
 
 .steps,
 .service-list,
@@ -694,16 +684,6 @@
   font-weight: 600;
 }
 
-.contact-mascot {
-  max-width: 8.5rem;
-  margin: 2rem 0 0;
-
-  app-phuyu {
-    display: block;
-    width: 100%;
-    filter: drop-shadow(0 0.4rem 0.8rem rgba(15, 23, 42, 0.35));
-  }
-}
 
 .contact-options {
   display: grid;

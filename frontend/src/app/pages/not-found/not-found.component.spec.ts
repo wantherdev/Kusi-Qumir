@@ -18,7 +18,7 @@ describe('NotFoundComponent', () => {
     expect(element.querySelector('main a.kq-button')?.textContent).toContain('Volver al inicio');
   });
 
-  it('shows a decorative mascot figure', async () => {
+  it('keeps the recovery page free of mascot imagery', async () => {
     await TestBed.configureTestingModule({
       imports: [NotFoundComponent],
       providers: [provideRouter([])],
@@ -28,10 +28,6 @@ describe('NotFoundComponent', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
-    const mascot = element.querySelector('.not-found-mascot img') as HTMLImageElement;
-    expect(mascot).toBeTruthy();
-    expect(mascot.getAttribute('loading')).toBe('lazy');
-    expect(mascot.getAttribute('alt')).toBe('');
-    expect(mascot.getAttribute('src')).toBe('/assets/phuyu/static/phuyu-official.webp');
+    expect(element.querySelector('app-phuyu, .not-found-mascot')).toBeNull();
   });
 });
