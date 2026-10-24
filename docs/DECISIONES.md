@@ -502,3 +502,9 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - No se sube un ZIP al repositorio ni se versionan archivos compilados.
 - `docs/` conserva la documentación del proyecto y la API no se despliega.
 - El despliegue depende de las pruebas y del build estático; usa los permisos de Pages e identidad OIDC solo en el job de publicación.
+
+## 2026-10-24 — Ilustración aprobada de Phuyu
+
+- El titular confirma como referencia la ilustración de Phuyu con mapa de la página City Tour del PDF de tours diarios, versión 2. Sustituye la referencia visual de las 48 poses del 14 de agosto para la web.
+- Los espacios existentes usan un único WebP sin pérdida y con transparencia; no se añaden apariciones ni se generan nuevas poses.
+- Se conservan los slots semánticos del componente para permitir incorporar otras poses cuando sean aprobadas.
