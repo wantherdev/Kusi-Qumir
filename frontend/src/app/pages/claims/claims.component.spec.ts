@@ -102,7 +102,7 @@ describe('ClaimsComponent', () => {
     );
   });
 
-  it('shows a mascot next to the feedback message', () => {
+  it('announces feedback without a mascot', () => {
     const fixture = TestBed.createComponent(ClaimsComponent);
     fixture.detectChanges();
 
@@ -110,12 +110,11 @@ describe('ClaimsComponent', () => {
     form.dispatchEvent(new Event('submit'));
     fixture.detectChanges();
 
-    const mascot = fixture.nativeElement.querySelector(
-      '.claim-status__mascot img',
-    ) as HTMLImageElement;
-    expect(mascot).toBeTruthy();
-    expect(mascot.src).toContain('/assets/phuyu/static/phuyu-official.webp');
-    expect(mascot.getAttribute('aria-hidden')).toBe('true');
+    const feedback = fixture.nativeElement.querySelector('.claim-status') as HTMLElement;
+    expect(feedback.textContent).toContain('Revisa los campos marcados');
+    expect(feedback.getAttribute('role')).toBe('alert');
+    expect(feedback.getAttribute('aria-live')).toBe('polite');
+    expect(feedback.querySelector('app-phuyu, img')).toBeNull();
   });
 
   it('clears hidden guardian data when the consumer is no longer marked as a minor', () => {
