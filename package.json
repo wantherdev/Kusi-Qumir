@@ -21,6 +21,7 @@
     "db:start": "docker compose -f compose.dev.yaml up -d postgres",
     "db:stop": "docker compose -f compose.dev.yaml stop postgres",
     "build:all": "pnpm frontend:build && pnpm backend:build",
-    "test:all": "pnpm frontend:test && pnpm backend:test"
+    "test:all": "pnpm frontend:test && pnpm backend:test",
+    "build:pages": "node scripts/build-pages.mjs"
   }
 }
