@@ -370,3 +370,9 @@ Prompt sugerido para una nueva sesión:
 
 - Referencia confirmada por el titular: Phuyu con mapa de City Tour en el PDF de tours diarios (versión 2).
 - La imagen aprobada sustituye las variantes anteriores en los espacios existentes mediante el componente compartido; no se añaden ubicaciones.
+
+## 2026-10-24 — Retiro de Phuyu de la web
+
+- Por solicitud del titular, se retira Phuyu de portada, contacto, página 404 y mensajes del Libro de Reclamaciones.
+- Se eliminan contenedores, estilos e imports asociados en esas páginas; los mensajes y las acciones conservan su funcionamiento.
+- Los recursos de marca se conservan como referencia; no se añaden nuevas apariciones.
