@@ -8,30 +8,18 @@ export interface PhuyuAsset {
   readonly height: number;
 }
 
+// Approved by the owner on 2026-10-24, from the City Tour brochure.
+// Semantic slots share this illustration until further poses are approved.
+const APPROVED_PHUYU: PhuyuAsset = {
+  src: '/assets/phuyu/static/phuyu-official.webp',
+  width: 512,
+  height: 768,
+};
+
 export const PHUYU_ASSETS: Readonly<Record<PhuyuPose, PhuyuAsset>> = {
-  empty: {
-    src: '/assets/phuyu/static/phuyu-empty.webp',
-    width: 326,
-    height: 499,
-  },
-  help: {
-    src: '/assets/phuyu/static/phuyu-help.webp',
-    width: 316,
-    height: 526,
-  },
-  support: {
-    src: '/assets/phuyu/static/phuyu-support.webp',
-    width: 324,
-    height: 530,
-  },
-  thanks: {
-    src: '/assets/phuyu/static/phuyu-thanks.webp',
-    width: 299,
-    height: 525,
-  },
-  welcome: {
-    src: '/assets/phuyu/static/phuyu-welcome.webp',
-    width: 393,
-    height: 540,
-  },
+  empty: APPROVED_PHUYU,
+  help: APPROVED_PHUYU,
+  support: APPROVED_PHUYU,
+  thanks: APPROVED_PHUYU,
+  welcome: APPROVED_PHUYU,
 };
