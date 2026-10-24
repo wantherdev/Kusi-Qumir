@@ -114,7 +114,7 @@ describe('ClaimsComponent', () => {
       '.claim-status__mascot img',
     ) as HTMLImageElement;
     expect(mascot).toBeTruthy();
-    expect(mascot.src).toContain('/assets/phuyu/static/phuyu-help.webp');
+    expect(mascot.src).toContain('/assets/phuyu/static/phuyu-official.webp');
     expect(mascot.getAttribute('aria-hidden')).toBe('true');
   });
 
