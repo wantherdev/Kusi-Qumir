@@ -13,47 +13,139 @@
         alt="Kusi Q’umir"
       />
     </a>
-
-    <button
-      #menuToggle
-      class="menu-toggle"
-      type="button"
-      [class.menu-toggle--open]="menuOpen()"
-      [attr.aria-expanded]="menuOpen()"
-      aria-controls="site-navigation"
-      (click)="toggleMenu()"
+    <span class="mobile-location"
+      ><i class="ri-icon ri-map-pin-2-line" aria-hidden="true"></i> Cusco, Perú</span
     >
-      <span class="sr-only">{{ menuOpen() ? 'Cerrar menú' : 'Abrir menú' }}</span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-      <span aria-hidden="true"></span>
-    </button>
-
-    <nav
-      id="site-navigation"
-      class="site-navigation"
-      [class.site-navigation--open]="menuOpen()"
-      aria-label="Navegación principal"
-    >
+    <nav id="site-navigation" class="site-navigation" aria-label="Navegación principal">
       <a
         routerLink="/tours"
         routerLinkActive="site-navigation__link--active"
         ariaCurrentWhenActive="page"
-        (click)="closeMenu()"
         >Tours</a
       >
-      <a routerLink="/" fragment="como-viajamos" (click)="closeMenu()">Cómo viajamos</a>
-      <a routerLink="/" fragment="servicios" (click)="closeMenu()">Servicios</a>
+      <a routerLink="/" fragment="como-viajamos">Cómo viajamos</a>
+      <a routerLink="/" fragment="servicios">Servicios</a>
       <a
         routerLink="/informacion-institucional"
         routerLinkActive="site-navigation__link--active"
         ariaCurrentWhenActive="page"
-        (click)="closeMenu()"
         >Información institucional</a
       >
-      <a class="kq-button kq-button--small" routerLink="/" fragment="contacto" (click)="closeMenu()"
+      <a class="kq-button kq-button--small" routerLink="/" fragment="contacto"
         >Canales de atención</a
       >
     </nav>
   </div>
 </header>
+
+<nav class="mobile-dock" aria-label="Navegación móvil">
+  <a
+    routerLink="/"
+    routerLinkActive="mobile-dock__item--active"
+    [routerLinkActiveOptions]="{
+      paths: 'exact',
+      queryParams: 'ignored',
+      matrixParams: 'ignored',
+      fragment: 'exact',
+    }"
+    ariaCurrentWhenActive="page"
+    (click)="closeMenu()"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m3 10 9-7 9 7v10H3zM9 20v-7h6v7" /></svg
+    ><span>Inicio</span>
+  </a>
+  <a
+    routerLink="/tours"
+    routerLinkActive="mobile-dock__item--active"
+    ariaCurrentWhenActive="page"
+    (click)="closeMenu()"
+  >
+    <i class="ri-icon ri-map-pin-2-line" aria-hidden="true"></i><span>Tours</span>
+  </a>
+  <a
+    routerLink="/"
+    fragment="contacto"
+    routerLinkActive="mobile-dock__item--active"
+    [routerLinkActiveOptions]="{
+      paths: 'exact',
+      queryParams: 'ignored',
+      matrixParams: 'ignored',
+      fragment: 'exact',
+    }"
+    ariaCurrentWhenActive="location"
+    (click)="closeMenu()"
+  >
+    <i class="ri-icon ri-chat-3-line" aria-hidden="true"></i><span>Contacto</span>
+  </a>
+  <button
+    #menuToggle
+    class="menu-toggle"
+    type="button"
+    [class.mobile-dock__item--active]="menuOpen()"
+    [attr.aria-expanded]="menuOpen()"
+    aria-controls="mobile-menu"
+    aria-haspopup="dialog"
+    (click)="toggleMenu()"
+  >
+    <svg viewBox="0 0 24 24" aria-hidden="true">
+      <rect x="3" y="3" width="6" height="6" rx="1.5" />
+      <rect x="15" y="3" width="6" height="6" rx="1.5" />
+      <rect x="3" y="15" width="6" height="6" rx="1.5" />
+      <rect x="15" y="15" width="6" height="6" rx="1.5" /></svg
+    ><span>Menú</span>
+  </button>
+</nav>
+
+<dialog
+  #mobileMenu
+  id="mobile-menu"
+  class="mobile-menu"
+  aria-labelledby="mobile-menu-title"
+  (cancel)="onDialogCancel($event)"
+  (close)="closeMenu()"
+  (click)="onBackdropClick($event)"
+>
+  <div class="mobile-menu__content">
+    <div class="mobile-menu__handle" aria-hidden="true"></div>
+    <div class="mobile-menu__heading">
+      <div>
+        <p class="mobile-menu__eyebrow">KUSI Q’UMIR · CUSCO</p>
+        <h2 id="mobile-menu-title">Tu próxima ruta</h2>
+      </div>
+      <button
+        class="mobile-menu__close"
+        type="button"
+        aria-label="Cerrar menú"
+        (click)="closeMenu()"
+        autofocus
+      >
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 6 12 12M6 18 18 6" /></svg>
+      </button>
+    </div>
+    <p class="mobile-menu__intro">Explora, conoce y planea tu viaje.</p>
+    <nav class="mobile-menu__links" aria-label="Explorar Kusi Q’umir">
+      <a routerLink="/tours" (click)="closeMenu()"
+        ><i class="ri-icon ri-map-pin-2-line" aria-hidden="true"></i><strong>Explorar tours</strong
+        ><span>Encuentra tu experiencia</span></a
+      >
+      <a routerLink="/" fragment="como-viajamos" (click)="closeMenu()"
+        ><i class="ri-icon ri-route-line" aria-hidden="true"></i><strong>Cómo viajamos</strong
+        ><span>Conoce cada paso</span></a
+      >
+      <a routerLink="/" fragment="servicios" (click)="closeMenu()"
+        ><i class="ri-icon ri-customer-service-2-line" aria-hidden="true"></i
+        ><strong>Servicios</strong><span>Nuestras formas de viajar</span></a
+      >
+      <a routerLink="/informacion-institucional" (click)="closeMenu()"
+        ><i class="ri-icon ri-information-line" aria-hidden="true"></i
+        ><strong>Sobre la agencia</strong><span>Información institucional</span></a
+      >
+    </nav>
+    <a class="mobile-menu__contact" routerLink="/" fragment="contacto" (click)="closeMenu()"
+      ><i class="ri-icon ri-chat-3-line" aria-hidden="true"></i
+      ><span>Conversemos<span>Consulta por nuestros canales</span></span
+      ><i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
+    ></a>
+    <p class="mobile-menu__note">Catálogo informativo · Reservas aún no habilitadas</p>
+  </div>
+</dialog>
