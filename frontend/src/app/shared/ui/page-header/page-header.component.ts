@@ -24,6 +24,7 @@ export class PageHeaderComponent {
   private readonly document = inject(DOCUMENT);
   private readonly destroyRef = inject(DestroyRef);
   private readonly menuToggle = viewChild<ElementRef<HTMLButtonElement>>('menuToggle');
+  private readonly mobileMenu = viewChild<ElementRef<HTMLDialogElement>>('mobileMenu');
 
   protected readonly menuOpen = signal(false);
 
@@ -33,26 +34,36 @@ export class PageHeaderComponent {
 
   @HostListener('window:resize')
   protected onWindowResize(): void {
-    if (window.innerWidth > DESKTOP_NAV_BREAKPOINT && this.menuOpen()) {
+    if ((this.document.defaultView?.innerWidth ?? 0) > DESKTOP_NAV_BREAKPOINT && this.menuOpen()) {
       this.closeMenu();
     }
   }
 
-  @HostListener('document:keydown.escape')
-  protected onEscape(): void {
-    if (!this.menuOpen()) return;
-
+  protected onDialogCancel(event: Event): void {
+    event.preventDefault();
     this.closeMenu();
-    this.menuToggle()?.nativeElement.focus();
+  }
+
+  protected onBackdropClick(event: MouseEvent): void {
+    if (event.target === this.mobileMenu()?.nativeElement) this.closeMenu();
   }
 
   protected toggleMenu(): void {
-    this.menuOpen.update((open) => !open);
-    this.document.body.classList.toggle('menu-open', this.menuOpen());
+    if (this.menuOpen()) {
+      this.closeMenu();
+      return;
+    }
+    this.mobileMenu()?.nativeElement.showModal();
+    this.menuOpen.set(true);
+    this.document.body.classList.add('menu-open');
   }
 
   protected closeMenu(): void {
+    const wasOpen = this.menuOpen();
     this.menuOpen.set(false);
     this.document.body.classList.remove('menu-open');
+    const dialog = this.mobileMenu()?.nativeElement;
+    if (dialog?.open) dialog.close();
+    if (wasOpen) this.menuToggle()?.nativeElement.focus();
   }
 }
