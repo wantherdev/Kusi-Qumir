@@ -376,3 +376,10 @@ Prompt sugerido para una nueva sesión:
 - Por solicitud del titular, se retira Phuyu de portada, contacto, página 404 y mensajes del Libro de Reclamaciones.
 - Se eliminan contenedores, estilos e imports asociados en esas páginas; los mensajes y las acciones conservan su funcionamiento.
 - Los recursos de marca se conservan como referencia; no se añaden nuevas apariciones.
+
+## 2026-10-24 — Navegación móvil con estilo de aplicación
+
+- Hasta 1040 px, una barra inferior persistente ofrece Inicio, Tours, Contacto y Menú, con estado activo y espacio reservado al final de la página.
+- Menú abre un panel inferior mediante `dialog` nativo: foco contenido, cierre con Escape, botón y fondo exterior, retorno de foco y bloqueo temporal del desplazamiento.
+- Se conservan los destinos y la navegación de escritorio, las áreas seguras del dispositivo y la preferencia de movimiento reducido. Phuyu permanece retirado.
+- Validación: 56 pruebas frontend; compilación SSR y estática para Pages.
