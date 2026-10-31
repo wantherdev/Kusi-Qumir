@@ -6,7 +6,7 @@ import { fileURLToPath } from 'node:url';
 import { launchGate } from './launch-gate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
-const base = process.env.PAGES_BASE_PATH || '/Kusi-Qumir/';
+const base = process.env.PAGES_BASE_PATH || '/';
 if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(base)) {
   throw new Error('PAGES_BASE_PATH must be an absolute directory path ending in /.');
 }
