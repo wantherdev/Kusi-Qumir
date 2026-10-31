@@ -119,3 +119,16 @@ Los archivos compilados no se guardan en Git ni se publica el contenido de
 mediante `pnpm build`.
 
 Para otra ruta de publicación: `PAGES_BASE_PATH=/otra-ruta/ pnpm build:pages`.
+
+## Lanzamiento integrado
+
+La publicación de Pages incluye `lanzamiento/`: hasta el **1 de noviembre de
+2026, 10:00 a. m. (Perú)** las entradas oficiales muestran la cuenta regresiva.
+Al llegar a cero se abre automáticamente la web; las visitas posteriores ven
+la web directamente. No hace falta ejecutar Actions de nuevo a esa hora.
+
+La fecha se configura en `frontend/public/lanzamiento/launch-config.mjs`.
+El cambio depende de JavaScript y del reloj del dispositivo, no constituye
+una restricción de acceso. Para publicar en la raíz de un dominio, usar
+`PAGES_BASE_PATH=/ pnpm build:pages`. Los formularios y reservas conservan
+su estado actual de evaluación.
