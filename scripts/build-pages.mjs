@@ -41,7 +41,7 @@ await writeFile(join(output, 'assets/catalog/tours.json'), JSON.stringify(tours)
 // Angular emits a client shell for routes that normally need the API.
 // Materialize each catalog URL so direct links and refreshes work on Pages.
 const shell = await readFile(join(output, 'index.csr.html'), 'utf8');
-for (const path of ['tours', ...tours.map((tour) => `tours/${tour.slug}`)]) {
+for (const path of ['admin', 'tours', ...tours.map((tour) => `tours/${tour.slug}`)]) {
   const directory = join(output, path);
   await mkdir(directory, { recursive: true });
   await writeFile(join(directory, 'index.html'), shell);
