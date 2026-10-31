@@ -2,6 +2,12 @@ import { Routes } from '@angular/router';
 
 export const routes: Routes = [
   {
+    path: 'admin',
+    title: 'Administración de tours | Kusi Q’umir',
+    loadComponent: () =>
+      import('./pages/admin/admin.component').then((module) => module.AdminComponent),
+  },
+  {
     path: '',
     title: 'Kusi Q’umir | Cusco auténtico, experiencias que permanecen',
     data: {

@@ -132,3 +132,28 @@ El cambio depende de JavaScript y del reloj del dispositivo, no constituye
 una restricción de acceso. Para publicar en la raíz de un dominio, usar
 `PAGES_BASE_PATH=/ pnpm build:pages`. Los formularios y reservas conservan
 su estado actual de evaluación.
+
+## Catálogo conectado a Supabase
+
+La compilación Pages consulta los tours activos de Supabase mediante la Data
+API, usando solo la clave pública `sb_publishable_…` definida en
+`frontend/src/app/deployment.config.pages.ts`. No contiene credenciales de
+PostgreSQL ni claves de servicio. El modo SSR/desarrollo conserva la API NestJS.
+
+La migración remota `public_read_active_tour_catalog` concede lectura por
+columnas y una política RLS `active = true` a `anon` y `authenticated`. No
+concede INSERT, UPDATE ni DELETE. `ContactRequest` y `Claim` siguen sin acceso
+público. No hay todavía dashboard ni roles administrativos.
+
+Los precios y el contenido se consultan al cargar o reintentar, sin recurrir
+a una copia estática cuando Supabase falla. El acceso directo en Pages a slugs
+nuevos utiliza la página 404 cliente hasta regenerar sus entradas con un
+despliegue. Las imágenes continúan en los recursos estáticos del sitio; subir
+imágenes nuevas sigue requiriendo publicación.
+
+La base se inicializó mediante `kusi_qumir_initial_backend_schema`, con el
+SQL de las cuatro migraciones Prisma existentes, y contiene los diez tours.
+Antes de ejecutar Prisma Migrate contra esta base, se deben marcar esas cuatro
+migraciones como aplicadas con `prisma migrate resolve --applied <nombre>`;
+no ejecutar `migrate reset`, ni aplicar de nuevo el esquema inicial. La
+conexión Prisma/NestJS y el administrador siguen pendientes.
