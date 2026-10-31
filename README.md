@@ -142,18 +142,64 @@ PostgreSQL ni claves de servicio. El modo SSR/desarrollo conserva la API NestJS.
 
 La migración remota `public_read_active_tour_catalog` concede lectura por
 columnas y una política RLS `active = true` a `anon` y `authenticated`. No
-concede INSERT, UPDATE ni DELETE. `ContactRequest` y `Claim` siguen sin acceso
-público. No hay todavía dashboard ni roles administrativos.
+concede escrituras a visitantes. `ContactRequest` y `Claim` siguen sin acceso
+público. El panel `/admin` incorpora permisos administrativos independientes.
 
 Los precios y el contenido se consultan al cargar o reintentar, sin recurrir
 a una copia estática cuando Supabase falla. El acceso directo en Pages a slugs
 nuevos utiliza la página 404 cliente hasta regenerar sus entradas con un
-despliegue. Las imágenes continúan en los recursos estáticos del sitio; subir
-imágenes nuevas sigue requiriendo publicación.
+despliegue. El panel admite URLs HTTPS para imágenes alojadas externamente y rutas de
+recursos locales existentes. No incluye todavía subida de archivos.
 
 La base se inicializó mediante `kusi_qumir_initial_backend_schema`, con el
 SQL de las cuatro migraciones Prisma existentes, y contiene los diez tours.
 Antes de ejecutar Prisma Migrate contra esta base, se deben marcar esas cuatro
 migraciones como aplicadas con `prisma migrate resolve --applied <nombre>`;
 no ejecutar `migrate reset`, ni aplicar de nuevo el esquema inicial. La
-conexión Prisma/NestJS y el administrador siguen pendientes.
+conexión Prisma/NestJS sigue pendiente.
+
+## Panel administrativo de tours (rama de desarrollo)
+
+La vista Pages/Supabase incorpora `/admin`, con inicio de sesión por correo y
+contraseña, listado de tours publicados y borradores, creación de tours y
+cambio de visibilidad. La versión SSR/local sin configuración Supabase muestra
+el estado sin conexión configurada. Los nuevos tours siempre se insertan como
+borradores. El formulario incluye precios PEN, imagen por URL, itinerario por
+días, inclusiones, exclusiones, requisitos y recomendaciones. No edita el
+contenido de tours existentes ni elimina registros. Una publicación cambia el
+catálogo conectado a Supabase; la web principal mantiene su catálogo estático
+hasta integrar esta rama. No habilita reservas, pagos ni formularios públicos.
+
+Se usa `@supabase/supabase-js` con versión exacta y sesión en `sessionStorage`
+(por pestaña). La clave pública no otorga permisos de escritura. La migración
+remota `restricted_tour_administration` crea `TourAdministrator`, con RLS de
+lectura exclusiva de la membresía propia y sin escritura desde el cliente.
+Solo miembros asignados por el propietario pueden leer borradores, insertar
+tours inactivos y actualizar `active`/`updatedAt`. No se conceden DELETE ni
+edición de otros campos. No se confía en `user_metadata`. La autorización real
+se aplica en PostgreSQL, además de comprobarla en el panel.
+
+Para activar el primer administrador:
+
+1. En el proyecto Supabase, abrir Authentication → Users → Add user → Create
+   new user. El titular debe introducir su correo y contraseña directamente
+   allí; no compartir la contraseña en chats ni guardarla en Git.
+2. Copiar el UID del usuario. El propietario del proyecto puede asignarlo desde
+   SQL Editor con la consulta siguiente (reemplazar el marcador por ese UID):
+
+```sql
+insert into public."TourAdministrator" (user_id)
+values ('REEMPLAZAR-POR-EL-UID-DEL-USUARIO'::uuid)
+on conflict (user_id) do nothing;
+```
+
+3. Abrir `/admin` en la vista previa e ingresar con esa cuenta. Una cuenta
+   autenticada sin membresía muestra su UID y el estado de acceso pendiente.
+
+Para revocar el permiso, el propietario elimina esa membresía desde SQL
+Editor; las siguientes consultas y escrituras quedan bloqueadas por RLS.
+La tabla depende de `auth.users` (Supabase), por lo que no forma parte del
+esquema local Prisma. No se debe ejecutar este SQL contra la base local ni
+reinicializar el esquema existente. Las tres migraciones remotas de Supabase
+son el historial de los permisos; conservar también la advertencia de baseline
+Prisma anterior. Mantener esta rama sin fusionar hasta autorizar su integración.
