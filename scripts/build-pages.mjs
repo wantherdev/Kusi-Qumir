@@ -3,6 +3,8 @@ import { cp, mkdir, readFile, readdir, rm, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 
+import { launchGate } from './launch-gate.mjs';
+
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const base = process.env.PAGES_BASE_PATH || '/Kusi-Qumir/';
 if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(base)) {
@@ -57,7 +59,11 @@ async function scopeAssets(directory) {
     if (entry.isDirectory()) await scopeAssets(path);
     else if (/\.(?:html|css|js|json|webmanifest)$/.test(entry.name)) {
       const source = await readFile(path, 'utf8');
-      await writeFile(path, source.replace(rootAssets, `${base}$1`));
+      let content = source.replace(rootAssets, `${base}$1`);
+      if (entry.name.endsWith('.html') && !path.startsWith(join(output, 'lanzamiento') + '/')) {
+        content = content.replace(/<head[^>]*>/i, (head) => head + launchGate(base));
+      }
+      await writeFile(path, content);
     }
   }
 }

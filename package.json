@@ -9,7 +9,7 @@
   "scripts": {
     "start": "node scripts/dev.mjs",
     "build": "pnpm --dir frontend build",
-    "test:ci": "pnpm --dir frontend test:ci",
+    "test:ci": "node --test scripts/launch.test.mjs && pnpm --dir frontend test:ci",
     "serve:ssr": "pnpm --dir frontend serve:ssr",
     "frontend:start": "pnpm --dir frontend start",
     "frontend:build": "pnpm --dir frontend build",
