@@ -7,6 +7,7 @@ import { launchGate } from './launch-gate.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const base = process.env.PAGES_BASE_PATH || '/';
+const adminAtRoot = process.argv.includes('--admin');
 if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(base)) {
   throw new Error('PAGES_BASE_PATH must be an absolute directory path ending in /.');
 }
@@ -21,7 +22,7 @@ const result = spawnSync(
     'ng',
     'build',
     '--configuration',
-    'production,pages',
+    adminAtRoot ? 'production,admin' : 'production,pages',
     '--base-href',
     base,
     '--output-path',
@@ -41,6 +42,10 @@ await writeFile(join(output, 'assets/catalog/tours.json'), JSON.stringify(tours)
 // Angular emits a client shell for routes that normally need the API.
 // Materialize each catalog URL so direct links and refreshes work on Pages.
 const shell = await readFile(join(output, 'index.csr.html'), 'utf8');
+if (adminAtRoot) {
+  await writeFile(join(output, 'index.html'), shell);
+  await rm(join(output, 'lanzamiento'), { recursive: true, force: true });
+}
 for (const path of ['admin', 'tours', ...tours.map((tour) => `tours/${tour.slug}`)]) {
   const directory = join(output, path);
   await mkdir(directory, { recursive: true });
@@ -60,7 +65,11 @@ async function scopeAssets(directory) {
     else if (/\.(?:html|css|js|json|webmanifest)$/.test(entry.name)) {
       const source = await readFile(path, 'utf8');
       let content = source.replace(rootAssets, `${base}$1`);
-      if (entry.name.endsWith('.html') && !path.startsWith(join(output, 'lanzamiento') + '/')) {
+      if (
+        !adminAtRoot &&
+        entry.name.endsWith('.html') &&
+        !path.startsWith(join(output, 'lanzamiento') + '/')
+      ) {
         content = content.replace(/<head[^>]*>/i, (head) => head + launchGate(base));
       }
       await writeFile(path, content);
