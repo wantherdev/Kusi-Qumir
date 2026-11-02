@@ -203,3 +203,26 @@ esquema local Prisma. No se debe ejecutar este SQL contra la base local ni
 reinicializar el esquema existente. Las tres migraciones remotas de Supabase
 son el historial de los permisos; conservar también la advertencia de baseline
 Prisma anterior. Mantener esta rama sin fusionar hasta autorizar su integración.
+
+## Despliegue del dashboard en la raíz del subdominio
+
+`pnpm build:admin` genera `.pages-site/` con el dashboard en `/`. La URL del
+subdominio (por ejemplo `https://admin.kusiqumir.com`) conserva la raíz al abrir
+el panel. El alias `/admin` redirige a `/`. La raíz utiliza renderizado cliente,
+sin contenido de la portada prerenderizada ni cuenta regresiva. El catálogo y
+las fichas siguen disponibles para los enlaces del panel. La autenticación y
+los permisos administrativos de Supabase siguen siendo obligatorios.
+
+Cloudflare Pages debe usar la rama `integrar-catalogo-supabase`, preset None,
+raíz del repositorio, salida `.pages-site` y comando:
+
+```bash
+corepack pnpm install --frozen-lockfile && corepack pnpm build:admin
+```
+
+Variables de compilación: `NODE_VERSION=24.19.0` y
+`SKIP_DEPENDENCY_INSTALL=true`. El CNAME `admin` apunta al nombre `.pages.dev`
+indicado por Cloudflare después de añadir el dominio personalizado. DNS no
+elige rutas de Angular; la compilación administrativa determina la página
+inicial. `pnpm build:pages` conserva la portada pública y el lanzamiento.
+Este cambio permanece en la rama de desarrollo, sin fusionar con `main`.
