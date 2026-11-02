@@ -165,8 +165,7 @@ contraseña, listado de tours publicados y borradores, creación de tours y
 cambio de visibilidad. La versión SSR/local sin configuración Supabase muestra
 el estado sin conexión configurada. Los nuevos tours siempre se insertan como
 borradores. El formulario incluye precios PEN, imagen por URL, itinerario por
-días, inclusiones, exclusiones, requisitos y recomendaciones. No edita el
-contenido de tours existentes ni elimina registros. Una publicación cambia el
+días, inclusiones, exclusiones, requisitos y recomendaciones. Permite editar tours existentes y moverlos a eliminados de forma recuperable. Una publicación cambia el
 catálogo conectado a Supabase; la web principal mantiene su catálogo estático
 hasta integrar esta rama. No habilita reservas, pagos ni formularios públicos.
 
@@ -175,8 +174,8 @@ Se usa `@supabase/supabase-js` con versión exacta y sesión en `sessionStorage`
 remota `restricted_tour_administration` crea `TourAdministrator`, con RLS de
 lectura exclusiva de la membresía propia y sin escritura desde el cliente.
 Solo miembros asignados por el propietario pueden leer borradores, insertar
-tours inactivos y actualizar `active`/`updatedAt`. No se conceden DELETE ni
-edición de otros campos. No se confía en `user_metadata`. La autorización real
+tours inactivos y actualizar `active`/`updatedAt`. No se concede DELETE permanente. La migración de CRUD posterior amplía los
+campos editables y añade eliminación recuperable. No se confía en `user_metadata`. La autorización real
 se aplica en PostgreSQL, además de comprobarla en el panel.
 
 Para activar el primer administrador:
@@ -226,3 +225,37 @@ indicado por Cloudflare después de añadir el dominio personalizado. DNS no
 elige rutas de Angular; la compilación administrativa determina la página
 inicial. `pnpm build:pages` conserva la portada pública y el lanzamiento.
 Este cambio permanece en la rama de desarrollo, sin fusionar con `main`.
+
+## CRUD administrativo de tours y reservas
+
+El panel incluye secciones Tours y Reservas. En tours se puede crear, consultar,
+editar, publicar, pasar a borrador, eliminar de forma recuperable y restaurar.
+Al restaurar un tour queda como borrador. La edición envía solo campos que
+cambiaron y conserva tarifas adicionales, imágenes secundarias, preguntas
+frecuentes, SEO y los detalles de itinerario que no se modificaron.
+
+Las reservas son registros internos introducidos por el equipo: tour, cliente,
+contacto, fecha, pasajeros, total en PEN, monto abonado registrado manualmente,
+estado y observaciones. Se pueden consultar, buscar por nombre, filtrar por
+estado, paginar, editar, eliminar de forma recuperable y restaurar. Los estados
+son pendiente, confirmada, completada y cancelada. No se procesa ningún pago ni
+se activa un formulario público de reservas.
+
+La migración remota `admin_tours_reservations_crud` añade `Tour.deletedAt` y la
+tabla privada `Reservation`. Los visitantes solo leen tours activos no
+eliminados. Las reservas requieren membresía administrativa para toda lectura
+y escritura. Los triggers conservan el nombre del tour al reservar, registran
+el creador desde `auth.uid()` y actualizan la versión al guardar. Los límites de
+pasajeros y montos se validan también en PostgreSQL. La eliminación de un tour
+no elimina sus reservas. Las escrituras de edición y eliminación comparan
+`updatedAt` para rechazar cambios concurrentes en lugar de sobrescribirlos.
+
+La copia SQL está en `supabase/migrations/`, generada con Supabase CLI. Es una
+migración incremental sobre la base existente y ya fue aplicada al proyecto;
+no ejecutarla de nuevo ni usar `supabase db reset` como inicialización completa:
+las migraciones iniciales y de membresías previas siguen en el historial remoto.
+Prisma/NestJS conserva el estado indicado anteriormente; este CRUD utiliza la
+Data API de Supabase. ContactRequest y Claim mantienen sus permisos anteriores.
+
+El despliegue administrativo continúa usando `pnpm build:admin` y la misma rama
+`integrar-catalogo-supabase`. Mantener la PR sin fusionar con `main`.
