@@ -502,3 +502,37 @@ legend {
     font-size: 1rem;
   }
 }
+
+.admin-sections {
+  display: flex;
+  gap: 0.5rem;
+  margin-bottom: 2rem;
+  border-bottom: 1px solid var(--kq-border);
+  padding-bottom: 0.8rem;
+}
+.admin-sections button {
+  border: 1px solid transparent;
+  background: transparent;
+  color: var(--kq-muted);
+  min-width: 100px;
+}
+.admin-sections button[aria-pressed='true'] {
+  background: var(--kq-surface-soft);
+  border-color: var(--kq-border);
+  color: var(--kq-action);
+}
+.danger {
+  color: var(--kq-danger);
+}
+.row-actions {
+  flex-wrap: wrap;
+  max-width: 480px;
+  flex-shrink: 1;
+}
+.catalog-heading {
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+.catalog-heading h2 {
+  margin-right: auto;
+}
