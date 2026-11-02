@@ -1,18 +1,35 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Injectable, PLATFORM_ID, inject, signal } from '@angular/core';
+import { Injectable, InjectionToken, PLATFORM_ID, inject, signal } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { SUPABASE_CATALOG } from '../../tours/data-access/tours.config';
 import { Tour } from '../../tours/domain/tour.model';
 
 export type AdminAccess =
   'loading' | 'unconfigured' | 'signed-out' | 'forbidden' | 'allowed' | 'error';
-export type AdminTour = Pick<Tour, 'title' | 'slug' | 'code'> & { id: string; active: boolean };
+export type AdminTour = Pick<Tour, 'title' | 'slug' | 'code'> & {
+  id: string;
+  active: boolean;
+  updatedAt: string;
+  deletedAt: string | null;
+};
+export type TourRecord = Tour & {
+  id: string;
+  active: boolean;
+  updatedAt: string;
+  deletedAt: string | null;
+};
 export type NewTour = Tour & { active: false };
+
+export const ADMIN_CLIENT_FACTORY = new InjectionToken<typeof createClient>(
+  'ADMIN_CLIENT_FACTORY',
+  { providedIn: 'root', factory: () => createClient },
+);
 
 @Injectable({ providedIn: 'root' })
 export class AdminApiService {
   private readonly config = inject(SUPABASE_CATALOG);
   private readonly browser = isPlatformBrowser(inject(PLATFORM_ID));
+  private readonly clientFactory = inject(ADMIN_CLIENT_FACTORY);
   private client: SupabaseClient | null = null;
   readonly access = signal<AdminAccess>('loading');
   readonly userId = signal('');
@@ -20,7 +37,7 @@ export class AdminApiService {
   private getClient(): SupabaseClient {
     if (!this.browser || !this.config) throw new Error('Panel no configurado.');
     if (!this.client) {
-      this.client = createClient(this.config.url, this.config.publishableKey, {
+      this.client = this.clientFactory(this.config.url, this.config.publishableKey, {
         auth: {
           storage: sessionStorage,
           persistSession: true,
@@ -93,14 +110,16 @@ export class AdminApiService {
     this.userId.set('');
   }
 
-  async list(): Promise<AdminTour[]> {
+  async list(deleted = false): Promise<AdminTour[]> {
     await this.authorize();
     if (this.access() !== 'allowed')
       throw new Error('Tu usuario no tiene permiso de administrador.');
-    const { data, error } = await this.getClient()
+    let query = this.getClient()
       .from('Tour')
-      .select('id,title,slug,code,active')
+      .select('id,title,slug,code,active,updatedAt,deletedAt')
       .order('createdAt', { ascending: false });
+    query = deleted ? query.not('deletedAt', 'is', null) : query.is('deletedAt', null);
+    const { data, error } = await query;
     if (error) throw new Error('No se cargaron los tours. Reintenta la consulta.');
     return data ?? [];
   }
@@ -127,17 +146,64 @@ export class AdminApiService {
       );
   }
 
-  async setVisibility(id: string, active: boolean): Promise<void> {
+  async authorizedClient(): Promise<SupabaseClient> {
     await this.authorize();
     if (this.access() !== 'allowed')
       throw new Error('Tu usuario no tiene permiso de administrador.');
-    const { data, error } = await this.getClient()
+    return this.getClient();
+  }
+
+  async getTour(id: string): Promise<TourRecord> {
+    const client = await this.authorizedClient();
+    const { data, error } = await client
       .from('Tour')
-      .update({ active, updatedAt: new Date().toISOString() })
+      .select('*')
       .eq('id', id)
-      .select('id')
-      .single();
+      .is('deletedAt', null)
+      .single<TourRecord>();
     if (error || !data)
-      throw new Error('No se cambió la visibilidad. Revisa tus permisos y vuelve a intentarlo.');
+      throw new Error('No se pudo abrir el tour. Actualiza el listado e inténtalo de nuevo.');
+    return data;
+  }
+
+  async updateTour(id: string, expectedUpdatedAt: string, patch: Partial<Tour>): Promise<void> {
+    await this.changeTour(id, expectedUpdatedAt, patch);
+  }
+
+  async setVisibility(id: string, active: boolean, expectedUpdatedAt: string): Promise<void> {
+    await this.changeTour(id, expectedUpdatedAt, { active });
+  }
+
+  async archiveTour(tour: AdminTour): Promise<void> {
+    await this.changeTour(tour.id, tour.updatedAt, {
+      deletedAt: new Date().toISOString(),
+      active: false,
+    });
+  }
+
+  async restoreTour(tour: AdminTour): Promise<void> {
+    await this.changeTour(tour.id, tour.updatedAt, { deletedAt: null, active: false });
+  }
+
+  private async changeTour(
+    id: string,
+    expectedUpdatedAt: string,
+    patch: Partial<Tour> & { active?: boolean; deletedAt?: string | null },
+  ): Promise<void> {
+    const client = await this.authorizedClient();
+    const { data, error } = await client
+      .from('Tour')
+      .update({ ...patch, updatedAt: new Date().toISOString() })
+      .eq('id', id)
+      .eq('updatedAt', expectedUpdatedAt)
+      .select('id')
+      .maybeSingle();
+    if (error?.code === '23505')
+      throw new Error('Ya existe un tour con esa URL o código. Usa valores únicos.');
+    if (error) throw new Error('No se guardaron los cambios. Revisa la conexión y tus permisos.');
+    if (!data)
+      throw new Error(
+        'El tour cambió desde que lo abriste. Vuelve al listado, actualiza y revisa la versión más reciente.',
+      );
   }
 }

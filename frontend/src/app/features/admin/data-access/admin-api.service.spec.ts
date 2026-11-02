@@ -2,10 +2,10 @@ import { PLATFORM_ID } from '@angular/core';
 import { TestBed } from '@angular/core/testing';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { SUPABASE_CATALOG } from '../../tours/data-access/tours.config';
-import { AdminApiService } from './admin-api.service';
+import { ADMIN_CLIENT_FACTORY, AdminApiService } from './admin-api.service';
 import { buildTourDraft } from '../domain/tour-draft';
 
-const sdk = vi.hoisted(() => {
+const sdk = (() => {
   const membership = vi.fn();
   const insert = vi.fn();
   const from = vi.fn(() => ({
@@ -22,8 +22,7 @@ const sdk = vi.hoisted(() => {
     onAuthStateChange: vi.fn(),
     signOut: vi.fn(),
   };
-});
-vi.mock('@supabase/supabase-js', () => ({ createClient: () => ({ auth: sdk, from: sdk.from }) }));
+})();
 const draft = buildTourDraft({
   title: 'Tour',
   slug: 'tour',
@@ -54,6 +53,7 @@ describe('admin authorization boundary', () => {
     vi.clearAllMocks();
     TestBed.configureTestingModule({
       providers: [
+        { provide: ADMIN_CLIENT_FACTORY, useValue: () => ({ auth: sdk, from: sdk.from }) },
         {
           provide: SUPABASE_CATALOG,
           useValue: { url: 'https://example.supabase.co', publishableKey: 'sb_publishable_test' },
