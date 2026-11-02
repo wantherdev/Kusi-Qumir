@@ -125,3 +125,118 @@ export function buildTourDraft(draft: TourDraft): Tour & { active: false } {
     seo: null,
   };
 }
+
+export function tourToDraft(tour: Tour): TourDraft {
+  const image = tour.images.find((item) => item.featured) ?? tour.images[0];
+  return {
+    title: tour.title,
+    slug: tour.slug,
+    code: tour.code,
+    subtitle: tour.subtitle ?? '',
+    shortDescription: tour.shortDescription,
+    description: tour.description,
+    durationHours: tour.durationHours,
+    difficulty: tour.difficulty,
+    groupType: tour.groupType,
+    serviceType: tour.serviceType,
+    operationType: tour.operationType,
+    categorySlug: tour.categorySlug,
+    featured: tour.featured,
+    adult: tour.prices[0]?.adult ?? 0,
+    child: tour.prices[0]?.child ?? null,
+    imageUrl: image?.url ?? '',
+    imageAlt: image?.alt ?? '',
+    includes: tour.includes.map((item) => item.title).join('\n'),
+    excludes: tour.excludes.map((item) => item.title).join('\n'),
+    requirements: tour.requirements.map((item) => item.requirement).join('\n'),
+    recommendations: tour.recommendations.map((item) => item.title).join('\n'),
+    itinerary: tour.itineraryDays.map((day) =>
+      day.activities.map((activity) => activity.title).join('\n'),
+    ),
+  };
+}
+
+// Only changed form fields are patched. Rich details and additional tariffs/images survive edits.
+export function buildTourUpdate(original: Tour, draft: TourDraft): Partial<Tour> {
+  const before = tourToDraft(original);
+  const next = buildTourDraft(draft);
+  const patch: Partial<Tour> = {};
+  const scalarFields = [
+    'title',
+    'slug',
+    'code',
+    'subtitle',
+    'shortDescription',
+    'description',
+    'durationHours',
+    'difficulty',
+    'groupType',
+    'serviceType',
+    'operationType',
+    'categorySlug',
+    'featured',
+  ] as const;
+  for (const field of scalarFields) {
+    if (draft[field] !== before[field]) Object.assign(patch, { [field]: next[field] });
+  }
+  if (draft.adult !== before.adult || draft.child !== before.child) {
+    if (original.prices[0]?.currency !== 'PEN')
+      throw new Error(
+        'La tarifa existente no está en soles. Conserva su precio y consulta la conversión antes de editarlo.',
+      );
+    const first = { ...original.prices[0], adult: draft.adult };
+    if (draft.child === null) delete first.child;
+    else first.child = draft.child;
+    patch.prices = [first, ...original.prices.slice(1)];
+  }
+  if (draft.imageUrl !== before.imageUrl || draft.imageAlt !== before.imageAlt) {
+    const selected = original.images.findIndex((image) => image.featured);
+    const index = selected < 0 ? 0 : selected;
+    patch.images = original.images.length
+      ? original.images.map((image, i) =>
+          i === index
+            ? { ...image, url: draft.imageUrl.trim(), alt: draft.imageAlt.trim() }
+            : image,
+        )
+      : next.images;
+  }
+  for (const field of ['includes', 'excludes', 'recommendations'] as const) {
+    if (draft[field] !== before[field]) {
+      const entries = lines(draft[field]).map((title, index, titles) => {
+        const previous =
+          original[field].find((item) => item.title === title) ??
+          (original[field].length === titles.length ? original[field][index] : undefined);
+        return { ...previous, title };
+      });
+      if (field === 'recommendations')
+        patch.recommendations = entries.map((entry) => ({
+          ...entry,
+          description: entry.description ?? '',
+        }));
+      else patch[field] = entries;
+    }
+  }
+  if (draft.requirements !== before.requirements) patch.requirements = next.requirements;
+  if (JSON.stringify(draft.itinerary) !== JSON.stringify(before.itinerary)) {
+    patch.durationDays = draft.itinerary.length;
+    patch.itineraryDays = draft.itinerary.map((text, index) => ({
+      ...original.itineraryDays[index],
+      day: index + 1,
+      title: original.itineraryDays[index]?.title ?? `Día ${index + 1}`,
+      activities: lines(text).map((title, sortOrder, titles) => {
+        const activities = original.itineraryDays[index]?.activities ?? [];
+        const previous =
+          activities.find((activity) => activity.title === title) ??
+          (activities.length === titles.length ? activities[sortOrder] : undefined);
+        return {
+          ...previous,
+          title,
+          sortOrder,
+          description: previous?.description ?? '',
+          duration: previous?.duration ?? 0,
+        };
+      }),
+    }));
+  }
+  return patch;
+}

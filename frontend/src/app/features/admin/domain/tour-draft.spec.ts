@@ -70,3 +70,47 @@ describe('tour draft', () => {
   it('generates predictable URL slugs from accented titles', () =>
     expect(slugFromTitle('  Montaña de 7 Colores! ')).toBe('montana-de-7-colores'));
 });
+
+import { buildTourUpdate, tourToDraft } from './tour-draft';
+describe('editing existing tours', () => {
+  it('patches a title without replacing rich itineraries, prices, images or FAQs', () => {
+    const original = buildTourDraft(validDraft);
+    original.itineraryDays[0].activities[0] = {
+      ...original.itineraryDays[0].activities[0],
+      time: '08:00',
+      description: 'Detalle original',
+      duration: 90,
+    };
+    original.prices.push({ name: 'Privado', currency: 'PEN', adult: 450, private: 450 });
+    original.images.push({
+      url: 'https://images.example.com/extra.webp',
+      alt: 'Otra vista',
+      featured: false,
+      sortOrder: 1,
+    });
+    original.faqs.push({ question: '¿Qué llevar?', answer: 'Abrigo', sortOrder: 0 });
+    const patch = buildTourUpdate(original, { ...tourToDraft(original), title: 'Nuevo título' });
+    expect(patch).toEqual({ title: 'Nuevo título' });
+  });
+  it('updates the first tariff while retaining other tariffs and private pricing', () => {
+    const original = buildTourDraft(validDraft);
+    original.prices[0].private = 350;
+    original.prices.push({ name: 'Otro servicio', currency: 'PEN', adult: 200 });
+    const patch = buildTourUpdate(original, { ...tourToDraft(original), adult: 140, child: 0 });
+    expect(patch.prices?.[0]).toMatchObject({ adult: 140, child: 0, private: 350 });
+    expect(patch.prices?.[1]).toEqual(original.prices[1]);
+    expect('active' in patch).toBe(false);
+  });
+  it('retains time and description when an itinerary activity title changes', () => {
+    const original = buildTourDraft({ ...validDraft, itinerary: ['Recogida\nVisita'] });
+    original.itineraryDays[0].activities[1].description = 'Detalle';
+    const patch = buildTourUpdate(original, {
+      ...tourToDraft(original),
+      itinerary: ['Recogida\nVisita ampliada'],
+    });
+    expect(patch.itineraryDays?.[0].activities[1]).toMatchObject({
+      title: 'Visita ampliada',
+      description: 'Detalle',
+    });
+  });
+});
