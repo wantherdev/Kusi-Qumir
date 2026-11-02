@@ -4,6 +4,7 @@ export type SupabaseCatalogConfig = {
 };
 
 export type DeploymentConfig = {
+  adminAtRoot?: boolean;
   staticCatalogUrl: string | null;
   supabaseCatalog: SupabaseCatalogConfig | null;
 };

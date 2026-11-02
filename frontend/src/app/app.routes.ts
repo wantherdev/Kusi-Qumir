@@ -1,12 +1,14 @@
-import { Routes } from '@angular/router';
+import { Route, Routes } from '@angular/router';
+import { deploymentConfig } from './deployment.config';
 
-export const routes: Routes = [
-  {
-    path: 'admin',
-    title: 'Administración de tours | Kusi Q’umir',
-    loadComponent: () =>
-      import('./pages/admin/admin.component').then((module) => module.AdminComponent),
-  },
+const adminRoute: Route = {
+  path: 'admin',
+  title: 'Administración de tours | Kusi Q’umir',
+  loadComponent: () =>
+    import('./pages/admin/admin.component').then((module) => module.AdminComponent),
+};
+
+const publicRoutes: Routes = [
   {
     path: '',
     title: 'Kusi Q’umir | Cusco auténtico, experiencias que permanecen',
@@ -114,3 +116,19 @@ export const routes: Routes = [
       import('./pages/not-found/not-found.component').then((module) => module.NotFoundComponent),
   },
 ];
+
+export function createRoutes(adminAtRoot = false): Routes {
+  const adminRoutes: Routes = adminAtRoot
+    ? [
+        { ...adminRoute, path: '', pathMatch: 'full' },
+        { path: 'admin', redirectTo: '', pathMatch: 'full' },
+      ]
+    : [adminRoute];
+
+  return [
+    ...adminRoutes,
+    ...(adminAtRoot ? publicRoutes.filter((route) => route.path !== '') : publicRoutes),
+  ];
+}
+
+export const routes: Routes = createRoutes(deploymentConfig.adminAtRoot === true);
