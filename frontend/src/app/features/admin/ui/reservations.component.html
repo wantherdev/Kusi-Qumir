@@ -1,0 +1,447 @@
+<section aria-labelledby="reservations-heading">
+  <header class="section-heading">
+    <div>
+      <p class="eyebrow">VENTAS Y OPERACIONES</p>
+      <h1 id="reservations-heading">
+        {{
+          view() === 'form'
+            ? selected()
+              ? 'Editar reserva'
+              : 'Nueva reserva'
+            : view() === 'detail'
+              ? 'Detalle de la reserva'
+              : 'Reservas'
+        }}
+      </h1>
+      <p>Registra y administra las reservas recibidas por tus canales de atención.</p>
+    </div>
+    @if (view() === 'list') {
+      <button type="button" class="primary" [disabled]="busy()" (click)="openNew()">
+        + Nueva reserva
+      </button>
+    } @else {
+      <button type="button" class="secondary" [disabled]="busy()" (click)="close()">
+        Volver al listado
+      </button>
+    }
+  </header>
+  <p class="notice" role="status">{{ message() }}</p>
+  <p class="error" role="alert">{{ error() }}</p>
+  @if (view() === 'form') {
+    <form [formGroup]="form" (ngSubmit)="save()" novalidate class="reservation-form">
+      <fieldset [disabled]="busy()">
+        <legend>Cliente y experiencia</legend>
+        <div class="fields">
+          <div>
+            <label for="reservation-name">Nombre del cliente *</label
+            ><input
+              id="reservation-name"
+              formControlName="customerName"
+              maxlength="150"
+              required
+              autocomplete="off"
+              [attr.aria-invalid]="invalid('customerName')"
+              aria-describedby="reservation-name-error"
+            />
+            @if (invalid('customerName')) {
+              <small id="reservation-name-error" class="error"
+                >Escribe entre 2 y 150 caracteres.</small
+              >
+            }
+          </div>
+          <div>
+            <label for="reservation-phone">Teléfono / WhatsApp *</label
+            ><input
+              id="reservation-phone"
+              type="tel"
+              formControlName="customerPhone"
+              maxlength="40"
+              required
+              autocomplete="off"
+              [attr.aria-invalid]="invalid('customerPhone')"
+              aria-describedby="reservation-phone-error"
+            />
+            @if (invalid('customerPhone')) {
+              <small id="reservation-phone-error" class="error"
+                >Escribe un teléfono de contacto válido.</small
+              >
+            }
+          </div>
+          <div class="wide">
+            <label for="reservation-email">Correo del cliente (opcional)</label
+            ><input
+              id="reservation-email"
+              type="email"
+              formControlName="customerEmail"
+              maxlength="254"
+              autocomplete="off"
+              [attr.aria-invalid]="invalid('customerEmail')"
+              aria-describedby="reservation-email-error"
+            />
+            @if (invalid('customerEmail')) {
+              <small id="reservation-email-error" class="error"
+                >Revisa el formato del correo.</small
+              >
+            }
+          </div>
+          <div class="wide">
+            <label for="reservation-tour">Tour *</label
+            ><select
+              id="reservation-tour"
+              formControlName="tourId"
+              required
+              [attr.aria-invalid]="invalid('tourId')"
+              aria-describedby="reservation-tour-error"
+            >
+              <option value="">Selecciona un tour</option>
+              @if (unavailableTour()) {
+                <option [value]="selected()?.tourId">
+                  {{ selected()?.tourTitle }} (tour eliminado; reserva existente)
+                </option>
+              }
+              @for (tour of tours(); track tour.id) {
+                <option [value]="tour.id">
+                  {{ tour.code }} · {{ tour.title }}{{ tour.active ? '' : ' (borrador)' }}
+                </option>
+              }
+            </select>
+            @if (invalid('tourId')) {
+              <small id="reservation-tour-error" class="error"
+                >Selecciona el tour de la reserva.</small
+              >
+            }
+            @if (!tours().length && !selected()) {
+              <small>Crea o restaura un tour antes de registrar una reserva.</small>
+            }
+          </div>
+          <div>
+            <label for="reservation-date">Fecha del tour *</label
+            ><input
+              id="reservation-date"
+              type="date"
+              formControlName="travelDate"
+              required
+              [attr.aria-invalid]="invalid('travelDate')"
+              aria-describedby="reservation-date-error"
+            />
+            @if (invalid('travelDate')) {
+              <small id="reservation-date-error" class="error">Indica una fecha válida.</small>
+            }
+          </div>
+          <div>
+            <label for="reservation-passengers">Pasajeros *</label
+            ><input
+              id="reservation-passengers"
+              type="number"
+              formControlName="passengers"
+              min="1"
+              max="100"
+              step="1"
+              required
+              [attr.aria-invalid]="invalid('passengers')"
+              aria-describedby="reservation-passengers-error"
+            />
+            @if (invalid('passengers')) {
+              <small id="reservation-passengers-error" class="error"
+                >Usa un número entero entre 1 y 100.</small
+              >
+            }
+          </div>
+        </div>
+      </fieldset>
+      <fieldset [disabled]="busy()">
+        <legend>Estado y montos</legend>
+        <div class="fields">
+          <div>
+            <label for="reservation-total">Monto total (S/) *</label
+            ><input
+              id="reservation-total"
+              type="number"
+              formControlName="totalAmount"
+              min="0"
+              max="99999999.99"
+              step="0.01"
+              required
+              [attr.aria-invalid]="invalid('totalAmount')"
+              aria-describedby="reservation-total-error"
+            />
+            @if (invalid('totalAmount')) {
+              <small id="reservation-total-error" class="error"
+                >Escribe un monto desde cero, con hasta 2 decimales.</small
+              >
+            }
+          </div>
+          <div>
+            <label for="reservation-paid">Monto abonado (S/) *</label
+            ><input
+              id="reservation-paid"
+              type="number"
+              formControlName="paidAmount"
+              min="0"
+              max="99999999.99"
+              step="0.01"
+              required
+              [attr.aria-invalid]="
+                invalid('paidAmount') || (form.touched && form.hasError('overpaid'))
+              "
+              aria-describedby="reservation-paid-help reservation-paid-error"
+            /><small id="reservation-paid-help">Registro manual de un abono recibido.</small>
+            @if (invalid('paidAmount') || (form.touched && form.hasError('overpaid'))) {
+              <small id="reservation-paid-error" class="error"
+                >El abono debe estar entre cero y el monto total.</small
+              >
+            }
+          </div>
+          <div>
+            <label for="reservation-status">Estado</label
+            ><select id="reservation-status" formControlName="status">
+              @for (status of statuses; track status.value) {
+                <option [value]="status.value">{{ status.label }}</option>
+              }
+            </select>
+          </div>
+          <div class="balance">
+            <span>Saldo pendiente</span
+            ><strong>{{
+              money(form.controls.totalAmount.value - form.controls.paidAmount.value)
+            }}</strong>
+          </div>
+          <div class="wide">
+            <label for="reservation-notes">Observaciones internas</label
+            ><textarea
+              id="reservation-notes"
+              formControlName="notes"
+              rows="4"
+              maxlength="4000"
+            ></textarea
+            ><small>Información necesaria para atender la reserva. Máximo 4000 caracteres.</small>
+          </div>
+        </div>
+      </fieldset>
+      <div class="save-actions">
+        <button type="button" class="secondary" [disabled]="busy()" (click)="close()">
+          Cancelar</button
+        ><button type="submit" class="primary" [disabled]="busy()">
+          {{ busy() ? 'Guardando…' : selected() ? 'Guardar cambios' : 'Guardar reserva' }}
+        </button>
+      </div>
+    </form>
+  } @else if (view() === 'detail') {
+    @if (selected(); as reservation) {
+      <article class="detail">
+        <div class="detail-heading">
+          <div>
+            <span class="code">{{ reservation.code }}</span>
+            <h2>{{ reservation.customerName }}</h2>
+          </div>
+          <span class="badge">{{ statusLabel(reservation.status) }}</span>
+        </div>
+        <dl>
+          <div>
+            <dt>Tour</dt>
+            <dd>{{ reservation.tourTitle }}</dd>
+          </div>
+          <div>
+            <dt>Fecha del tour</dt>
+            <dd>{{ dateLabel(reservation.travelDate) }}</dd>
+          </div>
+          <div>
+            <dt>Pasajeros</dt>
+            <dd>{{ reservation.passengers }}</dd>
+          </div>
+          <div>
+            <dt>Teléfono / WhatsApp</dt>
+            <dd>{{ reservation.customerPhone }}</dd>
+          </div>
+          <div>
+            <dt>Correo</dt>
+            <dd>{{ reservation.customerEmail || 'Sin registrar' }}</dd>
+          </div>
+          <div>
+            <dt>Total</dt>
+            <dd>{{ money(reservation.totalAmount) }}</dd>
+          </div>
+          <div>
+            <dt>Abonado</dt>
+            <dd>{{ money(reservation.paidAmount) }}</dd>
+          </div>
+          <div>
+            <dt>Saldo pendiente</dt>
+            <dd>{{ money(reservation.totalAmount - reservation.paidAmount) }}</dd>
+          </div>
+          <div class="wide">
+            <dt>Observaciones</dt>
+            <dd class="multiline">{{ reservation.notes || 'Sin observaciones' }}</dd>
+          </div>
+        </dl>
+        <div class="save-actions">
+          @if (reservation.deletedAt) {
+            <button
+              type="button"
+              class="primary"
+              [disabled]="busy()"
+              (click)="restore(reservation)"
+            >
+              Restaurar reserva
+            </button>
+          } @else {
+            <button
+              type="button"
+              class="secondary"
+              [disabled]="busy()"
+              (click)="requestDelete(reservation)"
+            >
+              Eliminar reserva</button
+            ><button type="button" class="primary" [disabled]="busy()" (click)="edit(reservation)">
+              Editar reserva
+            </button>
+          }
+        </div>
+      </article>
+    }
+  } @else {
+    <form [formGroup]="search" (ngSubmit)="searchRows()" class="filters">
+      <div>
+        <label for="reservation-search">Buscar por nombre del cliente</label
+        ><input id="reservation-search" formControlName="name" maxlength="150" type="search" />
+      </div>
+      <div>
+        <label for="reservation-filter-status">Estado</label
+        ><select id="reservation-filter-status" formControlName="status">
+          <option value="">Todos</option>
+          @for (status of statuses; track status.value) {
+            <option [value]="status.value">{{ status.label }}</option>
+          }
+        </select>
+      </div>
+      <button type="submit" class="secondary" [disabled]="loading() || busy()">Buscar</button
+      ><button
+        type="button"
+        class="quiet"
+        [disabled]="loading() || busy()"
+        (click)="switchDeleted()"
+      >
+        {{ deleted() ? 'Volver a reservas' : 'Ver eliminadas' }}
+      </button>
+    </form>
+    <section class="list-panel" aria-labelledby="reservations-list-heading">
+      <header class="list-heading">
+        <h2 id="reservations-list-heading">
+          {{ deleted() ? 'Reservas eliminadas' : 'Reservas registradas' }}
+        </h2>
+        <span>{{ total() }} resultados</span
+        ><button type="button" class="quiet" [disabled]="loading() || busy()" (click)="load()">
+          Actualizar
+        </button>
+      </header>
+      @if (loading()) {
+        <p class="state" role="status">Cargando reservas…</p>
+      } @else if (error()) {
+        <div class="state">
+          <p>No se pudo actualizar el listado.</p>
+          <button type="button" class="secondary" (click)="load()">Reintentar</button>
+        </div>
+      } @else {
+        <ul class="reservation-list">
+          @for (reservation of rows(); track reservation.id) {
+            <li>
+              <div>
+                <span class="code">{{ reservation.code }}</span>
+                <h3>{{ reservation.customerName }}</h3>
+                <p>{{ reservation.tourTitle }}</p>
+                <p>
+                  {{ dateLabel(reservation.travelDate) }} · {{ reservation.passengers }} pasajeros
+                </p>
+              </div>
+              <div class="row-summary">
+                <span class="badge" [class.confirmed]="reservation.status === 'CONFIRMED'">{{
+                  statusLabel(reservation.status)
+                }}</span
+                ><strong>{{ money(reservation.totalAmount) }}</strong
+                ><small>Saldo {{ money(reservation.totalAmount - reservation.paidAmount) }}</small>
+                <div class="row-actions">
+                  <button
+                    type="button"
+                    class="secondary"
+                    [disabled]="busy()"
+                    (click)="show(reservation)"
+                    [attr.aria-label]="'Ver reserva ' + reservation.code"
+                  >
+                    Ver
+                  </button>
+                  @if (deleted()) {
+                    <button
+                      type="button"
+                      class="secondary"
+                      [disabled]="busy()"
+                      (click)="restore(reservation)"
+                    >
+                      Restaurar
+                    </button>
+                  } @else {
+                    <button
+                      type="button"
+                      class="secondary"
+                      [disabled]="busy()"
+                      (click)="edit(reservation)"
+                      [attr.aria-label]="'Editar reserva ' + reservation.code"
+                    >
+                      Editar</button
+                    ><button
+                      type="button"
+                      class="quiet danger"
+                      [disabled]="busy()"
+                      (click)="requestDelete(reservation)"
+                      [attr.aria-label]="'Eliminar reserva ' + reservation.code"
+                    >
+                      Eliminar
+                    </button>
+                  }
+                </div>
+              </div>
+            </li>
+          } @empty {
+            <li class="state">
+              <p>
+                {{
+                  deleted()
+                    ? 'No hay reservas eliminadas.'
+                    : 'No hay reservas con estos filtros. Puedes registrar una nueva reserva.'
+                }}
+              </p>
+            </li>
+          }
+        </ul>
+      }
+      <nav class="pagination" aria-label="Páginas de reservas">
+        <button
+          type="button"
+          class="secondary"
+          [disabled]="page() === 0 || loading() || busy()"
+          (click)="navigate(-1)"
+        >
+          Anterior</button
+        ><span>Página {{ page() + 1 }}</span
+        ><button
+          type="button"
+          class="secondary"
+          [disabled]="(page() + 1) * pageSize >= total() || loading() || busy()"
+          (click)="navigate(1)"
+        >
+          Siguiente
+        </button>
+      </nav>
+    </section>
+  }
+</section>
+@if (confirmation()) {
+  <app-admin-confirm
+    [title]="confirmationTitle()"
+    [message]="confirmationMessage()"
+    [confirmLabel]="confirmation()?.kind === 'delete' ? 'Eliminar reserva' : 'Descartar cambios'"
+    [busy]="busy()"
+    [error]="error()"
+    (confirmed)="confirm()"
+    (cancelled)="confirmation.set(null)"
+  />
+}
