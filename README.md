@@ -148,8 +148,9 @@ público. El panel `/admin` incorpora permisos administrativos independientes.
 Los precios y el contenido se consultan al cargar o reintentar, sin recurrir
 a una copia estática cuando Supabase falla. El acceso directo en Pages a slugs
 nuevos utiliza la página 404 cliente hasta regenerar sus entradas con un
-despliegue. El panel admite URLs HTTPS para imágenes alojadas externamente y rutas de
-recursos locales existentes. No incluye todavía subida de archivos.
+despliegue. Las imágenes existentes conservan sus URLs HTTPS o rutas de
+recursos locales existentes. Los nuevos archivos se suben desde el formulario administrativo
+a Supabase Storage, como se detalla al final.
 
 La base se inicializó mediante `kusi_qumir_initial_backend_schema`, con el
 SQL de las cuatro migraciones Prisma existentes, y contiene los diez tours.
@@ -164,7 +165,7 @@ La vista Pages/Supabase incorpora `/admin`, con inicio de sesión por correo y
 contraseña, listado de tours publicados y borradores, creación de tours y
 cambio de visibilidad. La versión SSR/local sin configuración Supabase muestra
 el estado sin conexión configurada. Los nuevos tours siempre se insertan como
-borradores. El formulario incluye precios PEN, imagen por URL, itinerario por
+borradores. El formulario incluye precios PEN, subida de imagen, itinerario por
 días, inclusiones, exclusiones, requisitos y recomendaciones. Permite editar tours existentes y moverlos a eliminados de forma recuperable. Una publicación cambia el
 catálogo conectado a Supabase; la web principal mantiene su catálogo estático
 hasta integrar esta rama. No habilita reservas, pagos ni formularios públicos.
@@ -259,3 +260,24 @@ Data API de Supabase. ContactRequest y Claim mantienen sus permisos anteriores.
 
 El despliegue administrativo continúa usando `pnpm build:admin` y la misma rama
 `integrar-catalogo-supabase`. Mantener la PR sin fusionar con `main`.
+
+
+### Subir imágenes de tours
+
+En el formulario administrativo, **Imagen principal** permite seleccionar una foto
+JPG, PNG o WebP de hasta 5 MB desde el dispositivo. La vista previa es local y el
+archivo se sube a Supabase Storage al guardar el tour, después de validar el
+formulario. Cancelar una selección no sube archivos. Las imágenes previas se
+conservan al editar y no se exige volver a subirlas.
+
+El bucket `tour-images` entrega públicamente las fotografías del catálogo; no es
+un repositorio de documentos privados. Solo miembros de `TourAdministrator`
+pueden subir, con los tipos y tamaño también limitados en el servidor. Los nombres
+son UUID nuevos, sin nombres de archivo originales ni sobrescritura. No se
+habilita listado público, reemplazo ni borrado de objetos desde el cliente.
+
+Si se sube la imagen pero falla el guardado del tour, el formulario conserva la
+URL resultante para que reintentar no vuelva a subir el archivo. Las fotos
+reemplazadas o subidas antes de abandonar un guardado fallido se conservan en
+Storage; no se borran automáticamente para evitar romper referencias existentes.
+La migración incremental `tour_image_uploads` prepara el bucket y su política.
