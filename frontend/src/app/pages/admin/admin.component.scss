@@ -536,3 +536,26 @@ legend {
 .catalog-heading h2 {
   margin-right: auto;
 }
+
+.image-preview {
+  margin: 1rem 0;
+  max-width: 480px;
+  img {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 300px;
+    object-fit: contain;
+    background: var(--kq-canvas);
+    border-radius: 0.75rem;
+  }
+  figcaption {
+    font-size: 0.85rem;
+    color: var(--kq-muted);
+    overflow-wrap: anywhere;
+    margin-top: 0.5rem;
+  }
+}
+input[type='file'] {
+  max-width: 100%;
+}

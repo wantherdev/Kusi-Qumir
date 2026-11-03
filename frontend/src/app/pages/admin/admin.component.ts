@@ -2,6 +2,7 @@ import {
   ChangeDetectionStrategy,
   Component,
   OnInit,
+  OnDestroy,
   computed,
   inject,
   signal,
@@ -27,6 +28,10 @@ import {
   TourServiceType,
 } from '../../features/tours/domain/tour.model';
 import { AdminConfirmComponent } from '../../features/admin/ui/admin-confirm.component';
+import {
+  TourImagesService,
+  validateTourImage,
+} from '../../features/admin/data-access/tour-images.service';
 import { ReservationsComponent } from '../../features/admin/ui/reservations.component';
 
 @Component({
@@ -36,9 +41,14 @@ import { ReservationsComponent } from '../../features/admin/ui/reservations.comp
   styleUrl: './admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class AdminComponent implements OnInit {
+export class AdminComponent implements OnInit, OnDestroy {
   protected readonly api = inject(AdminApiService);
   private readonly fb = inject(FormBuilder);
+  private readonly images = inject(TourImagesService);
+  protected readonly selectedImage = signal<File | null>(null);
+  protected readonly imagePreview = signal('');
+  protected readonly imageError = signal('');
+  private previewObjectUrl: string | null = null;
   protected readonly section = signal<'tours' | 'reservations'>('tours');
   protected readonly reservationDirty = signal(false);
   protected readonly deleted = signal(false);
@@ -104,8 +114,10 @@ export class AdminComponent implements OnInit {
     ]),
     child: this.fb.control<number | null>(null, [Validators.min(0), Validators.max(100000)]),
     imageUrl: this.fb.nonNullable.control('', [
-      Validators.required,
-      (control) => (safeImageUrl(String(control.value).trim()) ? null : { imageUrl: true }),
+      (control) =>
+        this.selectedImage() || safeImageUrl(String(control.value).trim())
+          ? null
+          : { imageUrl: true },
     ]),
     imageAlt: this.fb.nonNullable.control('', [
       Validators.required,
@@ -202,12 +214,20 @@ export class AdminComponent implements OnInit {
     this.error.set('');
     this.message.set('');
     this.form.markAllAsTouched();
-    if (this.form.invalid) {
+    if (this.form.invalid || this.imageError()) {
       this.error.set('Revisa los campos señalados antes de guardar.');
       return;
     }
     this.busy.set(true);
     try {
+      const image = this.selectedImage();
+      if (image) {
+        const url = await this.images.upload(image);
+        this.form.controls.imageUrl.setValue(url);
+        this.selectedImage.set(null);
+        this.releasePreview();
+        this.imagePreview.set(url);
+      }
       const editing = this.editing();
       if (editing) {
         const patch = buildTourUpdate(editing, this.form.getRawValue());
@@ -259,6 +279,7 @@ export class AdminComponent implements OnInit {
     this.message.set('');
     this.creating.set(false);
     this.editing.set(null);
+    this.resetForm();
     this.deleted.set(false);
     this.section.set(section);
     await this.load();
@@ -286,7 +307,9 @@ export class AdminComponent implements OnInit {
     try {
       const record = await this.api.getTour(tour.id);
       const { itinerary, ...draft } = tourToDraft(record);
+      this.clearImageSelection();
       this.form.reset(draft);
+      this.imagePreview.set(draft.imageUrl);
       this.days.clear();
       for (const text of itinerary) {
         this.addDay();
@@ -363,7 +386,42 @@ export class AdminComponent implements OnInit {
     const control = this.form.get(name);
     return !!control?.touched && !!control.invalid;
   }
+  protected chooseImage(event: Event): void {
+    const input = event.target;
+    if (!(input instanceof HTMLInputElement)) return;
+    const file = input.files?.[0];
+    input.value = '';
+    if (!file || this.busy()) return;
+    this.imageError.set('');
+    try {
+      validateTourImage(file);
+      this.releasePreview();
+      this.selectedImage.set(file);
+      this.previewObjectUrl = URL.createObjectURL(file);
+      this.imagePreview.set(this.previewObjectUrl);
+      this.form.controls.imageUrl.updateValueAndValidity();
+      this.form.markAsDirty();
+    } catch (error) {
+      this.imageError.set(this.describe(error));
+    }
+  }
+  protected clearImageSelection(): void {
+    this.selectedImage.set(null);
+    this.imageError.set('');
+    this.releasePreview();
+    this.imagePreview.set(this.form.controls.imageUrl.value);
+    this.form.controls.imageUrl.updateValueAndValidity();
+  }
+  private releasePreview(): void {
+    if (this.previewObjectUrl) URL.revokeObjectURL(this.previewObjectUrl);
+    this.previewObjectUrl = null;
+  }
+  ngOnDestroy(): void {
+    this.releasePreview();
+  }
   private resetForm(): void {
+    this.clearImageSelection();
+    this.imagePreview.set('');
     this.form.reset();
     this.days.clear();
     this.addDay();

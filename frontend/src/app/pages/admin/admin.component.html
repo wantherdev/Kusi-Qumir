@@ -346,21 +346,44 @@
                   }
                 </div>
                 <div class="wide">
-                  <label for="image">URL de la imagen *</label
-                  ><input
+                  <label for="image">Imagen principal *</label>
+                  <input
                     id="image"
-                    formControlName="imageUrl"
-                    required
-                    [attr.aria-invalid]="invalid('imageUrl')"
+                    type="file"
+                    accept="image/jpeg,image/png,image/webp"
+                    (change)="chooseImage($event)"
+                    [attr.aria-invalid]="invalid('imageUrl') || !!imageError()"
                     aria-describedby="image-help image-error"
-                  /><small id="image-help"
-                    >Enlace HTTPS de una imagen que tengas permiso de usar, o ruta /assets/images/…
-                    del sitio. Esta versión usa enlaces; no sube archivos.</small
+                  />
+                  <small id="image-help"
+                    >Elige una foto de tu celular o computadora. JPG, PNG o WebP, máximo 5 MB. Se
+                    subirá al guardar y podrá verse en el catálogo. Usa imágenes que tengas permiso
+                    de publicar.</small
                   >
-                  @if (invalid('imageUrl')) {
-                    <small id="image-error" class="error"
-                      >Usa un enlace HTTPS válido o una imagen local existente.</small
-                    >
+                  @if (imagePreview()) {
+                    <figure class="image-preview">
+                      <img
+                        [src]="imagePreview()"
+                        [alt]="
+                          form.controls.imageAlt.value || 'Vista previa de la imagen principal'
+                        "
+                        width="480"
+                        height="300"
+                      />
+                      <figcaption>
+                        {{ selectedImage()?.name || 'Imagen actual del tour' }}
+                      </figcaption>
+                    </figure>
+                  }
+                  @if (selectedImage() || imageError()) {
+                    <button type="button" class="quiet" (click)="clearImageSelection()">
+                      Cancelar selección
+                    </button>
+                  }
+                  @if (imageError() || invalid('imageUrl')) {
+                    <small id="image-error" class="error" role="alert">{{
+                      imageError() || 'Selecciona una imagen para el tour.'
+                    }}</small>
                   }
                 </div>
                 <div class="wide">

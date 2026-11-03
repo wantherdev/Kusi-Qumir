@@ -3,9 +3,11 @@ import { TestBed } from '@angular/core/testing';
 import { provideRouter } from '@angular/router';
 import { beforeEach, describe, expect, it, vi } from 'vitest';
 import { AdminApiService } from '../../features/admin/data-access/admin-api.service';
+import { TourImagesService } from '../../features/admin/data-access/tour-images.service';
 import { AdminComponent } from './admin.component';
 import { buildTourDraft } from '../../features/admin/domain/tour-draft';
 
+const images = { upload: vi.fn() };
 const api = {
   access: signal('allowed'),
   userId: signal(''),
@@ -19,6 +21,17 @@ const api = {
 describe('admin tour form', () => {
   beforeEach(async () => {
     api.access.set('allowed');
+    Object.defineProperty(URL, 'createObjectURL', {
+      configurable: true,
+      writable: true,
+      value: vi.fn(() => 'blob:tour-preview'),
+    });
+    Object.defineProperty(URL, 'revokeObjectURL', {
+      configurable: true,
+      writable: true,
+      value: vi.fn(),
+    });
+    images.upload.mockResolvedValue('https://example.test/uploaded.webp');
     vi.clearAllMocks();
     Object.defineProperty(HTMLDialogElement.prototype, 'showModal', {
       configurable: true,
@@ -34,7 +47,11 @@ describe('admin tour form', () => {
     api.create.mockResolvedValue(undefined);
     await TestBed.configureTestingModule({
       imports: [AdminComponent],
-      providers: [provideRouter([]), { provide: AdminApiService, useValue: api }],
+      providers: [
+        provideRouter([]),
+        { provide: AdminApiService, useValue: api },
+        { provide: TourImagesService, useValue: images },
+      ],
     }).compileComponents();
   });
   it('opens a usable creation form and does not submit an invalid tour', async () => {
@@ -71,7 +88,6 @@ describe('admin tour form', () => {
       summary: 'Resumen',
       description: 'Descripción',
       adult: '100',
-      image: '/assets/images/cusco.webp',
       alt: 'Cusco',
       'day-0': 'Visita a Cusco',
     };
@@ -82,15 +98,29 @@ describe('admin tour form', () => {
         input.dispatchEvent(new Event('input', { bubbles: true }));
       }
     }
+    const fileInput = root.querySelector<HTMLInputElement>('#image')!;
+    const image = new File(['image'], 'cusco.webp', { type: 'image/webp' });
+    Object.defineProperty(fileInput, 'files', { value: [image], configurable: true });
+    fileInput.dispatchEvent(new Event('change', { bubbles: true }));
+    fixture.detectChanges();
+    expect(root.querySelector('.image-preview img')?.getAttribute('src')).toBe('blob:tour-preview');
+    expect(images.upload).not.toHaveBeenCalled();
     api.create.mockRejectedValue(new Error('No se guardó el tour.'));
     root
       .querySelector('form')
       ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     await fixture.whenStable();
     fixture.detectChanges();
-    expect(api.create).toHaveBeenCalled();
+    await vi.waitFor(() => expect(api.create).toHaveBeenCalled());
+    expect(images.upload).toHaveBeenCalledTimes(1);
+    expect(api.create.mock.calls[0][0].images[0].url).toBe('https://example.test/uploaded.webp');
     expect(root.querySelector<HTMLInputElement>('#title')?.value).toBe('Tour nuevo');
     expect(root.textContent).toContain('No se guardó el tour.');
+    root
+      .querySelector('form')
+      ?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
+    await fixture.whenStable();
+    expect(images.upload).toHaveBeenCalledTimes(1);
   });
 
   it('loads an existing tour for editing and patches only the changed title', async () => {
@@ -169,6 +199,7 @@ describe('admin tour form', () => {
       title: 'Tour actualizado',
     });
     expect(api.create).not.toHaveBeenCalled();
+    expect(images.upload).not.toHaveBeenCalled();
   });
   it('asks for confirmation before moving a tour to eliminated records', async () => {
     api.list.mockResolvedValue([
