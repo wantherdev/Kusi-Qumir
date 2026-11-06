@@ -281,3 +281,15 @@ URL resultante para que reintentar no vuelva a subir el archivo. Las fotos
 reemplazadas o subidas antes de abandonar un guardado fallido se conservan en
 Storage; no se borran automáticamente para evitar romper referencias existentes.
 La migración incremental `tour_image_uploads` prepara el bucket y su política.
+
+
+### Editor de itinerarios
+
+El dashboard edita la misma estructura que muestra la ficha de cada tour:
+por día, un título y una lista ordenada de actividades. Cada actividad tiene
+hora o tramo horario opcional, nombre y descripción. Se pueden agregar y quitar
+días y actividades; al guardar se recalculan los números y el orden sin mezclar
+sus textos. Se conserva la duración técnica de las actividades existentes.
+
+El selector de imágenes usa un control accesible con botón, vista previa y
+nombre del archivo. Los límites de formato, tamaño y permisos no cambian.
