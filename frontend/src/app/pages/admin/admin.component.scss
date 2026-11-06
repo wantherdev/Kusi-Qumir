@@ -559,3 +559,26 @@ legend {
 input[type='file'] {
   max-width: 100%;
 }
+
+.upload-heading, .day-heading, .activity-heading { display: flex; align-items: center; justify-content: space-between; gap: 1rem; flex-wrap: wrap; }
+.upload-heading { font-size: .85rem; font-weight: 600; margin-bottom: .65rem; }
+.field-badge, .day-number { font-size: .68rem; letter-spacing: .1em; font-weight: 700; color: var(--kq-action); }
+.image-picker { position: relative; border: 1px dashed var(--kq-control-border); border-radius: 1rem; padding: clamp(1rem, 3vw, 1.5rem); background: var(--kq-canvas); }
+input.image-file-input { position: absolute; width: 1px; height: 1px; padding: 0; border: 0; overflow: hidden; clip-path: inset(50%); }
+.image-picker-button { display: flex; align-items: center; gap: 1rem; margin: 0; cursor: pointer; min-height: 64px; }
+.image-picker-button strong { display: block; font-size: 1rem; color: var(--kq-ink); }
+.image-picker-button span span { display: block; font-size: .78rem; font-weight: 400; color: var(--kq-muted); margin-top: .3rem; }
+.upload-symbol { display: grid; place-items: center; flex: 0 0 48px; height: 48px; border-radius: .8rem; background: var(--kq-action); color: white; font-size: 1.7rem; }
+.upload-plus { margin-left: auto; color: var(--kq-action); font-size: 1.5rem; }
+.image-file-input:focus-visible + .image-picker-button { outline: 3px solid var(--kq-action); outline-offset: 5px; border-radius: .5rem; }
+.image-file-input:disabled + .image-picker-button { opacity: .6; cursor: wait; }
+.itinerary-editor { display: grid; gap: 1.25rem; margin: 1.4rem 0; }
+.itinerary-editor-day { border: 1px solid var(--kq-border); border-radius: 1rem; padding: clamp(1rem, 3vw, 1.5rem); background: var(--kq-canvas); min-width: 0; }
+.day-heading { margin-bottom: 1rem; }
+.activity-timeline { border-left: 2px solid var(--kq-border); margin: 1.5rem 0 1rem .4rem; padding-left: 1.2rem; display: grid; gap: 1rem; }
+.activity-editor { position: relative; border: 1px solid var(--kq-border); border-radius: .8rem; background: white; padding: 1rem; min-width: 0; }
+.activity-editor::before { content: ''; position: absolute; top: 1.4rem; left: -1.65rem; width: .65rem; height: .65rem; border-radius: 50%; background: var(--kq-action); border: 3px solid var(--kq-canvas); }
+.activity-heading { font-size: .75rem; font-weight: 600; color: var(--kq-muted); margin-bottom: 1rem; }
+.activity-fields { display: grid; grid-template-columns: minmax(150px, .6fr) minmax(0, 1.4fr); gap: 1rem; margin-bottom: 1rem; }
+.danger-action { color: var(--kq-danger); }
+@media (max-width: 640px) { .activity-fields { grid-template-columns: 1fr; } .activity-timeline { padding-left: .8rem; } .activity-editor::before { left: -1.25rem; } .field-badge { display: none; } }
