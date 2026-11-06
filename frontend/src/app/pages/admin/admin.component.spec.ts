@@ -66,6 +66,8 @@ describe('admin tour form', () => {
     create?.click();
     fixture.detectChanges();
     expect(root.querySelector('input#title')).not.toBeNull();
+    expect(root.querySelector('label.image-picker-button[for="image"]')?.textContent).toContain('Seleccionar imagen');
+    expect(root.querySelector<HTMLInputElement>('#image')?.type).toBe('file');
     const form = root.querySelector('form');
     form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
     fixture.detectChanges();
@@ -89,7 +91,8 @@ describe('admin tour form', () => {
       description: 'Descripción',
       adult: '100',
       alt: 'Cusco',
-      'day-0': 'Visita a Cusco',
+      'day-0': 'Cusco',
+      'activity-0-0': 'Visita a Cusco',
     };
     for (const [id, value] of Object.entries(fields)) {
       const input = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('#' + id);
@@ -147,7 +150,7 @@ describe('admin tour form', () => {
         excludes: '',
         requirements: '',
         recommendations: '',
-        itinerary: ['Visita'],
+        itinerary: [{ title: 'Visita', activities: [{ title: 'Visita', time: '', description: '', duration: 0 }] }],
       }),
       id: 'tour-id',
       updatedAt: '2026-11-01T00:00:00',
@@ -200,6 +203,35 @@ describe('admin tour form', () => {
     });
     expect(api.create).not.toHaveBeenCalled();
     expect(images.upload).not.toHaveBeenCalled();
+  });
+  it('edits structured activities and keeps their details when removing the preceding activity', async () => {
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    Array.from(root.querySelectorAll('button')).find((button) => button.textContent?.includes('+ Nuevo tour'))?.click();
+    fixture.detectChanges();
+    const click = (text: string) => {
+      Array.from(root.querySelectorAll('button')).find((button) => button.textContent?.trim() === text)?.click();
+      fixture.detectChanges();
+    };
+    click('+ Agregar actividad al día 1');
+    for (const [id, value] of Object.entries({ 'activity-0-1': 'Caminata', 'time-0-1': '08:30', 'activity-description-0-1': 'Detalle de la caminata' })) {
+      const input = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('#' + id)!;
+      input.value = value;
+      input.dispatchEvent(new Event('input', { bubbles: true }));
+    }
+    root.querySelector<HTMLButtonElement>('[aria-label="Quitar actividad 1 del día 1"]')!.click();
+    fixture.detectChanges();
+    expect(root.querySelector<HTMLInputElement>('#activity-0-0')?.value).toBe('Caminata');
+    expect(root.querySelector<HTMLInputElement>('#time-0-0')?.value).toBe('08:30');
+    expect(root.querySelector<HTMLTextAreaElement>('#activity-description-0-0')?.value).toBe('Detalle de la caminata');
+    click('+ Agregar día');
+    expect(root.querySelector('#day-1')).not.toBeNull();
+    click('Quitar día 2');
+    expect(root.querySelector('#day-1')).toBeNull();
+    expect(api.create).not.toHaveBeenCalled();
   });
   it('asks for confirmation before moving a tour to eliminated records', async () => {
     api.list.mockResolvedValue([
