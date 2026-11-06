@@ -6,6 +6,11 @@ import {
   TourServiceType,
 } from '../../tours/domain/tour.model';
 
+export type TourDayDraft = {
+  title: string;
+  activities: { time: string; title: string; description: string; duration: number }[];
+};
+
 export type TourDraft = {
   title: string;
   slug: string;
@@ -28,7 +33,7 @@ export type TourDraft = {
   excludes: string;
   requirements: string;
   recommendations: string;
-  itinerary: string[];
+  itinerary: TourDayDraft[];
 };
 
 export function slugFromTitle(title: string): string {
@@ -74,7 +79,23 @@ export function buildTourDraft(draft: TourDraft): Tour & { active: false } {
     draft.durationHours < 1 ||
     (draft.child !== null && (!Number.isFinite(draft.child) || draft.child < 0)) ||
     !draft.itinerary.length ||
-    draft.itinerary.some((day) => !day.trim())
+    draft.itinerary.length > 30 ||
+    draft.itinerary.some(
+      (day) =>
+        !day.title.trim() ||
+        day.title.length > 150 ||
+        !day.activities.length ||
+        day.activities.length > 60 ||
+        day.activities.some(
+          (activity) =>
+            !activity.title.trim() ||
+            activity.title.length > 200 ||
+            activity.time.length > 80 ||
+            activity.description.length > 6000 ||
+            !Number.isFinite(activity.duration) ||
+            activity.duration < 0,
+        ),
+    )
   ) {
     throw new Error('Revisa los campos obligatorios, la imagen, el precio y el itinerario.');
   }
@@ -107,12 +128,13 @@ export function buildTourDraft(draft: TourDraft): Tour & { active: false } {
     ],
     itineraryDays: draft.itinerary.map((day, index) => ({
       day: index + 1,
-      title: `Día ${index + 1}`,
-      activities: lines(day).map((title, sortOrder) => ({
-        title,
-        description: '',
+      title: day.title.trim(),
+      activities: day.activities.map((activity, sortOrder) => ({
+        title: activity.title.trim(),
+        ...(activity.time.trim() ? { time: activity.time.trim() } : {}),
+        description: activity.description.trim(),
+        duration: activity.duration,
         sortOrder,
-        duration: 0,
       })),
     })),
     includes: lines(draft.includes).map((title) => ({ title })),
@@ -150,9 +172,15 @@ export function tourToDraft(tour: Tour): TourDraft {
     excludes: tour.excludes.map((item) => item.title).join('\n'),
     requirements: tour.requirements.map((item) => item.requirement).join('\n'),
     recommendations: tour.recommendations.map((item) => item.title).join('\n'),
-    itinerary: tour.itineraryDays.map((day) =>
-      day.activities.map((activity) => activity.title).join('\n'),
-    ),
+    itinerary: tour.itineraryDays.map((day) => ({
+      title: day.title,
+      activities: day.activities.map((activity) => ({
+        title: activity.title,
+        time: activity.time ?? '',
+        description: activity.description,
+        duration: activity.duration,
+      })),
+    })),
   };
 }
 
@@ -217,26 +245,9 @@ export function buildTourUpdate(original: Tour, draft: TourDraft): Partial<Tour>
     }
   }
   if (draft.requirements !== before.requirements) patch.requirements = next.requirements;
-  if (JSON.stringify(draft.itinerary) !== JSON.stringify(before.itinerary)) {
+  if (JSON.stringify(next.itineraryDays) !== JSON.stringify(buildTourDraft(before).itineraryDays)) {
     patch.durationDays = draft.itinerary.length;
-    patch.itineraryDays = draft.itinerary.map((text, index) => ({
-      ...original.itineraryDays[index],
-      day: index + 1,
-      title: original.itineraryDays[index]?.title ?? `Día ${index + 1}`,
-      activities: lines(text).map((title, sortOrder, titles) => {
-        const activities = original.itineraryDays[index]?.activities ?? [];
-        const previous =
-          activities.find((activity) => activity.title === title) ??
-          (activities.length === titles.length ? activities[sortOrder] : undefined);
-        return {
-          ...previous,
-          title,
-          sortOrder,
-          description: previous?.description ?? '',
-          duration: previous?.duration ?? 0,
-        };
-      }),
-    }));
+    patch.itineraryDays = next.itineraryDays;
   }
   return patch;
 }
