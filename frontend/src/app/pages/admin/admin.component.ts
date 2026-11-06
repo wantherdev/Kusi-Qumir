@@ -15,6 +15,7 @@ import {
   TourRecord,
 } from '../../features/admin/data-access/admin-api.service';
 import {
+  TourDayDraft,
   buildTourDraft,
   buildTourUpdate,
   tourToDraft,
@@ -128,13 +129,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     excludes: this.fb.nonNullable.control(''),
     requirements: this.fb.nonNullable.control(''),
     recommendations: this.fb.nonNullable.control(''),
-    itinerary: new FormArray([
-      this.fb.nonNullable.control('', [
-        Validators.required,
-        Validators.maxLength(6000),
-        Validators.pattern(/\S/),
-      ]),
-    ]),
+    itinerary: new FormArray([this.createDay()]),
   });
   protected get days() {
     return this.form.controls.itinerary;
@@ -199,15 +194,55 @@ export class AdminComponent implements OnInit, OnDestroy {
     if (!this.editing() && !this.form.controls.slug.dirty)
       this.form.controls.slug.setValue(slugFromTitle(this.form.controls.title.value));
   }
+  private createActivity(activity?: TourDayDraft['activities'][number]) {
+    return this.fb.nonNullable.group({
+      time: [activity?.time ?? '', Validators.maxLength(80)],
+      title: [
+        activity?.title ?? '',
+        [Validators.required, Validators.maxLength(200), Validators.pattern(/\S/)],
+      ],
+      description: [activity?.description ?? '', Validators.maxLength(6000)],
+      duration: [activity?.duration ?? 0],
+    });
+  }
+  private createDay(day?: TourDayDraft) {
+    return this.fb.nonNullable.group({
+      title: [
+        day?.title ?? '',
+        [Validators.required, Validators.maxLength(150), Validators.pattern(/\S/)],
+      ],
+      activities: new FormArray(
+        day?.activities.length
+          ? day.activities.map((activity) => this.createActivity(activity))
+          : [this.createActivity()],
+      ),
+    });
+  }
   protected addDay(): void {
-    if (this.days.length < 30)
-      this.days.push(
-        this.fb.nonNullable.control('', [
-          Validators.required,
-          Validators.maxLength(6000),
-          Validators.pattern(/\S/),
-        ]),
-      );
+    if (this.days.length < 30) {
+      this.days.push(this.createDay());
+      this.form.markAsDirty();
+    }
+  }
+  protected removeDay(index: number): void {
+    if (this.days.length > 1) {
+      this.days.removeAt(index);
+      this.form.markAsDirty();
+    }
+  }
+  protected addActivity(dayIndex: number): void {
+    const activities = this.days.at(dayIndex).controls.activities;
+    if (activities.length < 60) {
+      activities.push(this.createActivity());
+      this.form.markAsDirty();
+    }
+  }
+  protected removeActivity(dayIndex: number, index: number): void {
+    const activities = this.days.at(dayIndex).controls.activities;
+    if (activities.length > 1) {
+      activities.removeAt(index);
+      this.form.markAsDirty();
+    }
   }
   protected async save(): Promise<void> {
     if (this.busy()) return;
@@ -311,10 +346,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.form.reset(draft);
       this.imagePreview.set(draft.imageUrl);
       this.days.clear();
-      for (const text of itinerary) {
-        this.addDay();
-        this.days.at(this.days.length - 1).setValue(text);
-      }
+      for (const day of itinerary) this.days.push(this.createDay(day));
       if (!itinerary.length) this.addDay();
       this.form.markAsPristine();
       this.editing.set(record);
@@ -425,6 +457,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.form.reset();
     this.days.clear();
     this.addDay();
+    this.form.markAsPristine();
   }
   private describe(error: unknown): string {
     return error instanceof Error
