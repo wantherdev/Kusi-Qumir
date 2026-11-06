@@ -45,7 +45,7 @@ const draft = buildTourDraft({
   excludes: '',
   requirements: '',
   recommendations: '',
-  itinerary: ['Visita'],
+  itinerary: [{ title: 'Visita', activities: [{ title: 'Visita', time: '', description: '', duration: 0 }] }],
 });
 
 describe('admin authorization boundary', () => {
