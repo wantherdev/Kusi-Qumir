@@ -346,15 +346,10 @@
                   }
                 </div>
                 <div class="wide">
-                  <label for="image">Imagen principal *</label>
-                  <input
-                    id="image"
-                    type="file"
-                    accept="image/jpeg,image/png,image/webp"
-                    (change)="chooseImage($event)"
-                    [attr.aria-invalid]="invalid('imageUrl') || !!imageError()"
-                    aria-describedby="image-help image-error"
-                  />
+                  <div class="upload-heading"><span>Imagen principal <span aria-hidden="true">*</span></span><span class="field-badge">PORTADA DEL TOUR</span></div>
+                  <div class="image-picker" [class.has-image]="imagePreview()">
+                  <input id="image" class="image-file-input" type="file" aria-label="Seleccionar imagen principal" accept="image/jpeg,image/png,image/webp" (change)="chooseImage($event)" [attr.aria-invalid]="invalid('imageUrl') || !!imageError()" aria-describedby="image-help image-error" />
+                  <label for="image" class="image-picker-button"><span class="upload-symbol" aria-hidden="true">↥</span><span><strong>{{ imagePreview() ? 'Cambiar imagen' : 'Seleccionar imagen' }}</strong><span>Explora las fotos de tu dispositivo</span></span><span class="upload-plus" aria-hidden="true">+</span></label>
                   <small id="image-help"
                     >Elige una foto de tu celular o computadora. JPG, PNG o WebP, máximo 5 MB. Se
                     subirá al guardar y podrá verse en el catálogo. Usa imágenes que tengas permiso
@@ -385,6 +380,7 @@
                       imageError() || 'Selecciona una imagen para el tour.'
                     }}</small>
                   }
+                  </div>
                 </div>
                 <div class="wide">
                   <label for="alt">Descripción de la imagen *</label
@@ -406,42 +402,41 @@
             </fieldset>
             <fieldset [disabled]="busy()">
               <legend>03 · Itinerario</legend>
-              <p class="help">
-                Una actividad por línea. El número de días se calcula con los días que agregues.
-              </p>
-              <div formArrayName="itinerary">
-                @for (day of days.controls; track day; let index = $index) {
-                  <div class="day">
-                    <label [for]="'day-' + index">Día {{ index + 1 }} *</label
-                    ><textarea
-                      [id]="'day-' + index"
-                      [formControlName]="index"
-                      rows="4"
-                      required
-                      [attr.aria-invalid]="day.touched && day.invalid"
-                      [attr.aria-describedby]="'day-error-' + index"
-                    ></textarea>
-                    @if (day.touched && day.invalid) {
-                      <small [id]="'day-error-' + index" class="error"
-                        >Añade al menos una actividad (máximo 6000 caracteres).</small
-                      >
-                    }
-                    @if (days.length > 1) {
-                      <button type="button" class="quiet" (click)="days.removeAt(index)">
-                        Quitar día {{ index + 1 }}
-                      </button>
-                    }
-                  </div>
+              <p class="help">Organiza cada día como aparecerá en la ficha del tour: título del día y actividades con su hora, nombre y descripción.</p>
+              <div formArrayName="itinerary" class="itinerary-editor">
+                @for (day of days.controls; track day; let dayIndex = $index) {
+                  <article class="itinerary-editor-day" [formGroupName]="dayIndex">
+                    <header class="day-heading"><span class="day-number">DÍA {{ dayIndex + 1 }}</span>
+                      @if (days.length > 1) { <button type="button" class="quiet danger-action" (click)="removeDay(dayIndex)">Quitar día {{ dayIndex + 1 }}</button> }
+                    </header>
+                    <label [for]="'day-' + dayIndex">Título del día *</label>
+                    <input [id]="'day-' + dayIndex" formControlName="title" maxlength="150" placeholder="Por ejemplo: Cusco y el Valle Sagrado" required [attr.aria-invalid]="day.controls.title.touched && day.controls.title.invalid" [attr.aria-describedby]="'day-error-' + dayIndex" />
+                    @if (day.controls.title.touched && day.controls.title.invalid) { <small class="error" [id]="'day-error-' + dayIndex">Escribe el título del día (máximo 150 caracteres).</small> }
+                    <div formArrayName="activities" class="activity-timeline">
+                      @for (activity of day.controls.activities.controls; track activity; let activityIndex = $index) {
+                        <div class="activity-editor" [formGroupName]="activityIndex">
+                          <div class="activity-heading"><span>Actividad {{ activityIndex + 1 }}</span>
+                            @if (day.controls.activities.length > 1) { <button type="button" class="quiet danger-action" [attr.aria-label]="'Quitar actividad ' + (activityIndex + 1) + ' del día ' + (dayIndex + 1)" (click)="removeActivity(dayIndex, activityIndex)">Quitar</button> }
+                          </div>
+                          <div class="activity-fields"><div>
+                            <label [for]="'time-' + dayIndex + '-' + activityIndex">Hora o tramo horario</label>
+                            <input [id]="'time-' + dayIndex + '-' + activityIndex" formControlName="time" maxlength="80" placeholder="06:00 o 06:00 – 06:30" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex" [attr.aria-invalid]="activity.controls.time.touched && activity.controls.time.invalid" />
+                          </div><div>
+                            <label [for]="'activity-' + dayIndex + '-' + activityIndex">Nombre de la actividad *</label>
+                            <input [id]="'activity-' + dayIndex + '-' + activityIndex" formControlName="title" maxlength="200" placeholder="Recogida en el hotel" required [attr.aria-invalid]="activity.controls.title.touched && activity.controls.title.invalid" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex" />
+                          </div></div>
+                          <label [for]="'activity-description-' + dayIndex + '-' + activityIndex">Descripción de la actividad</label>
+                          <textarea [id]="'activity-description-' + dayIndex + '-' + activityIndex" formControlName="description" maxlength="6000" rows="3" placeholder="Cuenta qué incluye esta parte de la experiencia…" [attr.aria-invalid]="activity.controls.description.touched && activity.controls.description.invalid" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex"></textarea>
+                          @if (activity.touched && activity.invalid) { <small class="error" [id]="'activity-error-' + dayIndex + '-' + activityIndex">Escribe el nombre de la actividad (máximo 200 caracteres), una hora de hasta 80 caracteres y una descripción de hasta 6000.</small> }
+                        </div>
+                      }
+                    </div>
+                    <button type="button" class="secondary add-activity" [disabled]="day.controls.activities.length >= 60" (click)="addActivity(dayIndex)">+ Agregar actividad al día {{ dayIndex + 1 }}</button>
+                    <small>Sin hora indicada, la ficha mostrará «Hora por confirmar».</small>
+                  </article>
                 }
               </div>
-              <button
-                type="button"
-                class="secondary"
-                [disabled]="days.length >= 30"
-                (click)="addDay()"
-              >
-                + Agregar día
-              </button>
+              <button type="button" class="secondary" [disabled]="days.length >= 30" (click)="addDay()">+ Agregar día</button>
             </fieldset>
             <fieldset [disabled]="busy()">
               <legend>04 · Información práctica</legend>
