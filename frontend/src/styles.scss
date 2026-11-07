@@ -480,3 +480,101 @@ summary {
     padding-bottom: calc(5.5rem + env(safe-area-inset-bottom));
   }
 }
+
+/* Destination photographs: keep more scenery above the reading area. */
+html:root .tour-card.tour-card .tour-card__art {
+  bottom: 16%;
+}
+html:root .tour-card.tour-card::before {
+  background: linear-gradient(
+    180deg,
+    rgba(8, 19, 30, 0.09) 0%,
+    rgba(8, 19, 30, 0) 30%,
+    rgba(8, 19, 30, 0.32) 46%,
+    rgba(8, 19, 30, 0.93) 70%,
+    #08131e 100%
+  );
+}
+html:root .tour-card.tour-card .tour-card__art img {
+  object-position: var(--tour-focal, 50% 45%);
+}
+html:root img[data-kq-photo$='tour-city-tour-cusco.webp'] {
+  --tour-focal: 36% 42%;
+}
+html:root img[data-kq-photo$='tour-machu-picchu-full-day.webp'] {
+  --tour-focal: 50% 45%;
+}
+html:root img[data-kq-photo$='tour-laguna-humantay.webp'] {
+  --tour-focal: 50% 70%;
+}
+html:root img[data-kq-photo$='tour-waqrapukara.webp'] {
+  --tour-focal: 62% 42%;
+}
+html:root img[data-kq-photo$='tour-puente-qeswachaka.webp'] {
+  --tour-focal: 53% 48%;
+}
+html:root img[data-kq-photo$='tour-montana-colores.webp'] {
+  --tour-focal: 46% 42%;
+}
+html:root img[data-kq-photo$='tour-valle-sagrado.webp'] {
+  --tour-focal: 58% 47%;
+}
+html:root img[data-kq-photo$='tour-maras-moray.webp'] {
+  --tour-focal: 48% 50%;
+}
+html:root img[data-kq-photo$='tour-palcoyo.webp'] {
+  --tour-focal: 48% 38%;
+}
+html:root img[data-kq-photo$='tour-valle-sur.webp'] {
+  --tour-focal: 48% 52%;
+}
+/* Detail pages show the complete photograph instead of clipping the landscape. */
+html:root .tour-hero.tour-hero > img {
+  height: auto;
+  max-height: 42rem;
+  object-fit: contain;
+  border-radius: 1.5rem;
+}
+@media (max-width: 760px) {
+  html:root .tour-hero.tour-hero > img {
+    max-height: 34rem;
+  }
+}
+
+/* Photographer attribution alongside the real destination imagery. */
+html:root .tour-card .tour-photo-credit {
+  position: relative;
+  margin: 0.7rem 0 0;
+  font:
+    400 0.6rem/1.5 Inter,
+    system-ui,
+    sans-serif;
+  color: #cbd7dd;
+}
+html:root .tour-photo-credit a {
+  color: inherit;
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+html:root .tour-hero > .tour-photo-credit {
+  grid-column: 2;
+  margin: -1rem 0 0;
+  font-size: 0.72rem;
+  color: var(--kq-muted);
+}
+@media (max-width: 760px) {
+  html:root .tour-hero > .tour-photo-credit {
+    grid-column: 1;
+  }
+}
+
+html:root img[data-kq-photo^='tour-'] {
+  filter: saturate(1.18) contrast(1.04) brightness(1.045);
+}
+
+.photo-credits-link {
+  display: inline-block;
+  margin-inline-start: 1rem;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
