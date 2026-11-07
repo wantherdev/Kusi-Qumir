@@ -1,5 +1,6 @@
 @use 'tailwindcss';
 @use 'styles/tokens' as tokens;
+@use 'styles/theme';
 
 @theme {
   --color-kq-teal: #{tokens.$teal};
