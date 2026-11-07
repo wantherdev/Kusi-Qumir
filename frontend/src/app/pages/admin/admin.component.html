@@ -1,0 +1,625 @@
+<div class="admin-shell">
+  <header class="admin-header">
+    <a routerLink="/" class="brand" aria-label="Kusi Q’umir, inicio"
+      >Kusi Q’umir<span>ADMINISTRACIÓN</span></a
+    >
+    <nav aria-label="Navegación del administrador">
+      <a routerLink="/tours">Ver catálogo <span aria-hidden="true">↗</span></a>
+      @if (api.access() === 'allowed' || api.access() === 'forbidden') {
+        <button type="button" class="quiet" [disabled]="busy()" (click)="signOut()">
+          Cerrar sesión
+        </button>
+      }
+    </nav>
+  </header>
+  <main id="contenido-principal" tabindex="-1">
+    @if (api.access() === 'loading') {
+      <section class="access-panel" aria-live="polite">
+        <p class="eyebrow">ACCESO ADMINISTRATIVO</p>
+        <h1>Verificando tu sesión…</h1>
+      </section>
+    } @else if (api.access() === 'unconfigured') {
+      <section class="access-panel">
+        <h1>Panel sin conexión configurada</h1>
+        <p>
+          Este entorno utiliza la API local. Abre la vista previa conectada a Supabase para
+          administrar tours.
+        </p>
+        <a routerLink="/">Volver al inicio</a>
+      </section>
+    } @else if (api.access() === 'error') {
+      <section class="access-panel">
+        <h1>No pudimos verificar el acceso</h1>
+        <p>Revisa tu conexión y vuelve a intentarlo.</p>
+        <button type="button" class="primary" (click)="initialize()">Reintentar</button>
+      </section>
+    } @else if (api.access() === 'signed-out') {
+      <section class="login-layout">
+        <div class="welcome">
+          <p class="eyebrow">ESPACIO DEL EQUIPO</p>
+          <h1>Una nueva aventura<br />empieza aquí.</h1>
+          <p>
+            Organiza las experiencias de Kusi Q’umir y prepara el próximo viaje de tus visitantes.
+          </p>
+          <div class="welcome-note">
+            <span aria-hidden="true">✦</span> Tu catálogo, siempre al día.
+          </div>
+        </div>
+        <div class="access-panel">
+          <p class="eyebrow">BIENVENIDO DE NUEVO</p>
+          <h2>Ingresa al panel</h2>
+          <p>Usa tu cuenta administrativa de Supabase.</p>
+          <form [formGroup]="login" (ngSubmit)="signIn()" novalidate>
+            <label for="admin-email">Correo electrónico</label
+            ><input
+              id="admin-email"
+              type="email"
+              formControlName="email"
+              autocomplete="username"
+              required
+              [attr.aria-invalid]="login.controls.email.touched && login.controls.email.invalid"
+              aria-describedby="login-error"
+            />
+            <label for="admin-password">Contraseña</label
+            ><input
+              id="admin-password"
+              type="password"
+              formControlName="password"
+              autocomplete="current-password"
+              required
+              [attr.aria-invalid]="
+                login.controls.password.touched && login.controls.password.invalid
+              "
+              aria-describedby="login-error"
+            />
+            <p id="login-error" class="error" role="alert">{{ error() }}</p>
+            <button type="submit" class="primary full" [disabled]="busy()">
+              {{ busy() ? 'Ingresando…' : 'Ingresar' }}
+            </button>
+          </form>
+          <p class="help">
+            Acceso exclusivo para administradores autorizados. Si aún no tienes cuenta, solicita su
+            activación al responsable del proyecto.
+          </p>
+        </div>
+      </section>
+    } @else if (api.access() === 'forbidden') {
+      <section class="access-panel">
+        <p class="eyebrow">CUENTA SIN PERMISOS</p>
+        <h1>Tu acceso está pendiente</h1>
+        <p>
+          La sesión es válida, pero tu usuario aún no tiene permiso para administrar tours. Comparte
+          este UID con el responsable del proyecto para activarlo:
+        </p>
+        <code class="uid">{{ api.userId() }}</code
+        ><button type="button" class="primary" [disabled]="busy()" (click)="initialize()">
+          Verificar permisos
+        </button>
+        <p class="error" role="alert">{{ error() }}</p>
+      </section>
+    } @else {
+      <nav class="admin-sections" aria-label="Secciones del panel">
+        <button
+          type="button"
+          [attr.aria-pressed]="section() === 'tours'"
+          [disabled]="busy() || loadingTours()"
+          (click)="selectSection('tours')"
+        >
+          Tours
+        </button>
+        <button
+          type="button"
+          [attr.aria-pressed]="section() === 'reservations'"
+          [disabled]="busy() || loadingTours()"
+          (click)="selectSection('reservations')"
+        >
+          Reservas
+        </button>
+      </nav>
+      @if (section() === 'tours') {
+        <section class="page-heading">
+          <div>
+            <p class="eyebrow">CATÁLOGO DE EXPERIENCIAS</p>
+            <h1>
+              {{
+                creating()
+                  ? editing()
+                    ? 'Editar tour'
+                    : 'Nuevo tour'
+                  : 'Tus próximos grandes viajes.'
+              }}
+            </h1>
+            <p>
+              {{
+                creating()
+                  ? editing()
+                    ? 'Actualiza la información de esta experiencia.'
+                    : 'Completa la información. Primero lo guardaremos como borrador.'
+                  : 'Administra los tours que tus visitantes descubrirán en la web.'
+              }}
+            </p>
+          </div>
+          <button
+            type="button"
+            [class.primary]="!creating()"
+            [class.quiet]="creating()"
+            [disabled]="busy()"
+            (click)="toggleEditor()"
+          >
+            {{ creating() ? 'Volver al listado' : '+ Nuevo tour' }}
+          </button>
+        </section>
+        <p class="notice" role="status">{{ message() }}</p>
+        <p class="error" role="alert">{{ error() }}</p>
+        @if (creating()) {
+          <form class="tour-form" [formGroup]="form" (ngSubmit)="save()" novalidate>
+            <fieldset [disabled]="busy()">
+              <legend>01 · Información del tour</legend>
+              <div class="fields">
+                <div class="wide">
+                  <label for="title">Nombre del tour *</label
+                  ><input
+                    id="title"
+                    formControlName="title"
+                    maxlength="150"
+                    required
+                    (input)="suggestSlug()"
+                    [attr.aria-invalid]="invalid('title')"
+                    aria-describedby="title-error"
+                  />
+                  @if (invalid('title')) {
+                    <small id="title-error" class="error"
+                      >Escribe un nombre (máximo 150 caracteres).</small
+                    >
+                  }
+                </div>
+                <div>
+                  <label for="slug">URL del tour *</label>
+                  <div class="input-prefix">
+                    <span>/tours/</span
+                    ><input
+                      id="slug"
+                      formControlName="slug"
+                      maxlength="100"
+                      required
+                      [attr.aria-invalid]="invalid('slug')"
+                      aria-describedby="slug-help slug-error"
+                    />
+                  </div>
+                  <small id="slug-help">Solo minúsculas, números y guiones.</small>
+                  @if (invalid('slug')) {
+                    <small id="slug-error" class="error">Usa una URL como valle-sagrado.</small>
+                  }
+                </div>
+                <div>
+                  <label for="code">Código único *</label
+                  ><input
+                    id="code"
+                    formControlName="code"
+                    maxlength="40"
+                    required
+                    placeholder="Ej.: KQ-011"
+                    [attr.aria-invalid]="invalid('code')"
+                    aria-describedby="code-error"
+                  />
+                  @if (invalid('code')) {
+                    <small id="code-error" class="error"
+                      >Escribe un código de hasta 40 caracteres.</small
+                    >
+                  }
+                </div>
+                <div class="wide">
+                  <label for="subtitle">Subtítulo</label
+                  ><input id="subtitle" formControlName="subtitle" maxlength="200" />
+                </div>
+                <div class="wide">
+                  <label for="summary">Descripción breve *</label
+                  ><textarea
+                    id="summary"
+                    formControlName="shortDescription"
+                    rows="2"
+                    maxlength="400"
+                    required
+                    [attr.aria-invalid]="invalid('shortDescription')"
+                    aria-describedby="summary-help summary-error"
+                  ></textarea
+                  ><small id="summary-help"
+                    >Hasta 400 caracteres, para las tarjetas del catálogo.</small
+                  >
+                  @if (invalid('shortDescription')) {
+                    <small id="summary-error" class="error">Escribe una descripción breve.</small>
+                  }
+                </div>
+                <div class="wide">
+                  <label for="description">Descripción completa *</label
+                  ><textarea
+                    id="description"
+                    formControlName="description"
+                    rows="5"
+                    maxlength="12000"
+                    required
+                    [attr.aria-invalid]="invalid('description')"
+                    aria-describedby="description-error"
+                  ></textarea>
+                  @if (invalid('description')) {
+                    <small id="description-error" class="error">Describe la experiencia.</small>
+                  }
+                </div>
+                <div>
+                  <label for="category">Categoría</label
+                  ><select id="category" formControlName="categorySlug">
+                    <option value="cultural">Cultura</option>
+                    <option value="historia">Historia</option>
+                    <option value="naturaleza">Naturaleza</option>
+                    <option value="aventura">Aventura</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="operation">Operación</label
+                  ><select id="operation" formControlName="operationType">
+                    <option value="PROPIO">Tour propio</option>
+                    <option value="TERCERO">Tour de terceros</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="hours">Duración total en horas *</label
+                  ><input
+                    id="hours"
+                    type="number"
+                    formControlName="durationHours"
+                    min="1"
+                    max="720"
+                    step="1"
+                    required
+                    [attr.aria-invalid]="invalid('durationHours')"
+                    aria-describedby="hours-error"
+                  />
+                  @if (invalid('durationHours')) {
+                    <small id="hours-error" class="error"
+                      >Usa un número entero entre 1 y 720.</small
+                    >
+                  }
+                </div>
+                <div>
+                  <label for="difficulty">Dificultad</label
+                  ><select id="difficulty" formControlName="difficulty">
+                    <option value="Facil">Fácil</option>
+                    <option value="Moderada">Moderada</option>
+                    <option value="Exigente">Exigente</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="group">Grupo</label
+                  ><select id="group" formControlName="groupType">
+                    <option value="Compartido">Compartido</option>
+                    <option value="Privado">Privado</option>
+                  </select>
+                </div>
+                <div>
+                  <label for="service">Tipo de servicio</label
+                  ><select id="service" formControlName="serviceType">
+                    <option value="MedioDia">Medio día</option>
+                    <option value="DiaCompleto">Día completo</option>
+                    <option value="VariosDias">Varios días</option>
+                  </select>
+                </div>
+                <label class="checkbox wide"
+                  ><input type="checkbox" formControlName="featured" />Destacar en la portada cuando
+                  esté publicado</label
+                >
+              </div>
+            </fieldset>
+            <fieldset [disabled]="busy()">
+              <legend>02 · Precio e imagen</legend>
+              <div class="fields">
+                <div>
+                  <label for="adult">Precio adulto en soles (S/) *</label
+                  ><input
+                    id="adult"
+                    type="number"
+                    formControlName="adult"
+                    min="0.01"
+                    max="100000"
+                    step="0.01"
+                    required
+                    [attr.aria-invalid]="invalid('adult')"
+                    aria-describedby="adult-error"
+                  />
+                  @if (invalid('adult')) {
+                    <small id="adult-error" class="error">Escribe un precio mayor que cero.</small>
+                  }
+                </div>
+                <div>
+                  <label for="child">Precio niño en soles (opcional)</label
+                  ><input
+                    id="child"
+                    type="number"
+                    formControlName="child"
+                    min="0"
+                    max="100000"
+                    step="0.01"
+                    [attr.aria-invalid]="invalid('child')"
+                    aria-describedby="child-error"
+                  />
+                  @if (invalid('child')) {
+                    <small id="child-error" class="error">El precio debe ser cero o mayor.</small>
+                  }
+                </div>
+                <div class="wide">
+                  <div class="upload-heading"><span>Imagen principal <span aria-hidden="true">*</span></span><span class="field-badge">PORTADA DEL TOUR</span></div>
+                  <div class="image-picker" [class.has-image]="imagePreview()">
+                  <input id="image" class="image-file-input" type="file" aria-label="Seleccionar imagen principal" accept="image/jpeg,image/png,image/webp" (change)="chooseImage($event)" [attr.aria-invalid]="invalid('imageUrl') || !!imageError()" aria-describedby="image-help image-error" />
+                  <label for="image" class="image-picker-button"><span class="upload-symbol" aria-hidden="true">↥</span><span><strong>{{ imagePreview() ? 'Cambiar imagen' : 'Seleccionar imagen' }}</strong><span>Explora las fotos de tu dispositivo</span></span><span class="upload-plus" aria-hidden="true">+</span></label>
+                  <small id="image-help"
+                    >Elige una foto de tu celular o computadora. JPG, PNG o WebP, máximo 5 MB. Se
+                    subirá al guardar y podrá verse en el catálogo. Usa imágenes que tengas permiso
+                    de publicar.</small
+                  >
+                  @if (imagePreview()) {
+                    <figure class="image-preview">
+                      <img
+                        [src]="imagePreview()"
+                        [alt]="
+                          form.controls.imageAlt.value || 'Vista previa de la imagen principal'
+                        "
+                        width="480"
+                        height="300"
+                      />
+                      <figcaption>
+                        {{ selectedImage()?.name || 'Imagen actual del tour' }}
+                      </figcaption>
+                    </figure>
+                  }
+                  @if (selectedImage() || imageError()) {
+                    <button type="button" class="quiet" (click)="clearImageSelection()">
+                      Cancelar selección
+                    </button>
+                  }
+                  @if (imageError() || invalid('imageUrl')) {
+                    <small id="image-error" class="error" role="alert">{{
+                      imageError() || 'Selecciona una imagen para el tour.'
+                    }}</small>
+                  }
+                  </div>
+                </div>
+                <div class="wide">
+                  <label for="alt">Descripción de la imagen *</label
+                  ><input
+                    id="alt"
+                    formControlName="imageAlt"
+                    maxlength="250"
+                    required
+                    [attr.aria-invalid]="invalid('imageAlt')"
+                    aria-describedby="alt-error"
+                  />
+                  @if (invalid('imageAlt')) {
+                    <small id="alt-error" class="error"
+                      >Describe lo que aparece en la imagen.</small
+                    >
+                  }
+                </div>
+              </div>
+            </fieldset>
+            <fieldset [disabled]="busy()">
+              <legend>03 · Itinerario</legend>
+              <p class="help">Organiza cada día como aparecerá en la ficha del tour: título del día y actividades con su hora, nombre y descripción.</p>
+              <div formArrayName="itinerary" class="itinerary-editor">
+                @for (day of days.controls; track day; let dayIndex = $index) {
+                  <article class="itinerary-editor-day" [formGroupName]="dayIndex">
+                    <header class="day-heading"><span class="day-number">DÍA {{ dayIndex + 1 }}</span>
+                      @if (days.length > 1) { <button type="button" class="quiet danger-action" (click)="removeDay(dayIndex)">Quitar día {{ dayIndex + 1 }}</button> }
+                    </header>
+                    <label [for]="'day-' + dayIndex">Título del día *</label>
+                    <input [id]="'day-' + dayIndex" formControlName="title" maxlength="150" placeholder="Por ejemplo: Cusco y el Valle Sagrado" required [attr.aria-invalid]="day.controls.title.touched && day.controls.title.invalid" [attr.aria-describedby]="'day-error-' + dayIndex" />
+                    @if (day.controls.title.touched && day.controls.title.invalid) { <small class="error" [id]="'day-error-' + dayIndex">Escribe el título del día (máximo 150 caracteres).</small> }
+                    <div formArrayName="activities" class="activity-timeline">
+                      @for (activity of day.controls.activities.controls; track activity; let activityIndex = $index) {
+                        <div class="activity-editor" [formGroupName]="activityIndex">
+                          <div class="activity-heading"><span>Actividad {{ activityIndex + 1 }}</span>
+                            @if (day.controls.activities.length > 1) { <button type="button" class="quiet danger-action" [attr.aria-label]="'Quitar actividad ' + (activityIndex + 1) + ' del día ' + (dayIndex + 1)" (click)="removeActivity(dayIndex, activityIndex)">Quitar</button> }
+                          </div>
+                          <div class="activity-fields"><div>
+                            <label [for]="'time-' + dayIndex + '-' + activityIndex">Hora o tramo horario</label>
+                            <input [id]="'time-' + dayIndex + '-' + activityIndex" formControlName="time" maxlength="80" placeholder="06:00 o 06:00 – 06:30" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex" [attr.aria-invalid]="activity.controls.time.touched && activity.controls.time.invalid" />
+                          </div><div>
+                            <label [for]="'activity-' + dayIndex + '-' + activityIndex">Nombre de la actividad *</label>
+                            <input [id]="'activity-' + dayIndex + '-' + activityIndex" formControlName="title" maxlength="200" placeholder="Recogida en el hotel" required [attr.aria-invalid]="activity.controls.title.touched && activity.controls.title.invalid" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex" />
+                          </div></div>
+                          <label [for]="'activity-description-' + dayIndex + '-' + activityIndex">Descripción de la actividad</label>
+                          <textarea [id]="'activity-description-' + dayIndex + '-' + activityIndex" formControlName="description" maxlength="6000" rows="3" placeholder="Cuenta qué incluye esta parte de la experiencia…" [attr.aria-invalid]="activity.controls.description.touched && activity.controls.description.invalid" [attr.aria-describedby]="'activity-error-' + dayIndex + '-' + activityIndex"></textarea>
+                          @if (activity.touched && activity.invalid) { <small class="error" [id]="'activity-error-' + dayIndex + '-' + activityIndex">Escribe el nombre de la actividad (máximo 200 caracteres), una hora de hasta 80 caracteres y una descripción de hasta 6000.</small> }
+                        </div>
+                      }
+                    </div>
+                    <button type="button" class="secondary add-activity" [disabled]="day.controls.activities.length >= 60" (click)="addActivity(dayIndex)">+ Agregar actividad al día {{ dayIndex + 1 }}</button>
+                    <small>Sin hora indicada, la ficha mostrará «Hora por confirmar».</small>
+                  </article>
+                }
+              </div>
+              <button type="button" class="secondary" [disabled]="days.length >= 30" (click)="addDay()">+ Agregar día</button>
+            </fieldset>
+            <fieldset [disabled]="busy()">
+              <legend>04 · Información práctica</legend>
+              <p class="help">Escribe un elemento por línea en cada campo.</p>
+              <div class="fields">
+                <div>
+                  <label for="includes">Incluye</label
+                  ><textarea id="includes" formControlName="includes" rows="4"></textarea>
+                </div>
+                <div>
+                  <label for="excludes">No incluye</label
+                  ><textarea id="excludes" formControlName="excludes" rows="4"></textarea>
+                </div>
+                <div>
+                  <label for="requirements">Requisitos</label
+                  ><textarea id="requirements" formControlName="requirements" rows="4"></textarea>
+                </div>
+                <div>
+                  <label for="recommendations">Recomendaciones</label
+                  ><textarea
+                    id="recommendations"
+                    formControlName="recommendations"
+                    rows="4"
+                  ></textarea>
+                </div>
+              </div>
+            </fieldset>
+            <div class="save-bar">
+              <div>
+                <strong>{{ editing() ? 'Cambios en el tour' : 'Primero, un borrador.' }}</strong>
+                <p>
+                  {{
+                    editing()
+                      ? 'Se conservará su estado de publicación.'
+                      : 'No aparecerá en el catálogo hasta que lo publiques.'
+                  }}
+                </p>
+              </div>
+              <button type="submit" class="primary" [disabled]="busy()">
+                {{ busy() ? 'Guardando…' : editing() ? 'Guardar cambios' : 'Guardar borrador' }}
+              </button>
+            </div>
+          </form>
+        } @else {
+          <div class="metrics" aria-label="Resumen del catálogo">
+            <div>
+              <span>Total de tours</span><strong>{{ tours().length }}</strong>
+            </div>
+            <div>
+              <span>Publicados</span><strong>{{ published() }}</strong>
+            </div>
+            <div>
+              <span>Borradores</span><strong>{{ tours().length - published() }}</strong>
+            </div>
+          </div>
+          <section class="catalog-panel" aria-labelledby="catalog-heading">
+            <div class="catalog-heading">
+              <h2 id="catalog-heading">{{ deleted() ? 'Tours eliminados' : 'Todos los tours' }}</h2>
+              <button
+                type="button"
+                class="quiet"
+                [disabled]="loadingTours() || busy()"
+                (click)="switchDeleted()"
+              >
+                {{ deleted() ? 'Volver a tours' : 'Ver eliminados' }}
+              </button>
+              <button
+                type="button"
+                class="quiet"
+                [disabled]="loadingTours() || busy()"
+                (click)="load()"
+              >
+                Actualizar
+              </button>
+            </div>
+            @if (loadingTours()) {
+              <p class="state" role="status">Cargando tours…</p>
+            } @else if (listError()) {
+              <div class="state">
+                <p class="error" role="alert">{{ listError() }}</p>
+                <button type="button" class="secondary" (click)="load()">Reintentar</button>
+              </div>
+            } @else {
+              <ul class="tour-list">
+                @for (tour of tours(); track tour.id) {
+                  <li>
+                    <div>
+                      <span class="tour-code">{{ tour.code }}</span>
+                      <h3>{{ tour.title }}</h3>
+                      <span class="tour-url">/tours/{{ tour.slug }}</span>
+                    </div>
+                    <div class="row-actions">
+                      @if (deleted()) {
+                        <span class="badge">Eliminado</span
+                        ><button
+                          type="button"
+                          class="secondary"
+                          [disabled]="busy()"
+                          (click)="restoreTour(tour)"
+                        >
+                          Restaurar
+                        </button>
+                      } @else {
+                        <span class="badge" [class.live]="tour.active">{{
+                          tour.active ? 'Publicado' : 'Borrador'
+                        }}</span>
+                        @if (tour.active) {
+                          <a
+                            [routerLink]="['/tours', tour.slug]"
+                            [attr.aria-label]="'Ver ' + tour.title"
+                            >Ver tour ↗</a
+                          >
+                        }
+                        <button
+                          type="button"
+                          class="secondary"
+                          [disabled]="busy()"
+                          (click)="editTour(tour)"
+                          [attr.aria-label]="'Editar tour ' + tour.title"
+                        >
+                          Editar
+                        </button>
+                        <button
+                          type="button"
+                          class="secondary"
+                          [disabled]="busy()"
+                          (click)="toggle(tour)"
+                          [attr.aria-label]="
+                            (tour.active ? 'Pasar a borrador: ' : 'Publicar: ') + tour.title
+                          "
+                        >
+                          {{ tour.active ? 'Pasar a borrador' : 'Publicar' }}
+                        </button>
+                        <button
+                          type="button"
+                          class="quiet danger"
+                          [disabled]="busy()"
+                          (click)="requestDelete(tour)"
+                          [attr.aria-label]="'Eliminar tour ' + tour.title"
+                        >
+                          Eliminar
+                        </button>
+                      }
+                    </div>
+                  </li>
+                } @empty {
+                  <li class="state">
+                    <p>
+                      {{
+                        deleted()
+                          ? 'No hay tours eliminados.'
+                          : 'Aún no hay tours. Crea tu primera experiencia con «Nuevo tour».'
+                      }}
+                    </p>
+                  </li>
+                }
+              </ul>
+            }
+          </section>
+        }
+      } @else {
+        <p class="error" role="alert">{{ error() }}</p>
+        @if (loadingTours()) {
+          <p role="status">Cargando tours disponibles…</p>
+        } @else if (listError()) {
+          <p class="error" role="alert">{{ listError() }}</p>
+          <button type="button" class="secondary" (click)="load()">Reintentar</button>
+        } @else {
+          <app-admin-reservations [tours]="tours()" (dirtyChanged)="reservationDirty.set($event)" />
+        }
+      }
+      @if (confirmation()) {
+        <app-admin-confirm
+          [title]="confirmationTitle()"
+          [message]="confirmationMessage()"
+          [confirmLabel]="confirmation()?.kind === 'delete' ? 'Eliminar tour' : 'Descartar cambios'"
+          [busy]="busy()"
+          [error]="error()"
+          (confirmed)="confirm()"
+          (cancelled)="confirmation.set(null)"
+        />
+      }
+    }
+  </main>
+  <footer class="admin-footer">Kusi Q’umir · Administración de tours y reservas</footer>
+</div>

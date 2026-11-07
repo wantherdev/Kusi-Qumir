@@ -93,6 +93,19 @@
                   "with": "src/app/app.routes.pages.ts"
                 }
               ]
+            },
+            "admin": {
+              "outputMode": "static",
+              "fileReplacements": [
+                {
+                  "replace": "src/app/deployment.config.ts",
+                  "with": "src/app/deployment.config.admin.ts"
+                },
+                {
+                  "replace": "src/app/app.routes.server.ts",
+                  "with": "src/app/app.routes.pages.ts"
+                }
+              ]
             }
           },
           "defaultConfiguration": "production"

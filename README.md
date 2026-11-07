@@ -132,3 +132,164 @@ El cambio depende de JavaScript y del reloj del dispositivo, no constituye
 una restricción de acceso. Para publicar en la raíz de un dominio, usar
 `PAGES_BASE_PATH=/ pnpm build:pages`. Los formularios y reservas conservan
 su estado actual de evaluación.
+
+## Catálogo conectado a Supabase
+
+La compilación Pages consulta los tours activos de Supabase mediante la Data
+API, usando solo la clave pública `sb_publishable_…` definida en
+`frontend/src/app/deployment.config.pages.ts`. No contiene credenciales de
+PostgreSQL ni claves de servicio. El modo SSR/desarrollo conserva la API NestJS.
+
+La migración remota `public_read_active_tour_catalog` concede lectura por
+columnas y una política RLS `active = true` a `anon` y `authenticated`. No
+concede escrituras a visitantes. `ContactRequest` y `Claim` siguen sin acceso
+público. El panel `/admin` incorpora permisos administrativos independientes.
+
+Los precios y el contenido se consultan al cargar o reintentar, sin recurrir
+a una copia estática cuando Supabase falla. El acceso directo en Pages a slugs
+nuevos utiliza la página 404 cliente hasta regenerar sus entradas con un
+despliegue. Las imágenes existentes conservan sus URLs HTTPS o rutas de
+recursos locales existentes. Los nuevos archivos se suben desde el formulario administrativo
+a Supabase Storage, como se detalla al final.
+
+La base se inicializó mediante `kusi_qumir_initial_backend_schema`, con el
+SQL de las cuatro migraciones Prisma existentes, y contiene los diez tours.
+Antes de ejecutar Prisma Migrate contra esta base, se deben marcar esas cuatro
+migraciones como aplicadas con `prisma migrate resolve --applied <nombre>`;
+no ejecutar `migrate reset`, ni aplicar de nuevo el esquema inicial. La
+conexión Prisma/NestJS sigue pendiente.
+
+## Panel administrativo de tours (rama de desarrollo)
+
+La vista Pages/Supabase incorpora `/admin`, con inicio de sesión por correo y
+contraseña, listado de tours publicados y borradores, creación de tours y
+cambio de visibilidad. La versión SSR/local sin configuración Supabase muestra
+el estado sin conexión configurada. Los nuevos tours siempre se insertan como
+borradores. El formulario incluye precios PEN, subida de imagen, itinerario por
+días, inclusiones, exclusiones, requisitos y recomendaciones. Permite editar tours existentes y moverlos a eliminados de forma recuperable. Una publicación cambia el
+catálogo conectado a Supabase; la web principal mantiene su catálogo estático
+hasta integrar esta rama. No habilita reservas, pagos ni formularios públicos.
+
+Se usa `@supabase/supabase-js` con versión exacta y sesión en `sessionStorage`
+(por pestaña). La clave pública no otorga permisos de escritura. La migración
+remota `restricted_tour_administration` crea `TourAdministrator`, con RLS de
+lectura exclusiva de la membresía propia y sin escritura desde el cliente.
+Solo miembros asignados por el propietario pueden leer borradores, insertar
+tours inactivos y actualizar `active`/`updatedAt`. No se concede DELETE permanente. La migración de CRUD posterior amplía los
+campos editables y añade eliminación recuperable. No se confía en `user_metadata`. La autorización real
+se aplica en PostgreSQL, además de comprobarla en el panel.
+
+Para activar el primer administrador:
+
+1. En el proyecto Supabase, abrir Authentication → Users → Add user → Create
+   new user. El titular debe introducir su correo y contraseña directamente
+   allí; no compartir la contraseña en chats ni guardarla en Git.
+2. Copiar el UID del usuario. El propietario del proyecto puede asignarlo desde
+   SQL Editor con la consulta siguiente (reemplazar el marcador por ese UID):
+
+```sql
+insert into public."TourAdministrator" (user_id)
+values ('REEMPLAZAR-POR-EL-UID-DEL-USUARIO'::uuid)
+on conflict (user_id) do nothing;
+```
+
+3. Abrir `/admin` en la vista previa e ingresar con esa cuenta. Una cuenta
+   autenticada sin membresía muestra su UID y el estado de acceso pendiente.
+
+Para revocar el permiso, el propietario elimina esa membresía desde SQL
+Editor; las siguientes consultas y escrituras quedan bloqueadas por RLS.
+La tabla depende de `auth.users` (Supabase), por lo que no forma parte del
+esquema local Prisma. No se debe ejecutar este SQL contra la base local ni
+reinicializar el esquema existente. Las tres migraciones remotas de Supabase
+son el historial de los permisos; conservar también la advertencia de baseline
+Prisma anterior. Mantener esta rama sin fusionar hasta autorizar su integración.
+
+## Despliegue del dashboard en la raíz del subdominio
+
+`pnpm build:admin` genera `.pages-site/` con el dashboard en `/`. La URL del
+subdominio (por ejemplo `https://admin.kusiqumir.com`) conserva la raíz al abrir
+el panel. El alias `/admin` redirige a `/`. La raíz utiliza renderizado cliente,
+sin contenido de la portada prerenderizada ni cuenta regresiva. El catálogo y
+las fichas siguen disponibles para los enlaces del panel. La autenticación y
+los permisos administrativos de Supabase siguen siendo obligatorios.
+
+Cloudflare Pages debe usar la rama `integrar-catalogo-supabase`, preset None,
+raíz del repositorio, salida `.pages-site` y comando:
+
+```bash
+corepack pnpm install --frozen-lockfile && corepack pnpm build:admin
+```
+
+Variables de compilación: `NODE_VERSION=24.19.0` y
+`SKIP_DEPENDENCY_INSTALL=true`. El CNAME `admin` apunta al nombre `.pages.dev`
+indicado por Cloudflare después de añadir el dominio personalizado. DNS no
+elige rutas de Angular; la compilación administrativa determina la página
+inicial. `pnpm build:pages` conserva la portada pública y el lanzamiento.
+Este cambio permanece en la rama de desarrollo, sin fusionar con `main`.
+
+## CRUD administrativo de tours y reservas
+
+El panel incluye secciones Tours y Reservas. En tours se puede crear, consultar,
+editar, publicar, pasar a borrador, eliminar de forma recuperable y restaurar.
+Al restaurar un tour queda como borrador. La edición envía solo campos que
+cambiaron y conserva tarifas adicionales, imágenes secundarias, preguntas
+frecuentes, SEO y los detalles de itinerario que no se modificaron.
+
+Las reservas son registros internos introducidos por el equipo: tour, cliente,
+contacto, fecha, pasajeros, total en PEN, monto abonado registrado manualmente,
+estado y observaciones. Se pueden consultar, buscar por nombre, filtrar por
+estado, paginar, editar, eliminar de forma recuperable y restaurar. Los estados
+son pendiente, confirmada, completada y cancelada. No se procesa ningún pago ni
+se activa un formulario público de reservas.
+
+La migración remota `admin_tours_reservations_crud` añade `Tour.deletedAt` y la
+tabla privada `Reservation`. Los visitantes solo leen tours activos no
+eliminados. Las reservas requieren membresía administrativa para toda lectura
+y escritura. Los triggers conservan el nombre del tour al reservar, registran
+el creador desde `auth.uid()` y actualizan la versión al guardar. Los límites de
+pasajeros y montos se validan también en PostgreSQL. La eliminación de un tour
+no elimina sus reservas. Las escrituras de edición y eliminación comparan
+`updatedAt` para rechazar cambios concurrentes en lugar de sobrescribirlos.
+
+La copia SQL está en `supabase/migrations/`, generada con Supabase CLI. Es una
+migración incremental sobre la base existente y ya fue aplicada al proyecto;
+no ejecutarla de nuevo ni usar `supabase db reset` como inicialización completa:
+las migraciones iniciales y de membresías previas siguen en el historial remoto.
+Prisma/NestJS conserva el estado indicado anteriormente; este CRUD utiliza la
+Data API de Supabase. ContactRequest y Claim mantienen sus permisos anteriores.
+
+El despliegue administrativo continúa usando `pnpm build:admin` y la misma rama
+`integrar-catalogo-supabase`. Mantener la PR sin fusionar con `main`.
+
+
+### Subir imágenes de tours
+
+En el formulario administrativo, **Imagen principal** permite seleccionar una foto
+JPG, PNG o WebP de hasta 5 MB desde el dispositivo. La vista previa es local y el
+archivo se sube a Supabase Storage al guardar el tour, después de validar el
+formulario. Cancelar una selección no sube archivos. Las imágenes previas se
+conservan al editar y no se exige volver a subirlas.
+
+El bucket `tour-images` entrega públicamente las fotografías del catálogo; no es
+un repositorio de documentos privados. Solo miembros de `TourAdministrator`
+pueden subir, con los tipos y tamaño también limitados en el servidor. Los nombres
+son UUID nuevos, sin nombres de archivo originales ni sobrescritura. No se
+habilita listado público, reemplazo ni borrado de objetos desde el cliente.
+
+Si se sube la imagen pero falla el guardado del tour, el formulario conserva la
+URL resultante para que reintentar no vuelva a subir el archivo. Las fotos
+reemplazadas o subidas antes de abandonar un guardado fallido se conservan en
+Storage; no se borran automáticamente para evitar romper referencias existentes.
+La migración incremental `tour_image_uploads` prepara el bucket y su política.
+
+
+### Editor de itinerarios
+
+El dashboard edita la misma estructura que muestra la ficha de cada tour:
+por día, un título y una lista ordenada de actividades. Cada actividad tiene
+hora o tramo horario opcional, nombre y descripción. Se pueden agregar y quitar
+días y actividades; al guardar se recalculan los números y el orden sin mezclar
+sus textos. Se conserva la duración técnica de las actividades existentes.
+
+El selector de imágenes usa un control accesible con botón, vista previa y
+nombre del archivo. Los límites de formato, tamaño y permisos no cambian.
