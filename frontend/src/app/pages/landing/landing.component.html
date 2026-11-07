@@ -5,12 +5,19 @@
 <main id="contenido" tabindex="-1">
   <section class="hero" id="inicio" aria-labelledby="hero-title">
     <picture class="hero-art">
-      <source srcset="/assets/images/cusco-andes-editorial-v2.webp" type="image/webp" />
+      <source
+        srcset="
+          /assets/images/machu-picchu-portada-v2-960.webp  960w,
+          /assets/images/machu-picchu-portada-v2.webp     1672w
+        "
+        sizes="100vw"
+        type="image/webp"
+      />
       <img
-        src="/assets/images/cusco-andes-editorial-v2.png"
+        src="/assets/images/machu-picchu-portada-v2.jpg"
         width="1672"
         height="941"
-        alt="Ilustración editorial del Valle Sagrado con montañas, terrazas y viajeros acompañados por un guía local"
+        alt="Recreación visual panorámica de Machu Picchu y Huayna Picchu con dos viajeros"
         decoding="async"
         fetchpriority="high"
       />
@@ -43,9 +50,7 @@
         </ul>
       </div>
     </div>
-    <p class="art-note">
-      Ilustración editorial · La experiencia final se confirma en tu propuesta.
-    </p>
+    <p class="art-note">Recreación visual · La experiencia final se confirma en tu propuesta.</p>
   </section>
 
   <section class="bg-white py-20 lg:py-32">

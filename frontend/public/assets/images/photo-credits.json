@@ -1,0 +1,118 @@
+[
+  {
+    "destination": "valle-sagrado",
+    "title": "Ruins at Ollantaytambo.jpg",
+    "author": "Tydence Davis",
+    "source": "https://commons.wikimedia.org/wiki/File:Ruins_at_Ollantaytambo.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/9/9f/Ruins_at_Ollantaytambo.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY 2.0",
+    "license_url": "https://creativecommons.org/licenses/by/2.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-valle-sagrado.webp"
+  },
+  {
+    "destination": "montana-colores",
+    "title": "Vinicunca (Rainbow Mountain).jpg",
+    "author": "Steve FUNG",
+    "source": "https://commons.wikimedia.org/wiki/File:Vinicunca_(Rainbow_Mountain).jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/e/ed/Vinicunca_%28Rainbow_Mountain%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-montana-colores.webp"
+  },
+  {
+    "destination": "city-tour-cusco",
+    "title": "Sacsayhuamán, Cusco, Perú, 2015-07-31, DD 05.JPG",
+    "author": "Diego Delso",
+    "source": "https://commons.wikimedia.org/wiki/File:Sacsayhuam%C3%A1n,_Cusco,_Per%C3%BA,_2015-07-31,_DD_05.JPG",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/d/d1/Sacsayhuam%C3%A1n%2C_Cusco%2C_Per%C3%BA%2C_2015-07-31%2C_DD_05.JPG?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-city-tour-cusco.webp"
+  },
+  {
+    "destination": "laguna-humantay",
+    "title": "Humantay, 2023 (37).jpg",
+    "author": "Draceane",
+    "source": "https://commons.wikimedia.org/wiki/File:Humantay,_2023_(37).jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/6/62/Humantay%2C_2023_%2837%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-laguna-humantay.webp"
+  },
+  {
+    "destination": "machu-picchu-full-day",
+    "title": "80 - Machu Picchu - Juin 2009 - edit.2.jpg",
+    "author": "Martin St-Amant (S23678)",
+    "source": "https://commons.wikimedia.org/wiki/File:80_-_Machu_Picchu_-_Juin_2009_-_edit.2.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/0/01/80_-_Machu_Picchu_-_Juin_2009_-_edit.2.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 3.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/3.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-machu-picchu-full-day.webp"
+  },
+  {
+    "destination": "maras-moray",
+    "title": "Moray, Peru - Laslovarga (7).jpg",
+    "author": "Laslovarga",
+    "source": "https://commons.wikimedia.org/wiki/File:Moray,_Peru_-_Laslovarga_(7).jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/1/16/Moray%2C_Peru_-_Laslovarga_%287%29.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-maras-moray.webp"
+  },
+  {
+    "destination": "valle-sur",
+    "title": "Incan Terraces in Tipon, Perú.jpg",
+    "author": "Charlesdarling",
+    "source": "https://commons.wikimedia.org/wiki/File:Incan_Terraces_in_Tipon,_Per%C3%BA.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/1/15/Incan_Terraces_in_Tipon%2C_Per%C3%BA.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC0",
+    "license_url": "https://creativecommons.org/publicdomain/zero/1.0/deed.en",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-valle-sur.webp"
+  },
+  {
+    "destination": "waqrapukara",
+    "title": "Sitio Arqueológico de Waqrapukara,.jpg",
+    "author": "Raul lhan",
+    "source": "https://commons.wikimedia.org/wiki/File:Sitio_Arqueol%C3%B3gico_de_Waqrapukara,.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/4/4e/Sitio_Arqueol%C3%B3gico_de_Waqrapukara%2C.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-waqrapukara.webp"
+  },
+  {
+    "destination": "puente-qeswachaka",
+    "title": "Inka suspension bridge Qeswachaka DSC 2730.jpg",
+    "author": "Aga Khan (IT)",
+    "source": "https://commons.wikimedia.org/wiki/File:Inka_suspension_bridge_Qeswachaka_DSC_2730.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/f/f7/Inka_suspension_bridge_Qeswachaka_DSC_2730.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-puente-qeswachaka.webp"
+  },
+  {
+    "destination": "palcoyo",
+    "title": "02-Cordillera Arcoíris de Palccoyo-nX-7.jpg",
+    "author": "PsamatheM",
+    "source": "https://commons.wikimedia.org/wiki/File:02-Cordillera_Arco%C3%ADris_de_Palccoyo-nX-7.jpg",
+    "original_url": "https://upload.wikimedia.org/wikipedia/commons/9/9a/02-Cordillera_Arco%C3%ADris_de_Palccoyo-nX-7.jpg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+    "license": "CC BY-SA 4.0",
+    "license_url": "https://creativecommons.org/licenses/by-sa/4.0",
+    "changes": "Redimensionado y convertido a WebP; ajuste de saturación, contraste y luminosidad aplicado mediante CSS.",
+    "local_asset": "/assets/images/tour-palcoyo.webp"
+  },
+  {
+    "destination": "hero",
+    "title": "Portada principal de Machu Picchu",
+    "generation": "Recreación visual generada con IA para Kusi Q’umir. No es una fotografía documental.",
+    "local_asset": "/assets/images/machu-picchu-portada-v2.webp"
+  }
+]
