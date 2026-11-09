@@ -17,9 +17,18 @@ describe('administrative deployment routing', () => {
     expect(routes.find((route) => route.path === 'admin')?.redirectTo).toBe('');
     expect(routes.find((route) => route.path === 'tours')?.loadComponent).toBeDefined();
   });
+  it('prerenders the public catalog only when the SEO build is selected', () => {
+    const catalog = (admin: boolean, seo: boolean) =>
+      createPagesRoutes(admin, seo).find((route) => route.path === 'tours/:slug');
+
+    expect(catalog(false, false)).toBeUndefined();
+    expect(catalog(true, true)).toBeUndefined();
+    expect(catalog(false, true)?.renderMode).toBe(RenderMode.Prerender);
+  });
+
   it('preserves the prerendered public landing and /admin in regular builds', async () => {
     const { routes, serverRoutes } = await loadRoutes(false);
-    expect(routes.find((route) => route.path === '')?.title).toContain('Cusco auténtico');
+    expect(routes.find((route) => route.path === '')?.title).toContain('Tours en Cusco');
     expect(serverRoutes.find((route) => route.path === '')?.renderMode).toBe(RenderMode.Prerender);
     expect(routes.find((route) => route.path === 'admin')?.loadComponent).toBeDefined();
   });
