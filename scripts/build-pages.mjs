@@ -8,6 +8,11 @@ import { launchGate } from './launch-gate.mjs';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '..');
 const base = process.env.PAGES_BASE_PATH || '/';
 const adminAtRoot = process.argv.includes('--admin');
+const indexable = process.argv.includes('--indexable');
+const prerenderTours = indexable || process.argv.includes('--seo-preview');
+if (prerenderTours && (adminAtRoot || base !== '/')) {
+  throw new Error('SEO builds target the public site at the root of kusiqumir.com.');
+}
 if (!/^\/(?:[A-Za-z0-9_-]+\/)*$/.test(base)) {
   throw new Error('PAGES_BASE_PATH must be an absolute directory path ending in /.');
 }
@@ -28,7 +33,11 @@ const result = spawnSync(
     '--output-path',
     '../.pages-build',
   ],
-  { cwd: root, stdio: 'inherit' },
+  {
+    cwd: root,
+    stdio: 'inherit',
+    env: { ...process.env, KQ_PRERENDER_TOURS: prerenderTours ? '1' : '0' },
+  },
 );
 if (result.status !== 0) process.exit(result.status ?? 1);
 await rm(output, { recursive: true, force: true });
@@ -46,7 +55,9 @@ if (adminAtRoot) {
   await writeFile(join(output, 'index.html'), shell);
   await rm(join(output, 'lanzamiento'), { recursive: true, force: true });
 }
-for (const path of ['admin', 'tours', ...tours.map((tour) => `tours/${tour.slug}`)]) {
+const clientRoutes = ['admin'];
+if (!prerenderTours) clientRoutes.push('tours', ...tours.map((tour) => `tours/${tour.slug}`));
+for (const path of clientRoutes) {
   const directory = join(output, path);
   await mkdir(directory, { recursive: true });
   await writeFile(join(directory, 'index.html'), shell);
@@ -77,6 +88,10 @@ async function scopeAssets(directory) {
   }
 }
 await scopeAssets(output);
+if (prerenderTours) {
+  const { writePagesSeo } = await import('./pages-seo.mjs');
+  await writePagesSeo(output, indexable);
+}
 const manifestPath = join(output, 'site.webmanifest');
 const manifest = JSON.parse(await readFile(manifestPath, 'utf8'));
 manifest.start_url = base;
