@@ -6,6 +6,9 @@ on:
   pull_request:
     branches: [main]
   workflow_dispatch:
+  schedule:
+    # Rebuild public HTML and the sitemap from the active catalog.
+    - cron: '27 8 * * *'
 
 permissions:
   contents: read
