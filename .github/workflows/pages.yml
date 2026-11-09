@@ -32,8 +32,8 @@ jobs:
         run: corepack pnpm install --frozen-lockfile
       - name: Test frontend
         run: corepack pnpm test:ci
-      - name: Build static evaluation site
-        run: corepack pnpm build:pages
+      - name: Build public site and sitemap
+        run: corepack pnpm build:pages --indexable
       - name: Upload only the generated site
         uses: actions/upload-pages-artifact@v3
         with:
