@@ -16,6 +16,8 @@ export async function writePagesSeo(output, indexable) {
 
   const routes = ['', 'tours', ...slugs.map((slug) => `tours/${slug}`)];
   const urls = [];
+  const titles = new Set();
+  const descriptions = new Set();
   for (const route of routes) {
     const file = join(output, route, 'index.html');
     let html = await readFile(file, 'utf8');
@@ -29,6 +31,17 @@ export async function writePagesSeo(output, indexable) {
     ) {
       throw new Error(`Missing prerendered catalog content in /${route}.`);
     }
+
+    const title = html.match(/<title>([^<]+)<\/title>/i)?.[1].trim();
+    const description = html.match(/<meta\s+name="description"\s+content="([^"]+)"/i)?.[1].trim();
+    if (!title || !description || titles.has(title) || descriptions.has(description)) {
+      throw new Error(`Missing or duplicate search metadata in /${route}.`);
+    }
+    if (/<link\b[^>]*rel="canonical"/i.test(html)) {
+      throw new Error(`Unexpected existing canonical in /${route}.`);
+    }
+    titles.add(title);
+    descriptions.add(description);
 
     const canonical = `${origin}/${route ? `${route}/` : ''}`;
     html = html
@@ -47,6 +60,11 @@ export async function writePagesSeo(output, indexable) {
   }
 
   if (indexable) {
+    for (const entry of ['admin/index.html', '404.html', 'index.csr.html']) {
+      if (!noindex.test(await readFile(join(output, entry), 'utf8'))) {
+        throw new Error(`Expected noindex in /${entry}.`);
+      }
+    }
     const sitemap = [
       '<?xml version="1.0" encoding="UTF-8"?>',
       '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',

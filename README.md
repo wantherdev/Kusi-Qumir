@@ -129,8 +129,9 @@ Para otra ruta de publicación: `PAGES_BASE_PATH=/otra-ruta/ pnpm build:pages`.
   Administración, errores, páginas de evaluación y formularios conservan
   `noindex`. GitHub Actions usa el modo indexable para la web oficial.
 - Verifica el HTTPS del dominio y la propiedad de Search Console. Tras publicar, inspecciona la
-  portada y una ficha y envía el sitemap. Vuelve a compilar al publicar,
-  modificar o retirar tours para actualizar el HTML inicial y el sitemap.
+  portada y una ficha y envía el sitemap. El flujo de Pages actualiza el HTML y el sitemap a diario. Para reflejar
+  de inmediato una alta, modificación o baja de tour, usa `Run workflow` en
+  GitHub Actions desde la rama `main`.
 
 ## Lanzamiento integrado
 

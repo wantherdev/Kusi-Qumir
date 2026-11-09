@@ -129,6 +129,21 @@ const photos: Readonly<Record<string, DestinationPhoto>> = {
   },
 };
 
+export function responsiveTourPhoto(
+  image: string,
+): { srcset: string; alt: string; file: string } | null {
+  const directory = '/assets/images/';
+  if (!image.startsWith(directory)) return null;
+  const file = image.slice(directory.length).replace(/-editorial-v2\.webp$/, '.webp');
+  if (!Object.hasOwn(photos, file)) return null;
+  const photo = photos[file];
+  return {
+    srcset: `${directory}${photo.small} ${photo.smallWidth}w, ${directory}${file} ${photo.width}w`,
+    alt: photo.alt,
+    file,
+  };
+}
+
 const creditsPage = 'creditos-fotograficos.html';
 
 export function mountDestinationPhotos(document: Document): void {
@@ -159,30 +174,17 @@ export function mountDestinationPhotos(document: Document): void {
     let credit = host.querySelector<HTMLParagraphElement>('.tour-photo-credit');
 
     if (!photo) {
-      if (img.dataset['kqPhoto']) {
-        delete img.dataset['kqPhoto'];
-        img.removeAttribute('srcset');
-        img.removeAttribute('sizes');
-      }
       credit?.remove();
       return;
     }
-
-    if (file !== localFile) img.src = imageUrl(file);
-    if (img.dataset['kqPhoto'] === file) return;
-
-    img.dataset['kqPhoto'] = file;
-    img.alt = photo.alt;
-    img.srcset = `${imageUrl(photo.small)} ${photo.smallWidth}w, ${imageUrl(file)} ${photo.width}w`;
-    img.sizes = card
-      ? '(max-width: 640px) 140vw, (max-width: 1023px) 75vw, 640px'
-      : '(max-width: 760px) 100vw, 50vw';
+    if (credit?.dataset['photoFile'] === file) return;
 
     if (!credit) {
       credit = document.createElement('p');
       credit.className = 'tour-photo-credit';
       host.append(credit);
     }
+    credit.dataset['photoFile'] = file;
     const { author, url: source, license, license_url } = photo.credit;
     credit.replaceChildren(
       'Foto: ',
