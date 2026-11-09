@@ -5,6 +5,7 @@ import { ActivatedRoute, RouterLink } from '@angular/router';
 import { catchError, distinctUntilChanged, map, of, startWith, Subject, switchMap } from 'rxjs';
 
 import { agencyProfile } from '../../config/agency-profile';
+import { tourSocialImage } from '../../core/seo/seo-title.strategy';
 import { ToursApiService } from '../../features/tours/data-access/tours-api.service';
 import { Tour } from '../../features/tours/domain/tour.model';
 import {
@@ -19,6 +20,30 @@ import {
 } from '../../features/tours/domain/tour-view';
 import { PageHeaderComponent } from '../../shared/ui/page-header/page-header.component';
 import { SiteFooterComponent } from '../../shared/ui/site-footer/site-footer.component';
+
+const tourSearchTitles: Readonly<Record<string, string>> = {
+  'city-tour-cusco': 'City Tour Cusco: Coricancha y Sacsayhuamán',
+  'valle-sagrado': 'Tour Valle Sagrado desde Cusco | Valle VIP',
+  'maras-moray': 'Tour Maras y Moray desde Cusco',
+  'machu-picchu-full-day': 'Tour Machu Picchu desde Cusco en un día',
+  'laguna-humantay': 'Tour Laguna Humantay desde Cusco',
+  'montana-colores': 'Tour Montaña de 7 Colores (Vinicunca) desde Cusco',
+  'valle-sur': 'Tour Valle Sur del Cusco: Tipón y Andahuaylillas',
+  waqrapukara: 'Tour Waqrapukara desde Cusco',
+  'puente-qeswachaka': 'Tour al puente inca Q’eswachaka desde Cusco',
+  palcoyo: 'Tour Montaña de Colores de Palcoyo desde Cusco',
+};
+
+function tourSearchTitle(tour: Tour): string {
+  const custom = tour.seo?.title?.trim();
+  const previousDefault = custom?.replace(/\s*\|\s*Kusi Q[’']umir$/i, '');
+  if (custom && previousDefault !== tour.title) return custom;
+
+  const label = Object.hasOwn(tourSearchTitles, tour.slug)
+    ? tourSearchTitles[tour.slug]
+    : tour.title;
+  return `${label} | Kusi Q’umir`;
+}
 
 type TourState =
   | { status: 'loading' }
@@ -90,14 +115,17 @@ export class TourDetailComponent {
       const tour = this.tour();
       if (!tour) return;
 
-      const title = tour.seo?.title ?? `${tour.title} | Kusi Q’umir`;
-      const description = tour.seo?.description ?? tour.shortDescription;
+      const title = tourSearchTitle(tour);
+      const description = tour.seo?.description?.trim() || tour.shortDescription;
+      const image = tourSocialImage(tourImage(tour));
       this.title.setTitle(title);
       this.meta.updateTag({ name: 'description', content: description });
       this.meta.updateTag({ property: 'og:title', content: title });
       this.meta.updateTag({ property: 'og:description', content: description });
       this.meta.updateTag({ name: 'twitter:title', content: title });
       this.meta.updateTag({ name: 'twitter:description', content: description });
+      this.meta.updateTag({ property: 'og:image', content: image });
+      this.meta.updateTag({ name: 'twitter:image', content: image });
     });
   }
 
