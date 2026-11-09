@@ -107,18 +107,30 @@ y publica únicamente `.pages-site/`. En Settings → Pages se debe seleccionar
 GitHub Actions como fuente. La URL prevista es
 `https://wantherdev.github.io/Kusi-Qumir/`.
 
-`pnpm build:pages` permite reproducir el build localmente. Esta variante incluye
-una instantánea de los 10 tours del catálogo confirmado y no necesita API,
-PostgreSQL ni servidor Node. Cada ficha tiene un archivo de entrada para admitir
-acceso directo y recargas. Los cambios del catálogo se publican al ejecutar de
-nuevo el flujo desde el código actualizado.
+`pnpm build:pages` reproduce el build de evaluación. Las entradas estáticas
+permiten abrir y recargar las fichas conocidas, y el navegador consulta el
+catálogo público en Supabase. Pages no necesita un servidor Node ni desplegar
+la API NestJS.
 
-Se conservan `noindex`, el estado de evaluación y los formularios desactivados.
+El build local de evaluación conserva `noindex`. Los formularios siguen desactivados.
 Los archivos compilados no se guardan en Git ni se publica el contenido de
 `docs/`, recursos internos o backend. El build SSR habitual sigue disponible
 mediante `pnpm build`.
 
 Para otra ruta de publicación: `PAGES_BASE_PATH=/otra-ruta/ pnpm build:pages`.
+
+### Validación SEO para el dominio oficial
+
+- `pnpm build:pages --seo-preview` prerenderiza el catálogo y las fichas de los
+  tours activos en Supabase. Añade sus URL canónicas para `kusiqumir.com`,
+  conserva `noindex` y omite el sitemap. Úsalo en desarrollo.
+- `pnpm build:pages --indexable` genera el mismo HTML, permite indexar la
+  portada, el catálogo y las fichas completas, y genera `sitemap.xml`.
+  Administración, errores, páginas de evaluación y formularios conservan
+  `noindex`. GitHub Actions usa el modo indexable para la web oficial.
+- Verifica el HTTPS del dominio y la propiedad de Search Console. Tras publicar, inspecciona la
+  portada y una ficha y envía el sitemap. Vuelve a compilar al publicar,
+  modificar o retirar tours para actualizar el HTML inicial y el sitemap.
 
 ## Lanzamiento integrado
 
