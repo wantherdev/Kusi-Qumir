@@ -22,12 +22,32 @@
       <button class="kq-button" type="button" (click)="retry()">Reintentar</button>
     </section>
   } @else if (tour(); as tour) {
-    <nav class="breadcrumbs" aria-label="Ruta de navegación">
-      <a routerLink="/">Inicio</a>
+    <nav
+      class="breadcrumbs"
+      aria-label="Ruta de navegación"
+      itemscope
+      itemtype="https://schema.org/BreadcrumbList"
+    >
+      <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a routerLink="/" itemprop="item"><span itemprop="name">Inicio</span></a>
+        <meta itemprop="position" content="1" />
+      </span>
       <span aria-hidden="true">/</span>
-      <a routerLink="/tours">Tours</a>
+      <span itemprop="itemListElement" itemscope itemtype="https://schema.org/ListItem">
+        <a routerLink="/tours"><span itemprop="name">Tours</span></a>
+        <link itemprop="item" href="https://kusiqumir.com/tours/" />
+        <meta itemprop="position" content="2" />
+      </span>
       <span aria-hidden="true">/</span>
-      <span aria-current="page">{{ tour.title }}</span>
+      <span
+        aria-current="page"
+        itemprop="itemListElement"
+        itemscope
+        itemtype="https://schema.org/ListItem"
+      >
+        <span itemprop="name">{{ tour.title }}</span>
+        <meta itemprop="position" content="3" />
+      </span>
     </nav>
 
     <header class="tour-hero">
@@ -63,7 +83,10 @@
         [src]="imageFor(tour)"
         width="1122"
         height="1402"
-        [alt]="imageAltFor(tour)"
+        [alt]="photo()?.alt ?? imageAltFor(tour)"
+        [attr.srcset]="photo()?.srcset"
+        [attr.sizes]="photo() ? '(max-width: 760px) 100vw, 50vw' : null"
+        [attr.data-kq-photo]="photo()?.file"
         decoding="async"
         fetchpriority="high"
       />
@@ -286,6 +309,38 @@
             </details>
           }
         </div>
+      </section>
+    }
+
+    @if (comparisonTour(); as vinicunca) {
+      <section aria-labelledby="mountain-comparison">
+        <p class="kq-eyebrow">Elige tu ruta</p>
+        <h2 id="mountain-comparison">Vinicunca o Palcoyo: ¿qué Montaña de Colores elegir?</h2>
+        <p>
+          El tour de Palcoyo dura {{ durationFor(tour) }} y el catálogo lo clasifica como
+          {{ difficultyFor(tour).toLowerCase() }}. El tour a
+          <a class="text-kq-action underline" [routerLink]="['/tours', vinicunca.slug]"
+            >Vinicunca</a
+          >
+          dura {{ durationFor(vinicunca) }} y tiene dificultad
+          {{ difficultyFor(vinicunca).toLowerCase() }}. Son duraciones del tour completo, incluidos
+          los traslados. Palcoyo ofrece una caminata más corta; ambas rutas son de altura.
+        </p>
+      </section>
+    }
+
+    @if (relatedTours().length) {
+      <section class="related-tours" aria-labelledby="related-tours-title">
+        <p class="kq-eyebrow">Compara recorridos</p>
+        <h2 id="related-tours-title">Otros tours que puedes explorar</h2>
+        <ul>
+          @for (related of relatedTours(); track related.slug) {
+            <li>
+              <a [routerLink]="['/tours', related.slug]">{{ related.title }}</a>
+              <span>{{ durationFor(related) }} · Dificultad {{ difficultyFor(related) }}</span>
+            </li>
+          }
+        </ul>
       </section>
     }
 

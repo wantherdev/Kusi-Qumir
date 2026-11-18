@@ -536,3 +536,34 @@ section {
     width: 100%;
   }
 }
+
+.related-tours ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 15rem), 1fr));
+  gap: 0.85rem;
+  margin: 1.25rem 0 0;
+  padding: 0;
+  list-style: none;
+
+  li {
+    display: grid;
+    align-content: start;
+    gap: 0.3rem;
+    padding: 1rem;
+    border: 1px solid var(--kq-border);
+    border-radius: 1rem;
+    background: var(--kq-surface);
+  }
+
+  a {
+    color: var(--kq-action);
+    font-weight: 700;
+    text-decoration: underline;
+    text-underline-offset: 0.2em;
+  }
+
+  span {
+    color: var(--kq-muted);
+    font-size: 0.85rem;
+  }
+}

@@ -11,20 +11,20 @@ const adminRoute: Route = {
 const publicRoutes: Routes = [
   {
     path: '',
-    title: 'Kusi Q’umir | Cusco auténtico, experiencias que permanecen',
+    title: 'Tours en Cusco y Machu Picchu | Kusi Q’umir',
     data: {
       description:
-        'Tours propios y de terceros en Cusco mediante una agencia minorista y operadora exclusivamente digital, actualmente en evaluación institucional.',
+        'Compara tours en Cusco, Machu Picchu, Valle Sagrado, Laguna Humantay y Vinicunca. Revisa itinerarios, dificultad, inclusiones y precios referenciales.',
     },
     loadComponent: () =>
       import('./pages/landing/landing.component').then((module) => module.LandingComponent),
   },
   {
     path: 'tours',
-    title: 'Tours en Cusco | Kusi Q’umir',
+    title: 'Catálogo de tours en Cusco: itinerarios y precios | Kusi Q’umir',
     data: {
       description:
-        'Catálogo vigente de tours de Kusi Q’umir en Cusco con itinerarios, precios referenciales e información práctica.',
+        'Encuentra tours de un día desde Cusco y compara recorridos culturales y caminatas. Consulta duración, dificultad, inclusiones y precios referenciales.',
     },
     loadComponent: () =>
       import('./pages/tours/tours.component').then((module) => module.ToursComponent),

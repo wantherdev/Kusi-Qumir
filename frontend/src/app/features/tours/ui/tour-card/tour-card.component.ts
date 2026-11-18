@@ -1,6 +1,7 @@
-import { ChangeDetectionStrategy, Component, input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, computed, input } from '@angular/core';
 import { RouterLink } from '@angular/router';
 
+import { responsiveTourPhoto } from '../../../../../destination-photos';
 import { TourSummary } from '../../domain/tour.model';
 import {
   formatTourPrice,
@@ -23,6 +24,7 @@ export class TourCardComponent {
   readonly tour = input.required<TourSummary>();
   readonly sequence = input<number>();
 
+  protected readonly photo = computed(() => responsiveTourPhoto(tourImage(this.tour())));
   protected readonly imageFor = tourImage;
   protected readonly imageAltFor = tourImageAlt;
   protected readonly durationFor = tourDuration;

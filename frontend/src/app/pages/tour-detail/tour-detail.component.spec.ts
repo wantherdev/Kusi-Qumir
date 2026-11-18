@@ -59,7 +59,10 @@ const tour: Tour = {
   destinations: [{ key: 'pisac', sortOrder: 1 }],
 };
 
-async function configure(api: { findOne: ReturnType<typeof vi.fn> }) {
+async function configure(api: {
+  findOne: ReturnType<typeof vi.fn>;
+  findAll?: ReturnType<typeof vi.fn>;
+}) {
   await TestBed.configureTestingModule({
     imports: [TourDetailComponent],
     providers: [
@@ -68,7 +71,7 @@ async function configure(api: { findOne: ReturnType<typeof vi.fn> }) {
         provide: ActivatedRoute,
         useValue: { paramMap: of(convertToParamMap({ slug: tour.slug })) },
       },
-      { provide: ToursApiService, useValue: api },
+      { provide: ToursApiService, useValue: { findAll: () => of([]), ...api } },
     ],
   }).compileComponents();
 }
@@ -94,10 +97,33 @@ describe('TourDetailComponent', () => {
     expect(element.querySelector('.breadcrumbs [aria-current="page"]')?.textContent).toContain(
       tour.title,
     );
+    const breadcrumb = element.querySelector('[itemtype="https://schema.org/BreadcrumbList"]');
+    expect(breadcrumb?.querySelectorAll('[itemprop="itemListElement"]')).toHaveLength(3);
+    expect(breadcrumb?.querySelector('[aria-current="page"] [itemprop="name"]')?.textContent).toBe(
+      tour.title,
+    );
     expect(document.title).toBe(tour.seo?.title);
     expect(document.head.querySelector('meta[name="twitter:title"]')?.getAttribute('content')).toBe(
       tour.seo?.title,
     );
+  });
+
+  it('links to related tours present in the active catalog without linking to itself', async () => {
+    const maras = { ...tour, slug: 'maras-moray', title: 'Maras y Moray' };
+    await configure({
+      findOne: vi.fn().mockReturnValue(of(tour)),
+      findAll: vi.fn().mockReturnValue(of([tour, maras])),
+    });
+
+    const fixture = TestBed.createComponent(TourDetailComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+
+    const element = fixture.nativeElement as HTMLElement;
+    const links = [...element.querySelectorAll('.related-tours a')];
+    expect(links.map((link) => link.getAttribute('href'))).toEqual(['/tours/maras-moray']);
+    expect(links[0].textContent).toBe('Maras y Moray');
   });
 
   it('visually and semantically distinguishes included and excluded services', async () => {

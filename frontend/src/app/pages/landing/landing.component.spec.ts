@@ -69,7 +69,7 @@ describe('LandingComponent', () => {
     fixture.detectChanges();
 
     const heading = fixture.nativeElement.querySelector('h1') as HTMLHeadingElement;
-    expect(heading.textContent).toContain('Cusco auténtico');
+    expect(heading.textContent).toContain('Tours en Cusco');
     expect(fixture.nativeElement.textContent).toContain('Canal exclusivamente digital');
     expect(fixture.nativeElement.textContent).toContain('Anexo II');
     expect(fixture.nativeElement.textContent).toContain('Experiencias Kusi Q’umir');

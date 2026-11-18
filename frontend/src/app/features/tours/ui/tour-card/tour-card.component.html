@@ -6,7 +6,10 @@
       [src]="imageFor(currentTour)"
       width="1122"
       height="1402"
-      [alt]="imageAltFor(currentTour)"
+      [alt]="photo()?.alt ?? imageAltFor(currentTour)"
+      [attr.srcset]="photo()?.srcset"
+      [attr.sizes]="photo() ? '(max-width: 640px) 100vw, (max-width: 1023px) 75vw, 640px' : null"
+      [attr.data-kq-photo]="photo()?.file"
       loading="lazy"
       decoding="async"
     />

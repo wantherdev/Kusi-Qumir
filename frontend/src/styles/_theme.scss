@@ -1,0 +1,400 @@
+/* Shared theme for the public website, including client-side navigation. */
+html:root:root[data-theme='dark'] {
+  color-scheme: dark;
+  --kq-ink: #edf5f6;
+  --kq-canvas: #0b141c;
+  --kq-surface: #14232e;
+  --kq-surface-soft: #19383d;
+  --kq-soft-ink: #d8e6ec;
+  --kq-border: #344b59;
+  --kq-control-border: #617986;
+  --kq-muted: #b2c4ce;
+  --kq-label: #cfdee5;
+  --kq-teal: #42d5cc;
+  --kq-teal-hover: #75e6de;
+  --kq-action: #66dfd5;
+  --kq-action-hover: #99eee7;
+  --kq-river: #a9ccf0;
+  --kq-mountain: #b0c3ec;
+  --kq-success: #78dfb5;
+  --kq-warning: #f4ce84;
+  --kq-warning-surface: #352d1d;
+  --kq-warning-border: #78633c;
+  --kq-danger: #ffaca4;
+  --kq-danger-surface: #392328;
+  --kq-danger-border: #8e5158;
+  --kq-footer-surface: #1b2e3e;
+  --kq-shadow-soft: 0 14px 34px #0003;
+  --kq-shadow-elevated: 0 20px 50px #0005;
+  --color-kq-ink: var(--kq-ink);
+  --color-kq-canvas: var(--kq-canvas);
+  --color-kq-border: var(--kq-border);
+  --color-kq-muted: var(--kq-muted);
+  --color-kq-action: var(--kq-action);
+  --color-kq-teal: var(--kq-teal);
+}
+#kq-theme-toggle {
+  position: fixed;
+  z-index: 120;
+  right: max(1rem, env(safe-area-inset-right));
+  bottom: max(1rem, env(safe-area-inset-bottom));
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.55rem;
+  min-height: 46px;
+  padding: 0.65rem 1rem;
+  border: 1px solid var(--kq-control-border);
+  border-radius: 999px;
+  background: var(--kq-surface);
+  color: var(--kq-ink);
+  box-shadow: 0 4px 20px #0002;
+  font:
+    600 0.8rem/1.4 Inter,
+    system-ui,
+    sans-serif;
+  cursor: pointer;
+}
+#kq-theme-toggle svg {
+  width: 20px;
+  height: 20px;
+}
+#kq-theme-toggle:hover {
+  border-color: var(--kq-action);
+}
+#kq-theme-toggle:focus-visible {
+  outline: 3px solid var(--kq-action);
+  outline-offset: 4px;
+}
+@media (max-width: 1040px) {
+  #kq-theme-toggle {
+    bottom: calc(6.4rem + env(safe-area-inset-bottom));
+    right: 1rem;
+  }
+}
+html:root:root[data-theme='dark'] .page-header,
+html:root:root[data-theme='dark'] .mobile-dock {
+  background: #10212ef5;
+  border-color: var(--kq-border);
+}
+html:root:root[data-theme='dark']
+  :is(
+    .mobile-menu__close,
+    .mobile-menu__links a,
+    .compliance-card,
+    .contact-option,
+    .price-card,
+    .coverage-card,
+    .data-grid > div,
+    .control-grid li,
+    .document-links a,
+    .admin-header,
+    .metrics > div,
+    .catalog-panel,
+    .access-panel,
+    .secondary,
+    input,
+    textarea,
+    select,
+    .bg-white
+  ) {
+  background: var(--kq-surface);
+  color: var(--kq-ink);
+  border-color: var(--kq-border);
+}
+html:root:root[data-theme='dark']
+  :is(
+    .process,
+    .service-card--own,
+    .site-footer,
+    .contact-option--primary,
+    .price-card__rate--primary,
+    .mobile-menu__contact,
+    .tour-card
+  ) {
+  background: #08131e;
+  color: #edf5f6;
+}
+html:root:root[data-theme='dark'] .contact-panel {
+  background: #1b3446;
+}
+html:root:root[data-theme='dark'] .contact-options > p {
+  color: var(--kq-muted);
+}
+html:root:root[data-theme='dark'] .service-card__tours li {
+  background: var(--kq-surface-soft);
+  color: var(--kq-ink);
+}
+html:root:root[data-theme='dark'] .service-card--own .service-card__tours li {
+  background: #ffffff14;
+  color: #edf5f6;
+}
+html:root:root[data-theme='dark'] :is(.kq-button, .primary) {
+  color: #08272b;
+}
+html:root:root[data-theme='dark'] .kq-button--light {
+  background: var(--kq-surface);
+  color: var(--kq-ink);
+  border-color: var(--kq-border);
+}
+html:root:root[data-theme='dark'] .kq-button--light:hover {
+  background: var(--kq-surface-soft);
+}
+html:root:root[data-theme='dark'] .admin-shell {
+  background: var(--kq-canvas);
+}
+html:root:root[data-theme='dark'] .badge {
+  background: var(--kq-surface-soft);
+  color: var(--kq-muted);
+}
+html:root:root[data-theme='dark'] .header-brand img {
+  content: url('/assets/brand/logo-horizontal-white.svg');
+}
+html:root:root[data-theme='dark'] .mobile-menu__links a:hover {
+  background: var(--kq-surface-soft);
+}
+html:root:root[data-theme='dark']
+  .mobile-dock
+  :is(a:hover, .mobile-dock__item--active, button:hover) {
+  background: var(--kq-surface-soft);
+}
+html:root:root[data-theme='dark'] .skip-link {
+  background: #14232e;
+  color: #fff;
+}
+html:root:root[data-theme='dark'] ::selection {
+  background: #42d5cc;
+  color: #08272b;
+}
+@media print {
+  #kq-theme-toggle {
+    display: none;
+  }
+}
+/* Preserve the meaning of pending items and interactive states. */
+html:root:root[data-theme='dark'] .data-grid > div.pending {
+  background: var(--kq-warning-surface);
+  box-shadow: inset 0 3px 0 var(--kq-warning);
+}
+html:root:root[data-theme='dark'] .document-links a:hover,
+html:root:root[data-theme='dark'] .document-links a:focus-visible {
+  background: var(--kq-surface-soft);
+  color: var(--kq-action);
+}
+html:root:root[data-theme='dark']
+  .coverage-card--excluded
+  :is(.coverage-card__icon, .coverage-list__marker) {
+  background: var(--kq-warning-surface);
+}
+#kq-theme-toggle {
+  gap: 0.9rem;
+  min-height: 62px;
+  padding: 0.65rem 0.75rem 0.65rem 1.1rem;
+  border: 1px solid #007d7c66;
+  border-radius: 1.25rem;
+  background: linear-gradient(135deg, #fffffffa, #e0f5f4fa);
+  color: #173743;
+  box-shadow:
+    0 8px 28px #0f172a26,
+    inset 0 1px 0 #fff;
+  backdrop-filter: blur(16px);
+  transition:
+    transform 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+#kq-theme-toggle:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 12px 30px #007d7c30;
+  border-color: #007d7c;
+}
+#kq-theme-toggle:active {
+  transform: translateY(0);
+}
+#kq-theme-toggle .theme-switch__label {
+  display: grid;
+  gap: 0.15rem;
+  text-align: left;
+  font-size: 0.62rem;
+  line-height: 1.3;
+  letter-spacing: 0.07em;
+  text-transform: uppercase;
+}
+#kq-theme-toggle .theme-switch__state {
+  font-size: 0.88rem;
+  letter-spacing: 0;
+  text-transform: none;
+  font-weight: 700;
+}
+#kq-theme-toggle .theme-switch__track {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 76px;
+  height: 38px;
+  padding: 4px;
+  border-radius: 99px;
+  background: #c9e8e7;
+  border: 1px solid #007d7c33;
+}
+#kq-theme-toggle :is(.theme-switch__sun, .theme-switch__moon) {
+  position: relative;
+  z-index: 1;
+  display: grid;
+  place-items: center;
+  width: 28px;
+  height: 28px;
+  color: #41616c;
+}
+#kq-theme-toggle svg {
+  width: 17px;
+  height: 17px;
+}
+#kq-theme-toggle .theme-switch__thumb {
+  position: absolute;
+  left: 4px;
+  top: 4px;
+  width: 28px;
+  height: 28px;
+  border-radius: 50%;
+  background: #007d7c;
+  box-shadow: 0 2px 6px #0002;
+  transition: transform 0.25s ease;
+}
+#kq-theme-toggle .theme-switch__sun {
+  color: #fff;
+}
+html[data-theme='dark'] #kq-theme-toggle {
+  background: linear-gradient(135deg, #193441f5, #10232ff5);
+  border-color: #42d5cc88;
+  color: #e4f5f5;
+  box-shadow:
+    0 8px 30px #0005,
+    inset 0 1px 0 #ffffff12;
+}
+html[data-theme='dark'] #kq-theme-toggle .theme-switch__track {
+  background: #081820;
+  border-color: #42d5cc44;
+}
+html[data-theme='dark'] #kq-theme-toggle .theme-switch__thumb {
+  transform: translateX(36px);
+  background: #42d5cc;
+  box-shadow: 0 0 12px #42d5cc40;
+}
+html[data-theme='dark'] #kq-theme-toggle .theme-switch__sun {
+  color: #a6bbc4;
+}
+html[data-theme='dark'] #kq-theme-toggle .theme-switch__moon {
+  color: #08272b;
+}
+@media (max-width: 480px) {
+  #kq-theme-toggle {
+    gap: 0.6rem;
+    min-height: 54px;
+    border-radius: 1rem;
+    padding: 0.45rem 0.6rem 0.45rem 0.85rem;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  #kq-theme-toggle,
+  #kq-theme-toggle .theme-switch__thumb {
+    transition: none;
+  }
+}
+
+/* Keep the switch's thumb in the DOM so its movement can interpolate. */
+#kq-theme-toggle .theme-switch__thumb {
+  transition:
+    transform 0.48s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.48s ease;
+}
+#kq-theme-toggle :is(.theme-switch__sun, .theme-switch__moon, .theme-switch__track) {
+  transition:
+    color 0.48s ease,
+    background-color 0.48s ease,
+    border-color 0.48s ease;
+}
+/* A single page crossfade also covers gradients, logos and hard-coded surfaces. */
+html.kq-theme-crossfade::view-transition-group(root) {
+  animation-duration: 0.55s;
+}
+html.kq-theme-crossfade::view-transition-old(root) {
+  animation: none;
+  mix-blend-mode: normal;
+  z-index: 1;
+}
+html.kq-theme-crossfade::view-transition-new(root) {
+  animation: kq-theme-reveal 0.55s cubic-bezier(0.4, 0, 0.2, 1) both;
+  mix-blend-mode: normal;
+  z-index: 2;
+}
+@keyframes kq-theme-reveal {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+/* Older browsers still ease surfaces and typography, only while switching. */
+html.kq-theme-changing,
+html.kq-theme-changing *,
+html.kq-theme-changing *::before,
+html.kq-theme-changing *::after {
+  transition-property: background-color, color, border-color, box-shadow, fill, stroke !important;
+  transition-duration: 0.55s !important;
+  transition-timing-function: ease-in-out !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #kq-theme-toggle,
+  #kq-theme-toggle *,
+  html.kq-theme-changing,
+  html.kq-theme-changing * {
+    transition: none !important;
+  }
+  html.kq-theme-crossfade::view-transition-old(root),
+  html.kq-theme-crossfade::view-transition-new(root) {
+    animation: none !important;
+  }
+}
+/* Give the control its own snapshot so the page fade cannot freeze its thumb. */
+#kq-theme-toggle {
+  view-transition-name: kq-theme-control;
+}
+#kq-theme-toggle .theme-switch__thumb {
+  view-transition-name: kq-theme-thumb;
+}
+html.kq-theme-crossfade #kq-theme-toggle .theme-switch__thumb {
+  transition: none;
+}
+html.kq-theme-crossfade::view-transition-group(kq-theme-control),
+html.kq-theme-crossfade::view-transition-group(kq-theme-thumb) {
+  animation-duration: 0.55s;
+  animation-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+}
+html.kq-theme-crossfade::view-transition-old(kq-theme-control),
+html.kq-theme-crossfade::view-transition-old(kq-theme-thumb) {
+  animation: none;
+  mix-blend-mode: normal;
+}
+html.kq-theme-crossfade::view-transition-new(kq-theme-control),
+html.kq-theme-crossfade::view-transition-new(kq-theme-thumb) {
+  animation: kq-theme-reveal 0.55s ease both;
+  mix-blend-mode: normal;
+}
+/* Keep the native transform transition in browsers using the color fallback. */
+html.kq-theme-changing #kq-theme-toggle .theme-switch__thumb {
+  transition-property: transform, background-color, box-shadow !important;
+  transition-duration: 0.55s !important;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+@media (prefers-reduced-motion: reduce) {
+  #kq-theme-toggle,
+  #kq-theme-toggle .theme-switch__thumb {
+    view-transition-name: none;
+  }
+  html.kq-theme-changing #kq-theme-toggle .theme-switch__thumb {
+    transition: none !important;
+  }
+}
