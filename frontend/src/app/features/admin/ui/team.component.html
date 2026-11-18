@@ -1,0 +1,144 @@
+<section aria-labelledby="team-heading">
+  <header class="section-heading">
+    <div>
+      <p class="eyebrow">ACCESOS DEL EQUIPO</p>
+      <h1 id="team-heading">{{ creating() ? 'Nuevo usuario' : 'Usuarios' }}</h1>
+      <p>Administra las cuentas que pueden trabajar con el catálogo y las reservas.</p>
+    </div>
+    @if (creating()) {
+      <button type="button" class="secondary" [disabled]="busy()" (click)="close()">
+        Volver al listado
+      </button>
+    } @else {
+      <button type="button" class="primary" [disabled]="busy() || loading()" (click)="open()">
+        + Nuevo usuario
+      </button>
+    }
+  </header>
+  <p class="notice" role="status">{{ message() }}</p>
+  <p class="error" role="alert">{{ error() }}</p>
+  @if (creating()) {
+    <form [formGroup]="form" (ngSubmit)="save()" class="reservation-form" novalidate>
+      <fieldset [disabled]="busy()">
+        <legend>Cuenta editora</legend>
+        <label for="team-email">Correo electrónico *</label
+        ><input
+          id="team-email"
+          type="email"
+          formControlName="email"
+          autocomplete="off"
+          maxlength="254"
+          required
+          [attr.aria-invalid]="form.controls.email.touched && form.controls.email.invalid"
+          aria-describedby="team-form-help"
+        />
+        <label for="team-password">Contraseña inicial *</label
+        ><input
+          id="team-password"
+          type="password"
+          formControlName="password"
+          autocomplete="new-password"
+          minlength="8"
+          maxlength="128"
+          required
+          [attr.aria-invalid]="form.controls.password.touched && form.controls.password.invalid"
+          aria-describedby="team-form-help"
+        />
+        <small id="team-form-help"
+          >Correo válido y contraseña de 8 a 128 caracteres. Entrégala al titular por un canal
+          privado.</small
+        >
+      </fieldset>
+      <p class="help">
+        El editor puede crear y editar tours, paquetes y reservas pendientes. No puede publicar,
+        eliminar ni gestionar usuarios.
+      </p>
+      <div class="save-actions">
+        <button type="submit" class="primary" [disabled]="busy()">
+          {{ busy() ? 'Creando cuenta…' : 'Crear usuario editor' }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <div class="list-panel">
+      <header class="list-heading">
+        <h2>Equipo autorizado</h2>
+        <button type="button" class="quiet" [disabled]="loading() || busy()" (click)="load()">
+          Actualizar
+        </button>
+      </header>
+      @if (loading()) {
+        <p class="state" role="status">Cargando usuarios…</p>
+      } @else if (error()) {
+        <button type="button" class="secondary" (click)="load()">Reintentar</button>
+      } @else {
+        <ul class="reservation-list">
+          @for (user of rows(); track user.id) {
+            <li>
+              <div class="record-row">
+                <div>
+                  <h3>{{ user.email || user.id }}</h3>
+                  <p>
+                    {{
+                      user.role === 'owner'
+                        ? 'Administrador total'
+                        : 'Editor · Tours, Paquetes y Reservas'
+                    }}
+                  </p>
+                </div>
+                @if (user.role === 'editor') {
+                  <button
+                    type="button"
+                    class="quiet danger"
+                    [disabled]="busy()"
+                    (click)="selected.set(user)"
+                    [attr.aria-label]="'Eliminar usuario ' + (user.email || user.id)"
+                  >
+                    Eliminar usuario
+                  </button>
+                } @else {
+                  <span class="badge">Cuenta protegida</span>
+                }
+              </div>
+            </li>
+          } @empty {
+            <li class="state">No hay usuarios en esta página.</li>
+          }
+        </ul>
+        <div class="pagination">
+          <button
+            type="button"
+            class="secondary"
+            [disabled]="page() === 0 || busy()"
+            (click)="navigate(-1)"
+          >
+            Anterior</button
+          ><span>Página {{ page() + 1 }}</span
+          ><button
+            type="button"
+            class="secondary"
+            [disabled]="rows().length < 50 || busy()"
+            (click)="navigate(1)"
+          >
+            Siguiente
+          </button>
+        </div>
+      }
+    </div>
+  }
+  @if (selected() || discarding()) {
+    <app-admin-confirm
+      [title]="discarding() ? '¿Descartar los cambios?' : '¿Eliminar este usuario?'"
+      [message]="
+        discarding()
+          ? 'Los datos sin guardar se perderán.'
+          : 'Se revocará el acceso y se eliminará la cuenta seleccionada. Su historial de reservas se conservará.'
+      "
+      [confirmLabel]="discarding() ? 'Descartar cambios' : 'Eliminar usuario'"
+      [busy]="busy()"
+      [error]="error()"
+      (confirmed)="confirm()"
+      (cancelled)="selected.set(null); discarding.set(false)"
+    />
+  }
+</section>

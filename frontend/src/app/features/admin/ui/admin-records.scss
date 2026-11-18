@@ -1,0 +1,6 @@
+.record-row { display: flex; width: 100%; align-items: flex-start; justify-content: space-between; gap: 1.5rem; min-width: 0; }
+.record-row > div { min-width: 0; }
+.record-row h2, .record-row h3, .record-row p { overflow-wrap: anywhere; }
+.record-days { margin-top: .8rem; }
+.record-days p { font-size: .85rem; }
+@media (max-width: 640px) { .record-row { flex-direction: column; gap: .8rem; } }

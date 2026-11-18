@@ -32,6 +32,7 @@ const soles = new Intl.NumberFormat('es-PE', { style: 'currency', currency: 'PEN
 export class ReservationsComponent implements OnInit {
   readonly tours = input.required<AdminTour[]>();
   readonly dirtyChanged = output<boolean>();
+  readonly owner = input(false);
   private readonly api = inject(ReservationsApiService);
   private readonly fb = inject(FormBuilder);
   protected readonly rows = signal<Reservation[]>([]);
@@ -156,7 +157,7 @@ export class ReservationsComponent implements OnInit {
       passengers: reservation.passengers,
       totalAmount: reservation.totalAmount,
       paidAmount: reservation.paidAmount,
-      status: reservation.status,
+      status: this.owner() ? reservation.status : 'PENDING',
       notes: reservation.notes,
     });
     this.view.set('form');
