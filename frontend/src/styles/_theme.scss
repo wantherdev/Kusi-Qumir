@@ -398,3 +398,7 @@ html.kq-theme-changing #kq-theme-toggle .theme-switch__thumb {
     transition: none !important;
   }
 }
+
+html:root:root[data-theme='dark'] .contact-feature {
+  color: #08272b;
+}

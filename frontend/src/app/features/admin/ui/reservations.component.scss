@@ -64,7 +64,7 @@ button:disabled {
 }
 .secondary {
   border: 1px solid var(--kq-control-border);
-  background: white;
+  background: var(--kq-surface);
   color: var(--kq-ink);
 }
 .quiet {
@@ -92,7 +92,7 @@ textarea {
   padding: 0.8rem;
   font: inherit;
   font-size: 1rem;
-  background: white;
+  background: var(--kq-surface);
   color: var(--kq-ink);
   min-width: 0;
 }
@@ -135,7 +135,7 @@ small {
 fieldset {
   border: 1px solid var(--kq-border);
   border-radius: 0.8rem;
-  background: white;
+  background: var(--kq-surface);
   padding: 1.6rem;
   margin: 0 0 1.8rem;
   min-width: 0;
@@ -193,7 +193,7 @@ legend {
 .detail {
   border: 1px solid var(--kq-border);
   border-radius: 0.8rem;
-  background: white;
+  background: var(--kq-surface);
   overflow: hidden;
 }
 .list-heading {
@@ -338,5 +338,71 @@ dd {
   }
   .pagination {
     gap: 0.5rem;
+  }
+}
+
+@media (max-width: 640px) {
+  :host {
+    min-width: 0;
+  }
+  h1 {
+    font-size: clamp(1.7rem, 7vw, 2.2rem);
+  }
+  .section-heading {
+    gap: 1rem;
+  }
+  .section-heading > button {
+    width: 100%;
+  }
+  .filters {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr);
+  }
+  .filters > div:first-child,
+  .filters > div:nth-child(2) {
+    min-width: 0;
+  }
+  label,
+  small,
+  .code,
+  dt,
+  .list-heading span {
+    font-size: 0.875rem;
+  }
+  .reservation-list li,
+  .record-row > div {
+    min-width: 0;
+  }
+  .reservation-list h3,
+  .reservation-list p {
+    overflow-wrap: anywhere;
+  }
+  .row-summary,
+  .row-actions {
+    width: 100%;
+  }
+  .row-actions button {
+    flex: 1 1 auto;
+    border: 1px solid var(--kq-border);
+    background: var(--kq-canvas);
+    font-size: 0.875rem;
+  }
+  .save-actions {
+    position: sticky;
+    bottom: calc(5rem + env(safe-area-inset-bottom));
+    z-index: 5;
+    padding: 0.75rem;
+    border: 1px solid var(--kq-border);
+    border-radius: 0.8rem;
+    background: var(--kq-surface);
+  }
+  .save-actions button {
+    flex: 1 1 auto;
+  }
+  .detail-heading {
+    flex-wrap: wrap;
+  }
+  .pagination {
+    flex-wrap: wrap;
   }
 }

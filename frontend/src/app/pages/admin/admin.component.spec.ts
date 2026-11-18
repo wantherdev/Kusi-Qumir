@@ -14,6 +14,7 @@ const api = {
   userEmail: signal('equipo@example.test'),
   isOwner: signal(true),
   initialize: vi.fn(),
+  signIn: vi.fn(),
   list: vi.fn(),
   create: vi.fn(),
   getTour: vi.fn(),
@@ -56,6 +57,53 @@ describe('admin tour form', () => {
         { provide: TourImagesService, useValue: images },
       ],
     }).compileComponents();
+  });
+  it('toggles password visibility without clearing the field or submitting the form', async () => {
+    api.access.set('signed-out');
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const password = root.querySelector('#admin-password') as HTMLInputElement;
+    const toggle = root.querySelector(
+      'button[aria-controls="admin-password"]',
+    ) as HTMLButtonElement;
+    password.value = 'example-only';
+    password.dispatchEvent(new Event('input'));
+    expect(password.type).toBe('password');
+    toggle.click();
+    fixture.detectChanges();
+    expect(password.type).toBe('text');
+    expect(password.value).toBe('example-only');
+    expect(toggle.getAttribute('aria-label')).toBe('Ocultar contraseña');
+    expect(toggle.getAttribute('aria-pressed')).toBe('true');
+    toggle.click();
+    fixture.detectChanges();
+    expect(password.type).toBe('password');
+    expect(password.value).toBe('example-only');
+    expect(api.signIn).not.toHaveBeenCalled();
+  });
+  it('hides the password again before submitting a sign-in attempt', async () => {
+    api.access.set('signed-out');
+    api.signIn.mockRejectedValueOnce(new Error('offline'));
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const email = root.querySelector('#admin-email') as HTMLInputElement;
+    const password = root.querySelector('#admin-password') as HTMLInputElement;
+    email.value = 'team@example.test';
+    email.dispatchEvent(new Event('input'));
+    password.value = 'example-only';
+    password.dispatchEvent(new Event('input'));
+    (root.querySelector('button[aria-controls="admin-password"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(password.type).toBe('password');
+    expect(password.value).toBe('example-only');
+    expect(root.querySelector('[role="alert"]')?.textContent).toBeTruthy();
   });
   it('shows all three work areas to editors and hides owner actions', async () => {
     api.isOwner.set(false);

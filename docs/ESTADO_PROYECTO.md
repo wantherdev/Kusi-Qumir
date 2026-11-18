@@ -402,3 +402,12 @@ Prompt sugerido para una nueva sesión:
 - Los paquetes conservan los días libres como null, admiten hasta 30 días y comprueban updatedAt para evitar sobrescrituras concurrentes.
 - manage-team está activo en Supabase con verificación JWT y comprobación de owner en cada solicitud. Su fuente se incorpora en supabase/functions/manage-team/index.ts; no usa secretos en el cliente.
 - Validación local: 110 pruebas Angular y tres pruebas de lanzamiento aprobadas; compilaciones SSR y administrativa correctas. La publicación en el dominio real queda pendiente de confirmar.
+
+
+## 2026-11-18 — Panel móvil y páginas de ayuda
+
+- Se rediseña el login con control accesible para mostrar/ocultar contraseña; se oculta nuevamente al intentar iniciar sesión y no cambia la autorización.
+- La navegación del panel pasa a una barra inferior en móvil; formularios, acciones y textos se adaptan a pantallas pequeñas. Los permisos de editor/propietario se conservan.
+- Contacto y preguntas frecuentes tienen rutas propias, enlaces desde menú y footer, y prerender. La portada conserva sus anclas como accesos breves a las nuevas páginas.
+- El titular vuelve a solicitar Phuyu expresamente para la página 404; se reutiliza exclusivamente la ilustración oficial aprobada con mapa.
+- Se publican únicamente canales verificados; no se inventan horarios ni se activan formularios o pagos.

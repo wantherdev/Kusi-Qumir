@@ -66,6 +66,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   protected readonly confirmation = signal<
     { kind: 'delete'; tour: AdminTour } | { kind: 'discard' } | null
   >(null);
+  protected readonly passwordVisible = signal(false);
   protected readonly busy = signal(false);
   protected readonly loadingTours = signal(false);
   protected readonly listError = signal('');
@@ -179,6 +180,7 @@ export class AdminComponent implements OnInit, OnDestroy {
       this.error.set('Escribe un correo válido y tu contraseña.');
       return;
     }
+    this.passwordVisible.set(false);
     this.busy.set(true);
     try {
       const { email, password } = this.login.getRawValue();
@@ -196,6 +198,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     this.error.set('');
     try {
       await this.api.signOut();
+      this.passwordVisible.set(false);
       this.tours.set([]);
       this.clearFilters();
       this.section.set('tours');

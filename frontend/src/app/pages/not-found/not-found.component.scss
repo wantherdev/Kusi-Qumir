@@ -3,49 +3,118 @@
   min-height: 100vh;
   background: var(--kq-canvas);
 }
-
 .not-found-page {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  align-items: center;
+  gap: 2rem;
+  padding-block: clamp(2.5rem, 6vw, 6rem);
+  min-height: 70svh;
+}
+h1 {
+  font-size: clamp(2.5rem, 4.5vw, 4.5rem);
+  line-height: 1.1;
+  letter-spacing: -0.04em;
+  margin: 1rem 0 1.5rem;
+}
+.not-found-copy > p:not(.kq-eyebrow) {
+  max-width: 45ch;
+  line-height: 1.8;
+  color: var(--kq-muted);
+}
+.recovery-actions {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.5rem;
+  margin-block: 2rem;
+}
+.recovery-link {
+  padding-block: 0.8rem;
+  font-weight: 700;
+  text-underline-offset: 0.3em;
+}
+.contact-hint {
+  font-size: 0.875rem;
+}
+.not-found-art {
   position: relative;
   isolation: isolate;
   display: grid;
-  min-height: calc(100vh - 5rem);
-  align-content: center;
-  justify-items: start;
-  padding-block: 4rem;
-
-  .error-code {
-    position: absolute;
-    z-index: -1;
-    top: clamp(2rem, 6vw, 4.5rem);
-    right: 0;
-    margin: 0;
-    color: rgba(100, 123, 171, 0.16);
-    font:
-      400 clamp(8rem, 28vw, 18rem) / 0.85 'Fjalla One',
-      sans-serif;
-  }
-
-  h1 {
-    max-width: 13ch;
-    margin: 0.8rem 0 1.25rem;
-    font-size: clamp(2.8rem, 7vw, 5.5rem);
-    line-height: 1.04;
-  }
-
-  > p:not(.error-code, .kq-eyebrow) {
-    max-width: 55ch;
-    margin: 0 0 2rem;
-    color: var(--kq-muted);
-  }
-
+  place-items: center;
+  padding: 2rem;
+  min-width: 0;
 }
-
-@media (max-width: 640px) {
+.error-code {
+  position: absolute;
+  z-index: -1;
+  top: -1rem;
+  color: color-mix(in srgb, var(--kq-action) 12%, transparent);
+  font-size: clamp(7rem, 16vw, 15rem);
+  line-height: 1;
+  font-weight: 800;
+  letter-spacing: -0.06em;
+}
+.mascot-orbit {
+  position: absolute;
+  z-index: -2;
+  width: 90%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--kq-surface-soft);
+  border: 1px dashed var(--kq-control-border);
+}
+.not-found-mascot {
+  --phuyu-size-xl: clamp(180px, 23vw, 290px);
+  transform: rotate(-4deg);
+}
+.map-note {
+  position: absolute;
+  bottom: 1rem;
+  right: 0;
+  padding: 0.8rem 1rem;
+  border-radius: 0.8rem;
+  background: var(--kq-surface);
+  border: 1px solid var(--kq-border);
+  color: var(--kq-action);
+  font-size: 0.875rem;
+  font-weight: 600;
+  transform: rotate(-5deg);
+}
+@media (max-width: 700px) {
   .not-found-page {
-    .error-code {
-      top: 1.5rem;
-      font-size: clamp(8rem, 38vw, 11rem);
-    }
-
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2rem;
+  }
+  .not-found-art {
+    grid-row: 1;
+    padding: 1.5rem;
+  }
+  .not-found-mascot {
+    --phuyu-size-xl: 170px;
+  }
+  .error-code {
+    font-size: 9rem;
+    top: 0;
+  }
+  .mascot-orbit {
+    width: 260px;
+    max-width: 100%;
+  }
+  .map-note {
+    right: 5%;
+    bottom: 0.5rem;
+  }
+  .not-found-copy {
+    text-align: center;
+  }
+  h1 {
+    font-size: clamp(2rem, 7.5vw, 3rem);
+  }
+  .not-found-copy > p {
+    margin-inline: auto;
+  }
+  .recovery-actions {
+    justify-content: center;
   }
 }

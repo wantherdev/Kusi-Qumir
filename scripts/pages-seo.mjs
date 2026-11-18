@@ -14,7 +14,13 @@ export async function writePagesSeo(output, indexable) {
     throw new Error('Expected prerendered public tour routes.');
   }
 
-  const routes = ['', 'tours', ...slugs.map((slug) => `tours/${slug}`)];
+  const routes = [
+    '',
+    'contacto',
+    'preguntas-frecuentes',
+    'tours',
+    ...slugs.map((slug) => `tours/${slug}`),
+  ];
   const urls = [];
   const titles = new Set();
   const descriptions = new Set();
