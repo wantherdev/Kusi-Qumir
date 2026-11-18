@@ -438,126 +438,22 @@
     </div>
   </section>
 
-  <section class="faq bg-white py-20 lg:py-32" id="preguntas" aria-labelledby="faq-title">
-    <div class="kq-shell faq-grid">
-      <div class="reveal">
-        <p class="kq-eyebrow mb-3">Antes de escribirnos</p>
-        <h2 id="faq-title">Preguntas frecuentes</h2>
-        <p>Resolvemos las dudas más comunes antes de que abras el canal de consulta.</p>
-      </div>
-      <div class="faq-list grid gap-3">
-        <details class="reveal">
-          <summary>
-            ¿Puedo personalizar una ruta?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
-          </summary>
-          <p>
-            Sí. Ajustamos duración, intereses y ritmo. La propuesta final depende de disponibilidad
-            y condiciones operativas.
-          </p>
-        </details>
-        <details class="reveal">
-          <summary>
-            ¿Cómo sé si una caminata es para mí?<i
-              class="ri-icon ri-add-line"
-              aria-hidden="true"
-            ></i>
-          </summary>
-          <p>
-            Antes de confirmar indicamos altitud, desnivel, duración, terreno, equipo y
-            restricciones.
-          </p>
-        </details>
-        <details class="reveal">
-          <summary>
-            ¿La consulta confirma una reserva?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
-          </summary>
-          <p>
-            No. Primero verificamos cupos y servicios. Recibirás precio, inclusiones y pasos de
-            confirmación.
-          </p>
-        </details>
-        <details class="reveal">
-          <summary>
-            ¿La atención será presencial?<i class="ri-icon ri-add-line" aria-hidden="true"></i>
-          </summary>
-          <p>
-            No. Kusi Q’umir operará exclusivamente mediante canales digitales. La dirección de
-            atención es digital mediante el teléfono, WhatsApp y correo publicados en esta página.
-          </p>
-        </details>
-        <details class="reveal">
-          <summary>
-            ¿Con cuánto tiempo debo planificar?<i
-              class="ri-icon ri-add-line"
-              aria-hidden="true"
-            ></i>
-          </summary>
-          <p>
-            Depende de la temporada y ruta. Con tus fechas tentativas podremos orientarte según
-            disponibilidad real.
-          </p>
-        </details>
-      </div>
+  <section class="help-links kq-shell" aria-label="Ayuda para tu viaje">
+    <div id="preguntas">
+      <p class="kq-eyebrow">Antes de viajar</p>
+      <h2>Las dudas también son parte del camino.</h2>
+      <p>Rutas, preparación y cómo planificar: encuentra las respuestas en un solo lugar.</p>
+      <a class="kq-button kq-button--outline" routerLink="/preguntas-frecuentes"
+        >Ver preguntas frecuentes</a
+      >
     </div>
-  </section>
-
-  <section class="contact py-20 lg:py-28" id="contacto" aria-labelledby="contact-title">
-    <div class="kq-shell contact-panel">
-      <div class="contact-copy reveal">
-        <p class="kq-eyebrow mb-3">Canales confirmados</p>
-        <h2 id="contact-title" class="text-balance">Conversemos directamente</h2>
-        <p>
-          Puedes solicitar información general mediante estos canales. No envíes documentos,
-          información bancaria ni realices pagos: las reservas todavía no están habilitadas.
-        </p>
-        <p
-          class="status-pill inline-flex items-center gap-2 rounded-full border border-kq-ink/15 px-3 py-2"
-        >
-          <span class="text-kq-teal" aria-hidden="true">●</span> Consultas informativas disponibles
-        </p>
-      </div>
-
-      <div class="contact-options reveal">
-        <a
-          class="contact-option contact-option--primary"
-          [href]="agencyProfile.whatsappHref"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <span class="contact-option__icon" aria-hidden="true"
-            ><i class="ri-icon ri-whatsapp-line"></i
-          ></span>
-          <span class="contact-option__label">WhatsApp</span>
-          <strong>{{ agencyProfile.whatsapp }}</strong>
-          <small
-            >Abrir conversación <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i
-          ></small>
-        </a>
-        <a class="contact-option" [href]="agencyProfile.phoneHref">
-          <span class="contact-option__icon" aria-hidden="true"
-            ><i class="ri-icon ri-phone-line"></i
-          ></span>
-          <span class="contact-option__label">Llamadas</span>
-          <strong>{{ agencyProfile.phone }}</strong>
-          <small>
-            Iniciar llamada <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
-          </small>
-        </a>
-        <a class="contact-option" [href]="agencyProfile.emailHref">
-          <span class="contact-option__icon" aria-hidden="true"
-            ><i class="ri-icon ri-mail-line"></i
-          ></span>
-          <span class="contact-option__label">Correo</span>
-          <strong>{{ agencyProfile.email }}</strong>
-          <small>
-            Escribir un mensaje <i class="ri-icon ri-arrow-right-line" aria-hidden="true"></i>
-          </small>
-        </a>
-        <p>
-          Atención exclusivamente digital. La consulta no confirma disponibilidad ni genera una
-          reserva.
-        </p>
-      </div>
+    <div id="contacto">
+      <p class="kq-eyebrow">Hablemos de tu viaje</p>
+      <h2>Cusco empieza con una conversación.</h2>
+      <p>
+        Cuéntanos tus ideas y consulta directamente con el equipo por nuestros canales oficiales.
+      </p>
+      <a class="kq-button" routerLink="/contacto">Ir a contacto</a>
     </div>
   </section>
 </main>
