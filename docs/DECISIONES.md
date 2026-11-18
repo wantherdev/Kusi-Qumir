@@ -536,3 +536,12 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - Tours y paquetes editados por un editor pasan a borrador al guardarse; las reservas editadas quedan pendientes. El propietario conserva su estado al editar y decide publicación/confirmación.
 - Las altas de equipo utilizan manage-team en servidor y crean cuentas editoras. La cuenta propietaria no se puede eliminar desde esa función. La contraseña inicial no se persiste en almacenamiento local ni se registra en consola.
 - El dashboard sigue compilándose con build:admin y se publica desde integrar-catalogo-supabase. La portada pública no forma parte de estos cambios.
+
+
+## 2026-11-18 — Panel móvil y páginas de ayuda
+
+- Se rediseña el login con control accesible para mostrar/ocultar contraseña; se oculta nuevamente al intentar iniciar sesión y no cambia la autorización.
+- La navegación del panel pasa a una barra inferior en móvil; formularios, acciones y textos se adaptan a pantallas pequeñas. Los permisos de editor/propietario se conservan.
+- Contacto y preguntas frecuentes tienen rutas propias, enlaces desde menú y footer, y prerender. La portada conserva sus anclas como accesos breves a las nuevas páginas.
+- El titular vuelve a solicitar Phuyu expresamente para la página 404; se reutiliza exclusivamente la ilustración oficial aprobada con mapa.
+- Se publican únicamente canales verificados; no se inventan horarios ni se activan formularios o pagos.
