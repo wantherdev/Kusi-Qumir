@@ -1,0 +1,66 @@
+<a class="skip-link" href="#contenido">Ir al contenido principal</a>
+<app-page-header />
+<main id="contenido" class="help-page" tabindex="-1">
+  <section class="help-hero kq-shell" aria-labelledby="contact-title">
+    <a class="breadcrumb" routerLink="/">Inicio / Contacto</a>
+    <p class="kq-eyebrow">DESDE CUSCO, CONTIGO</p>
+    <h1 id="contact-title">Tu viaje empieza<br />con un <em>hola.</em></h1>
+    <p>
+      Una pregunta, una idea o una ruta por descubrir. Elige cómo conversar con el equipo de Kusi
+      Q’umir.
+    </p>
+  </section>
+  <section class="contact-grid kq-shell" aria-label="Canales de contacto">
+    <a
+      class="contact-feature"
+      [href]="profile.whatsappHref"
+      target="_blank"
+      rel="noopener noreferrer"
+    >
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M21 11.5a9 9 0 0 1-13.5 8L3 21l1.5-4.5A9 9 0 1 1 21 11.5Z" />
+        <path d="M8 7c0 5 4 9 9 9l1-3-3-1-1 1-3-3 1-1-1-3Z" />
+      </svg>
+      <span class="channel-label">CONVERSEMOS POR WHATSAPP</span>
+      <h2>Un mensaje.<br />Muchas posibilidades.</h2>
+      <p>Cuéntanos tus fechas, cuántas personas viajan y qué te gustaría conocer.</p>
+      <strong>{{ profile.whatsapp }}</strong>
+      <span class="channel-action"
+        >Abrir conversación <span class="sr-only">en una nueva pestaña</span></span
+      >
+    </a>
+    <div class="contact-alternatives">
+      <a class="contact-line" [href]="profile.phoneHref"
+        ><span class="channel-label">SI PREFIERES LLAMAR</span>
+        <h2>{{ profile.phone }}</h2>
+        <p>Conversemos directamente sobre tu consulta.</p>
+        <span class="channel-action">Iniciar llamada</span></a
+      >
+      <a class="contact-line" [href]="profile.emailHref"
+        ><span class="channel-label">POR CORREO ELECTRÓNICO</span>
+        <h2>{{ profile.email }}</h2>
+        <p>Comparte tus ideas para preparar tu recorrido.</p>
+        <span class="channel-action">Escribir un correo</span></a
+      >
+    </div>
+  </section>
+  <section class="contact-notes kq-shell" aria-label="Información de atención">
+    <div>
+      <p class="kq-eyebrow">CERCA, AUNQUE ESTEMOS LEJOS</p>
+      <h2>Atención digital desde Cusco.</h2>
+      <p>
+        Te atendemos por los canales publicados. El horario exacto de atención está por confirmar;
+        no contamos con una dirección pública de atención presencial confirmada.
+      </p>
+    </div>
+    <aside>
+      <h2>Antes de escribirnos</h2>
+      <p>
+        Las consultas son informativas y no confirman una reserva. Las reservas y los pagos en línea
+        todavía no están habilitados.
+      </p>
+      <a routerLink="/preguntas-frecuentes">Consultar preguntas frecuentes</a>
+    </aside>
+  </section>
+</main>
+<app-site-footer />
