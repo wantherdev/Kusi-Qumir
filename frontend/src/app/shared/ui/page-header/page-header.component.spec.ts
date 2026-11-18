@@ -6,7 +6,12 @@ import { PageHeaderComponent } from './page-header.component';
 async function setup() {
   await TestBed.configureTestingModule({
     imports: [PageHeaderComponent],
-    providers: [provideRouter([{ path: '', component: PageHeaderComponent }])],
+    providers: [
+      provideRouter([
+        { path: '', component: PageHeaderComponent },
+        { path: 'contacto', component: PageHeaderComponent },
+      ]),
+    ],
   }).compileComponents();
   const fixture = TestBed.createComponent(PageHeaderComponent);
   fixture.detectChanges();
@@ -23,7 +28,7 @@ describe('PageHeaderComponent', () => {
   it('preserves desktop navigation and provides four named mobile destinations', async () => {
     const { element } = await setup();
     const desktop = element.querySelectorAll('.site-navigation a');
-    expect(desktop).toHaveLength(5);
+    expect(desktop).toHaveLength(6);
     expect(desktop[0].getAttribute('href')).toBe('/tours');
     expect(desktop[3].getAttribute('href')).toBe('/informacion-institucional');
     expect(element.querySelector('.header-brand')?.getAttribute('aria-label')).toContain(
@@ -66,15 +71,15 @@ describe('PageHeaderComponent', () => {
     expect(document.body.classList.contains('menu-open')).toBe(false);
   });
 
-  it('marks Contacto as current without marking Inicio at the contact fragment', async () => {
+  it('marks Contacto as current without marking Inicio on the contact page', async () => {
     const { fixture, element } = await setup();
-    await TestBed.inject(Router).navigateByUrl('/#contacto');
+    await TestBed.inject(Router).navigateByUrl('/contacto');
     fixture.detectChanges();
     await fixture.whenStable();
     fixture.detectChanges();
     const links = element.querySelectorAll('.mobile-dock a');
     expect(links[0].hasAttribute('aria-current')).toBe(false);
-    expect(links[2].getAttribute('aria-current')).toBe('location');
+    expect(links[2].getAttribute('aria-current')).toBe('page');
   });
 
   it('restores scrolling when destroyed while open', async () => {

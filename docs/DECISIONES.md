@@ -521,3 +521,27 @@ historial de Git ni la lista operativa de `ESTADO_PROYECTO.md`.
 - Menú abre un panel inferior mediante `dialog` nativo: foco contenido, cierre con Escape, botón y fondo exterior, retorno de foco y bloqueo temporal del desplazamiento.
 - Se conservan los destinos y la navegación de escritorio, las áreas seguras del dispositivo y la preferencia de movimiento reducido. Phuyu permanece retirado.
 - Validación: 56 pruebas frontend; compilación SSR y estática para Pages.
+
+
+## 2026-11-12 — Filtros administrativos y segundo acceso
+
+- La búsqueda y orden del catálogo administrativo se aplican sobre el listado cargado, sin nuevas dependencias ni escrituras de datos. Los totales del catálogo no cambian al filtrar.
+- Crear una cuenta de Auth y conceder acceso administrativo son operaciones independientes; no se permite autoconceder membresía desde el navegador. No se concede acceso a una segunda persona hasta identificar su correo o UID y el alcance solicitado.
+- Mantener los cambios en `integrar-catalogo-supabase`; esta tarea no fusiona a `main`.
+
+
+## Panel por responsabilidades — 17 de noviembre de 2026
+
+- Se conserva la autorización en PostgreSQL y se añade el rol a la interfaz para mostrar solo acciones permitidas. La interfaz no sustituye RLS.
+- Tours y paquetes editados por un editor pasan a borrador al guardarse; las reservas editadas quedan pendientes. El propietario conserva su estado al editar y decide publicación/confirmación.
+- Las altas de equipo utilizan manage-team en servidor y crean cuentas editoras. La cuenta propietaria no se puede eliminar desde esa función. La contraseña inicial no se persiste en almacenamiento local ni se registra en consola.
+- El dashboard sigue compilándose con build:admin y se publica desde integrar-catalogo-supabase. La portada pública no forma parte de estos cambios.
+
+
+## 2026-11-18 — Panel móvil y páginas de ayuda
+
+- Se rediseña el login con control accesible para mostrar/ocultar contraseña; se oculta nuevamente al intentar iniciar sesión y no cambia la autorización.
+- La navegación del panel pasa a una barra inferior en móvil; formularios, acciones y textos se adaptan a pantallas pequeñas. Los permisos de editor/propietario se conservan.
+- Contacto y preguntas frecuentes tienen rutas propias, enlaces desde menú y footer, y prerender. La portada conserva sus anclas como accesos breves a las nuevas páginas.
+- El titular vuelve a solicitar Phuyu expresamente para la página 404; se reutiliza exclusivamente la ilustración oficial aprobada con mapa.
+- Se publican únicamente canales verificados; no se inventan horarios ni se activan formularios o pagos.

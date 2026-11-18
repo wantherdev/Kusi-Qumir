@@ -41,6 +41,25 @@ const publicRoutes: Routes = [
       ),
   },
   {
+    path: 'contacto',
+    title: 'Contacto | Kusi Q’umir',
+    data: {
+      description:
+        'Conversa con Kusi Q’umir por WhatsApp, teléfono o correo. Atención digital desde Cusco para consultas sobre tu viaje.',
+    },
+    loadComponent: () =>
+      import('./pages/contact/contact.component').then((m) => m.ContactComponent),
+  },
+  {
+    path: 'preguntas-frecuentes',
+    title: 'Preguntas frecuentes sobre tu viaje | Kusi Q’umir',
+    data: {
+      description:
+        'Resuelve tus dudas sobre rutas, preparación, atención digital y consultas de viaje con Kusi Q’umir.',
+    },
+    loadComponent: () => import('./pages/faq/faq.component').then((m) => m.FaqComponent),
+  },
+  {
     path: 'informacion-institucional',
     title: 'Información institucional | Kusi Q’umir',
     data: {

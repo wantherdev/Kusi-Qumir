@@ -25,6 +25,11 @@
       </button>
     }
   </header>
+  @if (!owner()) {
+    <p class="help">
+      Las reservas que guardes quedarán pendientes de revisión por el administrador.
+    </p>
+  }
   <p class="notice" role="status">{{ message() }}</p>
   <p class="error" role="alert">{{ error() }}</p>
   @if (view() === 'form') {
@@ -196,7 +201,9 @@
             <label for="reservation-status">Estado</label
             ><select id="reservation-status" formControlName="status">
               @for (status of statuses; track status.value) {
-                <option [value]="status.value">{{ status.label }}</option>
+                @if (owner() || status.value === 'PENDING') {
+                  <option [value]="status.value">{{ status.label }}</option>
+                }
               }
             </select>
           </div>
@@ -276,23 +283,28 @@
         </dl>
         <div class="save-actions">
           @if (reservation.deletedAt) {
-            <button
-              type="button"
-              class="primary"
-              [disabled]="busy()"
-              (click)="restore(reservation)"
-            >
-              Restaurar reserva
-            </button>
+            @if (owner()) {
+              <button
+                type="button"
+                class="primary"
+                [disabled]="busy()"
+                (click)="restore(reservation)"
+              >
+                Restaurar reserva
+              </button>
+            }
           } @else {
-            <button
-              type="button"
-              class="secondary"
-              [disabled]="busy()"
-              (click)="requestDelete(reservation)"
-            >
-              Eliminar reserva</button
-            ><button type="button" class="primary" [disabled]="busy()" (click)="edit(reservation)">
+            @if (owner()) {
+              <button
+                type="button"
+                class="secondary"
+                [disabled]="busy()"
+                (click)="requestDelete(reservation)"
+              >
+                Eliminar reserva
+              </button>
+            }
+            <button type="button" class="primary" [disabled]="busy()" (click)="edit(reservation)">
               Editar reserva
             </button>
           }
@@ -314,15 +326,17 @@
           }
         </select>
       </div>
-      <button type="submit" class="secondary" [disabled]="loading() || busy()">Buscar</button
-      ><button
-        type="button"
-        class="quiet"
-        [disabled]="loading() || busy()"
-        (click)="switchDeleted()"
-      >
-        {{ deleted() ? 'Volver a reservas' : 'Ver eliminadas' }}
-      </button>
+      <button type="submit" class="secondary" [disabled]="loading() || busy()">Buscar</button>
+      @if (owner()) {
+        <button
+          type="button"
+          class="quiet"
+          [disabled]="loading() || busy()"
+          (click)="switchDeleted()"
+        >
+          {{ deleted() ? 'Volver a reservas' : 'Ver eliminadas' }}
+        </button>
+      }
     </form>
     <section class="list-panel" aria-labelledby="reservations-list-heading">
       <header class="list-heading">
@@ -370,14 +384,16 @@
                     Ver
                   </button>
                   @if (deleted()) {
-                    <button
-                      type="button"
-                      class="secondary"
-                      [disabled]="busy()"
-                      (click)="restore(reservation)"
-                    >
-                      Restaurar
-                    </button>
+                    @if (owner()) {
+                      <button
+                        type="button"
+                        class="secondary"
+                        [disabled]="busy()"
+                        (click)="restore(reservation)"
+                      >
+                        Restaurar
+                      </button>
+                    }
                   } @else {
                     <button
                       type="button"
@@ -386,16 +402,19 @@
                       (click)="edit(reservation)"
                       [attr.aria-label]="'Editar reserva ' + reservation.code"
                     >
-                      Editar</button
-                    ><button
-                      type="button"
-                      class="quiet danger"
-                      [disabled]="busy()"
-                      (click)="requestDelete(reservation)"
-                      [attr.aria-label]="'Eliminar reserva ' + reservation.code"
-                    >
-                      Eliminar
+                      Editar
                     </button>
+                    @if (owner()) {
+                      <button
+                        type="button"
+                        class="quiet danger"
+                        [disabled]="busy()"
+                        (click)="requestDelete(reservation)"
+                        [attr.aria-label]="'Eliminar reserva ' + reservation.code"
+                      >
+                        Eliminar
+                      </button>
+                    }
                   }
                 </div>
               </div>

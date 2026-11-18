@@ -1,13 +1,30 @@
 <a class="skip-link" href="#contenido">Ir al contenido principal</a>
-
 <app-page-header />
-
 <main id="contenido" class="not-found-page kq-shell" tabindex="-1">
-  <p class="error-code" aria-hidden="true">404</p>
-  <p class="kq-eyebrow">Ruta no encontrada</p>
-  <h1 class="text-balance">Esta página no forma parte del recorrido.</h1>
-  <p>Es posible que el enlace esté incompleto o que el contenido haya cambiado de ubicación.</p>
-  <a class="kq-button" routerLink="/">Volver al inicio</a>
+  <div class="not-found-copy">
+    <p class="kq-eyebrow">ERROR 404 · NOS SALIMOS DE LA RUTA</p>
+    <h1>Este camino aún<br />no está en el mapa.</h1>
+    <p>
+      Phuyu está listo para ayudarte a volver. Puede que el enlace haya cambiado o que la página ya
+      no exista.
+    </p>
+    <div class="recovery-actions">
+      <a class="kq-button" routerLink="/">Volver al inicio</a
+      ><a class="recovery-link" routerLink="/tours">Descubrir tours</a>
+    </div>
+    <p class="contact-hint">¿Buscabas algo más? <a routerLink="/contacto">Conversemos.</a></p>
+  </div>
+  <div class="not-found-art">
+    <span class="error-code" aria-hidden="true">404</span>
+    <div class="mascot-orbit" aria-hidden="true"></div>
+    <app-phuyu
+      class="not-found-mascot"
+      pose="help"
+      size="xl"
+      [decorative]="false"
+      alt="Phuyu, la mascota de Kusi Q’umir, con su mapa de viaje"
+      [priority]="true"
+    /><span class="map-note" aria-hidden="true">¡Volvamos a explorar!</span>
+  </div>
 </main>
-
 <app-site-footer />

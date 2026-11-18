@@ -11,7 +11,10 @@ const images = { upload: vi.fn() };
 const api = {
   access: signal('allowed'),
   userId: signal(''),
+  userEmail: signal('equipo@example.test'),
+  isOwner: signal(true),
   initialize: vi.fn(),
+  signIn: vi.fn(),
   list: vi.fn(),
   create: vi.fn(),
   getTour: vi.fn(),
@@ -21,6 +24,7 @@ const api = {
 describe('admin tour form', () => {
   beforeEach(async () => {
     api.access.set('allowed');
+    api.isOwner.set(true);
     Object.defineProperty(URL, 'createObjectURL', {
       configurable: true,
       writable: true,
@@ -54,6 +58,155 @@ describe('admin tour form', () => {
       ],
     }).compileComponents();
   });
+  it('toggles password visibility without clearing the field or submitting the form', async () => {
+    api.access.set('signed-out');
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const password = root.querySelector('#admin-password') as HTMLInputElement;
+    const toggle = root.querySelector(
+      'button[aria-controls="admin-password"]',
+    ) as HTMLButtonElement;
+    password.value = 'example-only';
+    password.dispatchEvent(new Event('input'));
+    expect(password.type).toBe('password');
+    toggle.click();
+    fixture.detectChanges();
+    expect(password.type).toBe('text');
+    expect(password.value).toBe('example-only');
+    expect(toggle.getAttribute('aria-label')).toBe('Ocultar contraseña');
+    expect(toggle.getAttribute('aria-pressed')).toBe('true');
+    toggle.click();
+    fixture.detectChanges();
+    expect(password.type).toBe('password');
+    expect(password.value).toBe('example-only');
+    expect(api.signIn).not.toHaveBeenCalled();
+  });
+  it('hides the password again before submitting a sign-in attempt', async () => {
+    api.access.set('signed-out');
+    api.signIn.mockRejectedValueOnce(new Error('offline'));
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    const root: HTMLElement = fixture.nativeElement;
+    const email = root.querySelector('#admin-email') as HTMLInputElement;
+    const password = root.querySelector('#admin-password') as HTMLInputElement;
+    email.value = 'team@example.test';
+    email.dispatchEvent(new Event('input'));
+    password.value = 'example-only';
+    password.dispatchEvent(new Event('input'));
+    (root.querySelector('button[aria-controls="admin-password"]') as HTMLButtonElement).click();
+    fixture.detectChanges();
+    root.querySelector('form')?.dispatchEvent(new Event('submit', { cancelable: true }));
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(password.type).toBe('password');
+    expect(password.value).toBe('example-only');
+    expect(root.querySelector('[role="alert"]')?.textContent).toBeTruthy();
+  });
+  it('shows all three work areas to editors and hides owner actions', async () => {
+    api.isOwner.set(false);
+    api.list.mockResolvedValue([
+      { id: 'draft', title: 'Borrador', code: 'KQ-01', slug: 'borrador', active: false },
+    ]);
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(root.querySelector('.tour-list h3')).not.toBeNull();
+    });
+    const buttons = Array.from(root.querySelectorAll('button')).map((button) =>
+      button.textContent?.trim(),
+    );
+    expect(buttons).toContain('Tours');
+    expect(buttons).toContain('Paquetes');
+    expect(buttons).toContain('Reservas');
+    expect(buttons).not.toContain('Usuarios');
+    expect(buttons).not.toContain('Publicar');
+    expect(buttons).not.toContain('Eliminar');
+    expect(buttons).not.toContain('Ver eliminados');
+  });
+  it('combines accent-insensitive search and status filters without changing catalog totals', async () => {
+    api.list.mockResolvedValue([
+      { id: 'one', title: 'Montaña de Colores', slug: 'montana', code: 'KQ-01', active: true },
+      {
+        id: 'two',
+        title: 'Montaña privada',
+        slug: 'montana-privada',
+        code: 'KQ-02',
+        active: false,
+      },
+      { id: 'three', title: 'Cusco', slug: 'cusco', code: 'KQ-03', active: true },
+    ]);
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(root.querySelectorAll('.tour-list h3')).toHaveLength(3);
+    });
+    const search = root.querySelector<HTMLInputElement>('#tour-search')!;
+    search.value = 'MONTANA';
+    search.dispatchEvent(new Event('input', { bubbles: true }));
+    const state = root.querySelector<HTMLSelectElement>('#tour-visibility')!;
+    state.value = 'draft';
+    state.dispatchEvent(new Event('change', { bubbles: true }));
+    fixture.detectChanges();
+    expect(root.querySelectorAll('.tour-list h3')).toHaveLength(1);
+    expect(root.querySelector('.tour-list h3')?.textContent).toBe('Montaña privada');
+    expect(root.querySelector('.result-count')?.textContent).toContain('1 de 3');
+    expect(root.querySelector('.metrics strong')?.textContent).toBe('3');
+    search.value = 'sin coincidencias';
+    search.dispatchEvent(new Event('input', { bubbles: true }));
+    fixture.detectChanges();
+    expect(root.querySelector('.tour-list')?.textContent).toContain('No hay tours que coincidan');
+    Array.from(root.querySelectorAll('button'))
+      .find((b) => b.textContent?.trim() === 'Limpiar filtros')
+      ?.click();
+    fixture.detectChanges();
+    expect(root.querySelectorAll('.tour-list h3')).toHaveLength(3);
+    search.value = 'kq-03';
+    search.dispatchEvent(new Event('input', { bubbles: true }));
+    fixture.detectChanges();
+    expect(root.querySelector('.tour-list h3')?.textContent).toBe('Cusco');
+  });
+  it('sorts by name and clears filters when switching to eliminated tours', async () => {
+    api.list.mockResolvedValue([
+      { id: 'one', title: 'Valle', slug: 'valle', code: 'KQ-01', active: true },
+      { id: 'two', title: 'Cusco', slug: 'cusco', code: 'KQ-02', active: false },
+    ]);
+    const fixture = TestBed.createComponent(AdminComponent);
+    fixture.detectChanges();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    await vi.waitFor(() => {
+      fixture.detectChanges();
+      expect(root.querySelectorAll('.tour-list h3')).toHaveLength(2);
+    });
+    const order = root.querySelector<HTMLSelectElement>('#tour-sort')!;
+    order.value = 'name';
+    order.dispatchEvent(new Event('change', { bubbles: true }));
+    const state = root.querySelector<HTMLSelectElement>('#tour-visibility')!;
+    state.value = 'draft';
+    state.dispatchEvent(new Event('change', { bubbles: true }));
+    fixture.detectChanges();
+    expect(root.querySelector('.tour-list h3')?.textContent).toBe('Cusco');
+    Array.from(root.querySelectorAll('button'))
+      .find((b) => b.textContent?.trim() === 'Ver eliminados')
+      ?.click();
+    await fixture.whenStable();
+    fixture.detectChanges();
+    expect(api.list).toHaveBeenLastCalledWith(true);
+    expect(root.querySelector('#tour-visibility')).toBeNull();
+    expect(root.querySelectorAll('.tour-list h3')).toHaveLength(2);
+  });
   it('opens a usable creation form and does not submit an invalid tour', async () => {
     const fixture = TestBed.createComponent(AdminComponent);
     fixture.detectChanges();
@@ -66,7 +219,9 @@ describe('admin tour form', () => {
     create?.click();
     fixture.detectChanges();
     expect(root.querySelector('input#title')).not.toBeNull();
-    expect(root.querySelector('label.image-picker-button[for="image"]')?.textContent).toContain('Seleccionar imagen');
+    expect(root.querySelector('label.image-picker-button[for="image"]')?.textContent).toContain(
+      'Seleccionar imagen',
+    );
     expect(root.querySelector<HTMLInputElement>('#image')?.type).toBe('file');
     const form = root.querySelector('form');
     form?.dispatchEvent(new Event('submit', { bubbles: true, cancelable: true }));
@@ -150,7 +305,12 @@ describe('admin tour form', () => {
         excludes: '',
         requirements: '',
         recommendations: '',
-        itinerary: [{ title: 'Visita', activities: [{ title: 'Visita', time: '', description: '', duration: 0 }] }],
+        itinerary: [
+          {
+            title: 'Visita',
+            activities: [{ title: 'Visita', time: '', description: '', duration: 0 }],
+          },
+        ],
       }),
       id: 'tour-id',
       updatedAt: '2026-11-01T00:00:00',
@@ -210,14 +370,22 @@ describe('admin tour form', () => {
     await fixture.whenStable();
     fixture.detectChanges();
     const root: HTMLElement = fixture.nativeElement;
-    Array.from(root.querySelectorAll('button')).find((button) => button.textContent?.includes('+ Nuevo tour'))?.click();
+    Array.from(root.querySelectorAll('button'))
+      .find((button) => button.textContent?.includes('+ Nuevo tour'))
+      ?.click();
     fixture.detectChanges();
     const click = (text: string) => {
-      Array.from(root.querySelectorAll('button')).find((button) => button.textContent?.trim() === text)?.click();
+      Array.from(root.querySelectorAll('button'))
+        .find((button) => button.textContent?.trim() === text)
+        ?.click();
       fixture.detectChanges();
     };
     click('+ Agregar actividad al día 1');
-    for (const [id, value] of Object.entries({ 'activity-0-1': 'Caminata', 'time-0-1': '08:30', 'activity-description-0-1': 'Detalle de la caminata' })) {
+    for (const [id, value] of Object.entries({
+      'activity-0-1': 'Caminata',
+      'time-0-1': '08:30',
+      'activity-description-0-1': 'Detalle de la caminata',
+    })) {
       const input = root.querySelector<HTMLInputElement | HTMLTextAreaElement>('#' + id)!;
       input.value = value;
       input.dispatchEvent(new Event('input', { bubbles: true }));
@@ -226,7 +394,9 @@ describe('admin tour form', () => {
     fixture.detectChanges();
     expect(root.querySelector<HTMLInputElement>('#activity-0-0')?.value).toBe('Caminata');
     expect(root.querySelector<HTMLInputElement>('#time-0-0')?.value).toBe('08:30');
-    expect(root.querySelector<HTMLTextAreaElement>('#activity-description-0-0')?.value).toBe('Detalle de la caminata');
+    expect(root.querySelector<HTMLTextAreaElement>('#activity-description-0-0')?.value).toBe(
+      'Detalle de la caminata',
+    );
     click('+ Agregar día');
     expect(root.querySelector('#day-1')).not.toBeNull();
     click('Quitar día 2');

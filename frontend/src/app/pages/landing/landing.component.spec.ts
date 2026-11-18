@@ -138,7 +138,12 @@ describe('LandingComponent', () => {
     expect(processSteps).toHaveLength(4);
     expect(processSteps[0].textContent).toContain('Paso 01');
     expect(processSteps[3].textContent).toContain('Paso 04');
-    expect(fixture.nativeElement.querySelectorAll('.faq-list details')).toHaveLength(5);
+    expect(fixture.nativeElement.querySelector('#preguntas a')?.getAttribute('href')).toBe(
+      '/preguntas-frecuentes',
+    );
+    expect(fixture.nativeElement.querySelector('#contacto a')?.getAttribute('href')).toBe(
+      '/contacto',
+    );
     expect(content).toContain('contratación desactivada');
   });
 });

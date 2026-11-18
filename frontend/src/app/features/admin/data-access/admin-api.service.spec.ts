@@ -45,7 +45,9 @@ const draft = buildTourDraft({
   excludes: '',
   requirements: '',
   recommendations: '',
-  itinerary: [{ title: 'Visita', activities: [{ title: 'Visita', time: '', description: '', duration: 0 }] }],
+  itinerary: [
+    { title: 'Visita', activities: [{ title: 'Visita', time: '', description: '', duration: 0 }] },
+  ],
 });
 
 describe('admin authorization boundary', () => {
@@ -79,7 +81,7 @@ describe('admin authorization boundary', () => {
     expect(sdk.insert).not.toHaveBeenCalled();
   });
   it('inserts a draft for an authorized member and explains duplicate slug/code errors', async () => {
-    sdk.membership.mockResolvedValue({ data: { user_id: 'user-id' }, error: null });
+    sdk.membership.mockResolvedValue({ data: { user_id: 'user-id', role: 'owner' }, error: null });
     const api = TestBed.inject(AdminApiService);
     await api.create(draft);
     expect(sdk.insert).toHaveBeenCalledWith(
@@ -92,6 +94,21 @@ describe('admin authorization boundary', () => {
     );
     sdk.insert.mockResolvedValue({ error: { code: '23505' } });
     await expect(api.create(draft)).rejects.toThrow('URL o código');
+  });
+  it('rejects unknown roles and prevents editors from publishing or managing users', async () => {
+    sdk.membership.mockResolvedValue({ data: { user_id: 'user-id', role: 'editor' }, error: null });
+    const api = TestBed.inject(AdminApiService);
+    await api.authorizedClient();
+    expect(api.role()).toBe('editor');
+    expect(api.isOwner()).toBe(false);
+    await expect(api.requireOwner()).rejects.toThrow('administrador total');
+    await expect(api.setVisibility('tour', true, 'v')).rejects.toThrow('publicar');
+    sdk.membership.mockResolvedValue({
+      data: { user_id: 'user-id', role: 'unexpected' },
+      error: null,
+    });
+    await expect(api.authorizedClient()).rejects.toThrow('permiso');
+    expect(api.access()).toBe('forbidden');
   });
   it('does not create a browser auth client during server rendering', async () => {
     TestBed.overrideProvider(PLATFORM_ID, { useValue: 'server' });

@@ -1,5 +1,5 @@
 import { isPlatformBrowser } from '@angular/common';
-import { Injectable, InjectionToken, PLATFORM_ID, inject, signal } from '@angular/core';
+import { Injectable, InjectionToken, PLATFORM_ID, inject, signal, computed } from '@angular/core';
 import { createClient, SupabaseClient } from '@supabase/supabase-js';
 import { SUPABASE_CATALOG } from '../../tours/data-access/tours.config';
 import { Tour } from '../../tours/domain/tour.model';
@@ -33,6 +33,9 @@ export class AdminApiService {
   private client: SupabaseClient | null = null;
   readonly access = signal<AdminAccess>('loading');
   readonly userId = signal('');
+  readonly userEmail = signal('');
+  readonly role = signal<'owner' | 'editor' | null>(null);
+  readonly isOwner = computed(() => this.access() === 'allowed' && this.role() === 'owner');
 
   private getClient(): SupabaseClient {
     if (!this.browser || !this.config) throw new Error('Panel no configurado.');
@@ -49,6 +52,8 @@ export class AdminApiService {
         if (event === 'SIGNED_OUT') {
           this.access.set('signed-out');
           this.userId.set('');
+          this.role.set(null);
+          this.userEmail.set('');
         }
       });
     }
@@ -91,16 +96,19 @@ export class AdminApiService {
       throw new Error('No se pudo verificar la sesión. Vuelve a ingresar.');
     }
     this.userId.set(data.user.id);
+    this.userEmail.set(data.user.email ?? '');
     const membership = await client
       .from('TourAdministrator')
-      .select('user_id')
+      .select('user_id,role')
       .eq('user_id', data.user.id)
       .maybeSingle();
     if (membership.error) {
       this.access.set('error');
       throw new Error('No se pudieron verificar tus permisos. Inténtalo de nuevo.');
     }
-    this.access.set(membership.data ? 'allowed' : 'forbidden');
+    const role: unknown = membership.data?.role;
+    this.role.set(role === 'owner' || role === 'editor' ? role : null);
+    this.access.set(this.role() ? 'allowed' : 'forbidden');
   }
 
   async signOut(): Promise<void> {
@@ -108,6 +116,8 @@ export class AdminApiService {
     if (error) throw new Error('No se pudo cerrar la sesión. Inténtalo de nuevo.');
     this.access.set('signed-out');
     this.userId.set('');
+    this.role.set(null);
+    this.userEmail.set('');
   }
 
   async list(deleted = false): Promise<AdminTour[]> {
@@ -167,14 +177,22 @@ export class AdminApiService {
   }
 
   async updateTour(id: string, expectedUpdatedAt: string, patch: Partial<Tour>): Promise<void> {
-    await this.changeTour(id, expectedUpdatedAt, patch);
+    await this.authorizedClient();
+    await this.changeTour(
+      id,
+      expectedUpdatedAt,
+      this.isOwner() ? patch : { ...patch, active: false },
+    );
   }
 
   async setVisibility(id: string, active: boolean, expectedUpdatedAt: string): Promise<void> {
+    await this.authorizedClient();
+    if (active && !this.isOwner()) throw new Error('Solo el administrador total puede publicar.');
     await this.changeTour(id, expectedUpdatedAt, { active });
   }
 
   async archiveTour(tour: AdminTour): Promise<void> {
+    await this.requireOwner();
     await this.changeTour(tour.id, tour.updatedAt, {
       deletedAt: new Date().toISOString(),
       active: false,
@@ -182,7 +200,14 @@ export class AdminApiService {
   }
 
   async restoreTour(tour: AdminTour): Promise<void> {
+    await this.requireOwner();
     await this.changeTour(tour.id, tour.updatedAt, { deletedAt: null, active: false });
+  }
+
+  async requireOwner(): Promise<SupabaseClient> {
+    const client = await this.authorizedClient();
+    if (!this.isOwner()) throw new Error('Esta acción requiere un administrador total.');
+    return client;
   }
 
   private async changeTour(
