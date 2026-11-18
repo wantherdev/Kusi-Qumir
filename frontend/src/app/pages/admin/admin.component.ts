@@ -34,10 +34,19 @@ import {
   validateTourImage,
 } from '../../features/admin/data-access/tour-images.service';
 import { ReservationsComponent } from '../../features/admin/ui/reservations.component';
+import { PackagesComponent } from '../../features/admin/ui/packages.component';
+import { TeamComponent } from '../../features/admin/ui/team.component';
 
 @Component({
   selector: 'app-admin',
-  imports: [ReactiveFormsModule, RouterLink, AdminConfirmComponent, ReservationsComponent],
+  imports: [
+    ReactiveFormsModule,
+    RouterLink,
+    AdminConfirmComponent,
+    ReservationsComponent,
+    PackagesComponent,
+    TeamComponent,
+  ],
   templateUrl: './admin.component.html',
   styleUrl: './admin.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -50,7 +59,7 @@ export class AdminComponent implements OnInit, OnDestroy {
   protected readonly imagePreview = signal('');
   protected readonly imageError = signal('');
   private previewObjectUrl: string | null = null;
-  protected readonly section = signal<'tours' | 'reservations'>('tours');
+  protected readonly section = signal<'tours' | 'reservations' | 'packages' | 'users'>('tours');
   protected readonly reservationDirty = signal(false);
   protected readonly deleted = signal(false);
   protected readonly editing = signal<TourRecord | null>(null);
@@ -63,6 +72,27 @@ export class AdminComponent implements OnInit, OnDestroy {
   protected readonly error = signal('');
   protected readonly message = signal('');
   protected readonly tours = signal<AdminTour[]>([]);
+  protected readonly search = signal('');
+  protected readonly visibility = signal('all');
+  protected readonly sort = signal('recent');
+  protected readonly filteredTours = computed(() => {
+    const normalize = (value: string) =>
+      value
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .toLocaleLowerCase('es');
+    const query = normalize(this.search().trim());
+    const result = this.tours().filter(
+      (tour) =>
+        (!query || normalize(`${tour.title} ${tour.code} ${tour.slug}`).includes(query)) &&
+        (this.deleted() ||
+          this.visibility() === 'all' ||
+          (this.visibility() === 'published' ? tour.active : !tour.active)),
+    );
+    return this.sort() === 'name'
+      ? result.sort((a, b) => a.title.localeCompare(b.title, 'es'))
+      : result;
+  });
   protected readonly creating = signal(false);
   protected readonly published = computed(() => this.tours().filter((tour) => tour.active).length);
   protected readonly login = this.fb.nonNullable.group({
@@ -167,6 +197,7 @@ export class AdminComponent implements OnInit, OnDestroy {
     try {
       await this.api.signOut();
       this.tours.set([]);
+      this.clearFilters();
       this.section.set('tours');
       this.editing.set(null);
       this.reservationDirty.set(false);
@@ -304,8 +335,11 @@ export class AdminComponent implements OnInit, OnDestroy {
     }
   }
 
-  protected async selectSection(section: 'tours' | 'reservations'): Promise<void> {
+  protected async selectSection(
+    section: 'tours' | 'reservations' | 'packages' | 'users',
+  ): Promise<void> {
     if (this.busy() || this.loadingTours()) return;
+    if (section === 'users' && !this.api.isOwner()) return;
     if ((this.creating() && this.form.dirty) || this.reservationDirty()) {
       this.error.set('Guarda o cancela los cambios antes de cambiar de sección.');
       return;
@@ -359,8 +393,14 @@ export class AdminComponent implements OnInit, OnDestroy {
   }
   protected async switchDeleted(): Promise<void> {
     this.deleted.update((value) => !value);
+    this.clearFilters();
     this.message.set('');
     await this.load();
+  }
+  protected clearFilters(): void {
+    this.search.set('');
+    this.visibility.set('all');
+    this.sort.set('recent');
   }
   protected requestDelete(tour: AdminTour): void {
     this.error.set('');

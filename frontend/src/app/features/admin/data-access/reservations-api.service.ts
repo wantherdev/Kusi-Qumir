@@ -37,12 +37,18 @@ export class ReservationsApiService {
     if (error) this.fail(error.code);
   }
   async update(reservation: Reservation, value: ReservationInput): Promise<void> {
-    await this.change(reservation, normalizeReservation(value));
+    await this.admin.authorizedClient();
+    await this.change(
+      reservation,
+      normalizeReservation(this.admin.isOwner() ? value : { ...value, status: 'PENDING' }),
+    );
   }
   async archive(reservation: Reservation): Promise<void> {
+    await this.admin.requireOwner();
     await this.change(reservation, { deletedAt: new Date().toISOString() });
   }
   async restore(reservation: Reservation): Promise<void> {
+    await this.admin.requireOwner();
     await this.change(reservation, { deletedAt: null });
   }
   private async change(

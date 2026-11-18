@@ -1,0 +1,215 @@
+<section aria-labelledby="packages-heading">
+  <header class="section-heading">
+    <div>
+      <p class="eyebrow">VIAJES DE VARIOS DÍAS</p>
+      <h1 id="packages-heading">
+        {{ editing() ? (selected() ? 'Editar paquete' : 'Nuevo paquete') : 'Paquetes' }}
+      </h1>
+      <p>Combina tours y días libres en un recorrido.</p>
+    </div>
+    @if (editing()) {
+      <button type="button" class="secondary" [disabled]="busy()" (click)="close()">
+        Volver al listado
+      </button>
+    } @else {
+      <button type="button" class="primary" [disabled]="busy() || loading()" (click)="open()">
+        + Nuevo paquete
+      </button>
+    }
+  </header>
+  <p role="status" class="notice">{{ message() }}</p>
+  <p role="alert" class="error">{{ error() }}</p>
+  @if (editing()) {
+    <form [formGroup]="form" (ngSubmit)="save()" class="reservation-form" novalidate>
+      <fieldset [disabled]="busy()">
+        <legend>Información del paquete</legend>
+        <label for="package-title">Nombre *</label
+        ><input
+          id="package-title"
+          formControlName="title"
+          maxlength="100"
+          required
+          [attr.aria-invalid]="form.controls.title.touched && form.controls.title.invalid"
+          aria-describedby="package-title-help"
+        />
+        <small id="package-title-help">Entre 2 y 100 caracteres.</small>
+        <label for="package-description">Descripción</label
+        ><textarea
+          id="package-description"
+          formControlName="description"
+          maxlength="400"
+          rows="3"
+        ></textarea>
+      </fieldset>
+      <fieldset [disabled]="busy()">
+        <legend>Itinerario · {{ days.length }} días</legend>
+        <div formArrayName="itinerary" class="fields">
+          @for (day of days.controls; track day; let index = $index) {
+            <div>
+              <label [for]="'package-day-' + index">Día {{ index + 1 }}</label>
+              <select [id]="'package-day-' + index" [formControlName]="index">
+                <option value="">Día libre</option>
+                @if (day.value && !hasTour(day.value)) {
+                  <option [value]="day.value">{{ day.value }} · tour no disponible</option>
+                }
+                @for (tour of tours(); track tour.id) {
+                  <option [value]="tour.slug">{{ tour.title }}</option>
+                }
+              </select>
+              @if (days.length > 1) {
+                <button
+                  type="button"
+                  class="quiet danger"
+                  (click)="removeDay(index)"
+                  [attr.aria-label]="'Quitar día ' + (index + 1)"
+                >
+                  Quitar día
+                </button>
+              }
+            </div>
+          }
+        </div>
+        <button type="button" class="secondary" [disabled]="days.length >= 30" (click)="addDay()">
+          + Añadir día
+        </button>
+      </fieldset>
+      <p class="help">
+        {{
+          owner()
+            ? 'Los paquetes nuevos se guardan como borradores. Al editar se conserva su estado actual.'
+            : 'Al guardar, el paquete quedará como borrador para revisión del administrador.'
+        }}
+      </p>
+      <div class="save-actions">
+        <button class="primary" type="submit" [disabled]="busy()">
+          {{ busy() ? 'Guardando…' : 'Guardar paquete' }}
+        </button>
+      </div>
+    </form>
+  } @else {
+    <div class="filters">
+      <div>
+        <label for="package-search">Buscar paquete</label
+        ><input
+          id="package-search"
+          #packageSearch
+          type="search"
+          [value]="search()"
+          (input)="search.set(packageSearch.value)"
+        />
+      </div>
+      <button type="button" class="secondary" [disabled]="busy() || loading()" (click)="load()">
+        Actualizar
+      </button>
+      @if (owner()) {
+        <button
+          type="button"
+          class="quiet"
+          [disabled]="busy() || loading()"
+          (click)="switchDeleted()"
+        >
+          {{ deleted() ? 'Volver a paquetes' : 'Ver eliminados' }}
+        </button>
+      }
+    </div>
+    <div class="list-panel">
+      @if (loading()) {
+        <p class="state" role="status">Cargando paquetes…</p>
+      } @else if (error()) {
+        <button type="button" class="secondary" (click)="load()">Reintentar</button>
+      } @else {
+        <ul class="reservation-list">
+          @for (row of filtered(); track row.id) {
+            <li>
+              <div class="record-row">
+                <div>
+                  <h2>{{ row.title }}</h2>
+                  <p>{{ row.description }}</p>
+                  <p>
+                    {{ row.itinerary.length }} días ·
+                    {{ deleted() ? 'Eliminado' : row.active ? 'Publicado' : 'Borrador' }}
+                  </p>
+                  <div class="record-days">
+                    @for (day of row.itinerary; track $index) {
+                      <p>Día {{ $index + 1 }}: {{ dayTitle(day) }}</p>
+                    }
+                  </div>
+                </div>
+                <div class="row-actions">
+                  @if (deleted()) {
+                    @if (owner()) {
+                      <button
+                        type="button"
+                        class="secondary"
+                        [disabled]="busy()"
+                        (click)="restore(row)"
+                      >
+                        Restaurar
+                      </button>
+                    }
+                  } @else {
+                    <button
+                      type="button"
+                      class="secondary"
+                      [disabled]="busy()"
+                      (click)="open(row)"
+                      [attr.aria-label]="'Editar paquete ' + row.title"
+                    >
+                      Editar
+                    </button>
+                    @if (owner() || row.active) {
+                      <button
+                        type="button"
+                        class="secondary"
+                        [disabled]="busy()"
+                        (click)="visibility(row)"
+                      >
+                        {{ row.active ? 'Pasar a borrador' : 'Publicar' }}
+                      </button>
+                    }
+                    @if (owner()) {
+                      <button
+                        type="button"
+                        class="quiet danger"
+                        [disabled]="busy()"
+                        (click)="requestArchive(row)"
+                        [attr.aria-label]="'Eliminar paquete ' + row.title"
+                      >
+                        Eliminar
+                      </button>
+                    }
+                  }
+                </div>
+              </div>
+            </li>
+          } @empty {
+            <li class="state">
+              {{
+                search()
+                  ? 'No hay paquetes que coincidan con la búsqueda.'
+                  : deleted()
+                    ? 'No hay paquetes eliminados.'
+                    : 'Aún no hay paquetes. Crea el primero.'
+              }}
+            </li>
+          }
+        </ul>
+      }
+    </div>
+  }
+  @if (confirmation()) {
+    <app-admin-confirm
+      [title]="confirmationTitle()"
+      [message]="
+        confirmation()?.kind === 'archive'
+          ? 'El paquete se moverá a eliminados. Podrás restaurarlo como borrador.'
+          : 'Los cambios sin guardar se perderán.'
+      "
+      [confirmLabel]="confirmation()?.kind === 'archive' ? 'Eliminar paquete' : 'Descartar cambios'"
+      [busy]="busy()"
+      [error]="error()"
+      (confirmed)="confirm()"
+      (cancelled)="confirmation.set(null)"
+    />
+  }
+</section>

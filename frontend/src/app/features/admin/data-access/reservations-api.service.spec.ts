@@ -45,7 +45,12 @@ describe('private reservations access', () => {
     insert.mockResolvedValue({ error: null });
     result.mockResolvedValue({ data: { id: 'reservation-id' }, error: null });
     TestBed.configureTestingModule({
-      providers: [{ provide: AdminApiService, useValue: { authorizedClient } }],
+      providers: [
+        {
+          provide: AdminApiService,
+          useValue: { authorizedClient, requireOwner: authorizedClient, isOwner: () => true },
+        },
+      ],
     });
   });
   it('does not query reservation data if administrator authorization fails', async () => {

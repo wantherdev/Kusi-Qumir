@@ -47,6 +47,7 @@ describe('manual reservations UI', () => {
   });
   async function setup() {
     const fixture = TestBed.createComponent(ReservationsComponent);
+    fixture.componentRef.setInput('owner', true);
     fixture.componentRef.setInput('tours', [
       {
         id: 'tour-id',
@@ -77,6 +78,22 @@ describe('manual reservations UI', () => {
       );
     }
   }
+  it('allows editor searches and editing while hiding deletion and confirmation states', async () => {
+    const fixture = await setup();
+    fixture.componentRef.setInput('owner', false);
+    fixture.detectChanges();
+    const root: HTMLElement = fixture.nativeElement;
+    expect(root.textContent).not.toContain('Ver eliminadas');
+    expect(root.textContent).not.toContain('Eliminar');
+    expect(
+      Array.from(root.querySelectorAll('button')).some((b) => b.textContent?.trim() === 'Buscar'),
+    ).toBe(true);
+    click(root, 'Editar');
+    fixture.detectChanges();
+    const select = root.querySelector<HTMLSelectElement>('#reservation-status')!;
+    expect(Array.from(select.options).map((option) => option.value)).toEqual(['PENDING']);
+    expect(root.querySelector('#reservation-name')).not.toBeNull();
+  });
   it('shows reservation details, date and manually recorded balance', async () => {
     const fixture = await setup();
     const root: HTMLElement = fixture.nativeElement;
