@@ -383,3 +383,22 @@ Prompt sugerido para una nueva sesión:
 - Menú abre un panel inferior mediante `dialog` nativo: foco contenido, cierre con Escape, botón y fondo exterior, retorno de foco y bloqueo temporal del desplazamiento.
 - Se conservan los destinos y la navegación de escritorio, las áreas seguras del dispositivo y la preferencia de movimiento reducido. Phuyu permanece retirado.
 - Validación: 56 pruebas frontend; compilación SSR y estática para Pages.
+
+
+## 2026-11-12 — Búsqueda del catálogo administrativo
+
+- La rama `integrar-catalogo-supabase` incorpora búsqueda por nombre, código y slug sin distinguir mayúsculas ni tildes, filtro de publicados/borradores y orden alfabético opcional.
+- El panel diferencia catálogo vacío de búsqueda sin resultados, muestra resultados sobre total y permite restablecer los filtros. Cambiar a eliminados restablece los filtros para no ocultar registros recuperables.
+- Controles adaptables y con etiquetas; el login usa lenguaje del equipo. No se modifica el esquema ni la autorización de Supabase.
+- Validación: 97 pruebas Angular y 3 pruebas de lanzamiento aprobadas; builds SSR y administrativo correctos. No se verificó una sesión administrativa real en navegador.
+- Segundo usuario pendiente: solicitar correo y alcance de permisos; todavía no se ha creado una cuenta ni concedido membresía. La implementación actual solo distingue administrador autorizado de cuenta sin acceso.
+
+
+## Panel administrativo — 17 de noviembre de 2026
+
+- Fuente preparada en integrar-catalogo-supabase: filtros del catálogo, pestaña Paquetes con itinerario por días y días libres, y pestaña Usuarios solo para el rol owner.
+- Supabase ya tiene dos cuentas autorizadas: owner y editor. Las reglas remotas owner_editor_row_access restringen al editor a borradores y reservas pendientes. No se guardan credenciales en el repositorio.
+- La interfaz consulta el rol en TourAdministrator; el editor ve Tours, Paquetes y Reservas. Publicación, eliminación recuperable, restauración y gestión de usuarios quedan reservadas al propietario. Las ediciones del editor se guardan como borrador/pendiente.
+- Los paquetes conservan los días libres como null, admiten hasta 30 días y comprueban updatedAt para evitar sobrescrituras concurrentes.
+- manage-team está activo en Supabase con verificación JWT y comprobación de owner en cada solicitud. Su fuente se incorpora en supabase/functions/manage-team/index.ts; no usa secretos en el cliente.
+- Validación local: 110 pruebas Angular y tres pruebas de lanzamiento aprobadas; compilaciones SSR y administrativa correctas. La publicación en el dominio real queda pendiente de confirmar.
