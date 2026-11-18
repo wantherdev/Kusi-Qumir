@@ -31,6 +31,8 @@ export function createPagesRoutes(adminAtRoot = false, prerenderTours = false): 
   return [
     ...[
       '',
+      'contacto',
+      'preguntas-frecuentes',
       'informacion-institucional',
       'privacidad',
       'terminos',
