@@ -536,6 +536,23 @@ legend {
 .catalog-heading h2 {
   margin-right: auto;
 }
+.catalog-filters {
+  display: flex;
+  align-items: end;
+  flex-wrap: wrap;
+  gap: 1rem;
+  padding: 1.25rem;
+  border-bottom: 1px solid var(--kq-border);
+}
+.catalog-filters > div { flex: 1 1 160px; min-width: 0; }
+.catalog-filters .search-field { flex: 2 1 240px; }
+.result-count { padding: 1rem 1.25rem 0; font-size: .85rem; }
+.metrics strong { overflow-wrap: anywhere; }
+@media (max-width: 640px) {
+  .catalog-filters { padding: 1rem; gap: .8rem; }
+  .catalog-filters > div, .catalog-filters .search-field { flex-basis: 100%; }
+  .metrics strong { font-size: clamp(1rem, 4vw, 1.9rem); }
+}
 
 .image-preview {
   margin: 1rem 0;
@@ -582,3 +599,6 @@ input.image-file-input { position: absolute; width: 1px; height: 1px; padding: 0
 .activity-fields { display: grid; grid-template-columns: minmax(150px, .6fr) minmax(0, 1.4fr); gap: 1rem; margin-bottom: 1rem; }
 .danger-action { color: var(--kq-danger); }
 @media (max-width: 640px) { .activity-fields { grid-template-columns: 1fr; } .activity-timeline { padding-left: .8rem; } .activity-editor::before { left: -1.25rem; } .field-badge { display: none; } }
+
+.admin-sections { flex-wrap: wrap; }
+.admin-sections button { min-width: 0; flex: 1 1 100px; }
