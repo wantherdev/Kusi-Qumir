@@ -1,10 +1,10 @@
-<div class="admin-shell">
+<div class="admin-shell" [class.is-authenticated]="api.access() === 'allowed'">
   <header class="admin-header">
     <a routerLink="/" class="brand" aria-label="Kusi Q’umir, inicio"
       >Kusi Q’umir<span>ADMINISTRACIÓN</span></a
     >
     <nav aria-label="Navegación del administrador">
-      <a routerLink="/tours">Ver catálogo <span aria-hidden="true">↗</span></a>
+      <a routerLink="/tours">Ver catálogo</a>
       @if (api.access() === 'allowed' || api.access() === 'forbidden') {
         <button type="button" class="quiet" [disabled]="busy()" (click)="signOut()">
           Cerrar sesión
@@ -36,16 +36,25 @@
     } @else if (api.access() === 'signed-out') {
       <section class="login-layout">
         <div class="welcome">
-          <p class="eyebrow">ESPACIO DEL EQUIPO</p>
-          <h1>Una nueva aventura<br />empieza aquí.</h1>
+          <span class="login-label">KUSI Q’UMIR · ESPACIO DEL EQUIPO</span>
+          <p class="eyebrow">CREAMOS EXPERIENCIAS, JUNTOS</p>
+          <h1>
+            Una nueva aventura<br />
+            empieza aquí.
+          </h1>
           <p>
             Organiza las experiencias de Kusi Q’umir y prepara el próximo viaje de tus visitantes.
           </p>
           <div class="welcome-note">
-            <span aria-hidden="true">✦</span> Tu catálogo, siempre al día.
+            <span aria-hidden="true">✦</span> Tours · Paquetes · Reservas
           </div>
         </div>
-        <div class="access-panel">
+        <div class="access-panel login-panel">
+          <span class="login-icon" aria-hidden="true"
+            ><svg viewBox="0 0 24 24">
+              <rect x="5" y="10" width="14" height="11" rx="2" />
+              <path d="M8 10V7a4 4 0 0 1 8 0v3M12 14v3" /></svg
+          ></span>
           <p class="eyebrow">BIENVENIDO DE NUEVO</p>
           <h2>Ingresa al panel</h2>
           <p>Ingresa con tu correo y contraseña del equipo.</p>
@@ -54,32 +63,54 @@
             ><input
               id="admin-email"
               type="email"
+              inputmode="email"
+              autocapitalize="none"
+              spellcheck="false"
+              placeholder="tu@correo.com"
               formControlName="email"
               autocomplete="username"
               required
               [attr.aria-invalid]="login.controls.email.touched && login.controls.email.invalid"
               aria-describedby="login-error"
             />
-            <label for="admin-password">Contraseña</label
-            ><input
-              id="admin-password"
-              type="password"
-              formControlName="password"
-              autocomplete="current-password"
-              required
-              [attr.aria-invalid]="
-                login.controls.password.touched && login.controls.password.invalid
-              "
-              aria-describedby="login-error"
-            />
+            <label for="admin-password">Contraseña</label>
+            <div class="password-field">
+              <input
+                id="admin-password"
+                [type]="passwordVisible() ? 'text' : 'password'"
+                formControlName="password"
+                autocomplete="current-password"
+                required
+                [attr.aria-invalid]="
+                  login.controls.password.touched && login.controls.password.invalid
+                "
+                aria-describedby="login-error"
+              />
+              <button
+                type="button"
+                class="password-toggle"
+                aria-controls="admin-password"
+                [attr.aria-label]="passwordVisible() ? 'Ocultar contraseña' : 'Mostrar contraseña'"
+                [attr.aria-pressed]="passwordVisible()"
+                (click)="passwordVisible.set(!passwordVisible())"
+              >
+                <svg viewBox="0 0 24 24" aria-hidden="true">
+                  <path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12Z" />
+                  <circle cx="12" cy="12" r="3" />
+                  @if (passwordVisible()) {
+                    <path d="m3 3 18 18" />
+                  }
+                </svg>
+              </button>
+            </div>
             <p id="login-error" class="error" role="alert">{{ error() }}</p>
             <button type="submit" class="primary full" [disabled]="busy()">
               {{ busy() ? 'Ingresando…' : 'Ingresar' }}
             </button>
           </form>
           <p class="help">
-            Acceso exclusivo para administradores autorizados. Si aún no tienes cuenta, solicita su
-            activación al responsable del proyecto.
+            Acceso exclusivo del equipo. Si necesitas una cuenta, solicita tu acceso al
+            administrador.
           </p>
         </div>
       </section>
@@ -105,7 +136,8 @@
           [disabled]="busy() || loadingTours()"
           (click)="selectSection('tours')"
         >
-          Tours
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="m12 3 8 18-8-4-8 4 8-18Z" /></svg
+          ><span>Tours</span>
         </button>
         <button
           type="button"
@@ -113,7 +145,10 @@
           [disabled]="busy() || loadingTours()"
           (click)="selectSection('reservations')"
         >
-          Reservas
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="5" width="18" height="16" rx="2" />
+            <path d="M7 3v4m10-4v4M3 11h18m-14 4h4" /></svg
+          ><span>Reservas</span>
         </button>
         <button
           type="button"
@@ -121,7 +156,10 @@
           [disabled]="busy() || loadingTours()"
           (click)="selectSection('packages')"
         >
-          Paquetes
+          <svg viewBox="0 0 24 24" aria-hidden="true">
+            <rect x="3" y="6" width="18" height="15" rx="2" />
+            <path d="M8 6V3h8v3M3 12h18m-9-2v4" /></svg
+          ><span>Paquetes</span>
         </button>
         @if (api.isOwner()) {
           <button
@@ -130,11 +168,14 @@
             [disabled]="busy() || loadingTours()"
             (click)="selectSection('users')"
           >
-            Usuarios
+            <svg viewBox="0 0 24 24" aria-hidden="true">
+              <circle cx="9" cy="8" r="3" />
+              <path d="M3 21v-3a6 6 0 0 1 12 0v3m1-16a3 3 0 0 1 0 6m3 10v-3a5 5 0 0 0-2-4" /></svg
+            ><span>Usuarios</span>
           </button>
         }
       </nav>
-      <p class="help">
+      <p class="session-info">
         {{ api.userEmail() }} ·
         {{ api.isOwner() ? 'Administrador total' : 'Editor · Tours, Paquetes y Reservas' }}
       </p>
