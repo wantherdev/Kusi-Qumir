@@ -14,11 +14,11 @@ describe('NotFoundComponent', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelector('h1')?.textContent).toContain('no forma parte del recorrido');
+    expect(element.querySelector('h1')?.textContent).toContain('no está en el mapa');
     expect(element.querySelector('main a.kq-button')?.textContent).toContain('Volver al inicio');
   });
 
-  it('keeps the recovery page free of mascot imagery', async () => {
+  it('shows approved Phuyu and offers catalog and contact recovery', async () => {
     await TestBed.configureTestingModule({
       imports: [NotFoundComponent],
       providers: [provideRouter([])],
@@ -28,6 +28,11 @@ describe('NotFoundComponent', () => {
     fixture.detectChanges();
     const element = fixture.nativeElement as HTMLElement;
 
-    expect(element.querySelector('app-phuyu, .not-found-mascot')).toBeNull();
+    expect(element.querySelector('app-phuyu img')?.getAttribute('src')).toBe(
+      '/assets/phuyu/static/phuyu-official.webp',
+    );
+    expect(element.querySelector('app-phuyu img')?.getAttribute('alt')).toContain('Phuyu');
+    expect(element.querySelector('a[href="/tours"]')).toBeTruthy();
+    expect(element.querySelector('a[href="/contacto"]')).toBeTruthy();
   });
 });
